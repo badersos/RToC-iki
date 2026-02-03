@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Azure Tiger Saint | Regressor's Tale of Cultivation Wiki</title>
+    <link rel="stylesheet" href="../../styles/main.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap"
+        rel="stylesheet">
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <style>
+        /* Azure Tiger Saint Theme - Azure/Righteousness Theme */
+        .character-theme-azure-tiger-saint {
+            --accent-primary: #00bcd4;
+            /* Cyan 500 */
+            --accent-secondary: #006064;
+            /* Cyan 900 */
+            --text-highlight: #e0f7fa;
+            /* Cyan 50 */
+            background: #081216 !important;
+        }
+
+        /* Hero Background */
+        .character-theme-azure-tiger-saint .hero {
+            min-height: 60vh;
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.4) 0%, #081216 100%),
+                url('../../assets/images/azure_tiger_saint.jpg') center top/cover no-repeat;
+            background-position: center 20%;
+        }
+
+        /* Title Gradient */
+        .character-theme-azure-tiger-saint .hero-title {
+            background: linear-gradient(135deg, #00e5ff, #80deea);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: drop-shadow(0 0 15px rgba(0, 229, 255, 0.4));
+        }
+
+        /* Sidebar Theme */
+        .character-theme-azure-tiger-saint .infobox-title {
+            background: linear-gradient(135deg, #00bcd4 0%, #84ffff 50%, #00bcd4 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: drop-shadow(0 2px 4px rgba(0, 188, 212, 0.3));
+            animation: shimmer-heaven 3s ease-in-out infinite;
+        }
+
+        .character-theme-azure-tiger-saint .character-sidebar {
+            background: rgba(8, 18, 22, 0.95);
+            border: 1px solid rgba(0, 188, 212, 0.3);
+            box-shadow: 0 4px 20px rgba(0, 188, 212, 0.2);
+        }
+
+        .character-theme-azure-tiger-saint .infobox-header {
+            background: rgba(0, 188, 212, 0.15);
+            color: #00bcd4;
+            border-left: 3px solid #006064;
+        }
+
+        .character-theme-azure-tiger-saint .character-quote {
+            border-left-color: #00bcd4;
+            background: linear-gradient(90deg, rgba(0, 188, 212, 0.1), transparent);
+            color: #e0f7fa;
+            font-style: italic;
+        }
+
+        .character-theme-azure-tiger-saint .section-title {
+            color: #00e5ff;
+            border-bottom-color: rgba(0, 188, 212, 0.3);
+        }
+
+        @keyframes shimmer-heaven {
+
+            0%,
+            100% {
+                filter: drop-shadow(0 0 10px rgba(0, 188, 212, 0.4));
+            }
+
+            50% {
+                filter: drop-shadow(0 0 20px rgba(132, 255, 255, 0.6));
+            }
+        }
+    </style>
+</head>
+
+<body class="character-theme-azure-tiger-saint">
+
+    <nav class="nav" style="background: rgba(8, 12, 16, 0.95); box-shadow: rgba(0, 0, 0, 0.4) 0px 4px 20px;">
+        <div class="nav-container">
+            <a href="../../index.html" class="nav-logo">
+                <div class="nav-logo-icon">R</div>
+                RToC Wiki
+            </a>
+            <ul class="nav-links">
+                <li><a href="../../index.html" class="nav-link">Home</a></li>
+                <li><a href="../characters.html" class="nav-link"
+                        style="color: #ffffff; background: rgba(0, 188, 212, 0.2);">Characters</a></li>
+                <li><a href="../concepts.html" class="nav-link">Concepts</a></li>
+                <li><a href="../plot.html" class="nav-link">Plot</a></li>
+                <li><a href="../cultivation.html" class="nav-link">Cultivation</a></li>
+                <li><a href="../locations.html" class="nav-link">Locations</a></li>
+            </ul>
+            <div class="nav-search">
+                <ion-icon name="search-outline" class="nav-search-icon"></ion-icon>
+                <input type="text" placeholder="Search the wiki...">
+            </div>
+            <button class="login-btn">Log In</button>
+        </div>
+    </nav>
+
+    <!-- Login Modal -->
+    <div class="modal-overlay">
+        <div class="login-modal">
+            <div class="modal-header">
+                <button class="modal-close"><ion-icon name="close-outline"></ion-icon></button>
+                <h2 class="modal-title">Welcome Back</h2>
+                <p class="modal-subtitle">Log in to the RToC Wiki Community</p>
+            </div>
+
+            <div class="social-login">
+                <button class="social-btn discord">
+                    <ion-icon name="logo-discord"></ion-icon>
+                    Continue with Discord
+                </button>
+                <button class="social-btn google">
+                    <ion-icon name="logo-google"></ion-icon>
+                    Continue with Google
+                </button>
+            </div>
+
+            <div class="divider">or</div>
+
+            <div class="auth-form">
+                <div class="form-group">
+                    <input type="email" placeholder="Email Address">
+                </div>
+                <div class="form-group">
+                    <input type="password" placeholder="Password">
+                </div>
+                <button class="auth-submit">Log In</button>
+            </div>
+
+            <div class="auth-footer">
+                Don't have an account? <span class="auth-link">Create Account</span>
+            </div>
+        </div>
+    </div>
+
+    <header class="hero" style="min-height: 40vh; padding-bottom: 2rem;">
+        <div class="hero-content">
+            <h1 class="hero-title">Azure Tiger Saint</h1>
+            <p class="hero-subtitle">Sect Master Of The Azure Heaven Creation Sect</p>
+        </div>
+    </header>
+
+    <main class="section">
+        <div class="character-layout">
+            <!-- Main Content -->
+            <div class="character-main" contenteditable="false">
+                <div class="character-header">
+                    <div class="character-quote" style="margin-bottom: 2rem;">
+                        “People, from birth to growth, receive immeasurable grace that cannot be expressed in words. The
+                        reason I have upheld righteousness and maintained my version of goodness is because it is the
+                        duty and responsibility of everyone who has received grace throughout their life. No, it is not
+                        a duty but a privilege... To die for the noble ideal that righteousness defines. Gazing upon
+                        righteousness, knowing how to mend our wrongs. To love each other with purity and goodwill. To
+                        have pride in impossible dreams. Believing thus, reaching the stars.”
+                        <div style="margin-top: 0.5rem; font-style: normal; font-size: 0.9em; opacity: 0.8;">— Cheongmun
+                            Sunwoo's Final Words to Oh Hyeon-seok</div>
+                    </div>
+
+                    <div class="spoiler character-section-content revealed">
+                        <strong>Cheongmun Sunwoo</strong> (창호자), known as the <strong>Azure Tiger Saint</strong>, was
+                        the founder of the Azure Heavenly Sect. Renowned for his unwavering righteousness and immense
+                        fighting prowess, he served as a mentor to Seo Eun-hyun in the 14th Cycle.
+                    </div>
+                </div>
+
+                <div class="character-section-content">
+                    <h2 class="section-title">Overview</h2>
+                    <p>Cheongmun Sunwoo founded the Azure Heavenly Sect and led it with a philosophy of righteousness
+                        and grace. He is called the Azure Tiger Saint due to his formidable martial arts and spiritual
+                        power.</p>
+                    <p style="margin-top: 1rem;">In the 14th Cycle, Eun-hyun joined the Azure Heavenly Sect and trained
+                        under Cheongmun Sunwoo. Sunwoo sacrificed himself by self-destructing to defend the Bright Cold
+                        Realm from a combined attack by The Esteemed One from the Blood Yin Realm and The Black Dragon.
+                    </p>
+                    <p style="margin-top: 1rem;">He was initially thought to have died due to Heavenly Tribulation
+                        during his advancement to Integration. However, it was later revealed that a [White Deer] took
+                        him, saving him from his untimely death. His current condition remains unknown.</p>
+                </div>
+
+                <div class="character-section-content">
+                    <h2 class="section-title">Relationships</h2>
+                    <h3>Students</h3>
+                    <ul
+                        style="list-style-type: disc; margin-left: 1.5rem; color: var(--text-secondary); line-height: 1.8;">
+                        <li><strong>Oh Hyun-seok</strong>: A disciple he imparted his final wisdom to.</li>
+                        <li><strong>Seo Eun-hyun</strong> (14th Cycle): Trained under him and inherited his will.</li>
+                    </ul>
+                </div>
+
+                <div class="character-section-content">
+                    <h2 class="section-title">Prowess</h2>
+                    <div class="infobox-row">
+                        <span class="infobox-label">Peak Cultivation</span>
+                        <span class="infobox-value">Four Axis (사축/四軸)</span>
+                    </div>
+                    <div class="infobox-row">
+                        <span class="infobox-label">Peak Martial Realm</span>
+                        <span class="infobox-value">Three Flowers Gather at the Summit (삼화취정/三花聚頂)</span>
+                    </div>
+                </div>
+
+                <div class="character-section-content">
+                    <h2 class="section-title">References</h2>
+                    <ul
+                        style="list-style-type: disc; margin-left: 1.5rem; color: var(--text-secondary); line-height: 1.8; font-size: 0.9em;">
+                        <li>Novel Chapter 2 - Debut.</li>
+                        <li>Manhwa Chapter 3 - Debut.</li>
+                    </ul>
+                </div>
+
+                <div class="character-section-content"
+                    style="margin-top: 3rem; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 2rem;">
+                    <h2 class="section-title">See Also</h2>
+                    <div
+                        style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem;">
+                        <a href="seo_eun_hyun.html" class="nav-link"
+                            style="display: block; background: var(--bg-secondary); padding: 1rem; border-radius: 8px; text-align: center; border: 1px solid rgba(255,255,255,0.1); transition: all 0.2s;">
+                            <div style="font-weight: 600; margin-bottom: 0.5rem; color: var(--text-primary);">Seo
+                                Eun-hyun</div>
+                            <div style="font-size: 0.8em; color: var(--text-secondary);">Disciple</div>
+                        </a>
+                        <a href="oh_hyun_seok.html" class="nav-link"
+                            style="display: block; background: var(--bg-secondary); padding: 1rem; border-radius: 8px; text-align: center; border: 1px solid rgba(255,255,255,0.1); transition: all 0.2s;">
+                            <div style="font-weight: 600; margin-bottom: 0.5rem; color: var(--text-primary);">Oh
+                                Hyun-seok</div>
+                            <div style="font-size: 0.8em; color: var(--text-secondary);">Disciple</div>
+                        </a>
+                        <a href="../characters.html" class="nav-link"
+                            style="display: block; background: var(--bg-secondary); padding: 1rem; border-radius: 8px; text-align: center; border: 1px solid rgba(255,255,255,0.1); transition: all 0.2s;">
+                            <div style="font-weight: 600; margin-bottom: 0.5rem; color: var(--text-primary);">All
+                                Characters</div>
+                            <div style="font-size: 0.8em; color: var(--text-secondary);">View Full Roster</div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sidebar Infobox -->
+            <aside class="character-sidebar" style="outline-offset: 4px;">
+                <h3 class="infobox-title" contenteditable="false">Azure Tiger Saint</h3>
+                <div class="infobox-image" contenteditable="false">
+                    <div class="carousel-container">
+                        <div class="carousel-track">
+                            <img src="../../assets/images/azure_tiger_saint.jpg" alt="Azure Tiger Saint"
+                                class="carousel-img active" data-caption="Azure Tiger Saint Fanart by @failose_">
+                        </div>
+                    </div>
+                    <div id="carousel-caption"
+                        style="text-align: center; font-size: 0.8rem; margin-top: 0.5rem; min-height: 1.2em; font-weight: 500;">
+                        Azure Tiger Saint Fanart by @failose_</div>
+                </div>
+
+                <div class="infobox-section" contenteditable="false">
+                    <div class="infobox-header">Personal Info</div>
+                    <div class="infobox-row">
+                        <span class="infobox-label">Real Name</span>
+                        <span class="infobox-value">Cheongmun Sunwoo</span>
+                    </div>
+                    <div class="infobox-row">
+                        <span class="infobox-label">Korean</span>
+                        <span class="infobox-value">창호자</span>
+                    </div>
+                    <div class="infobox-row">
+                        <span class="infobox-label">Aliases</span>
+                        <span class="infobox-value">Azure Tiger Saint, Sir Chang-Ho</span>
+                    </div>
+                    <div class="infobox-row">
+                        <span class="infobox-label">Race</span>
+                        <span class="infobox-value">Human</span>
+                    </div>
+                    <div class="infobox-row">
+                        <span class="infobox-label">Gender</span>
+                        <span class="infobox-value">Male</span>
+                    </div>
+                </div>
+
+                <div class="infobox-section" contenteditable="false">
+                    <div class="infobox-header">Status</div>
+                    <div class="infobox-row">
+                        <span class="infobox-label">Occupation</span>
+                        <span class="infobox-value">Sect Master Of The Azure Heaven Creation Sect</span>
+                    </div>
+                </div>
+
+                <div class="infobox-section" contenteditable="false">
+                    <div class="infobox-header">Cultivation</div>
+                    <div class="infobox-row">
+                        <span class="infobox-label">Level</span>
+                        <span class="infobox-value">Four Axis</span>
+                    </div>
+                </div>
+
+                <div class="infobox-section" contenteditable="false">
+                    <div class="infobox-header">Debut</div>
+                    <div class="infobox-row">
+                        <span class="infobox-label">Novel</span>
+                        <span class="infobox-value">Chapter 2</span>
+                    </div>
+                    <div class="infobox-row">
+                        <span class="infobox-label">Manhwa</span>
+                        <span class="infobox-value">Chapter 3</span>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    <script src="../../scripts/editor.js"></script>
+    <script src="../../scripts/main.js"></script>
+
+</body>
+
+</html>

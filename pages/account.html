@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile | RToC Wiki</title>
+    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700&family=Inter:wght@400;500;600&family=Rubik:wght@400;500;700&display=swap"
+        rel="stylesheet">
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <style>
+        :root {
+            --fandom-bg: #0e1925;
+            --fandom-content-bg: #22222b;
+            --fandom-border: rgba(255, 255, 255, 0.1);
+            --fandom-text: #e6e6e6;
+            --fandom-text-sub: #a3a3a3;
+            --fandom-accent: #fa005a;
+            --banner-height: 280px;
+        }
+
+        body {
+            background-color: #000;
+            background-image: url('https://static.wikia.nocookie.net/regressorstaleofcultivation/images/c/c3/Wiki-background/revision/latest?cb=20240510165909');
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+            font-family: 'Rubik', sans-serif;
+            margin: 0;
+            color: var(--fandom-text);
+            min-height: 100vh;
+        }
+
+        .main-wrapper {
+            background: rgba(0, 0, 0, 0.8);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .profile-container {
+            width: 100%;
+            max-width: 1024px;
+            background: linear-gradient(180deg, rgba(30, 30, 30, 1) 0%, rgba(20, 20, 20, 1) 100%);
+            margin-top: 60px;
+            border: 1px solid #333;
+            position: relative;
+        }
+
+        .profile-banner {
+            height: var(--banner-height);
+            width: 100%;
+            background: #333;
+            background-image: linear-gradient(to bottom, transparent 50%, rgba(0, 0, 0, 0.8)), url('https://w.wallhaven.cc/full/85/wallhaven-8589y2.jpg');
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        .profile-header {
+            padding: 0 30px;
+            display: flex;
+            align-items: flex-end;
+            margin-top: -60px;
+            position: relative;
+            z-index: 10;
+            gap: 24px;
+        }
+
+        .avatar-container {
+            position: relative;
+        }
+
+        .profile-avatar {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            border: 6px solid #1a1a1a;
+            object-fit: cover;
+            background: #000;
+        }
+
+        .status-dot {
+            position: absolute;
+            bottom: 20px;
+            right: 10px;
+            width: 20px;
+            height: 20px;
+            background: #22c55e;
+            border: 4px solid #1a1a1a;
+            border-radius: 50%;
+        }
+
+        .user-info {
+            padding-bottom: 20px;
+            flex: 1;
+        }
+
+        .username-row {
+            display: flex;
+            align-items: baseline;
+            gap: 10px;
+            margin-bottom: 4px;
+        }
+
+        .username {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #fff;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .stats-row {
+            color: #aaa;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .role-tag {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2px 8px;
+            border-radius: 4px;
+            color: #fff;
+            font-size: 0.7rem;
+        }
+
+        .actions-container {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            gap: 10px;
+            z-index: 10;
+        }
+
+        .action-btn {
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: #fff;
+            padding: 8px 16px;
+            border-radius: 3px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            cursor: pointer;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s;
+            text-decoration: none;
+        }
+
+        .action-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: #fff;
+        }
+
+        .admin-btn {
+            background: #da2466;
+            border-color: #da2466;
+        }
+
+        .admin-btn:hover {
+            background: #b81b53;
+            border-color: #b81b53;
+        }
+
+        .profile-nav {
+            margin-top: 20px;
+            padding: 0 30px;
+            border-bottom: 1px solid #333;
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-item {
+            padding: 15px 0;
+            color: #aaa;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            position: relative;
+            text-transform: uppercase;
+        }
+
+        .nav-item.active {
+            color: #fff;
+            border-bottom: 3px solid #da2466;
+        }
+
+        .nav-item:hover {
+            color: #fff;
+        }
+
+        .profile-body {
+            padding: 40px 30px;
+            min-height: 300px;
+            background: #1a1a1a;
+        }
+
+        .empty-placeholder {
+            color: #777;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 40px;
+        }
+
+        .empty-placeholder a {
+            color: #3b82f6;
+            text-decoration: none;
+        }
+
+        .empty-placeholder a:hover {
+            text-decoration: underline;
+        }
+
+        .right-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 15px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #333;
+            padding-bottom: 10px;
+        }
+
+        .small-action {
+            color: #aaa;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .small-action:hover {
+            color: #fff;
+        }
+
+        .profile-footer {
+            padding: 20px 30px;
+            background: #111;
+            color: #555;
+            font-size: 0.8rem;
+            border-top: 1px solid #222;
+        }
+
+        /* Banner Overlay Logic */
+        .banner-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            opacity: 0;
+            transition: opacity 0.3s;
+            cursor: pointer;
+            z-index: 5;
+        }
+
+        .profile-banner:hover .banner-overlay {
+            opacity: 1;
+        }
+
+        .banner-overlay ion-icon {
+            font-size: 3rem;
+            margin-bottom: 10px;
+        }
+
+        .banner-overlay span {
+            font-size: 1.2rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Modal Styles */
+        .modal-backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+            z-index: 2000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-box {
+            background: #1a1a24;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            width: 500px;
+            max-width: 90%;
+            border-radius: 12px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+            animation: slideUp 0.3s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .modal-header {
+            padding: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h3 {
+            margin: 0;
+            color: white;
+            font-size: 1.2rem;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            color: #aaa;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .close-btn:hover {
+            color: white;
+        }
+
+        .modal-body {
+            padding: 20px;
+        }
+
+        textarea#bioInput {
+            width: 100%;
+            min-height: 150px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #eee;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            resize: vertical;
+            outline: none;
+        }
+
+        textarea#bioInput:focus {
+            border-color: #fa005a;
+        }
+
+        .modal-footer {
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.2);
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        .btn-cancel {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #ddd;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .btn-save {
+            background: #fa005a;
+            border: none;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .btn-save:hover {
+            background: #d4004c;
+        }
+
+        @media (max-width: 768px) {
+            .profile-header {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+                margin-top: -70px;
+            }
+
+            .profile-avatar {
+                width: 120px;
+                height: 120px;
+            }
+
+            .username-row,
+            .stats-row {
+                justify-content: center;
+            }
+
+            .actions-container {
+                position: relative;
+                top: 0;
+                right: 0;
+                justify-content: center;
+                margin-top: 20px;
+            }
+
+            .profile-nav {
+                overflow-x: auto;
+                padding-bottom: 5px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="main-wrapper">
+        <!-- Top Nav Placeholder (Simulated) -->
+        <a href="/"
+            style="position:fixed; top:20px; left:20px; color:white; z-index:100; background:rgba(0,0,0,0.5); padding:10px; border-radius:8px; text-decoration:none;">
+            <ion-icon name="arrow-back"></ion-icon> Return Home
+        </a>
+
+        <div class="profile-container">
+            <!-- Banner -->
+            <div class="profile-banner" id="profileBanner">
+                <div class="banner-overlay" id="bannerOverlay">
+                    <ion-icon name="camera-outline"></ion-icon>
+                    <span>Change Banner</span>
+                </div>
+                <!-- Hidden File Input -->
+                <input type="file" id="bannerUpload" accept="image/*" style="display:none;">
+
+                <div class="actions-container">
+                    <button class="action-btn" id="logoutBtn">
+                        <ion-icon name="log-out-outline"></ion-icon> Sign Out
+                    </button>
+                    <a href="/pages/users.html" class="action-btn admin-btn" id="manageUsersBtn" style="display:none;">
+                        <ion-icon name="people-circle-outline"></ion-icon> Manage Users
+                    </a>
+                </div>
+            </div>
+
+            <!-- Header -->
+            <div class="profile-header">
+                <div class="avatar-container">
+                    <img id="userAvatar" src="" class="profile-avatar">
+                    <div class="status-dot"></div>
+                </div>
+                <div class="user-info">
+                    <div class="username-row">
+                        <span class="username" id="userName">...</span>
+                    </div>
+
+                    <div class="stats-row">
+                        <span id="editCount">0 EDITS</span>
+                        <span>•</span>
+                        <span>0 POSTS</span>
+                        <div id="roleBadge" class="role-tag">USER</div>
+                        <a id="discordLink" href="#" target="_blank"
+                            style="display:flex; align-items:center; text-decoration:none;">
+                            <ion-icon name="logo-discord"
+                                style="color:#5865F2; font-size:1.1rem; margin-left:8px;"></ion-icon>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tabs -->
+            <div class="profile-nav">
+                <div class="nav-item active" data-tab="about">About</div>
+                <div class="nav-item" data-tab="activity">Activity</div>
+                <div class="nav-item" data-tab="message">Message Wall</div>
+                <div class="nav-item" data-tab="blog">Blog</div>
+                <div class="nav-item" data-tab="contributions">Contributions</div>
+            </div>
+
+            <!-- Body -->
+            <div class="profile-body">
+                <div class="right-actions">
+                    <div class="small-action" id="editProfileBtn"><ion-icon name="create-outline"></ion-icon> EDIT BIO
+                    </div>
+                    <div class="small-action"><ion-icon name="ellipsis-horizontal"></ion-icon></div>
+                </div>
+
+                <div id="tabContent">
+                    <div class="empty-placeholder">
+                        There is currently no text in this page. You can <a href="#"
+                            onclick="document.getElementById('editProfileBtn').click()">create a bio</a> to tell others
+                        about yourself.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <div class="profile-footer">
+                Community content is available under CC-BY-SA unless otherwise noted.
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Bio Modal -->
+    <div id="bioModal" class="modal-backdrop">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h3>Edit Bio</h3>
+                <button class="close-btn" id="closeBioModal"><ion-icon name="close-outline"></ion-icon></button>
+            </div>
+            <div class="modal-body">
+                <textarea id="bioInput" placeholder="Tell us about yourself..."></textarea>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-cancel" id="cancelBioBtn">Cancel</button>
+                <button class="btn-save" id="saveBioBtn">Save Bio</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_PROFILE = '/api/profile';
+        const API_ACTIVITY = '/api/activity';
+        const API_UPLOAD = '/upload';
+
+        // --- AUTH & CONTEXT ---
+        const loggedInUser = JSON.parse(localStorage.getItem('rtoc_user') || 'null');
+        const urlParams = new URLSearchParams(window.location.search);
+        const targetUsername = urlParams.get('username');
+
+        // Determine who we are viewing
+        // If ?username=... is present, view them. Otherwise view self (if logged in).
+        let viewingUser = null;
+        let isOwnProfile = false;
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            if (targetUsername) {
+                // Public View Mode
+                // We need to fetch the basic user info (avatar/role) from server or profile API first?
+                // Actually the profile API returns sidebar info too usually? 
+                // Wait, our profile API currently just returns 'banner' and 'bio'.
+                // We might need to rely on what we can get. 
+                // For now, let's assume valid key.
+                viewingUser = { username: targetUsername };
+
+                if (loggedInUser && loggedInUser.username === targetUsername) {
+                    isOwnProfile = true;
+                    viewingUser = loggedInUser; // Use full data if it's us
+                }
+            } else {
+                // Private/Self View Mode
+                if (!loggedInUser) {
+                    window.location.href = '/';
+                    return;
+                }
+                viewingUser = loggedInUser;
+                isOwnProfile = true;
+            }
+
+            // Init UI
+            setupUI();
+            await loadProfile();
+            loadActivity();
+            setupTabs();
+            if (isOwnProfile) setupInteractions();
+        });
+
+        function setupUI() {
+            // Header Info
+            document.getElementById('userName').textContent = viewingUser.username;
+
+            // If we have full user object (own profile), set avatar/role immediately
+            if (viewingUser.avatar) {
+                document.getElementById('userAvatar').src = viewingUser.avatar;
+            } else {
+                document.getElementById('userAvatar').src = 'https://cdn.discordapp.com/embed/avatars/0.png';
+            }
+
+            if (viewingUser.role) {
+                document.getElementById('roleBadge').textContent = viewingUser.role.toUpperCase();
+            } else {
+                document.getElementById('roleBadge').style.display = 'none'; // Hide until loaded
+            }
+
+            // Hide/Show Controls based on permission
+            if (!isOwnProfile) {
+                document.getElementById('profileBanner').classList.add('readonly');
+                document.getElementById('bannerOverlay').style.display = 'none';
+                document.getElementById('editProfileBtn').style.display = 'none';
+                document.getElementById('logoutBtn').style.display = 'none';
+
+                // Show "View Own Profile" if logged in
+                if (loggedInUser) {
+                    const actions = document.querySelector('.actions-container');
+                    const myProfileBtn = document.createElement('a');
+                    myProfileBtn.href = '/pages/account.html';
+                    myProfileBtn.className = 'action-btn';
+                    myProfileBtn.innerHTML = '<ion-icon name="person-circle-outline"></ion-icon> My Profile';
+                    actions.prepend(myProfileBtn);
+                }
+            }
+
+            const discordLink = document.getElementById('discordLink');
+            if (viewingUser.id) {
+                discordLink.href = `https://discord.com/users/${viewingUser.id}`;
+            } else {
+                discordLink.style.display = 'none';
+            }
+
+            // Permissions for Admin Button
+            const viewerIsAdmin = loggedInUser && (loggedInUser.role === 'admin' || loggedInUser.role === 'owner');
+            if (viewerIsAdmin) {
+                document.getElementById('manageUsersBtn').style.display = 'flex';
+            } else {
+                document.getElementById('manageUsersBtn').style.display = 'none';
+            }
+        }
+
+        async function loadProfile() {
+            try {
+                const res = await fetch(`${API_PROFILE}?user=${viewingUser.username}`);
+                const data = await res.json();
+
+                if (data.status === 'success' && data.profile) {
+                    if (data.profile.banner) {
+                        document.querySelector('.profile-banner').style.backgroundImage = `linear-gradient(to bottom, transparent 50%, rgba(0,0,0,0.9)), url('${data.profile.banner}')`;
+                    }
+                    window.currentBio = data.profile.bio || '';
+                    updateAboutTab();
+
+                    // If we are viewing someone else, we might want to try to update role/avatar if backend supported it in profile
+                    // But currently backend only stores banner/bio in user_profiles.json. 
+                    // Avatar/Role come from users.json which isn't fully exposed via generic public content API yet except validation.
+                    // For now, we accept that for public profiles, we might miss the real avatar if not stored in profile.
+                    // Implementation Detail: In a real app we'd fetch public user info (avatar/role) here.
+                    // For RToC Wiki specifically, let's stick to what we have.
+                }
+            } catch (e) { console.error("Profile fetch error", e); }
+        }
+
+        async function loadActivity() {
+            try {
+                const res = await fetch(`${API_ACTIVITY}?user=${viewingUser.username}`);
+                const data = await res.json();
+                const edits = data.activity ? data.activity.filter(a => a.action === 'edited').length : 0;
+                document.getElementById('editCount').textContent = `${edits} EDITS`;
+                window.activityLogs = data.activity || [];
+
+                const activeTab = document.querySelector('.nav-item.active').dataset.tab;
+                if (activeTab === 'activity' || activeTab === 'contributions') {
+                    renderActivityTab();
+                }
+            } catch (e) { console.error("Activity fetch error", e); }
+        }
+
+        function setupTabs() {
+            const tabs = document.querySelectorAll('.nav-item');
+            const contentArea = document.getElementById('tabContent');
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+                    const tabName = tab.dataset.tab;
+                    contentArea.innerHTML = '';
+
+                    if (tabName === 'about') {
+                        updateAboutTab();
+                    } else if (tabName === 'activity' || tabName === 'contributions') {
+                        renderActivityTab();
+                    } else {
+                        contentArea.innerHTML = `<div class="empty-placeholder">No content in ${tabName} yet.</div>`;
+                    }
+                });
+            });
+        }
+
+        function updateAboutTab() {
+            const contentArea = document.getElementById('tabContent');
+            const activeTab = document.querySelector('.nav-item.active').dataset.tab;
+            if (activeTab !== 'about') return;
+
+            if (window.currentBio) {
+                contentArea.innerHTML = `<div style="font-size:1.1rem; line-height:1.6; white-space: pre-wrap;">${window.currentBio}</div>`;
+            } else {
+                if (isOwnProfile) {
+                    contentArea.innerHTML = `
+                        <div class="empty-placeholder">
+                            There is currently no text in this page. You can <a href="#" onclick="document.getElementById('editProfileBtn').click()">create a bio</a> to tell others about yourself.
+                        </div>
+                    `;
+                } else {
+                    contentArea.innerHTML = `
+                        <div class="empty-placeholder">
+                            This user has not written a bio yet.
+                        </div>
+                    `;
+                }
+            }
+        }
+
+        function renderActivityTab() {
+            const container = document.getElementById('tabContent');
+            const logs = window.activityLogs || [];
+
+            if (logs.length === 0) {
+                container.innerHTML = `<div class="empty-placeholder">No recent activity recorded.</div>`;
+                return;
+            }
+
+            let html = '<div class="activity-feed" style="display:flex; flex-direction:column; gap:15px;">';
+            logs.forEach(log => {
+                const time = new Date(log.timestamp).toLocaleString();
+                html += `
+                    <div class="activity-item" style="background:rgba(255,255,255,0.05); padding:15px; border-radius:8px; border:1px solid rgba(255,255,255,0.1);">
+                        <div style="font-weight:bold; color:#fff; margin-bottom:5px;">
+                            <ion-icon name="create-outline" style="color:#aaa; margin-right:8px;"></ion-icon>
+                            Edited page <a href="/${log.target}" style="color:#3b82f6; text-decoration:none;">${log.target}</a>
+                        </div>
+                        <div style="font-size:0.8rem; color:#888;">${time}</div>
+                    </div>
+                `;
+            });
+            html += '</div>';
+            container.innerHTML = html;
+        }
+
+        function setupInteractions() {
+            const overlay = document.getElementById('bannerOverlay');
+            const fileInput = document.getElementById('bannerUpload');
+
+            if (overlay) {
+                overlay.addEventListener('click', (e) => {
+                    if (e.target.closest('.actions-container')) return;
+                    fileInput.click();
+                });
+            }
+
+            if (fileInput) {
+                fileInput.addEventListener('change', async (e) => {
+                    if (e.target.files.length > 0) {
+                        const file = e.target.files[0];
+                        await uploadBanner(file);
+                    }
+                });
+            }
+
+            const bioModal = document.getElementById('bioModal');
+            const editBtn = document.getElementById('editProfileBtn');
+            const closeBtn = document.getElementById('closeBioModal');
+            const cancelBtn = document.getElementById('cancelBioBtn');
+            const saveBtn = document.getElementById('saveBioBtn');
+            const bioInput = document.getElementById('bioInput');
+
+            if (editBtn) {
+                editBtn.onclick = () => {
+                    bioInput.value = window.currentBio || '';
+                    bioModal.style.display = 'flex';
+                    bioInput.focus();
+                };
+            }
+
+            const closeModal = () => { bioModal.style.display = 'none'; };
+            if (closeBtn) closeBtn.onclick = closeModal;
+            if (cancelBtn) cancelBtn.onclick = closeModal;
+
+            if (saveBtn) {
+                saveBtn.onclick = async () => {
+                    const newBio = bioInput.value;
+                    await saveProfile({ bio: newBio });
+                    closeModal();
+                };
+            }
+
+            const logoutBtn = document.getElementById('logoutBtn');
+            if (logoutBtn) {
+                logoutBtn.onclick = () => {
+                    localStorage.removeItem('rtoc_user');
+                    window.location.href = '/';
+                };
+            }
+        }
+
+        async function uploadBanner(file) {
+            const formData = new FormData();
+            formData.append('file', file);
+
+            try {
+                document.querySelector('.banner-overlay span').textContent = "Uploading...";
+
+                const res = await fetch(API_UPLOAD, {
+                    method: 'POST',
+                    body: formData
+                });
+                const data = await res.json();
+
+                if (data.status === 'success') {
+                    await saveProfile({ banner: data.url });
+                } else {
+                    alert('Upload failed: ' + data.message);
+                }
+            } catch (e) {
+                console.error(e);
+                alert('Upload error');
+            } finally {
+                document.querySelector('.banner-overlay span').textContent = "Change Banner";
+            }
+        }
+
+        async function saveProfile(data) {
+            try {
+                const payload = { ...data, username: viewingUser.username };
+                const res = await fetch(API_PROFILE, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                const result = await res.json();
+
+                if (result.status === 'success') {
+                    if (data.banner) {
+                        document.querySelector('.profile-banner').style.backgroundImage = `linear-gradient(to bottom, transparent 50%, rgba(0,0,0,0.9)), url('${data.banner}')`;
+                    }
+                    if (data.bio !== undefined) {
+                        window.currentBio = data.bio;
+                        updateAboutTab();
+                    }
+                } else {
+                    alert("Update failed: " + result.message);
+                }
+            } catch (e) { console.error(e); alert("Connection error."); }
+        }
+    </script>
+    <script src="../scripts/editor.js"></script>
+</body>
+
+</html>

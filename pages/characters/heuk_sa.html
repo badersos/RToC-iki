@@ -1,0 +1,1040 @@
+<!DOCTYPE html>
+<html lang="en" class="hydrated">
+
+<head>
+    <meta charset="UTF-8">
+    <style data-styles="">
+        ion-icon {
+            visibility: hidden
+        }
+
+        .hydrated {
+            visibility: inherit
+        }
+    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0a0a0f">
+    <title>Heuk Sa | Regressor's Tale of Cultivation Wiki</title>
+    <link rel="icon" type="image/jpeg" href="../../assets/images/seo_eun_hyun_cover.jpg">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&amp;family=Inter:wght@400;500;600;700&amp;family=Outfit:wght@500;600;700;800&amp;display=swap"
+        rel="stylesheet">
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule="" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <style id="comment-styles-v2">
+        .comments-wrapper {
+            margin-top: 60px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .comments-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .comments-title {
+            font-size: 1.2rem;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 0;
+        }
+
+        .comments-title span {
+            color: #888;
+            font-size: 1rem;
+        }
+
+        .sort-controls {
+            display: flex;
+            gap: 8px;
+        }
+
+        .sort-btn {
+            padding: 6px 12px;
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #888;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.2s;
+        }
+
+        .sort-btn:hover {
+            border-color: rgba(139, 92, 246, 0.5);
+            color: #aaa;
+        }
+
+        .sort-btn.active {
+            background: rgba(139, 92, 246, 0.2);
+            border-color: #8B5CF6;
+            color: #8B5CF6;
+        }
+
+        /* Comment Input */
+        .comment-input-area {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            background: rgba(255, 255, 255, 0.03);
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            align-items: flex-start;
+        }
+
+        .comment-input-area.replying {
+            border-color: rgba(139, 92, 246, 0.3);
+            background: rgba(139, 92, 246, 0.05);
+        }
+
+        .reply-indicator {
+            display: none;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.85rem;
+            color: #8B5CF6;
+            margin-bottom: 10px;
+        }
+
+        .reply-indicator.active {
+            display: flex;
+        }
+
+        .cancel-reply {
+            background: none;
+            border: none;
+            color: #888;
+            cursor: pointer;
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
+        .cancel-reply:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .user-badge,
+        .comment-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #8B5CF6, #6D28D9);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+            overflow: hidden;
+        }
+
+        .user-avatar-img,
+        .comment-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .input-wrapper {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .comment-input-area textarea {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: white;
+            resize: none;
+            font-family: inherit;
+            padding: 12px;
+            outline: none;
+            min-height: 60px;
+            transition: border-color 0.2s;
+        }
+
+        .comment-input-area textarea:focus {
+            border-color: rgba(139, 92, 246, 0.5);
+        }
+
+        .input-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        .post-btn {
+            background: linear-gradient(135deg, #8B5CF6, #6D28D9);
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .post-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(139, 92, 246, 0.4);
+        }
+
+        .post-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Comments List */
+        .comments-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+
+        /* Comment Item */
+        .comment-item {
+            display: flex;
+            gap: 15px;
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .comment-item:last-child {
+            border-bottom: none;
+        }
+
+        .comment-item.pinned {
+            background: rgba(255, 215, 0, 0.05);
+            border-left: 3px solid #FFD700;
+            padding-left: 15px;
+            margin-left: -15px;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .comment-item.deleted {
+            opacity: 0.5;
+        }
+
+        .comment-item.deleted .comment-text {
+            font-style: italic;
+            color: #666;
+        }
+
+        /* Nested Replies */
+        .comment-replies {
+            margin-left: 55px;
+            border-left: 2px solid rgba(139, 92, 246, 0.2);
+            padding-left: 20px;
+        }
+
+        .comment-replies .comment-item {
+            padding: 15px 0;
+        }
+
+        .comment-replies .comment-avatar {
+            width: 32px;
+            height: 32px;
+            font-size: 0.8rem;
+        }
+
+        /* Voting */
+        .vote-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+            margin-right: 5px;
+        }
+
+        .vote-btn {
+            background: none;
+            border: none;
+            color: #555;
+            cursor: pointer;
+            padding: 4px;
+            border-radius: 4px;
+            transition: all 0.2s;
+            font-size: 1.2rem;
+        }
+
+        .vote-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .vote-btn.upvoted {
+            color: #10B981;
+        }
+
+        .vote-btn.downvoted {
+            color: #EF4444;
+        }
+
+        .vote-score {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #888;
+            min-width: 20px;
+            text-align: center;
+        }
+
+        .vote-score.positive {
+            color: #10B981;
+        }
+
+        .vote-score.negative {
+            color: #EF4444;
+        }
+
+        /* Comment Content */
+        .comment-body {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .comment-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
+            flex-wrap: wrap;
+        }
+
+        .comment-author {
+            font-weight: 600;
+            color: #fff;
+        }
+
+        .role-tag {
+            font-size: 0.7rem;
+            padding: 2px 8px;
+            border-radius: 10px;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+
+        .role-tag.owner {
+            background: rgba(255, 215, 0, 0.2);
+            color: #FFD700;
+        }
+
+        .role-tag.admin {
+            background: rgba(255, 75, 75, 0.2);
+            color: #FF4B4B;
+        }
+
+        .pin-badge {
+            font-size: 0.7rem;
+            padding: 2px 8px;
+            border-radius: 10px;
+            background: rgba(255, 215, 0, 0.15);
+            color: #FFD700;
+        }
+
+        .edited-badge {
+            font-size: 0.75rem;
+            color: #666;
+            font-style: italic;
+        }
+
+        .comment-time {
+            font-size: 0.8rem;
+            color: #666;
+        }
+
+        .comment-text {
+            color: #ccc;
+            line-height: 1.6;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        /* Comment Actions */
+        .comment-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .action-btn {
+            background: none;
+            border: none;
+            color: #666;
+            cursor: pointer;
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            padding: 4px 8px;
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+
+        .action-btn:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: #8B5CF6;
+        }
+
+        .action-btn.delete:hover {
+            color: #EF4444;
+        }
+
+        /* Edit Mode */
+        .edit-textarea {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            border-radius: 8px;
+            color: white;
+            padding: 10px;
+            font-family: inherit;
+            resize: vertical;
+            min-height: 80px;
+            margin-bottom: 10px;
+        }
+
+        .edit-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .edit-actions button {
+            padding: 6px 14px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.2s;
+        }
+
+        .save-edit-btn {
+            background: #8B5CF6;
+            border: none;
+            color: white;
+        }
+
+        .cancel-edit-btn {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #aaa;
+        }
+
+        /* Login Prompt */
+        .comment-login-prompt {
+            text-align: center;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 12px;
+            color: #888;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .comment-login-prompt ion-icon {
+            font-size: 3rem;
+            opacity: 0.4;
+        }
+
+        .comment-login-prompt a {
+            color: #8B5CF6;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        /* Loading & Empty States */
+        .loading-comments,
+        .empty-comments {
+            text-align: center;
+            color: #666;
+            padding: 40px;
+        }
+
+        .loading-comments {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .loading-spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(139, 92, 246, 0.3);
+            border-top-color: #8B5CF6;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 600px) {
+            .comment-input-area {
+                flex-direction: column;
+            }
+
+            .comment-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 5px;
+            }
+
+            .comment-replies {
+                margin-left: 20px;
+                padding-left: 15px;
+            }
+
+            .vote-section {
+                flex-direction: row;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="/styles/profile-modal.css">
+    <style id="imgEditStyles">
+        .img-edit-btn {
+            background: rgba(0, 0, 0, 0.8);
+            border: 2px solid #8B5CF6;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+        }
+
+        .img-edit-btn:hover {
+            background: #8B5CF6;
+            transform: scale(1.05);
+        }
+
+        .img-edit-btn ion-icon {
+            font-size: 1.2rem;
+        }
+    </style>
+    <style>
+        /* Heuk Sa - Crimson Serpent Theme */
+        .character-theme-heuk-sa {
+            --accent-primary: #ef4444;
+            --accent-secondary: #fca5a5;
+            --text-highlight: #f87171;
+            background: linear-gradient(135deg, #000000 0%, #2a0a0a 60%, #450a0a 100%) !important;
+        }
+
+        /* Hero Background */
+        .character-theme-heuk-sa .hero {
+            min-height: 60vh;
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.6) 0%, #000000 100%),
+                url('../../assets/images/heuk_sa.jpg') center top/cover no-repeat;
+        }
+
+        /* Crimson Title Gradient */
+        .character-theme-heuk-sa .hero-title {
+            background: linear-gradient(135deg, #fecaca, #ef4444);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Sidebar Crimson Theme */
+        .character-theme-heuk-sa .infobox-title {
+            background: linear-gradient(135deg, #fecaca 0%, #ef4444 50%, #b91c1c 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: drop-shadow(0 2px 4px rgba(239, 68, 68, 0.3));
+        }
+
+        .character-theme-heuk-sa .character-sidebar {
+            background: rgba(0, 0, 0, 0.8);
+            border: 1px solid rgba(239, 68, 68, 0.15);
+            box-shadow: 0 4px 20px rgba(239, 68, 68, 0.08);
+        }
+
+        .character-theme-heuk-sa .infobox-header {
+            background: rgba(239, 68, 68, 0.1);
+            color: #f87171;
+        }
+
+        .character-theme-heuk-sa .character-quote {
+            border-left-color: #ef4444;
+            background: linear-gradient(90deg, rgba(239, 68, 68, 0.05), transparent);
+        }
+
+        .character-theme-heuk-sa .section-title {
+            color: #f87171;
+            border-bottom-color: rgba(239, 68, 68, 0.2);
+        }
+    </style>
+</head>
+
+<body class="character-theme-heuk-sa">
+
+
+    <nav class="nav" style="background: rgba(15, 20, 25, 0.98); box-shadow: rgba(0, 0, 0, 0.4) 0px 4px 20px;">
+        <div class="nav-container">
+            <a href="../../index.html" class="nav-logo">
+                <img src="../../assets/logo_character.png" alt="RToC" class="nav-logo-img"
+                    style="width:36px; height:36px; border-radius:8px; object-fit:cover;">
+                RToC Wiki
+            </a>
+            <ul class="nav-links">
+                <li><a href="../../index.html" class="nav-link">Home</a></li>
+                <li><a href="../characters.html" class="nav-link"
+                        style="color: #ffffff; background: rgba(139, 92, 246, 0.1);">Characters</a></li>
+                <li><a href="../concepts.html" class="nav-link">Concepts</a></li>
+                <li><a href="../plot.html" class="nav-link">Plot</a></li>
+                <li><a href="../cultivation.html" class="nav-link">Cultivation</a></li>
+                <li><a href="../locations.html" class="nav-link">Locations</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <header class="hero" style="min-height: 40vh; padding-bottom: 2rem;">
+        <div class="hero-content">
+            <h1 class="hero-title" contenteditable="false">Heuk Sa</h1>
+            <p class="hero-subtitle" contenteditable="false">The Radiance Supreme Deity</p>
+        </div>
+    </header>
+
+    <main class="section">
+        <div class="character-layout">
+            <!-- Main Content -->
+            <div class="character-main" contenteditable="false">
+                <div class="character-header">
+                    <div class="character-quote">
+                        "That is not something a thing like you needs to know."
+                        <span
+                            style="display:block; font-size: 0.8em; margin-top: 0.5rem; color: var(--theme-primary);">—
+                            Hong Fan, to Seo Eun-hyun</span>
+                    </div>
+                    <div class="character-section-content">
+                        <strong>Heuk Sa</strong> is a title carried by the Radiance Supreme Deity. However, as the
+                        Radiance Supreme Deity is actually comprised of the ten Heavenly Lords who jointly occupy the
+                        <strong>[Seat of Radiance]</strong>, the <strong>Radiance Ten Heavenly Lords</strong>, it
+                        actually refers to them as a group.
+                    </div>
+                    <div class="character-section-content">
+                        They rule over the Heavenly King Heavenly Domain and seek for the completion of a story.
+                    </div>
+                </div>
+
+                <div class="character-section-content">
+                    <h2 class="section-title" contenteditable="false">Overview</h2>
+                    <p contenteditable="false" class="">They are known as the Owner of Light and the God of Light. They
+                        govern the realms of Qi Refining
+                        4th Star, Vestige Liberation Immortal, and Immortal Lord. They are the ones who grant and take
+                        away the Fates of the Enders.</p>
+                </div>
+
+                <div class="character-section-content">
+                    <h2 class="section-title" contenteditable="false">The Radiance Seven Immortals</h2>
+                    <p contenteditable="false" class="">After the defection of the Castle Wall Heavenly Lord, Field
+                        Garden Heavenly Lord, and Sword Spear
+                        Heavenly Lord (the former tenth, ninth, and fifth seats), the Radiance Ten have been reduced to
+                        the Radiance Seven Immortals:</p>
+                    <table style="width: 100%; border-collapse: collapse; margin-top: 1rem;">
+                        <thead>
+                            <tr style="background: rgba(255,255,255,0.05); text-align: left;">
+                                <th style="padding: 0.75rem; color: var(--theme-primary);">Seat</th>
+                                <th style="padding: 0.75rem;">Title</th>
+                                <th style="padding: 0.75rem;">Name (Chinese)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                                <td style="padding: 0.75rem; color: var(--theme-primary);">First Seat</td>
+                                <td style="padding: 0.75rem;">Great Forest Heavenly Lord</td>
+                                <td style="padding: 0.75rem;">大林天君</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                                <td style="padding: 0.75rem; color: var(--theme-primary);">Second Seat</td>
+                                <td style="padding: 0.75rem;">Flower Plant Heavenly Lord</td>
+                                <td style="padding: 0.75rem;">花草天君</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                                <td style="padding: 0.75rem; color: var(--theme-primary);">Third Seat</td>
+                                <td style="padding: 0.75rem;">Great Sun Heavenly Lord</td>
+                                <td style="padding: 0.75rem;">太陽天君</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                                <td style="padding: 0.75rem; color: var(--theme-primary);">Fourth Seat</td>
+                                <td style="padding: 0.75rem;">Torch Candle Heavenly Lord</td>
+                                <td style="padding: 0.75rem;">燈燭天君</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                                <td style="padding: 0.75rem; color: var(--theme-primary);">Sixth Seat</td>
+                                <td style="padding: 0.75rem;">Pearl Jade Heavenly Lord</td>
+                                <td style="padding: 0.75rem;">珠玉天君</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                                <td style="padding: 0.75rem; color: var(--theme-primary);">Seventh Seat</td>
+                                <td style="padding: 0.75rem;">Great Sea Heavenly Lord</td>
+                                <td style="padding: 0.75rem;">大海天君</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                                <td style="padding: 0.75rem; color: var(--theme-primary);">Eighth Seat</td>
+                                <td style="padding: 0.75rem;">Rain Dew Heavenly Lord</td>
+                                <td style="padding: 0.75rem;">雨露天君</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="character-section-content">
+                    <h2 class="section-title" contenteditable="false">Relationships</h2>
+                    <p contenteditable="false" class=""><strong>Allies:</strong> Radiance Hall</p>
+                    <p contenteditable="false" class=""><strong>Enemies:</strong> Underworld, Enders</p>
+                </div>
+            </div>
+
+            <!-- Sidebar Infobox -->
+            <aside class="character-sidebar">
+                <h3 class="infobox-title" contenteditable="false">Heuk Sa</h3>
+                <div class="infobox-image">
+                    <div class="carousel-container">
+                        <div class="carousel-track">
+                            <img src="../../assets/images/heuk_sa.jpg" alt="Heuk Sa" class="carousel-img active">
+                        </div>
+                    </div>
+                    <div id="carousel-caption"
+                        style="text-align: center; font-size: 0.8rem; margin-top: 0.5rem; min-height: 1.2em;">Radiance
+                        Supreme Deity</div>
+                </div>
+
+                <div class="infobox-section" contenteditable="false">
+                    <div class="infobox-header">Personal Info</div>
+                    <div class="infobox-row">
+                        <span class="infobox-label">Race</span>
+                        <span class="infobox-value">Irrelevant</span>
+                    </div>
+                    <div class="infobox-row">
+                        <span class="infobox-label">Age</span>
+                        <span class="infobox-value">Immeasurable</span>
+                    </div>
+                    <div class="infobox-row">
+                        <span class="infobox-label">Occupation</span>
+                        <span class="infobox-value">Supreme Deity,<br>Master of Radiance Hall</span>
+                    </div>
+                    <div class="infobox-row">
+                        <span class="infobox-label">Domain</span>
+                        <span class="infobox-value">Heavenly King Heavenly Domain</span>
+                    </div>
+                    <div class="infobox-row">
+                        <span class="infobox-label">Governs</span>
+                        <span class="infobox-value">Qi Refining 4th Star<br>Vestige Liberation Immortal<br>Immortal
+                            Lord</span>
+                    </div>
+                </div>
+
+                <div class="infobox-section" contenteditable="false">
+                    <div class="infobox-header">Prowess</div>
+                    <div class="infobox-row">
+                        <span class="infobox-label">Peak Cultivation</span>
+                        <span class="infobox-value">Supreme Deity</span>
+                    </div>
+                </div>
+
+                <div class="infobox-section" contenteditable="false">
+                    <div class="infobox-header">Aliases</div>
+                    <div class="aliases-list">
+                        God of Light<br>
+                        Owner of Light<br>
+                        Black Snake<br>
+                        Devil<br>
+                        Amitayus Buddha&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; baderso (Past Life)<br>
+                        Most Supreme who Illuminates Dawn, Wielder of Seals, Ruler of Brightness, Truth Embracing
+                        Dao&nbsp;<span style="font-size: 0.85rem;">&nbsp;Embodying Black Heaven Radiance Supreme Deity
+                            (太上開曉執符御明含真體道玄天光明上帝)</span></div>
+                </div>
+            </aside>
+
+            <!-- Comments Section -->
+            <div id="comments-section">
+                <div class="comments-wrapper">
+                    <div class="comments-header">
+                        <h3 class="comments-title" contenteditable="false">
+                            <ion-icon name="chatbubbles-outline" role="img" class="md hydrated"></ion-icon>
+                            Discussion <span id="commentCount">(0)</span>
+                        </h3>
+                        <div class="sort-controls">
+                            <button class="sort-btn active" data-sort="newest" fdprocessedid="4bokz6">Newest</button>
+                            <button class="sort-btn" data-sort="oldest" fdprocessedid="g635pn">Oldest</button>
+                            <button class="sort-btn" data-sort="top" fdprocessedid="kqe9gf">Top</button>
+                        </div>
+                    </div>
+
+
+                    <div class="comment-input-area" id="mainInputArea">
+                        <div class="user-badge"><img
+                                src="https://cdn.discordapp.com/avatars/1021410672803844129/2d6dea378cdd7c3567724cb2c759388d.png"
+                                class="user-avatar-img" onerror="this.parentElement.innerHTML='B'"></div>
+                        <div class="input-wrapper">
+                            <div class="reply-indicator" id="replyIndicator">
+                                <ion-icon name="return-down-forward-outline" role="img" class="md hydrated"></ion-icon>
+                                <span>Replying to <strong id="replyingToName"></strong></span>
+                                <button class="cancel-reply" onclick="CommentSystem.cancelReply()">✕</button>
+                            </div>
+                            <textarea id="commentInput" placeholder="Share your thoughts..." rows="2"></textarea>
+                            <div class="input-actions">
+                                <button class="post-btn" id="postCommentBtn" fdprocessedid="wr0dxf">
+                                    <ion-icon name="send-outline" role="img" class="md hydrated"></ion-icon> Post
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div id="commentsList" class="comments-list">
+                        <div class="empty-comments">No comments yet. Be the first to share your thoughts!</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="../../scripts/editor.js"></script>
+    <script src="../../scripts/comments.js"></script>
+    <script src="../../scripts/main.js"></script>
+    <script defer=""
+        src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015"
+        integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ=="
+        data-cf-beacon="{&quot;version&quot;:&quot;2024.11.0&quot;,&quot;token&quot;:&quot;f48d0529dd7045b58ef57c5e1566f455&quot;,&quot;r&quot;:1,&quot;server_timing&quot;:{&quot;name&quot;:{&quot;cfCacheStatus&quot;:true,&quot;cfEdge&quot;:true,&quot;cfExtPri&quot;:true,&quot;cfL4&quot;:true,&quot;cfOrigin&quot;:true,&quot;cfSpeedBrain&quot;:true},&quot;location_startswith&quot;:null}}"
+        crossorigin="anonymous"></script>
+
+
+
+
+
+    <style>
+        #adminContextMenu {
+            display: none;
+            position: fixed;
+            z-index: 100000;
+            background: linear-gradient(135deg, #1a1a24 0%, #12121a 100%);
+            border: 1px solid rgba(139, 92, 246, 0.4);
+            border-radius: 12px;
+            padding: 8px 0;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.05) inset;
+            min-width: 220px;
+            max-height: 80vh;
+            overflow-y: auto;
+            backdrop-filter: blur(20px);
+        }
+
+        .context-header {
+            padding: 10px 15px;
+            color: #8B5CF6;
+            font-weight: 600;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 5px;
+        }
+
+        .context-section-title {
+            padding: 6px 15px;
+            color: #888;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .context-divider {
+            height: 1px;
+            background: rgba(255, 255, 255, 0.1);
+            margin: 5px 10px;
+        }
+
+        .context-item {
+            padding: 10px 15px;
+            cursor: pointer;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.2s;
+            font-size: 0.9rem;
+        }
+
+        .context-item:hover {
+            background: rgba(139, 92, 246, 0.2);
+            color: #A78BFA;
+        }
+
+        .context-item ion-icon {
+            font-size: 1.1rem;
+        }
+
+        .context-danger {
+            color: #f87171 !important;
+        }
+
+        .context-danger:hover {
+            background: rgba(248, 113, 113, 0.2) !important;
+            color: #fca5a5 !important;
+        }
+
+        .context-success {
+            color: #4ade80 !important;
+        }
+
+        .context-success:hover {
+            background: rgba(74, 222, 128, 0.2) !important;
+            color: #86efac !important;
+        }
+    </style>
+    <div id="torrent-scanner-popup" style="display: none;"></div>
+
+
+
+
+
+
+
+
+    <style>
+        .admin-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 10001;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .admin-modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, #1a1a24 0%, #12121a 100%);
+            padding: 2rem;
+            border-radius: 16px;
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            width: 420px;
+            max-width: 90%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-content h3 {
+            margin: 0 0 1.5rem 0;
+            color: #fff;
+            font-size: 1.3rem;
+        }
+
+        .form-field {
+            margin-bottom: 1rem;
+        }
+
+        .form-field label {
+            display: block;
+            color: #aaa;
+            margin-bottom: 0.5rem;
+            font-size: 0.85rem;
+        }
+
+        .form-field input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: #fff;
+            font-size: 0.95rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .form-field input:focus {
+            border-color: rgba(139, 92, 246, 0.5);
+        }
+
+        .form-field input[readonly] {
+            color: #888;
+        }
+
+        .modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .btn-secondary {
+            padding: 0.6rem 1.2rem;
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #fff;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .btn-primary {
+            padding: 0.6rem 1.5rem;
+            background: linear-gradient(135deg, #8B5CF6, #6D28D9);
+            border: none;
+            color: #fff;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.4);
+        }
+    </style>
+    <span id="PING_IFRAME_FORM_DETECTION" style="display: none;"></span>
+</body>
+
+</html>

@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shi Ho | Regressor's Tale of Cultivation Wiki</title>
+    <link rel="stylesheet" href="../../styles/main.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap"
+        rel="stylesheet">
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <style>
+        /* Shi Ho Theme Override - Ethereal White/Frost Theme */
+        .character-theme-shi-ho {
+            --accent-primary: #a5d8ff;
+            /* Light blue */
+            --accent-secondary: #74c0fc;
+            /* Sky blue */
+            --text-highlight: #e7f5ff;
+            /* Ice white */
+            background: #0a0c10 !important;
+        }
+
+        /* Hero Background */
+        .character-theme-shi-ho .hero {
+            min-height: 60vh;
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.4) 0%, #0a0c10 100%),
+                url('../../assets/images/shi_ho_fox.png') center top/cover no-repeat;
+        }
+
+        /* Title Gradient */
+        .character-theme-shi-ho .hero-title {
+            background: linear-gradient(135deg, #e7f5ff, #a5d8ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: drop-shadow(0 0 15px rgba(165, 216, 255, 0.4));
+        }
+
+        /* Sidebar Theme */
+        .character-theme-shi-ho .infobox-title {
+            background: linear-gradient(135deg, #e7f5ff 0%, #a5d8ff 50%, #e7f5ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: drop-shadow(0 2px 4px rgba(165, 216, 255, 0.3));
+            animation: shimmer-frost 3s ease-in-out infinite;
+        }
+
+        .character-theme-shi-ho .character-sidebar {
+            background: rgba(10, 15, 20, 0.95);
+            border: 1px solid rgba(165, 216, 255, 0.3);
+            box-shadow: 0 4px 20px rgba(116, 192, 252, 0.2);
+        }
+
+        .character-theme-shi-ho .infobox-header {
+            background: rgba(165, 216, 255, 0.15);
+            color: #a5d8ff;
+            border-left: 3px solid #74c0fc;
+        }
+
+        .character-theme-shi-ho .character-quote {
+            border-left-color: #a5d8ff;
+            background: linear-gradient(90deg, rgba(165, 216, 255, 0.1), transparent);
+            color: #e7f5ff;
+            font-style: italic;
+        }
+
+        .character-theme-shi-ho .section-title {
+            color: #a5d8ff;
+            border-bottom-color: rgba(165, 216, 255, 0.3);
+        }
+
+        @keyframes shimmer-frost {
+
+            0%,
+            100% {
+                filter: drop-shadow(0 0 10px rgba(165, 216, 255, 0.4));
+            }
+
+            50% {
+                filter: drop-shadow(0 0 20px rgba(231, 245, 255, 0.6));
+            }
+        }
+    </style>
+</head>
+
+<body class="character-theme-shi-ho">
+
+    <nav class="nav" style="background: rgba(10, 12, 16, 0.95); box-shadow: rgba(0, 0, 0, 0.4) 0px 4px 20px;">
+        <div class="nav-container">
+            <a href="../../index.html" class="nav-logo">
+                <div class="nav-logo-icon">R</div>
+                RToC Wiki
+            </a>
+            <ul class="nav-links">
+                <li><a href="../../index.html" class="nav-link">Home</a></li>
+                <li><a href="../characters.html" class="nav-link"
+                        style="color: #ffffff; background: rgba(165, 216, 255, 0.2);">Characters</a></li>
+                <li><a href="../concepts.html" class="nav-link">Concepts</a></li>
+                <li><a href="../plot.html" class="nav-link">Plot</a></li>
+                <li><a href="../cultivation.html" class="nav-link">Cultivation</a></li>
+                <li><a href="../locations.html" class="nav-link">Locations</a></li>
+            </ul>
+            <div class="nav-search">
+                <ion-icon name="search-outline" class="nav-search-icon"></ion-icon>
+                <input type="text" placeholder="Search the wiki...">
+            </div>
+            <button class="login-btn">Log In</button>
+        </div>
+    </nav>
+
+    <!-- Login Modal -->
+    <div class="modal-overlay">
+        <div class="login-modal">
+            <div class="modal-header">
+                <button class="modal-close"><ion-icon name="close-outline"></ion-icon></button>
+                <h2 class="modal-title">Welcome Back</h2>
+                <p class="modal-subtitle">Log in to the RToC Wiki Community</p>
+            </div>
+
+            <div class="social-login">
+                <button class="social-btn discord">
+                    <ion-icon name="logo-discord"></ion-icon>
+                    Continue with Discord
+                </button>
+                <button class="social-btn google">
+                    <ion-icon name="logo-google"></ion-icon>
+                    Continue with Google
+                </button>
+            </div>
+
+            <div class="divider">or</div>
+
+            <div class="auth-form">
+                <div class="form-group">
+                    <input type="email" placeholder="Email Address">
+                </div>
+                <div class="form-group">
+                    <input type="password" placeholder="Password">
+                </div>
+                <button class="auth-submit">Log In</button>
+            </div>
+
+            <div class="auth-footer">
+                Don't have an account? <span class="auth-link">Create Account</span>
+            </div>
+        </div>
+    </div>
+
+    <header class="hero" style="min-height: 40vh; padding-bottom: 2rem;">
+        <div class="hero-content">
+            <h1 class="hero-title">Shi Ho</h1>
+            <p class="hero-subtitle">Owner Of the Forest • Master Of Ascension Path</p>
+        </div>
+    </header>
+
+    <main class="section">
+        <div class="character-layout">
+            <!-- Main Content -->
+            <div class="character-main" contenteditable="false">
+                <div class="character-header">
+                    <div class="spoiler character-section-content revealed">
+                        <strong>Shi Ho</strong> (始狐, literally "Beginning Fox") is a powerful fox spirit who served as
+                        the Master of Ascension Path. He is an extremely talented cultivator who reached Core Formation
+                        using only the Heaven and Earth spiritual energy available on Ascension Path.
+                    </div>
+                </div>
+
+                <div class="character-section-content">
+                    <h2 class="section-title">Overview</h2>
+                    <p>Shi Ho made his debut in Chapter 2 of the Manhwa. In the early cycles, he took a single limb from
+                        Seo Eun-hyun and his group as payment for living in Ascension Path. In later regressions, Kim
+                        Young-hoon used him as a "punching bag" to train.</p>
+                    <p style="margin-top: 1rem;">In the 19th Cycle, it was revealed that he ascended to the Ancient
+                        Force Realm with the Buk Hyang Fleet and was in love with Seo Ran. However, Seo Ran couldn't
+                        accept his love because he was a male.</p>
+                    <p style="margin-top: 1rem;">Shi Ho is said to be extremely talented to the point that he reached
+                        Core Formation by just the Heaven and Earth spiritual energy on Ascension Path. He would exact a
+                        price for living in the ascension path from every being.</p>
+                </div>
+
+                <div class="character-section-content">
+                    <h2 class="section-title">Appearance</h2>
+                    <p>Shi Ho is a white-furred fox that lived in Ascension Path. In his fox form, Shi Ho is around a
+                        two-story house tall, with multiple tails and piercing red eyes. He also possesses a humanoid
+                        form with white hair, fox ears, and traditional robes.</p>
+                </div>
+
+                <div class="character-section-content">
+                    <h2 class="section-title">Personality</h2>
+                    <p>He killed those who disrespected him and looked down on the weak with arrogance. As the strongest
+                        on the ascension path, he had never met an equal, until the ascension gate opened.</p>
+                </div>
+
+                <div class="character-section-content">
+                    <h2 class="section-title">Relationships</h2>
+                    <h3>Love Interests</h3>
+                    <ul
+                        style="list-style-type: disc; margin-left: 1.5rem; color: var(--text-secondary); line-height: 1.8;">
+                        <li>Seo Ran (Unrequited)</li>
+                    </ul>
+                    <h3 style="margin-top: 1rem;">Allies</h3>
+                    <ul
+                        style="list-style-type: disc; margin-left: 1.5rem; color: var(--text-secondary); line-height: 1.8;">
+                        <li>Buk Hyang Fleet</li>
+                        <li>Wuji Religious Order</li>
+                    </ul>
+                </div>
+
+                <div class="character-section-content">
+                    <h2 class="section-title">Prowess</h2>
+                    <div class="infobox-row">
+                        <span class="infobox-label">Initial Cultivation</span>
+                        <span class="infobox-value">Core Formation (結丹)</span>
+                    </div>
+                    <div class="infobox-row">
+                        <span class="infobox-label">Peak Cultivation</span>
+                        <span class="infobox-value">Four Axis (四軸)</span>
+                    </div>
+                    <div class="infobox-row">
+                        <span class="infobox-label">Peak Martial Realm</span>
+                        <span class="infobox-value">Five Energies Converging at the Origin (五氣朝元)</span>
+                    </div>
+                </div>
+
+                <div class="character-section-content">
+                    <h2 class="section-title">Trivia</h2>
+                    <ul
+                        style="list-style-type: disc; margin-left: 1.5rem; color: var(--text-secondary); line-height: 1.8;">
+                        <li>Shi Ho (始狐) literally means "start/beginning fox."</li>
+                        <li>Kim Young-hoon nicknamed him "Baduk" and also referred to him as "Gi" (棋).</li>
+                        <li>The Ascenders (The Azure Tiger Saint, Sir Byuk-ho, and The White Ghost Bone Devil) killed
+                            Shi Ho and all the monsters of Ascension Path to make it safe for a decade in the earlier
+                            cycles.</li>
+                    </ul>
+                </div>
+
+                <div class="character-section-content">
+                    <h2 class="section-title">References</h2>
+                    <ul
+                        style="list-style-type: disc; margin-left: 1.5rem; color: var(--text-secondary); line-height: 1.8; font-size: 0.9em;">
+                        <li>Manhwa Chapter 2 - Debut.</li>
+                    </ul>
+                </div>
+
+                <div class="character-section-content"
+                    style="margin-top: 3rem; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 2rem;">
+                    <h2 class="section-title">See Also</h2>
+                    <div
+                        style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem;">
+                        <a href="seo_ran.html" class="nav-link"
+                            style="display: block; background: var(--bg-secondary); padding: 1rem; border-radius: 8px; text-align: center; border: 1px solid rgba(255,255,255,0.1); transition: all 0.2s;">
+                            <div style="font-weight: 600; margin-bottom: 0.5rem; color: var(--text-primary);">Seo Ran
+                            </div>
+                            <div style="font-size: 0.8em; color: var(--text-secondary);">Buk Hyang Fleet</div>
+                        </a>
+                        <a href="../characters.html" class="nav-link"
+                            style="display: block; background: var(--bg-secondary); padding: 1rem; border-radius: 8px; text-align: center; border: 1px solid rgba(255,255,255,0.1); transition: all 0.2s;">
+                            <div style="font-weight: 600; margin-bottom: 0.5rem; color: var(--text-primary);">All
+                                Characters</div>
+                            <div style="font-size: 0.8em; color: var(--text-secondary);">View Full Roster</div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sidebar Infobox -->
+            <aside class="character-sidebar" style="outline-offset: 4px;">
+                <h3 class="infobox-title" contenteditable="false">Shi Ho</h3>
+                <div class="infobox-image" contenteditable="false">
+                    <div class="carousel-container">
+                        <div class="carousel-track">
+                            <img src="../../assets/images/shi_ho_fox.png" alt="Shi Ho (Fox Form)"
+                                class="carousel-img active" data-caption="Shi Ho - Fox Form">
+                            <img src="../../assets/images/shi_ho_human.png" alt="Shi Ho (Human Form)"
+                                class="carousel-img" data-caption="Shi Ho - Human Form">
+                        </div>
+                        <button class="carousel-btn prev"><ion-icon name="chevron-back"></ion-icon></button>
+                        <button class="carousel-btn next"><ion-icon name="chevron-forward"></ion-icon></button>
+                        <div class="carousel-dots">
+                            <span class="dot active" data-index="0"></span>
+                            <span class="dot" data-index="1"></span>
+                        </div>
+                    </div>
+                    <div id="carousel-caption"
+                        style="text-align: center; font-size: 0.8rem; margin-top: 0.5rem; min-height: 1.2em; font-weight: 500;">
+                        Shi Ho - Fox Form</div>
+                </div>
+
+                <div class="infobox-section" contenteditable="false">
+                    <div class="infobox-header">Personal Info</div>
+                    <div class="infobox-row">
+                        <span class="infobox-label">Korean</span>
+                        <span class="infobox-value">始狐</span>
+                    </div>
+                    <div class="infobox-row">
+                        <span class="infobox-label">Aliases</span>
+                        <span class="infobox-value">Baduk, Gi (棋), Owner Of the Forest</span>
+                    </div>
+                    <div class="infobox-row">
+                        <span class="infobox-label">Race</span>
+                        <span class="infobox-value">Fox</span>
+                    </div>
+                    <div class="infobox-row">
+                        <span class="infobox-label">Gender</span>
+                        <span class="infobox-value">Male</span>
+                    </div>
+                </div>
+
+                <div class="infobox-section" contenteditable="false">
+                    <div class="infobox-header">Status</div>
+                    <div class="infobox-row">
+                        <span class="infobox-label">Occupation</span>
+                        <span class="infobox-value">Master Of Ascension Path (Former)</span>
+                    </div>
+                </div>
+
+                <div class="infobox-section" contenteditable="false">
+                    <div class="infobox-header">Cultivation</div>
+                    <div class="infobox-row">
+                        <span class="infobox-label">Initial Level</span>
+                        <span class="infobox-value">Core Formation</span>
+                    </div>
+                    <div class="infobox-row">
+                        <span class="infobox-label">Peak Level</span>
+                        <span class="infobox-value">Four Axis</span>
+                    </div>
+                </div>
+
+                <div class="infobox-section" contenteditable="false">
+                    <div class="infobox-header">Debut</div>
+                    <div class="infobox-row">
+                        <span class="infobox-label">Manhwa</span>
+                        <span class="infobox-value">Chapter 2</span>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    <script src="../../scripts/editor.js"></script>
+    <script src="../../scripts/main.js"></script>
+
+</body>
+
+</html>

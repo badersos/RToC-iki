@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0a0a0f">
+    <title>Immortal Arts (仙術) | Regressor's Tale of Cultivation Wiki</title>
+    <link rel="icon" type="image/jpeg" href="../../assets/images/seo_eun_hyun_cover.jpg">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap"
+        rel="stylesheet">
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <style>
+        .concept-content {
+            max-width: 900px;
+            margin: 0 auto;
+            color: var(--text-secondary);
+        }
+
+        .concept-content h2,
+        .concept-content h3,
+        .concept-content h4 {
+            color: var(--text-primary);
+            margin-top: 3rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 0.5rem;
+        }
+
+        .concept-lede {
+            margin: 1rem 0 2rem;
+            font-size: 1.05rem;
+        }
+
+        .quick-read {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            padding: 1.25rem;
+            background: var(--bg-secondary);
+            border: var(--glass-border);
+            border-radius: 14px;
+            margin: 2rem 0;
+            box-shadow: var(--glow-purple);
+        }
+
+        .quick-read-title {
+            width: 100%;
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            letter-spacing: 0.05em;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .quick-read a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.35rem;
+            padding: 0.75rem 1rem;
+            background: rgba(36, 45, 65, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            color: var(--text-primary);
+            font-weight: 600;
+            letter-spacing: 0.02em;
+            transition: var(--transition-medium);
+        }
+
+        .quick-read a:hover {
+            background: var(--bg-card-hover);
+            color: var(--accent-primary);
+            transform: translateY(-2px);
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .info-card {
+            background: var(--bg-secondary);
+            border: var(--glass-border);
+            border-radius: 12px;
+            padding: 1rem 1.25rem;
+        }
+
+        .info-card h4 {
+            border: none;
+            margin: 0 0 0.5rem;
+            padding: 0;
+        }
+
+        .quote {
+            margin: 1.5rem 0;
+            padding: 1rem 1.25rem;
+            background: rgba(255, 255, 255, 0.03);
+            border-left: 3px solid var(--accent-primary);
+            border-radius: 10px;
+            color: var(--text-primary);
+        }
+
+        .reference-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0 2rem;
+            background: var(--bg-secondary);
+            border: var(--glass-border);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .reference-table th,
+        .reference-table td {
+            padding: 0.9rem 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            text-align: left;
+        }
+
+        .reference-table th {
+            color: var(--text-primary);
+            background: rgba(255, 255, 255, 0.04);
+            font-weight: 700;
+        }
+
+        .reference-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            padding: 0.25rem 0.75rem;
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 999px;
+            font-size: 0.85rem;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .ref-list {
+            list-style: decimal;
+            padding-left: 1.25rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        .small-label {
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        @media (max-width: 640px) {
+            .quick-read {
+                padding: 1rem;
+            }
+
+            .quick-read a {
+                width: 100%;
+                justify-content: flex-start;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="nav">
+        <div class="nav-container">
+            <a href="../../index.html" class="nav-logo">
+                <img src="../../assets/logo_character.png" alt="RToC" class="nav-logo-img"
+                    style="width:36px; height:36px; border-radius:8px; object-fit:cover;">
+                RToC Wiki
+            </a>
+            <ul class="nav-links">
+                <li><a href="../../index.html" class="nav-link">Home</a></li>
+                <li><a href="../characters.html" class="nav-link">Characters</a></li>
+                <li><a href="../concepts.html" class="nav-link"
+                        style="color: var(--text-primary); background: rgba(139, 92, 246, 0.1);">Concepts</a></li>
+                <li><a href="../plot.html" class="nav-link">Plot</a></li>
+                <li><a href="../cultivation.html" class="nav-link">Cultivation</a></li>
+                <li><a href="../martial_arts.html" class="nav-link">Martial Arts</a></li>
+                <li><a href="../locations.html" class="nav-link">Locations</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <header class="hero" style="min-height: 45vh; padding-bottom: 2rem; background-position: center 20%;">
+        <div class="hero-content">
+            <div class="hero-badge">Concepts · Immortal Authority</div>
+            <h1 class="hero-title">Immortal Arts (仙術)</h1>
+            <p class="hero-subtitle">Authority to twist the principles of the heavens using only the heart.</p>
+        </div>
+    </header>
+
+    <main class="section">
+        <div class="concept-content">
+            <p class="concept-lede">Immortal Arts (仙術) is the authority to alter the laws of the world purely with the
+                heart—without Qi,
+                spiritual power,
+                or cultivation. Anyone can wield this authority if they repentantly enlighten themselves.</p>
+            <div class="quick-read">
+                <div class="quick-read-title">Quick Read</div><a href="#overview">Overview</a><a
+                    href="#substages">Substages</a><a href="#uses">Uses</a><a href="#history">History</a><a
+                    href="#known-arts">Known Immortal Arts</a><a href="#mantras">Mantras</a><a
+                    href="#references">References</a>
+            </div>
+            <section id="overview">
+                <h2>Overview</h2>
+                <div class="info-grid">
+                    <div class="info-card">
+                        <div class="small-label">Nature</div>
+                        <p>Heart-driven authority to bend heavenly principles without external energy.</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="small-label">Accessibility</div>
+                        <p>Inherent to all beings;
+                            mastery requires sincere enlightenment and repentance.</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="small-label">Relation to Cultivation</div>
+                        <p>Cultivation spells often approximate Immortal Arts;
+                            the more peerless a spell,
+                            the closer it approaches true Immortal Arts.</p>
+                    </div>
+                </div>
+            </section>
+            <section id="substages">
+                <h2>Substages of Immortal Arts</h2>
+                <p>Before Immortal Cultivation was systemized,
+                    Immortal Arts followed three realms that mirror the Minor,
+                    Middle,
+                    and Greater Boundaries of Immortal Cultivation:</p>
+                <ul>
+                    <li>The realm of clearing the heart.</li>
+                    <li>The realm of laying the basics of Immortal Arts through the heart.</li>
+                    <li>The realm of fully using Immortal Arts and reaching the heavens.</li>
+                </ul>
+                <h3>Clearing the heart</h3>
+                <p>Corresponds to the Minor Boundary of Immortal Cultivation.</p>
+                <h3>Basics of Immortal Arts</h3>
+                <p>The basics are divided into four substages,
+                    each paralleling cultivation formulas:</p>
+                <ul>
+                    <li><strong>Various Omens (庶徵)</strong>— Rain,
+                        Sun,
+                        Heat,
+                        Cold,
+                        Wind,
+                        Time — mirrors the Integration formula.</li>
+                    <li><strong>Examination of Doubts (稽疑)</strong>— divination via attraction forces — mirrors the Star
+                        Shattering formula.</li>
+                    <li><strong>Five Epochs,
+                            Three Spirits (五紀三靈)</strong>— reads constellations to gather spirits — mirrors the Sacred
+                        Vessel formula.</li>
+                    <li><strong>Eight Paths,
+                            One Extreme (八道一極)</strong>— unites the Eight Paths to reach the Nine Palaces and enter true
+                        Immortal Arts — mirrors the Entering Nirvana formula.</li>
+                </ul>
+                <p>After mastering these,
+                    focusing the Five Affairs (五事) on the Five Elements and enlightening to the Ten Heavenly Stems forms
+                    the final stage (per Cheongmun Ryeong).</p>
+                <h4>Real life inspiration</h4>
+                <p>The basics reference the Nine Divisions (九疇, jiuchou) of the Hongfan (Great Plan) in Confucian
+                    literature. The corresponding mapping is shown below.</p>
+                <table class="reference-table">
+                    <thead>
+                        <tr>
+                            <th>Immortal Cultivation Realm</th>
+                            <th>RToC Basics of Immortal Arts</th>
+                            <th>Hongfan (洪範) Division</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Earth Axis (地軸)</td>
+                            <td>Five Blessings (五福)</td>
+                            <td>Five Sources of Happiness (五福)</td>
+                        </tr>
+                        <tr>
+                            <td>Six Extremes (六極)</td>
+                            <td>Awing Use of the Six Occasions of Suffering (六極)</td>
+                            <td>Six Occasions of Suffering (六極)</td>
+                        </tr>
+                        <tr>
+                            <td>Five Elements (五行)</td>
+                            <td>Knowledge of the Nature of the Five Agents</td>
+                            <td>Five Agents (五行)</td>
+                        </tr>
+                        <tr>
+                            <td>Integration (合體)</td>
+                            <td>Various Omens (庶徵)</td>
+                            <td>Various Verifications in Divination (庶徵)</td>
+                        </tr>
+                        <tr>
+                            <td>Star Shattering (碎星)</td>
+                            <td>Examination of Doubts (稽疑)</td>
+                            <td>Examination of Doubts (稽疑)</td>
+                        </tr>
+                        <tr>
+                            <td>Sacred Vessel (星槃)</td>
+                            <td>Five Epochs,
+                                Three Spirits (五紀三靈)</td>
+                            <td>Five Dividers of Time (五紀) · Three Virtues (三德)</td>
+                        </tr>
+                        <tr>
+                            <td>Eight Paths,
+                                One Extreme (八道一極)</td>
+                            <td>Eight Paths,
+                                One Extreme</td>
+                            <td>Eight Objects of Government (八政)</td>
+                        </tr>
+                        <tr>
+                            <td>Entering Nirvana (開涅)</td>
+                            <td>Royal Perfection (皇極)</td>
+                            <td>Royal Perfection (皇極)</td>
+                        </tr>
+                        <tr>
+                            <td>Unknown / Great Boundary</td>
+                            <td>Five Affairs (五事)</td>
+                            <td>Five Personal Matters (五事)</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <h3>Reaching the heavens</h3>
+                <p>Corresponds to the Greater Boundary of Immortal Cultivation.</p>
+            </section>
+            <section id="uses">
+                <h2>Uses of Immortal Arts</h2>
+                <p>Immortal Arts can manipulate the Plane of Fate or the hearts of many. Cultivation spells are often
+                    paths that approximate true Immortal Arts;
+                    the more peerless the spell,
+                    the closer it is to the real authority.</p>
+                <div class="quote">
+                    <p>"Immortal Arts are something anyone can use. It is an authority everyone wields from the moment
+                        they are born... All life in this world carries the Immortal Art called life." </p>
+                    <div class="small-label">— Cheongmun Ryeong,
+                        Chapter 465</div>
+                </div>
+            </section>
+            <section id="history">
+                <h2>History</h2>
+                <p>Immortal Cultivation originally had only three realms: clearing the heart,
+                    laying the basics through the heart,
+                    and reaching the heavens. Later,
+                    realms split into the modern cultivation ladder,
+                    shifting the focus from understanding the heart to pursuing power. Cultivation itself is described
+                    as an Immortal Art that twisted the original process.</p>
+                <div class="quote">
+                    <p>"Immortal Cultivation isn't the process of learning Immortal Arts. Immortal Cultivation itself
+                        is... someone's Immortal Art." </p>
+                    <div class="small-label">— Chapter 464</div>
+                </div>
+            </section>
+            <section id="known-arts">
+                <h2>Known Immortal Arts</h2>
+                <h3>Yeon's Play</h3>
+                <p>Mad Lord's Immortal Art inspired by the Serving Command Palace; realized as the Wonderfully
+                    Mysterious Fortress to recreate his first dance with Wol Ha-eun using hundreds of millions of puppet
+                    souls. Contains the power of Vast Cold Heavenly King.</p>
+
+                <h3>Vast Cold Beautiful Agreement (Vast Cold Oath)</h3>
+                <p>Binds a couple with a fate to die together;
+                    activated by hand seal and kiss,
+                    requires reciprocity or can be undone via a witnessed return kiss or by the caster. Kim Yeon
+                    reactivated it in the 15th cycle through the Wonderfully Mysterious Innate Heart Canon.</p>
+                <h3>Extinguishing Divine Tribulating Heavens Technique</h3>
+                <p>Yang Su-jin's ritual to obscure fate via calamity, combining 9000 Golden Divine Heavenly Thunder Sect
+                    methods and reciting the 30 articles of the Universal Declaration of Human Rights. Four regulations
+                    include secrecy from the Heavenly Lightning Banner and avoiding its use while holding the banner.
+                </p>
+
+                <h3>Purple Soul Filling the Heavens</h3>
+                <p>Inheritance-themed;
+                    inert until merged with another inheritance. Core formulas: <br>—Purple is the most suitable color
+                    to hide in the darkness. <br>—Carry on life in the darkness where light can never reach. <br>—By
+                    continuing the inherited life,
+                    we shall all finally reach liberation.</p>
+                <h3>Tainted Soul Filling the Heavens</h3>
+                <p>Corrupted form of Purple Soul;
+                    formed when fragments merged in the Head Realm,
+                    creating Seo Hweol as an innate Sacred Vessel. Disassembles consciousness into configurations,
+                    enabling implantation or brainwashing.</p>
+                <h3>Flower Soul Filling the Heavens</h3>
+                <p>Seo Eun-hyun inherits Ryeo Hwa's memories merged with Purple Soul; bestows stored hearts from the
+                    Canvas of Myriad Forms and Connections to others.</p>
+
+                <h3>Crystal Glass to Treading Sea (玻瓈蹈海成)</h3>
+                <p>Seo Eun-hyun's incomplete Innate True Method, merging all learned techniques into the Glass True
+                    Fire. Weaknesses: past illusions ignore its pain; heart-based attacks halve its power and complete
+                    heart-only Immortal Arts can shatter it; salt disperses its formula (e.g., Salt Sea Flooding the
+                    Heavens Esoteric Method).</p>
+                <p class="small-label">Forms include:</p>
+                <ul>
+                    <li><strong>Twin Flowers Reaching the Heavens</strong>(Glass True Fire born of memories of
+                        suffering).</li>
+                    <li><strong>Sword Sea Star Body</strong>(Glass True Fire swords paired with Colorless Glass Sword).
+                    </li>
+                    <li><strong>Heavenly Shatter Star Body</strong>(body refinement; glass wings).</li>
+                    <li><strong>Avīci Hell Star Body</strong>&amp;
+                        <strong>Ghost-Face Killing Heavens Furnace</strong>(Glass True Fire turns Black Flame;
+                        curse/ghost optimized).
+                    </li>
+                    <li><strong>Mysterious Bizarre Star Body</strong>(consciousness strands become Glass True Fire).
+                    </li>
+                    <li><strong>Wind-Painting Star Body</strong>(manipulates interstellar wind with attraction force).
+                    </li>
+                </ul>
+            </section>
+            <section id="mantras">
+                <h2>Mantras</h2>
+                <p>Mantras are woven collections of Immortal Arts,
+                    sometimes numbering in the thousands. Powerful Mantras can have hearts of their own,
+                    acting as innate True Immortals capable of corrupting or overpowering unprepared users.</p>
+            </section>
+            <section id="references">
+                <h2>References</h2>
+                <ol class="ref-list">
+                    <li>Chapters 463–465</li>
+                    <li><a href="http://www.chinaknowledge.de/Literature/Classics/hongfan.html" target="_blank"
+                            rel="noopener">Hongfan (Great Plan)</a></li>
+                    <li>Chapters 147–233,
+                        298,
+                        438,
+                        455,
+                        466,
+                        475,
+                        480,
+                        481,
+                        497,
+                        500</li>
+                    <li>Quotes from Cheongmun Ryeong,
+                        Mad Lord,
+                        Yang Su-jin,
+                        Gyu-ryeon,
+                        Gyu-baek,
+                        Seo Hweol,
+                        Yuk Jeung,
+                        Yuk Rin</li>
+                </ol>
+            </section>
+        </div>
+    </main>
+    <script src="../../scripts/main.js"></script>
+    <script src="/scripts/editor.js"></script>
+</body>
+
+</html>

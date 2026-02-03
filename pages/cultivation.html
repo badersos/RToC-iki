@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0a0a0f">
+    <title>Cultivation | Regressor's Tale of Cultivation Wiki</title>
+    <link rel="icon" type="image/jpeg" href="../assets/images/seo_eun_hyun_cover.jpg">
+    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&family=Noto+Sans+KR:wght@400;500;700&display=swap"
+        rel="stylesheet">
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <style>
+        .cultivation-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            color: var(--text-secondary);
+            font-size: 1.05rem;
+        }
+
+        .cultivation-content h2 {
+            color: var(--text-primary);
+            margin-top: 3rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid rgba(139, 92, 246, 0.3);
+        }
+
+        .cultivation-content h3 {
+            color: var(--accent-secondary);
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .cultivation-table-container {
+            overflow-x: auto;
+            margin: 2rem 0;
+            background: rgba(26, 31, 46, 0.5);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .cultivation-table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 800px;
+        }
+
+        .cultivation-table th,
+        .cultivation-table td {
+            padding: 1rem 1.5rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .cultivation-table th {
+            background: rgba(139, 92, 246, 0.1);
+            color: var(--accent-primary);
+            font-weight: 700;
+            font-family: var(--font-display);
+        }
+
+        .cultivation-table tr:hover {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .cultivation-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .boundary-header {
+            background: rgba(255, 255, 255, 0.03);
+            font-weight: 700;
+            color: var(--text-primary);
+            text-align: center;
+        }
+
+        .wiki-quote {
+            border-left: 3px solid var(--accent-primary);
+            padding: 1rem 1.5rem;
+            background: rgba(139, 92, 246, 0.05);
+            font-style: italic;
+            margin: 1.5rem 0;
+            color: var(--text-primary);
+        }
+
+        .wiki-list {
+            margin-left: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .wiki-list li {
+            margin-bottom: 0.5rem;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="nav">
+        <div class="nav-container">
+            <a href="../index.html" class="nav-logo">
+                <img src="../assets/logo_character.png" alt="RToC" class="nav-logo-img"
+                    style="width:36px; height:36px; border-radius:8px; object-fit:cover;">
+                RToC Wiki
+            </a>
+            <ul class="nav-links">
+                <li><a href="../index.html" class="nav-link">Home</a></li>
+                <li><a href="characters.html" class="nav-link">Characters</a></li>
+                <li><a href="concepts.html" class="nav-link">Concepts</a></li>
+                <li><a href="plot.html" class="nav-link">Plot</a></li>
+                <li><a href="cultivation.html" class="nav-link"
+                        style="color: var(--text-primary); background: rgba(139, 92, 246, 0.1);">Cultivation</a></li>
+                <li><a href="martial_arts.html" class="nav-link">Martial Arts</a></li>
+                <li><a href="locations.html" class="nav-link">Locations</a></li>
+            </ul>
+            <div class="nav-search">
+                <ion-icon name="search-outline" class="nav-search-icon"></ion-icon>
+                <input type="text" placeholder="Search the wiki...">
+            </div>
+            <button class="login-btn">Log In</button>
+        </div>
+    </nav>
+
+    <header class="hero" style="min-height: 40vh; padding-bottom: 2rem;">
+        <div class="hero-content">
+            <h1 class="hero-title">Cultivation Methods</h1>
+            <p class="hero-subtitle">The Dao of Immortal Cultivation</p>
+        </div>
+    </header>
+
+    <main class="section">
+        <div class="cultivation-content">
+            <p><strong>Cultivation</strong>, or the Dao of Immortal Cultivation, is the process of elevating oneself
+                from a
+                mortal to an Immortal. As one progresses through the stages of Cultivation, they gain lifespan,
+                regenerative
+                abilities, and, for Heaven/Earth practitioners, come to resemble stars and eventually effect Fate
+                itself.</p>
+
+            <p style="margin-top: 1rem;">Cultivators themselves bring change to the Heavenly Mechanism, and since
+                ancient times, cultivators have
+                also been called Heaven-Defiers.</p>
+
+            <p style="margin-top: 1rem;">The Cultivation is a great Immortal Art created by the Future King.</p>
+
+            <h2 id="realms">Cultivation Realms</h2>
+            <p>The cultivation realms can be divided into the <strong>Three Great Boundaries Of Cultivation</strong>
+                (수선삼계/修仙三界):
+                <strong>Minor Boundary</strong> (소경계/小境界), <strong>Middle Boundary</strong> (중경계/中境界), and
+                <strong>Great Boundary</strong> (대경계/大境界). At the Minor Boundary, one begins to break free of their
+                mortality. At the Middle Boundary, one wields attraction forces. At the Great Boundary, one becomes a
+                True
+                Immortal.
+            </p>
+
+            <p style="margin-top: 1rem;">Star Shattering is the stage where one begins to step into divinity.</p>
+
+            <div class="cultivation-table-container">
+                <table class="cultivation-table">
+                    <thead>
+                        <tr>
+                            <th colspan="3">Heaven & Earth Paths</th>
+                            <th colspan="2">Martial Realms / Manifestation</th>
+                        </tr>
+                        <tr>
+                            <th>Order</th>
+                            <th>Realm Name</th>
+                            <th>Lifespan</th>
+                            <th>Realm Name</th>
+                            <th>Lifespan</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Minor Boundary -->
+                        <tr>
+                            <td colspan="5" class="boundary-header">Minor Boundary (소경계/小境界)</td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td><a href="cultivation/qi_gathering.html"
+                                    style="color:var(--text-primary); text-decoration: underline;">Qi Gathering
+                                    (단수/丹修)</a></td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td><a href="cultivation/qi_refining.html"
+                                    style="color:var(--text-primary); text-decoration: underline;">Qi Refining
+                                    (연기/練氣)</a><br><span style="font-size:0.9em; opacity:0.7">(1st-2nd star)</span>
+                            </td>
+                            <td>-</td>
+                            <td><a href="martial_arts/peak_master.html"
+                                    style="color:var(--text-primary); text-decoration: underline;">Peak Master
+                                    (절정/絕頂)</a></td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td><a href="cultivation/qi_refining.html"
+                                    style="color:var(--text-primary); text-decoration: underline;">Qi
+                                    Refining</a><br><span style="font-size:0.9em; opacity:0.7">(3rd-6th star)</span>
+                            </td>
+                            <td>-</td>
+                            <td><a href="martial_arts/three_flowers_gather_at_the_summit.html"
+                                    style="color:var(--text-primary); text-decoration: underline;">Three Flowers Gather
+                                    at the Summit (삼화취정/三花聚頂)</a></td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td><a href="cultivation/qi_refining.html"
+                                    style="color:var(--text-primary); text-decoration: underline;">Qi
+                                    Refining</a><br><span style="font-size:0.9em; opacity:0.7">(7th-14th star)</span>
+                            </td>
+                            <td>-</td>
+                            <td><a href="martial_arts/five_energies_converging_at_the_origin.html"
+                                    style="color:var(--text-primary); text-decoration: underline;">Five Energies
+                                    Converging at the Origin (오기조원/五氣朝元)</a></td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td><a href="cultivation/qi_building.html"
+                                    style="color:var(--text-primary); text-decoration: underline;">Qi Building
+                                    (축기/築氣)</a><br><span style="font-size:0.9em; opacity:0.7">(Early)</span></td>
+                            <td>300 Years</td>
+                            <td>-</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td><a href="cultivation/qi_building.html"
+                                    style="color:var(--text-primary); text-decoration: underline;">Qi
+                                    Building</a><br><span style="font-size:0.9em; opacity:0.7">(Late to Grand
+                                    Perfection)</span></td>
+                            <td>300 Years</td>
+                            <td><a href="martial_arts/ultimate_pinnacle.html"
+                                    style="color:var(--text-primary); text-decoration: underline;">Ultimate Pinnacle
+                                    (등봉조극/登峰造極)</a></td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td><a href="cultivation/core_formation.html"
+                                    style="color:var(--text-primary); text-decoration: underline;">Core Formation
+                                    (결단/結丹)</a></td>
+                            <td>600 Years</td>
+                            <td><a href="martial_arts/first_stage_of_manifestation.html"
+                                    style="color:var(--text-primary); text-decoration: underline;">First Stage of
+                                    Manifestation<br>Entering Heavens Beyond the Path (월도입천/越道入天)</a></td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td><a href="cultivation/nascent_soul.html"
+                                    style="color:var(--text-primary); text-decoration: underline;">Nascent Soul
+                                    (원영/元靈)</a></td>
+                            <td>1,200 Years</td>
+                            <td><a href="martial_arts/second_stage_of_manifestation.html"
+                                    style="color:var(--text-primary); text-decoration: underline;">Second Stage of
+                                    Manifestation<br>Treading Heaven Beyond The Path (월도답천/越道踏天)</a></td>
+                            <td>Extend Life by 49 Years</td>
+                        </tr>
+                        <tr>
+                            <td>6</td>
+                            <td><a href="cultivation/heavenly_being.html"
+                                    style="color:var(--text-primary); text-decoration: underline;">Heavenly Being
+                                    (천인/天人)</a></td>
+                            <td>2,400 Years</td>
+                            <td><a href="martial_arts/third_stage_of_manifestation.html"
+                                    style="color:var(--text-primary); text-decoration: underline;">Third Stage of
+                                    Manifestation<br>Shattering Heavens Beyond the Path (월도쇄천/越道碎天)</a></td>
+                            <td>343 Years</td>
+                        </tr>
+
+                        <!-- Middle Boundary -->
+                        <tr>
+                            <td colspan="5" class="boundary-header">Middle Boundary (중경계/中境界)</td>
+                        </tr>
+                        <tr>
+                            <td>7</td>
+                            <td><a href="cultivation/four_axis.html"
+                                    style="color:var(--text-primary); text-decoration: underline;">Four-Axis (사축/四軸)</a>
+                            </td>
+                            <td>50,000 Years</td>
+                            <td><a href="martial_arts/first_step_before_the_throne.html"
+                                    style="color:var(--text-primary); text-decoration: underline;">First Step Before The
+                                    Throne</a></td>
+                            <td>At least 10,000 Years</td>
+                        </tr>
+                        <tr>
+                            <td>8</td>
+                            <td><a href="cultivation/integration.html"
+                                    style="color:var(--text-primary); text-decoration: underline;">Integration
+                                    (합체/合體)</a></td>
+                            <td>100,000 Years</td>
+                            <td>-</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td>9</td>
+                            <td><a href="cultivation/star_shattering.html"
+                                    style="color:var(--text-primary); text-decoration: underline;">Star Shattering
+                                    (쇄성/碎星)</a></td>
+                            <td>10 million Years</td>
+                            <td><a href="martial_arts/second_step_before_the_throne.html"
+                                    style="color:var(--text-primary); text-decoration: underline;">Second Step Before
+                                    The Throne</a></td>
+                            <td>At least 1,000,000 Years</td>
+                        </tr>
+                        <tr>
+                            <td>10</td>
+                            <td><a href="cultivation/sacred_vessel.html"
+                                    style="color:var(--text-primary); text-decoration: underline;">Sacred Vessel
+                                    (성반/星槃)</a></td>
+                            <td>10 billion Years</td>
+                            <td>-</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td>11</td>
+                            <td><a href="cultivation/entering_nirvana.html"
+                                    style="color:var(--text-primary); text-decoration: underline;">Entering Nirvana
+                                    (개열/開涅)</a></td>
+                            <td>Meaningless</td>
+                            <td><a href="martial_arts/third_step_before_the_throne.html"
+                                    style="color:var(--text-primary); text-decoration: underline;">Third Step Before The
+                                    Throne</a></td>
+                            <td>Unknown</td>
+                        </tr>
+
+                        <!-- Great Boundary -->
+                        <tr>
+                            <td colspan="5" class="boundary-header">Great Boundary (대경계/大境界)</td>
+                        </tr>
+                        <tr>
+                            <td>12</td>
+                            <td><a href="cultivation/vestige_liberation_immortal.html"
+                                    style="color:var(--text-primary); text-decoration: underline;">Vestige Liberation
+                                    Immortal (尸解仙)</a></td>
+                            <td>Immortal</td>
+                            <td><a href="martial_arts/third_step_before_the_throne.html"
+                                    style="color:var(--text-primary); text-decoration: underline;">Third Step Before The
+                                    Throne</a></td>
+                            <td>Unknown</td>
+                        </tr>
+                        <tr>
+                            <td>13</td>
+                            <td><a href="cultivation/upper_immortal.html"
+                                    style="color:var(--text-primary); text-decoration: underline;">Upper Immortal
+                                    (上仙)</a></td>
+                            <td>Unknown</td>
+                            <td>-</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td>14</td>
+                            <td><a href="cultivation/great_net_immortal.html"
+                                    style="color:var(--text-primary); text-decoration: underline;">Great Net Immortal
+                                    (大羅)</a></td>
+                            <td>Unknown</td>
+                            <td>-</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td>15</td>
+                            <td><a href="cultivation/immortal_lord.html"
+                                    style="color:var(--text-primary); text-decoration: underline;">Immortal Lord</a>
+                            </td>
+                            <td>Unknown</td>
+                            <td>-</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td>16</td>
+                            <td><a href="cultivation/supreme_deity.html"
+                                    style="color:var(--text-primary); text-decoration: underline;">Supreme Deity</a>
+                            </td>
+                            <td>Unknown</td>
+                            <td><a href="martial_arts/martial_pinnacle.html"
+                                    style="color:var(--text-primary); text-decoration: underline;">Martial Pinnacle
+                                    (武極)<br>Seventh Stage of Manifestation</a></td>
+                            <td>Unknown</td>
+                        </tr>
+                        <tr>
+                            <td>17</td>
+                            <td><a href="cultivation/heavenly_venerable.html"
+                                    style="color:var(--text-primary); text-decoration: underline;">Heavenly
+                                    Venerable</a></td>
+                            <td>Unknown</td>
+                            <td>-</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td>18</td>
+                            <td><a href="cultivation/true_emperor.html"
+                                    style="color:var(--text-primary); text-decoration: underline;">True Emperor</a></td>
+                            <td>No equivalent</td>
+                            <td>-</td>
+                            <td>-</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h2 id="overview">Overview</h2>
+            <p>Cultivation in the Three Thousand Worlds can be grouped into three categories: Heaven Path, Earth Path,
+                and
+                Heart Path. The first two are also known as the Immortal Family Methods which share the same cultivation
+                stages found above. In contrast, the Heart Path has its own distinct realms. Certain martial arts/Heart
+                Path
+                realms have their equivalent among the Heaven/Earth Path realms; these comparisons are shown in the
+                table
+                above.</p>
+
+            <h3>Heaven Path</h3>
+            <p>The Heaven Path is practised by the Heaven Tribe, including the Human Race, whose enlightenments are
+                based on
+                [Heaven]. Their cultivation revolves around conducting rituals at the Plane of Fate to descend to the
+                Planes
+                of Qi/Soul.</p>
+
+            <h3>Earth Path</h3>
+            <p>The Earth Path is practiced by the Earth Tribe, commonly made up of animals who gain a spiritual
+                awakening,
+                demon beasts; whose enlightenments are based on [Earth]. Their cultivation revolves around elevating
+                from the
+                Plane of Qi to the Planes of Soul/Fate by exploding yin-yang spiritual energy within their bodies. Those
+                who
+                survive and withstand the explosions will strengthen themselves.</p>
+
+            <h3>Heart Path</h3>
+            <p>The Heart Path is practiced by the Heart Tribe. Those who obsessively struggle find themselves becoming a
+                Heart
+                Tribe member. Martial Arts and consciousness techniques mastered to the extreme may also ascend to the
+                Heart
+                Path. They masterfully manipulate the Plane of Soul, higher than Qi and lower than Fate.</p>
+
+            <h2 id="other-info">Other Information</h2>
+            <h3>All Streams Return to the Origin (萬流歸宗)</h3>
+            <p>At the Lower Boundary, Heaven and Earth Paths each have very different rituals. However, at the Middle
+                Boundary, they begin to converge. At the Four-Axis stage, the Axis building rituals are largely
+                identical. At
+                the Star Shattering stage, all beings including the Heart Tribe must sever their emotions. At Entering
+                Nirvana, all beings undergo the True Immortal Ascension Ritual.</p>
+
+            <h3>Dual Cultivation Paths, Three Great Ultimates (三太極)</h3>
+            <p>It is possible to learn multiple paths at once. Theoretically, the Heaven Tribe can practice all three
+                methods,
+                the Earth Tribe can practice Earth and Heart Paths, while the Heart Tribe can only practice the Heart
+                Path.
+                The Earth Tribe races lack the vision of fate of the Heaven Tribe, thus they are unable to conduct
+                Heaven
+                Path rituals. The Heart Tribe either lack the vision of fate or are untalented in the Heaven Path, and
+                their
+                bodies are also too weak to withstand Earth Path cultivation. While it is possible for the Heaven and
+                Earth
+                Tribes to learn the Heart Path, enlightenment of the Immortal Family Methods fundamentally contradict
+                that of
+                the Heart Path, rendering it almost impossible to achieve Manifestation.</p>
+            <p style="margin-top: 1rem;">The Penglai Palace in the Bright Cold Realm is renowned for their Great
+                Mountain Splitting Emperor
+                Technique, a powerful attack and defense that is a Dual Heaven and Earth Cultivation method. The Black
+                Scaled
+                Fish Commanding Sect in Bright Cold Realm also practices Dual Heaven and Earth Cultivation. The Fighting
+                Ghost
+                Race is known to practice Heaven Tribe methods while refining their Fighting Steps, what they call their
+                Heart
+                Path. Practicing two paths allows one to attack at one or two sub-realms above their station.</p>
+            <p style="margin-top: 1rem;">Seo Eun-hyun and Hyeon Mu are the only two known to have practiced all three
+                paths simultaneously,
+                giving rise to the Three Great Ultimates (三太極). In combination with Mad Lord's puppet circuitry, the
+                Three
+                Great Ultimates allows him to attack at one or two whole realms above what should be possible, but
+                became
+                obsolete past Sacred Vessel stage, as the boost given was minimal.</p>
+
+            <h2 id="true-immortals">True Immortals</h2>
+            <p>True Immortal stage cultivation follows the path of a [Seat] and [Origin Essence], which are the
+                fundamental
+                concepts and laws through which wisdom flows from in Mount Sumeru. The stages progress as follows:</p>
+
+            <ul class="wiki-list">
+                <li><strong>Vestige Liberation Immortal:</strong> Have shed their original bodies and reached the
+                    Greater
+                    Boundary, reached by practitioners of Heaven and Earths cultivations methods.</li>
+                <li><strong>Upper Immortal (Heaven/Earth):</strong> This stage is split into two types, those that
+                    follow the
+                    pathway of the Absolute of Fate (Heaven), and those that follow the pathway of Absolute of History
+                    (Earth). This stage is the difference between Heaven Immortals, and Immortal Beasts. Note that just
+                    being
+                    born as part of the Heaven tribe or the Earth tribe doesn't mean that you have to follow the same
+                    path
+                    you were born on, Spirit Beasts at the stage of Upper Immortals could follow the path of Heaven.
+                </li>
+                <li><strong>Great Net (大羅):</strong> This stage is where one manages to control a portion of the True
+                    Immortal
+                    Realm, as well as reach the peak of their [path]. This is the stage at which a True Immortal can
+                    open up
+                    a Middle Realm within their bodies, before this they would have just become a decaying corpse realm
+                    in
+                    the Interdimensional Void upon death. This is also the stage at which a True Immortal can choose if
+                    they
+                    wish to continue to advance or not through accomplishing greater and greater feats and cultivating
+                    the
+                    Great Net formula, which merges one's self with alternate versions of one's past self (the Earth
+                    pathway)
+                    or future self (the Heaven pathway), enlarging their weight-class and increasing their 'rank'. At a
+                    certain rank, one is able to reach and try break through to the dimension containing their [Seat]
+                    and
+                    [Origin Essence], qualifying one to try ascend to Immortal Lord.</li>
+                <li><strong>Immortal Lord (Heavenly/True):</strong> An Great Net Immortal that has broken through to the
+                    [Origin Essence] where their path flows from and successfully overlaid their domain onto the Origin
+                    Essence so as to draw power from the Origin Essence directly is said to have seized the Seat of that
+                    Origin Essence and successfully advanced as Immortal Lords. However, there exists only one [Seat]
+                    per
+                    [path]. If there is already an Immortal Lord or Supreme Deity at the peak of your path, it is
+                    impossible
+                    to ascend past Great Net, but one can attempt to take the seat through interpreting it in more ways,
+                    achieving it more, and asserting your interpretations more strongly. This is possible due to the
+                    fact
+                    that, depending on the [Seat] holder, there might be different interpretations, like how under the
+                    [Owner of Salt Mountain], the Salt Mountain [Seat] was seen as divine and sacred, while under [Great
+                    Mountain Supreme Deity], it is seen as devilish. Immortal Lords continue cultivation through the
+                    Great
+                    Net formula to increase their weight-class and rank in order to fully seize their Origin Essence and
+                    ascend to Supreme Deity. Those who do not eventually get consumed by their Origin Essence, although
+                    this
+                    takes billions or trillions of years.</li>
+                <li><strong>Supreme Deity:</strong> When an Immortal Lord has accumulated enough rank and achievement to
+                    surpass their Origin Essence, they can attempt to completely seize their Origin Essence and become
+                    the
+                    [Owner] of that Origin, thereby becoming a Supreme Deity. This involves transforming the Origin into
+                    both
+                    an Audience Chamber and a Throne. One achieves this by ascending to the realm where Origin dwells,
+                    and
+                    defeating all others who walk that Dao using your own enlightenment, before attempting to seize the
+                    essence. Upon reaching this realm, one half steps out of the Immortal Cultivation System, and gains
+                    the
+                    ability to inhale Chaos, which only exists outside of Mt. Sumeru forcing one to transcend it, and
+                    because
+                    this is a fundamental ability of this rank, their existence is engraved at the very bottom of Mt.
+                    Sumeru,
+                    At this stage, their consciousness transforms into an entire heavenly domain, whose fate, life, and
+                    soul,
+                    are powered by the inhalation of Chaos.</li>
+                <li><strong>Heavenly Venerable / Heavenly King:</strong> A Supreme Deity that is able to draw power from
+                    the
+                    Origin Essence of one of the Absolutes is a Heavenly Venerable. This can involve being granted power
+                    from
+                    a being with control over that Absolute, or by accumulating enough rank and achievements to directly
+                    break through to the Origin Essence of an Absolute. Enders who achieve this rank through breaking
+                    through
+                    to the Origin Essence of their chosen Path (i.e., become Immortal Lords), are called Heavenly Kings.
+                </li>
+            </ul>
+
+            <h2 id="immortal-beasts">Immortal Beasts</h2>
+            <p>Immortal Beasts correspond to Immortals of the Earth Tribe. The Main Immortal Beasts are as follows:</p>
+            <ul class="wiki-list">
+                <li>The Immortal Beast Black Dragon (黑龍).</li>
+                <li>The Immortal Beast Supreme Tiger (太虎).</li>
+                <li>The Immortal Beast Azure Peng (靑鵬).</li>
+                <li>The Immortal Beast Lustrous Glaze Peacock (琉璃孔雀).</li>
+                <li>The Immortal Beast Yin Ghost Black Turtle (陰鬼玄武).</li>
+                <li>The Immortal Beast Mountain-Destroying Demon Ape (破山魔猿).</li>
+                <li>The Immortal Beast White-Winged Heavenly Pegasus (白翼天馬).</li>
+            </ul>
+            <p>The Immortal that corresponds to the Heart Tribe is the Heavenly Venerable of the Void.</p>
+
+            <h2 id="overseen-realms">Realms overseen by True Immortals</h2>
+            <p>Governing Immortals and all Seats in this world ultimately represent realms of Immortal Cultivation,
+                portions
+                of a realm, or the process of Immortal Cultivation itself. Cultivators all walk the path of Immortal
+                Cultivation, but stop at some realm along the way and are buried there. Eventually, they rot and decay,
+                becoming the nutrients of the world once again, providing the foundation for future generations to
+                continue
+                on the path. Being 'eaten' is simply decaying on the path of Immortal Cultivation and becoming its
+                foundation. And the Governing Immortals have become the very path of Immortal Cultivation itself.
+                Therefore,
+                dying within the realms overseen by the Governing Immortals simply makes one their daily sustenance.</p>
+            <p>The realms overseen by the Governing Immortals are as follows:</p>
+            <ul class="wiki-list">
+                <li>Qi Refining 1st star: Star Genesis Supreme Deity.</li>
+                <li>Qi Refining 2nd star: Star Genesis Supreme Deity.</li>
+                <li>Qi Refining 3rd Star: Eastern Heavenly Venerable Flower Monarch (Previously), Great Mountain Supreme
+                    Deity (Previously)</li>
+                <li>Qi Refining 4th star: Radiance Supreme Deity.</li>
+                <li>Qi Refining 6th Star: Liberation Supreme Deity (Previously).</li>
+                <li>Qi Refining 7th star: Southern Heavenly Venerable True Ultimate Eternal Life Great Emperor, Star
+                    Genesis
+                    Supreme Deity.</li>
+                <li>Qi Refining 14th star: Great Mountain Supreme Deity (Previously)</li>
+                <li>Qi Building stage: Star Genesis Supreme Deity.</li>
+                <li>Core Formation stage: Star Genesis Supreme Deity.</li>
+                <li>Four-Axis stage: Star Genesis Supreme Deity, Great Mountain Supreme Deity (Previously)</li>
+                <li>Integration stage: Swallowing Heaven Supreme Deity (Previously)</li>
+                <li>Star Shattering stage: Star Genesis Supreme Deity.</li>
+                <li>Sacred Vessel stage: Liberation Supreme Deity (Previously), Star Genesis Supreme Deity.</li>
+                <li>Entering Nirvana: Star Genesis Supreme Deity ,Western Heavenly Venerable Netherworld Ghost Mother.
+                </li>
+                <li>True Immortal advancement ritual: Western Heavenly Venerable Netherworld Ghost Mother.</li>
+                <li>Right after becoming true immortal: Naming Supreme Deity (Previously).</li>
+                <li>Vestige Liberation Immortal: Radiance Supreme Deity, Star Genesis Supreme Deity.</li>
+                <li>Upper Immortal: Star Genesis Supreme Deity, Great Mountain Supreme Deity (Previously)</li>
+                <li>Great Net Immortal: True Martial Great Emperor (Previously), True Ultimate Eternal Life Great
+                    Emperor,
+                    Eastern Heavenly Venerable Flower Monarch (Previously) and Star Genesis Supreme Deity.</li>
+                <li>Immortal Lord: Radiance Supreme Deity, Emptiness Supreme Deity.</li>
+            </ul>
+
+            <h2 id="lifespan">Lifespan Assigned by Heaven</h2>
+            <p>From the moment an individual is born, one is attracted towards death, which is the force of attraction
+                of
+                their fate. Fate works like a sea of stars and a individual journeys through these stars, and the
+                attraction
+                force of death is from one of these stars. The only way to change fate is to either jump to a different
+                star
+                of fate or to create a star to extend one's life. Cultivators follow the latter and create a star to
+                extend
+                one's life. They artificially create a flow of fate by the usage of that star and increase their life
+                and use
+                the power they harnessed by cultivating to escape the attraction of fate.</p>
+            <p style="margin-top: 1rem;">If one practices a Heaven and Earth Dual Cultivation method, practicing both
+                Heaven and Earth Paths will
+                not give any additional lifespan. However, if one practices either Heaven/Earth Path(s) as well as the
+                Heart
+                Path, the lifespan from the Heart Path would be obtained as well as that of the Heaven/Earth Path(s).
+            </p>
+            <p style="margin-top: 1rem;">Upon death, the soul is covered in a layer of death. The dead are pulled
+                towards the Netherworld by an
+                attraction force where their souls will be reincarnated, typically without memories of their previous
+                life.
+                The God of the Underworld created the Wheel of Reincarnation to grant all beings another chance at
+                fulfilling
+                their fates. Should one intend to stay in the world of the living, there are many methods to resist the
+                pull
+                of the Netherworld.</p>
+        </div>
+    </main>
+
+    <script src="../scripts/editor.js"></script>
+    <script src="../scripts/main.js"></script>
+</body>
+
+</html>

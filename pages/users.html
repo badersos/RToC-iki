@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team & Permissions | RToC Wiki</title>
+    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Inter:wght@400;500;600&display=swap"
+        rel="stylesheet">
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <style>
+        :root {
+            --glass-bg: rgba(20, 20, 30, 0.6);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --card-bg: rgba(30, 30, 40, 0.6);
+            --accent-color: #1d9bf0;
+        }
+
+        body {
+            background-color: #050505;
+            background-image:
+                radial-gradient(circle at 10% 20%, rgba(76, 29, 149, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(59, 130, 246, 0.1) 0%, transparent 40%);
+            min-height: 100vh;
+            font-family: 'Inter', sans-serif;
+            color: white;
+        }
+
+        .page-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 100px 20px 40px;
+        }
+
+        /* Header Section */
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 50px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .header-content h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin: 0;
+            background: linear-gradient(135deg, #fff 0%, #9ca3af 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -1px;
+        }
+
+        .header-content p {
+            color: #8899ac;
+            margin-top: 10px;
+            font-size: 1.1rem;
+            max-width: 500px;
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            color: #fff;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            font-weight: 500;
+        }
+
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Add User Section */
+        .add-user-section {
+            background: linear-gradient(145deg, rgba(20, 20, 30, 0.8), rgba(30, 30, 40, 0.9));
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 30px;
+            margin-bottom: 50px;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(20px);
+        }
+
+        .add-user-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-right: 20px;
+            color: #ccc;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .input-glass {
+            flex: 1;
+            padding: 16px 24px;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid var(--glass-border);
+            border-radius: 14px;
+            color: #fff;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .input-glass:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            background: rgba(0, 0, 0, 0.6);
+            box-shadow: 0 0 0 4px rgba(29, 155, 240, 0.1);
+        }
+
+        .select-glass {
+            padding: 16px 24px;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid var(--glass-border);
+            border-radius: 14px;
+            color: #fff;
+            font-size: 1rem;
+            cursor: pointer;
+            min-width: 160px;
+        }
+
+        .btn-primary {
+            padding: 16px 32px;
+            background: linear-gradient(135deg, #1d9bf0 0%, #0c8de4 100%);
+            border: none;
+            border-radius: 14px;
+            color: white;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 20px rgba(29, 155, 240, 0.3);
+            white-space: nowrap;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(29, 155, 240, 0.5);
+        }
+
+        /* Grid */
+        .users-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 30px;
+        }
+
+        /* User Card */
+        .user-card {
+            background: var(--card-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 25px;
+            position: relative;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            backdrop-filter: blur(10px);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .user-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.5);
+            background: rgba(40, 40, 55, 0.7);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+
+        .user-avatar-placeholder {
+            width: 56px;
+            height: 56px;
+            border-radius: 16px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .role-badge {
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .user-info h3 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.4rem;
+            margin: 0 0 5px 0;
+            color: #fff;
+        }
+
+        .user-id {
+            font-family: 'SF Mono', monospace;
+            color: #8899ac;
+            font-size: 0.85rem;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 4px 8px;
+            border-radius: 6px;
+            display: inline-block;
+        }
+
+        .card-actions {
+            margin-top: auto;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            gap: 10px;
+        }
+
+        /* Controls */
+        .edit-role-select {
+            flex: 1;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #ccc;
+            padding: 10px 14px;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .edit-role-select:hover {
+            border-color: #666;
+        }
+
+        .save-btn {
+            background: rgba(255, 255, 255, 0.05);
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 0 18px;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .save-btn:hover {
+            background: var(--accent-color);
+            border-color: var(--accent-color);
+        }
+
+        /* Notifications */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            padding: 16px 24px;
+            background: #151a23;
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            color: white;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .toast.success {
+            border-left: 4px solid #22c55e;
+        }
+
+        .toast.error {
+            border-left: 4px solid #ef4444;
+        }
+
+        .empty-state {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 80px;
+            color: #6b7280;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 24px;
+            border: 1px solid var(--glass-border);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="page-container">
+        <!-- Header -->
+        <div class="page-header">
+            <div class="header-content">
+                <h1>Team Management</h1>
+                <p>Control access levels and manage wiki staff permissions.</p>
+            </div>
+            <a href="/pages/account.html" class="back-btn">
+                <ion-icon name="arrow-back-outline"></ion-icon> Back to Account
+            </a>
+        </div>
+
+        <!-- Notification Toast -->
+        <div id="toast" class="toast"></div>
+
+        <!-- Add User Section -->
+        <div class="add-user-section">
+            <div class="add-user-title">
+                <ion-icon name="person-add-outline" style="font-size:1.5rem; color:#1d9bf0;"></ion-icon>
+                <span>Add Member</span>
+            </div>
+            <input type="text" id="newUserId" class="input-glass" placeholder="Enter Discord ID or Username">
+            <select id="newUserRole" class="select-glass">
+                <option value="user">User</option>
+                <option value="editor">Editor</option>
+                <option value="admin">Admin</option>
+            </select>
+            <button onclick="addUser()" class="btn-primary">
+                Grant Access
+            </button>
+        </div>
+
+        <!-- Users Grid -->
+        <div id="usersGrid" class="users-grid">
+            <div style="grid-column: 1/-1; display: flex; justify-content: center; padding: 50px;">
+                <ion-icon name="reload-outline" class="loading-spinner"
+                    style="font-size:2rem; animation:spin 1s linear infinite;"></ion-icon>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = '/api/permissions';
+        const currentUser = JSON.parse(localStorage.getItem('rtoc_user') || 'null');
+
+        // Security Check
+        if (!currentUser || (currentUser.role !== 'admin' && currentUser.role !== 'owner')) {
+            window.location.href = '/';
+            throw new Error("Unauthorized");
+        }
+
+        const ROLES = {
+            'owner': { bg: 'linear-gradient(135deg, #FFD700 0%, #FFA500 100%)', color: '#000', label: 'Owner' },
+            'admin': { bg: 'linear-gradient(135deg, #FF4B4B 0%, #FF2E2E 100%)', color: '#fff', label: 'Admin' },
+            'editor': { bg: 'linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%)', color: '#fff', label: 'Editor' },
+            'user': { bg: 'rgba(255,255,255,0.1)', color: '#ccc', label: 'User' }
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            if (currentUser.role === 'owner') {
+                const opt = document.createElement('option');
+                opt.value = 'owner';
+                opt.textContent = 'Owner';
+                document.getElementById('newUserRole').appendChild(opt);
+            }
+            loadUsers();
+        });
+
+        async function loadUsers() {
+            try {
+                const res = await fetch(API_URL);
+                const data = await res.json();
+                if (data.status === 'success') renderGrid(data.permissions);
+                else showToast(data.message || 'Failed to load', 'error');
+            } catch (e) {
+                showToast('Connection error', 'error');
+            }
+        }
+
+        function renderGrid(permissions) {
+            const grid = document.getElementById('usersGrid');
+            grid.innerHTML = '';
+
+            const entries = Object.entries(permissions);
+            if (entries.length === 0) {
+                grid.innerHTML = `<div class="empty-state">No permissions found in database.</div>`;
+                return;
+            }
+
+            // Sort: Owner > Admin > Editor > User
+            const rank = { 'owner': 0, 'admin': 1, 'editor': 2, 'user': 3 };
+            entries.sort((a, b) => (rank[a[1]] || 99) - (rank[b[1]] || 99));
+
+            entries.forEach(([userId, role]) => {
+                const isMe = userId === currentUser.id || userId === currentUser.username;
+                const roleStyle = ROLES[role] || ROLES.user;
+                const canEdit = currentUser.role === 'owner' || (currentUser.role === 'admin' && role !== 'owner');
+
+                const card = document.createElement('div');
+                card.className = 'user-card';
+                card.innerHTML = `
+                    <div class="card-header">
+                        <div class="user-avatar-placeholder">
+                            ${userId.substring(0, 2).toUpperCase()}
+                        </div>
+                        <span class="role-badge" style="background:${roleStyle.bg}; color:${roleStyle.color};">
+                            ${roleStyle.label}
+                        </span>
+                    </div>
+                    
+                    <div class="user-info">
+                        <h3>${userId} ${isMe ? '<span style="opacity:0.5; font-size:0.8em;">(You)</span>' : ''}</h3>
+                        <span class="user-id">ID: ${userId}</span>
+                    </div>
+
+                    <div class="card-actions">
+                        ${canEdit ? `
+                            <select class="edit-role-select" id="role-${userId}">
+                                <option value="user" ${role === 'user' ? 'selected' : ''}>User</option>
+                                <option value="editor" ${role === 'editor' ? 'selected' : ''}>Editor</option>
+                                <option value="admin" ${role === 'admin' ? 'selected' : ''}>Admin</option>
+                                ${currentUser.role === 'owner' ? `<option value="owner" ${role === 'owner' ? 'selected' : ''}>Owner</option>` : ''}
+                            </select>
+                            <button class="save-btn" onclick="updateRole('${userId}')">Save</button>
+                        ` : `
+                            <div style="width:100%; text-align:center; padding:10px; color:#666; font-size:0.9rem;">
+                                <ion-icon name="lock-closed-outline"></ion-icon> Modification Restricted
+                            </div>
+                        `}
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        async function addUser() {
+            const id = document.getElementById('newUserId').value.trim();
+            const role = document.getElementById('newUserRole').value;
+            if (!id) return showToast('Please enter a User ID', 'error');
+            await submitChange(id, role);
+            document.getElementById('newUserId').value = '';
+        }
+
+        async function updateRole(id) {
+            const select = document.getElementById(`role-${id}`);
+            if (select) await submitChange(id, select.value);
+        }
+
+        async function submitChange(target, role) {
+            try {
+                const res = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        username: target,
+                        role: role,
+                        requester: currentUser.id || currentUser.username
+                    })
+                });
+                const data = await res.json();
+                if (data.status === 'success') {
+                    showToast('✓ Updated successfully', 'success');
+                    loadUsers();
+                } else {
+                    showToast(data.message, 'error');
+                }
+            } catch (e) { showToast('Connection failed', 'error'); }
+        }
+
+        function showToast(msg, type) {
+            const toast = document.getElementById('toast');
+            toast.textContent = msg;
+            toast.className = `toast ${type} show`;
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+    </script>
+</body>
+
+</html>

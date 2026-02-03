@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Mad Lord | Regressor's Tale of Cultivation Wiki</title>
+    <link rel="stylesheet" href="../../styles/main.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap"
+        rel="stylesheet">
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <style>
+        /* Mad Lord Theme - Manic Magenta/Chaos Grey */
+        .character-theme-mad-lord {
+            --accent-primary: #e0aaff;
+            /* Light purple */
+            --accent-secondary: #9d4edd;
+            /* Deep purple */
+            --text-highlight: #f8f9fa;
+            /* Almost white */
+            background: #110b15 !important;
+        }
+
+        /* Hero Background */
+        .character-theme-mad-lord .hero {
+            min-height: 60vh;
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.4) 0%, #110b15 100%),
+                url('../../assets/images/mad_lord_novel.jpg') center top/cover no-repeat;
+            background-position: center 20%;
+        }
+
+        /* Title Gradient */
+        .character-theme-mad-lord .hero-title {
+            background: linear-gradient(135deg, #e0aaff, #ff9e00);
+            /* Purple to Madness Orange */
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: drop-shadow(0 0 15px rgba(224, 170, 255, 0.4));
+        }
+
+        /* Sidebar Theme */
+        .character-theme-mad-lord .infobox-title {
+            background: linear-gradient(135deg, #e0aaff 0%, #ff9e00 50%, #e0aaff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: drop-shadow(0 2px 4px rgba(157, 78, 221, 0.3));
+            animation: shimmer-chaos 3s ease-in-out infinite;
+        }
+
+        .character-theme-mad-lord .character-sidebar {
+            background: rgba(20, 10, 25, 0.95);
+            border: 1px solid rgba(224, 170, 255, 0.3);
+            box-shadow: 0 4px 20px rgba(157, 78, 221, 0.2);
+        }
+
+        .character-theme-mad-lord .infobox-header {
+            background: rgba(157, 78, 221, 0.15);
+            color: #e0aaff;
+            border-left: 3px solid #9d4edd;
+        }
+
+        .character-theme-mad-lord .character-quote {
+            border-left-color: #ff9e00;
+            background: linear-gradient(90deg, rgba(255, 158, 0, 0.1), transparent);
+            color: #e0aaff;
+            font-style: italic;
+        }
+
+        .character-theme-mad-lord .section-title {
+            color: #ff9e00;
+            border-bottom-color: rgba(157, 78, 221, 0.3);
+        }
+
+        @keyframes shimmer-chaos {
+
+            0% {
+                filter: drop-shadow(0 0 10px rgba(224, 170, 255, 0.4));
+            }
+
+            50% {
+                filter: drop-shadow(0 0 20px rgba(255, 158, 0, 0.6));
+            }
+
+            100% {
+                filter: drop-shadow(0 0 10px rgba(224, 170, 255, 0.4));
+            }
+        }
+    </style>
+</head>
+
+<body class="character-theme-mad-lord">
+
+    <nav class="nav" style="background: rgba(15, 10, 20, 0.95); box-shadow: rgba(0, 0, 0, 0.4) 0px 4px 20px;">
+        <div class="nav-container">
+            <a href="../../index.html" class="nav-logo">
+                <div class="nav-logo-icon">R</div>
+                RToC Wiki
+            </a>
+            <ul class="nav-links">
+                <li><a href="../../index.html" class="nav-link">Home</a></li>
+                <li><a href="../characters.html" class="nav-link"
+                        style="color: #ffffff; background: rgba(157, 78, 221, 0.2);">Characters</a></li>
+                <li><a href="../concepts.html" class="nav-link">Concepts</a></li>
+                <li><a href="../plot.html" class="nav-link">Plot</a></li>
+                <li><a href="../cultivation.html" class="nav-link">Cultivation</a></li>
+                <li><a href="../locations.html" class="nav-link">Locations</a></li>
+            </ul>
+            <div class="nav-search">
+                <ion-icon name="search-outline" class="nav-search-icon"></ion-icon>
+                <input type="text" placeholder="Search the wiki...">
+            </div>
+            <button class="login-btn">Log In</button>
+        </div>
+    </nav>
+
+    <!-- Login Modal -->
+    <div class="modal-overlay">
+        <div class="login-modal">
+            <div class="modal-header">
+                <button class="modal-close"><ion-icon name="close-outline"></ion-icon></button>
+                <h2 class="modal-title">Welcome Back</h2>
+                <p class="modal-subtitle">Log in to the RToC Wiki Community</p>
+            </div>
+
+            <div class="social-login">
+                <button class="social-btn discord">
+                    <ion-icon name="logo-discord"></ion-icon>
+                    Continue with Discord
+                </button>
+                <button class="social-btn google">
+                    <ion-icon name="logo-google"></ion-icon>
+                    Continue with Google
+                </button>
+            </div>
+
+            <div class="divider">or</div>
+
+            <div class="auth-form">
+                <div class="form-group">
+                    <input type="email" placeholder="Email Address">
+                </div>
+                <div class="form-group">
+                    <input type="password" placeholder="Password">
+                </div>
+                <button class="auth-submit">Log In</button>
+            </div>
+
+            <div class="auth-footer">
+                Don't have an account? <span class="auth-link">Create Account</span>
+            </div>
+        </div>
+    </div>
+
+    <header class="hero" style="min-height: 40vh; padding-bottom: 2rem;">
+        <div class="hero-content">
+            <h1 class="hero-title">The Mad Lord</h1>
+            <p class="hero-subtitle">Puppeteer of the Wonderfully Mysterious Fortress</p>
+        </div>
+    </header>
+
+    <main class="section">
+        <div class="character-layout">
+            <!-- Main Content -->
+            <div class="character-main" contenteditable="false">
+                <div class="character-header">
+                    <div class="character-quote" style="margin-bottom: 2rem;">
+                        “The reason [She] ended up like this... is because Seo Hweol set up the stage, so it's no
+                        different from me losing a lover to Seo Hweol. Huh... Anyway, today seems to be the perfect day
+                        for revenge. Seo Hweol's downfall by someone who loves him...”
+                        <div style="margin-top: 0.5rem; font-style: normal; font-size: 0.9em; opacity: 0.8;">— Jo Yeon
+                            to Seo Eun-hyun</div>
+                    </div>
+
+                    <div class="spoiler character-section-content revealed">
+                        <strong>Jo Yeon</strong> (조연), better known as the <strong>Mad Lord</strong> (괴군/怪君), is one of
+                        the Heavenly Being cultivators of the Head Realm. Driven insane by the tragic loss of his lover,
+                        Wol Ha-eun, he dedicated his existence to the path of Puppetry, seeking to resurrect her through
+                        his magnum opus, "Yeon's Play," within the Wonderfully Mysterious Fortress.
+                    </div>
+                </div>
+
+                <div class="character-section-content">
+                    <h2 class="section-title">Overview</h2>
+                    <p>The Mad Lord is one of the main antagonists of the Middle Realms arc. He is a puppeteer of
+                        immense skill and terrifying obsession. He was described as an old man with a hunchback,
+                        wielding a cane. </p>
+                    <p style="margin-top: 1rem;">Due to the loss of his lover, he became insane and started making
+                        puppets in the hopes of recreating [Her]. His life-long wish is to activate Yeon's Play and
+                        become one with [Her]. Occasionally, Jo Yeon becomes sane, during which he exceeds wisdom and
+                        even acts kindly towards Eun-hyun, but these moments are fleeting.</p>
+                </div>
+
+                <div class="character-section-content">
+                    <h2 class="section-title">Personality</h2>
+                    <p>Mad Lord's personality is wildly erratic and doubly insane. His insanity is a by-product of the
+                        sorrow he felt when he lost his wife. This insanity led to him being feared by all the other
+                        Heavenly Being cultivators in the Head Realm. However, he is shown to have a soft spot for
+                        lovers as they remind him of his own life.</p>
+                    <p style="margin-top: 1rem;">The only exception to this is when the Mad Lord's Heart Essence is
+                        forcefully cleaned either by Seo Eun-Hyun or by Baek Woon. In his sane state, he is shown to be
+                        wise and clear-headed. This state however doesn't last long and the Mad Lord is forced back into
+                        insanity in a manner of seconds or days.</p>
+                </div>
+
+                <div class="character-section-content">
+                    <h2 class="section-title">Relationships</h2>
+                    <h3>Seo Eun-hyun</h3>
+                    <p>Seo Eun-Hyun first met the Mad Lord when the Mad Lord sensed his colleague, Kim Yeon's, enormous
+                        consciousness. On the 11th cycle, Seo Eun-Hyun persuaded the Mad Lord to kill Yuan Li upon
+                        telling him the story of the two immortals. Mad Lord, saddened by Eun-Hyun's story, listened to
+                        [Her] persuasion and decided to go after Eun-Hyun to turn him into a puppet. From that day on
+                        Eun-Hyun developed an irrational fear of the Mad Lord.</p>
+                    <p style="margin-top: 0.5rem;">Upon ascending, Seo Eun-Hyun was captured by the Mad Lord as his
+                        second disciple and was taken to the Wonderfully Mysterious Fortress. Seo Eun-Hyun was modified
+                        by Mad Lord and given many modifications to his body until one faithful day where he converted
+                        Eun-Hyun to General Seo.</p>
+
+                    <h3 style="margin-top: 1.5rem;">Kim Yeon</h3>
+                    <p>Kim Yeon is Mad Lord's direct disciple. She was captured by him on ascension path after awakening
+                        her consciousness. Kim Yeon without Eun-Hyun intervening goes insane. After being rescued by
+                        Eun-Hyun from the fortress and gaining [Her]'s arm she gains conflicted feelings on the Mad
+                        Lord. In many other cycles she learns her fate and realizes how to operate the Wonderfully
+                        Mysterious Fortress and start Yeon's play.</p>
+
+                    <h3 style="margin-top: 1.5rem;">[Her] (Wol Ha-eun)</h3>
+                    <p>[Her] is canonically known as Mad Lord's lover. She is the doll version of his dead lover Wol
+                        Ha-eun. She died a tragic death which heralded Jo Yeon's transformation into the Mad Lord. Mad
+                        Lord created the Wonderfully Mysterious Fortress to create Yeon's Play and live one final moment
+                        alongside his wife. In many cycles, Yeon's Play was complete and Mad Lord died peacefully
+                        alongside his wife.</p>
+                </div>
+
+                <div class="character-section-content">
+                    <h2 class="section-title">Prowess</h2>
+                    <div class="infobox-row">
+                        <span class="infobox-label">Peak Cultivation</span>
+                        <span class="infobox-value">Grand Perfection Four Axis (사축/四軸)</span>
+                    </div>
+                    <div class="infobox-row">
+                        <span class="infobox-label">Peak Martial Realm</span>
+                        <span class="infobox-value">Entering Heavens Beyond the Path (월도입천/越道入天)</span>
+                    </div>
+                    <div class="infobox-row">
+                        <span class="infobox-label">Talent</span>
+                        <span class="infobox-value">One Pattern Extraordinary Law Talent</span>
+                    </div>
+                </div>
+
+                <div class="character-section-content">
+                    <h2 class="section-title">Trivia</h2>
+                    <ul
+                        style="list-style-type: disc; margin-left: 1.5rem; color: var(--text-secondary); line-height: 1.8;">
+                        <li>"Mad Lord" (怪君) can be translated as "Strange Monarch" or "Monster Lord".</li>
+                        <li>His obsession with puppets mirrors the themes of control and loss prevalent in the series.
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="character-section-content">
+                    <h2 class="section-title">References</h2>
+                    <ul
+                        style="list-style-type: disc; margin-left: 1.5rem; color: var(--text-secondary); line-height: 1.8; font-size: 0.9em;">
+                        <li>Novel Chapter 3 - Debut.</li>
+                        <li>Manhwa Chapter 4 - Debut.</li>
+                    </ul>
+                </div>
+
+                <div class="character-section-content"
+                    style="margin-top: 3rem; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 2rem;">
+                    <h2 class="section-title">See Also</h2>
+                    <div
+                        style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem;">
+                        <a href="kim_yeon.html" class="nav-link"
+                            style="display: block; background: var(--bg-secondary); padding: 1rem; border-radius: 8px; text-align: center; border: 1px solid rgba(255,255,255,0.1); transition: all 0.2s;">
+                            <div style="font-weight: 600; margin-bottom: 0.5rem; color: var(--text-primary);">Kim Yeon
+                            </div>
+                            <div style="font-size: 0.8em; color: var(--text-secondary);">Direct Disciple</div>
+                        </a>
+                        <a href="yuan_li.html" class="nav-link"
+                            style="display: block; background: var(--bg-secondary); padding: 1rem; border-radius: 8px; text-align: center; border: 1px solid rgba(255,255,255,0.1); transition: all 0.2s;">
+                            <div style="font-weight: 600; margin-bottom: 0.5rem; color: var(--text-primary);">Yuan Li
+                            </div>
+                            <div style="font-size: 0.8em; color: var(--text-secondary);">Enemy</div>
+                        </a>
+                        <a href="../characters.html" class="nav-link"
+                            style="display: block; background: var(--bg-secondary); padding: 1rem; border-radius: 8px; text-align: center; border: 1px solid rgba(255,255,255,0.1); transition: all 0.2s;">
+                            <div style="font-weight: 600; margin-bottom: 0.5rem; color: var(--text-primary);">All
+                                Characters</div>
+                            <div style="font-size: 0.8em; color: var(--text-secondary);">View Full Roster</div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sidebar Infobox -->
+            <aside class="character-sidebar" style="outline-offset: 4px;">
+                <h3 class="infobox-title" contenteditable="false">The Mad Lord</h3>
+                <div class="infobox-image" contenteditable="false">
+                    <div class="carousel-container">
+                        <div class="carousel-track">
+                            <img src="../../assets/images/mad_lord_novel.jpg" alt="Mad Lord (Novel)"
+                                class="carousel-img active" data-caption="Mad Lord, Jo Yeon (Novel Illustration)">
+                            <img src="../../assets/images/mad_lord_manhwa.jpg" alt="Mad Lord (Manhwa)"
+                                class="carousel-img" data-caption="Mad Lord (Manhwa)">
+                        </div>
+                        <button class="carousel-btn prev"><ion-icon name="chevron-back"></ion-icon></button>
+                        <button class="carousel-btn next"><ion-icon name="chevron-forward"></ion-icon></button>
+                        <div class="carousel-dots">
+                            <span class="dot active" data-index="0"></span>
+                            <span class="dot" data-index="1"></span>
+                        </div>
+                    </div>
+                    <div id="carousel-caption"
+                        style="text-align: center; font-size: 0.8rem; margin-top: 0.5rem; min-height: 1.2em; font-weight: 500;">
+                        Mad Lord, Jo Yeon (Novel Illustration)</div>
+                </div>
+
+                <div class="infobox-section" contenteditable="false">
+                    <div class="infobox-header">Personal Info</div>
+                    <div class="infobox-row">
+                        <span class="infobox-label">Real Name</span>
+                        <span class="infobox-value">Jo Yeon</span>
+                    </div>
+                    <div class="infobox-row">
+                        <span class="infobox-label">Hangul</span>
+                        <span class="infobox-value">조연 / 괴군</span>
+                    </div>
+                    <div class="infobox-row">
+                        <span class="infobox-label">Race</span>
+                        <span class="infobox-value">Human</span>
+                    </div>
+                    <div class="infobox-row">
+                        <span class="infobox-label">Gender</span>
+                        <span class="infobox-value">Male</span>
+                    </div>
+                </div>
+
+                <div class="infobox-section" contenteditable="false">
+                    <div class="infobox-header">Status</div>
+                    <div class="infobox-row">
+                        <span class="infobox-label">Occupation</span>
+                        <span class="infobox-value">Puppeteer</span>
+                    </div>
+                    <div class="infobox-row">
+                        <span class="infobox-label">Condition</span>
+                        <span class="infobox-value">Dead (Yeon's Play)</span>
+                    </div>
+                </div>
+
+                <div class="infobox-section" contenteditable="false">
+                    <div class="infobox-header">Cultivation</div>
+                    <div class="infobox-row">
+                        <span class="infobox-label">Level</span>
+                        <span class="infobox-value">Grand Perfection Four Axis</span>
+                    </div>
+                </div>
+
+                <div class="infobox-section" contenteditable="false">
+                    <div class="infobox-header">Debut</div>
+                    <div class="infobox-row">
+                        <span class="infobox-label">Novel</span>
+                        <span class="infobox-value">Chapter 3</span>
+                    </div>
+                    <div class="infobox-row">
+                        <span class="infobox-label">Manhwa</span>
+                        <span class="infobox-value">Chapter 4</span>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    <script src="../../scripts/editor.js"></script>
+    <script src="../../scripts/main.js"></script>
+
+</body>
+
+</html>

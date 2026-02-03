@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heavenly Punishment Supreme Deity | Regressor's Tale of Cultivation Wiki</title>
+    <link rel="stylesheet" href="../../styles/main.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap"
+        rel="stylesheet">
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <style>
+        /* Heavenly Punishment Supreme Deity Theme - Thunder/Gold/Crimson Theme */
+        .character-theme-heavenly-punishment {
+            --accent-primary: #ffd700;
+            /* Gold */
+            --accent-secondary: #b71c1c;
+            /* Crimson */
+            --text-highlight: #fff8e1;
+            /* Pale Gold */
+            background: #1a1005 !important;
+        }
+
+        /* Hero Background */
+        .character-theme-heavenly-punishment .hero {
+            min-height: 60vh;
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.4) 0%, #1a1005 100%),
+                url('../../assets/images/heavenly_punishment_supreme_deity.png') center top/cover no-repeat;
+            background-position: center 20%;
+        }
+
+        /* Title Gradient */
+        .character-theme-heavenly-punishment .hero-title {
+            background: linear-gradient(135deg, #ffecb3, #ff6f00);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: drop-shadow(0 0 15px rgba(255, 193, 7, 0.4));
+        }
+
+        /* Sidebar Theme */
+        .character-theme-heavenly-punishment .infobox-title {
+            background: linear-gradient(135deg, #ffd700 0%, #ff6f00 50%, #ffd700 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: drop-shadow(0 2px 4px rgba(183, 28, 28, 0.3));
+            animation: shimmer-lightning 3s ease-in-out infinite;
+        }
+
+        .character-theme-heavenly-punishment .character-sidebar {
+            background: rgba(20, 10, 5, 0.95);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            box-shadow: 0 4px 20px rgba(183, 28, 28, 0.2);
+        }
+
+        .character-theme-heavenly-punishment .infobox-header {
+            background: rgba(255, 215, 0, 0.15);
+            color: #ffd700;
+            border-left: 3px solid #b71c1c;
+        }
+
+        .character-theme-heavenly-punishment .character-quote {
+            border-left-color: #ffd700;
+            background: linear-gradient(90deg, rgba(255, 215, 0, 0.1), transparent);
+            color: #fff8e1;
+            font-style: italic;
+        }
+
+        .character-theme-heavenly-punishment .section-title {
+            color: #ffca28;
+            border-bottom-color: rgba(255, 215, 0, 0.3);
+        }
+
+        @keyframes shimmer-lightning {
+
+            0% {
+                filter: drop-shadow(0 0 5px rgba(255, 215, 0, 0.4));
+            }
+
+            50% {
+                filter: drop-shadow(0 0 20px rgba(255, 111, 0, 0.6));
+            }
+
+            100% {
+                filter: drop-shadow(0 0 5px rgba(255, 215, 0, 0.4));
+            }
+        }
+    </style>
+</head>
+
+<body class="character-theme-heavenly-punishment">
+
+    <nav class="nav" style="background: rgba(20, 10, 5, 0.95); box-shadow: rgba(0, 0, 0, 0.4) 0px 4px 20px;">
+        <div class="nav-container">
+            <a href="../../index.html" class="nav-logo">
+                <div class="nav-logo-icon">R</div>
+                RToC Wiki
+            </a>
+            <ul class="nav-links">
+                <li><a href="../../index.html" class="nav-link">Home</a></li>
+                <li><a href="../characters.html" class="nav-link"
+                        style="color: #ffffff; background: rgba(255, 215, 0, 0.2);">Characters</a></li>
+                <li><a href="../concepts.html" class="nav-link">Concepts</a></li>
+                <li><a href="../plot.html" class="nav-link">Plot</a></li>
+                <li><a href="../cultivation.html" class="nav-link">Cultivation</a></li>
+                <li><a href="../locations.html" class="nav-link">Locations</a></li>
+            </ul>
+            <div class="nav-search">
+                <ion-icon name="search-outline" class="nav-search-icon"></ion-icon>
+                <input type="text" placeholder="Search the wiki...">
+            </div>
+            <button class="login-btn">Log In</button>
+        </div>
+    </nav>
+
+    <!-- Login Modal -->
+    <div class="modal-overlay">
+        <div class="login-modal">
+            <div class="modal-header">
+                <button class="modal-close"><ion-icon name="close-outline"></ion-icon></button>
+                <h2 class="modal-title">Welcome Back</h2>
+                <p class="modal-subtitle">Log in to the RToC Wiki Community</p>
+            </div>
+
+            <div class="social-login">
+                <button class="social-btn discord">
+                    <ion-icon name="logo-discord"></ion-icon>
+                    Continue with Discord
+                </button>
+                <button class="social-btn google">
+                    <ion-icon name="logo-google"></ion-icon>
+                    Continue with Google
+                </button>
+            </div>
+
+            <div class="divider">or</div>
+
+            <div class="auth-form">
+                <div class="form-group">
+                    <input type="email" placeholder="Email Address">
+                </div>
+                <div class="form-group">
+                    <input type="password" placeholder="Password">
+                </div>
+                <button class="auth-submit">Log In</button>
+            </div>
+
+            <div class="auth-footer">
+                Don't have an account? <span class="auth-link">Create Account</span>
+            </div>
+        </div>
+    </div>
+
+    <header class="hero" style="min-height: 40vh; padding-bottom: 2rem;">
+        <div class="hero-content">
+            <h1 class="hero-title">Heavenly Punishment Supreme Deity</h1>
+            <p class="hero-subtitle">The Nine Heavens Origin Responding Thunderous Sound Universal Transformation Great
+                Emperor</p>
+        </div>
+    </header>
+
+    <main class="section">
+        <div class="character-layout">
+            <!-- Main Content -->
+            <div class="character-main" contenteditable="false">
+                <div class="character-header">
+                    <div class="character-quote" style="margin-bottom: 2rem;">
+                        “The time to wash away the shame has arrived. Cry out, O Essence of Great Heavenly Punishment.”
+                        <div style="margin-top: 0.5rem; font-style: normal; font-size: 0.9em; opacity: 0.8;">— Heavenly
+                            Punishment Supreme Deity</div>
+                    </div>
+
+                    <div class="spoiler character-section-content revealed">
+                        <strong>Nine Heavens Origin Responding Thunderous Sound Universal Transformation Great Emperor
+                            Do Gon</strong> (구천응원뇌성보화천존), simply known as the <strong>Heavenly Punishment Supreme
+                            Deity</strong>, is the God of all lightning and the Namer of Indra's Net. They are the
+                        former ruler of the Bearing Tree Heavenly Domain and govern over most advancement rituals in the
+                        system of Immortal Cultivation.
+                    </div>
+                </div>
+
+                <div class="character-section-content">
+                    <h2 class="section-title">Overview</h2>
+                    <p>Do Gon is the Heavenly Punishment Supreme Deity. Their symbol is the [Lightning Spear]. They
+                        govern over most advancement rituals in the system of Immortal Cultivation, from Qi Refining
+                        towards Entering Nirvana, and adjusted the heavenly tribulations accordingly. Prior to their
+                        existence, heavenly tribulations were much more disastrous.</p>
+                    <p style="margin-top: 1rem;">During a massive fight against Radiance Hall, their entire faction was
+                        killed, and They Themselves were imprisoned in the Horse Ear Heavenly Domain. They managed to
+                        escape after retrieving the light bulb from the 1003rd cycle.</p>
+                </div>
+
+                <div class="character-section-content">
+                    <h2 class="section-title">Personality</h2>
+                    <p>Do Gon is a complex deity who cares deeply for their "daughter" Zhengli. Though powerful and
+                        commanding as the God of Lightning, they have suffered great loss, including their entire
+                        faction.</p>
+                </div>
+
+                <div class="character-section-content">
+                    <h2 class="section-title">Relationships</h2>
+                    <h3>Zhengli</h3>
+                    <p>She is born from the remnants of the past Red Pearl Heavenly Kings that Do Gon gathered to make a
+                        banner which they then breathe their split soul into it, becoming Immortal Treasure of the
+                        Heavenly Punishment Supreme Deity Do Gon.</p>
+                    <p style="margin-top: 0.5rem;">However, she was a personality born from the split soul due to
+                        unknown reasons and became an entirely new existence which they then named "Zhengli" and
+                        cherished it like a daughter.</p>
+
+                    <h3 style="margin-top: 1.5rem;">Jade Pivot Forty-eight Lighting Heavenly Great Immortals</h3>
+                    <p>The subordinates of the Heavenly Punishment Supreme Deity. This includes:</p>
+                    <ul
+                        style="list-style-type: disc; margin-left: 1.5rem; color: var(--text-secondary); line-height: 1.8;">
+                        <li>The seven Heavenly Dao Envoys</li>
+                        <li>The four Heavenly Lords</li>
+                        <li>The five Immortal Lords</li>
+                        <li>The four Heavenly Lords</li>
+                    </ul>
+
+                    <h3 style="margin-top: 1.5rem;">Yang Su-jin</h3>
+                    <p>A former student and love interest.</p>
+                </div>
+
+                <div class="character-section-content">
+                    <h2 class="section-title">Prowess</h2>
+                    <div class="infobox-row">
+                        <span class="infobox-label">Peak Cultivation</span>
+                        <span class="infobox-value">Supreme Deity</span>
+                    </div>
+                    <div class="infobox-row">
+                        <span class="infobox-label">Special Designation</span>
+                        <span class="infobox-value">Owner of Heavenly Punishment</span>
+                    </div>
+                </div>
+
+                <div class="character-section-content">
+                    <h2 class="section-title">Trivia</h2>
+                    <ul
+                        style="list-style-type: disc; margin-left: 1.5rem; color: var(--text-secondary); line-height: 1.8;">
+                        <li>Their full title is "The Nine Heavens Origin Responding Thunderous Sound Universal
+                            Transformation Great Emperor" (九天應元雷聲普化天帝).</li>
+                        <li>Also known as "Indra" and "The Namer of Indra's Net".</li>
+                    </ul>
+                </div>
+
+                <div class="character-section-content"
+                    style="margin-top: 3rem; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 2rem;">
+                    <h2 class="section-title">See Also</h2>
+                    <div
+                        style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem;">
+                        <a href="yang_su_jin.html" class="nav-link"
+                            style="display: block; background: var(--bg-secondary); padding: 1rem; border-radius: 8px; text-align: center; border: 1px solid rgba(255,255,255,0.1); transition: all 0.2s;">
+                            <div style="font-weight: 600; margin-bottom: 0.5rem; color: var(--text-primary);">Yang
+                                Su-jin</div>
+                            <div style="font-size: 0.8em; color: var(--text-secondary);">Former Student</div>
+                        </a>
+                        <a href="../characters.html" class="nav-link"
+                            style="display: block; background: var(--bg-secondary); padding: 1rem; border-radius: 8px; text-align: center; border: 1px solid rgba(255,255,255,0.1); transition: all 0.2s;">
+                            <div style="font-weight: 600; margin-bottom: 0.5rem; color: var(--text-primary);">All
+                                Characters</div>
+                            <div style="font-size: 0.8em; color: var(--text-secondary);">View Full Roster</div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sidebar Infobox -->
+            <aside class="character-sidebar" style="outline-offset: 4px;">
+                <h3 class="infobox-title" contenteditable="false">Do Gon</h3>
+                <div class="infobox-image" contenteditable="false">
+                    <div class="carousel-container">
+                        <div class="carousel-track">
+                            <img src="../../assets/images/heavenly_punishment_supreme_deity.png"
+                                alt="Heavenly Punishment Supreme Deity" class="carousel-img active"
+                                data-caption="Heavenly Punishment Supreme Deity Fanart by @failose_">
+                        </div>
+                    </div>
+                    <div id="carousel-caption"
+                        style="text-align: center; font-size: 0.8rem; margin-top: 0.5rem; min-height: 1.2em; font-weight: 500;">
+                        Fanart by @failose_</div>
+                </div>
+
+                <div class="infobox-section" contenteditable="false">
+                    <div class="infobox-header">Personal Info</div>
+                    <div class="infobox-row">
+                        <span class="infobox-label">Real Name</span>
+                        <span class="infobox-value">Do Gon</span>
+                    </div>
+                    <div class="infobox-row">
+                        <span class="infobox-label">Aliases</span>
+                        <span class="infobox-value">Heavenly Punishment Supreme Deity, Indra</span>
+                    </div>
+                    <div class="infobox-row">
+                        <span class="infobox-label">Occupation</span>
+                        <span class="infobox-value">Supreme Deity</span>
+                    </div>
+                </div>
+
+                <div class="infobox-section" contenteditable="false">
+                    <div class="infobox-header">Status</div>
+                    <div class="infobox-row">
+                        <span class="infobox-label">Affiliation</span>
+                        <span class="infobox-value">Jade Pivot Forty-eight Lighting Heavenly Great Immortals</span>
+                    </div>
+                    <div class="infobox-row">
+                        <span class="infobox-label">Domain</span>
+                        <span class="infobox-value">Lightning, Heavenly Punishment</span>
+                    </div>
+                </div>
+
+                <div class="infobox-section" contenteditable="false">
+                    <div class="infobox-header">Cultivation</div>
+                    <div class="infobox-row">
+                        <span class="infobox-label">Level</span>
+                        <span class="infobox-value">Supreme Deity</span>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    <script src="../../scripts/editor.js"></script>
+    <script src="../../scripts/main.js"></script>
+
+</body>
+
+</html>

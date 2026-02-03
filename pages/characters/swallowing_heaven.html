@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Swallowing Heaven Supreme Deity | Regressor's Tale of Cultivation Wiki</title>
+    <link rel="stylesheet" href="../../styles/main.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap"
+        rel="stylesheet">
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <style>
+        /* Swallowing Heaven Theme - Abyssal/Orange/Black Theme */
+        .character-theme-swallowing-heaven {
+            --accent-primary: #ff5722;
+            /* Deep Orange */
+            --accent-secondary: #212121;
+            /* Grey 900 */
+            --text-highlight: #ffccbc;
+            /* Deep Orange 100 */
+            background: #050100 !important;
+            /* Very Dark Orange/Black */
+        }
+
+        /* Hero Background */
+        .character-theme-swallowing-heaven .hero {
+            min-height: 60vh;
+            background: linear-gradient(to bottom, rgba(5, 1, 0, 0.4) 0%, #050100 100%),
+                url('../../assets/images/swallowing_heaven.png') center top/cover no-repeat;
+            background-position: center 20%;
+        }
+
+        /* Title Gradient - fiery/abyssal */
+        .character-theme-swallowing-heaven .hero-title {
+            background: linear-gradient(135deg, #ffccbc, #bf360c);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: drop-shadow(0 0 15px rgba(255, 87, 34, 0.4));
+        }
+
+        /* Sidebar Theme */
+        .character-theme-swallowing-heaven .infobox-title {
+            background: linear-gradient(135deg, #ff5722 0%, #3e2723 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: drop-shadow(0 2px 4px rgba(191, 54, 12, 0.3));
+            animation: pulse-void 4s infinite alternate;
+        }
+
+        .character-theme-swallowing-heaven .character-sidebar {
+            background: rgba(10, 5, 0, 0.95);
+            border: 1px solid rgba(191, 54, 12, 0.4);
+            box-shadow: 0 4px 20px rgba(191, 54, 12, 0.2);
+        }
+
+        .character-theme-swallowing-heaven .infobox-header {
+            background: rgba(191, 54, 12, 0.15);
+            color: #ffab91;
+            border-left: 3px solid #bf360c;
+        }
+
+        .character-theme-swallowing-heaven .character-quote {
+            border-left-color: #ff5722;
+            background: linear-gradient(90deg, rgba(255, 87, 34, 0.1), transparent);
+            color: #ffab91;
+            font-style: italic;
+        }
+
+        .character-theme-swallowing-heaven .section-title {
+            color: #ff8a65;
+            border-bottom-color: rgba(255, 138, 101, 0.3);
+        }
+
+        @keyframes pulse-void {
+            from {
+                text-shadow: 0 0 10px rgba(255, 87, 34, 0.5), 0 0 20px rgba(255, 87, 34, 0.3);
+            }
+
+            to {
+                text-shadow: 0 0 20px rgba(191, 54, 12, 0.6), 0 0 30px rgba(191, 54, 12, 0.4);
+            }
+        }
+    </style>
+</head>
+
+<body class="character-theme-swallowing-heaven">
+
+    <nav class="nav" style="background: rgba(10, 5, 0, 0.95); box-shadow: rgba(0, 0, 0, 0.4) 0px 4px 20px;">
+        <div class="nav-container">
+            <a href="../../index.html" class="nav-logo">
+                <div class="nav-logo-icon">R</div>
+                RToC Wiki
+            </a>
+            <ul class="nav-links">
+                <li><a href="../../index.html" class="nav-link">Home</a></li>
+                <li><a href="../characters.html" class="nav-link"
+                        style="color: #ffffff; background: rgba(255, 87, 34, 0.2);">Characters</a></li>
+                <li><a href="../concepts.html" class="nav-link">Concepts</a></li>
+                <li><a href="../plot.html" class="nav-link">Plot</a></li>
+                <li><a href="../cultivation.html" class="nav-link">Cultivation</a></li>
+                <li><a href="../locations.html" class="nav-link">Locations</a></li>
+            </ul>
+            <div class="nav-search">
+                <ion-icon name="search-outline" class="nav-search-icon"></ion-icon>
+                <input type="text" placeholder="Search the wiki...">
+            </div>
+            <button class="login-btn">Log In</button>
+        </div>
+    </nav>
+
+    <!-- Login Modal -->
+    <div class="modal-overlay">
+        <div class="login-modal">
+            <div class="modal-header">
+                <button class="modal-close"><ion-icon name="close-outline"></ion-icon></button>
+                <h2 class="modal-title">Welcome Back</h2>
+                <p class="modal-subtitle">Log in to the RToC Wiki Community</p>
+            </div>
+
+            <div class="social-login">
+                <button class="social-btn discord">
+                    <ion-icon name="logo-discord"></ion-icon>
+                    Continue with Discord
+                </button>
+                <button class="social-btn google">
+                    <ion-icon name="logo-google"></ion-icon>
+                    Continue with Google
+                </button>
+            </div>
+
+            <div class="divider">or</div>
+
+            <div class="auth-form">
+                <div class="form-group">
+                    <input type="email" placeholder="Email Address">
+                </div>
+                <div class="form-group">
+                    <input type="password" placeholder="Password">
+                </div>
+                <button class="auth-submit">Log In</button>
+            </div>
+
+            <div class="auth-footer">
+                Don't have an account? <span class="auth-link">Create Account</span>
+            </div>
+        </div>
+    </div>
+
+    <header class="hero" style="min-height: 40vh; padding-bottom: 2rem;">
+        <div class="hero-content">
+            <h1 class="hero-title">Swallowing Heaven Supreme Deity</h1>
+            <p class="hero-subtitle">The Immortal Beast Supreme Tiger</p>
+        </div>
+    </header>
+
+    <main class="section">
+        <div class="character-layout">
+            <!-- Main Content -->
+            <div class="character-main" contenteditable="false">
+                <div class="character-header">
+                    <div
+                        style="background: rgba(255, 87, 34, 0.1); border-left: 4px solid #ff5722; padding: 1rem; margin-bottom: 2rem; border-radius: 4px;">
+                        <strong>Warning:</strong> This Article is Currently Incomplete. Please feel free to add
+                        information. <br>
+                        Join the <a href="https://discord.gg/P2cuYfEcTg"
+                            style="color: #ffab91; text-decoration: underline;">RToC server</a> to let us know what's
+                        missing!
+                    </div>
+
+                    <div class="spoiler character-section-content revealed">
+                        <strong>Swallowing Heaven Supreme Deity</strong> (Hyeon Ryul), also known as <strong>The
+                            Immortal Beast Supreme Tiger</strong>, is an Innate Supreme Deity. True to his name, his
+                        true form is that of a black hole capable of consuming multiple superclusters. He rules the Twin
+                        Holding Heavenly Domain.
+                    </div>
+                </div>
+
+                <div class="character-section-content">
+                    <h2 class="section-title">Overview</h2>
+                    <p>The Swallowing Heavens Supreme Deity is a Mantra left behind by the Obsidian Devil Heavenly King.
+                        Being an Innate Supreme Deity, he holds no Dao but is instead composed of the <strong>Flawless
+                            Mantra</strong>.</p>
+                    <p style="margin-top: 1rem;">He governs over the realm of Integration. His physical form is a
+                        massive black hole, and his stomach is considered the safest place against [Light]. However,
+                        entry and exit require the Flawless Mantra. His internal world connects to various realms,
+                        including the deep Underworld, Outer Sea, and the Inner Sanctum of Radiance Hall.</p>
+                </div>
+
+                <div class="character-section-content">
+                    <h2 class="section-title">Prowess</h2>
+                    <div class="infobox-row">
+                        <span class="infobox-label">Peak Cultivation</span>
+                        <span class="infobox-value">Supreme Deity (Innate)</span>
+                    </div>
+                    <div class="infobox-row">
+                        <span class="infobox-label">No Dao</span>
+                        <span class="infobox-value">Holds no Dao</span>
+                    </div>
+                    <div class="infobox-row">
+                        <span class="infobox-label">Composition</span>
+                        <span class="infobox-value">Flawless Mantra</span>
+                    </div>
+                </div>
+
+                <div class="character-section-content">
+                    <h2 class="section-title">Appearance</h2>
+                    <p>His true form is that of a black hole large enough to swallow five superclusters.</p>
+                </div>
+
+                <div class="character-section-content"
+                    style="margin-top: 3rem; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 2rem;">
+                    <h2 class="section-title">See Also</h2>
+                    <div
+                        style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem;">
+                        <a href="obsidian_devil_heavenly_king.html" class="nav-link"
+                            style="display: block; background: var(--bg-secondary); padding: 1rem; border-radius: 8px; text-align: center; border: 1px solid rgba(255,255,255,0.1); transition: all 0.2s;">
+                            <div style="font-weight: 600; margin-bottom: 0.5rem; color: var(--text-primary);">Obsidian
+                                Devil HK</div>
+                            <div style="font-size: 0.8em; color: var(--text-secondary);">Creator?</div>
+                        </a>
+                        <a href="../characters.html" class="nav-link"
+                            style="display: block; background: var(--bg-secondary); padding: 1rem; border-radius: 8px; text-align: center; border: 1px solid rgba(255,255,255,0.1); transition: all 0.2s;">
+                            <div style="font-weight: 600; margin-bottom: 0.5rem; color: var(--text-primary);">All
+                                Characters</div>
+                            <div style="font-size: 0.8em; color: var(--text-secondary);">View Full Roster</div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sidebar Infobox -->
+            <aside class="character-sidebar" style="outline-offset: 4px;">
+                <h3 class="infobox-title" contenteditable="false">Swallowing Heaven</h3>
+                <div class="infobox-image" contenteditable="false">
+                    <div class="carousel-container">
+                        <div class="carousel-track">
+                            <img src="../../assets/images/swallowing_heaven.png" alt="Swallowing Heaven Supreme Deity"
+                                class="carousel-img active" data-caption="Art by Failose_">
+                        </div>
+                    </div>
+                    <div id="carousel-caption"
+                        style="text-align: center; font-size: 0.8rem; margin-top: 0.5rem; min-height: 1.2em; font-weight: 500;">
+                        Art by Failose_</div>
+                </div>
+
+                <div class="infobox-section" contenteditable="false">
+                    <div class="infobox-header">Personal Info</div>
+                    <div class="infobox-row">
+                        <span class="infobox-label">Real Name</span>
+                        <span class="infobox-value">Hyeon Ryul (玄律)</span>
+                    </div>
+                    <div class="infobox-row">
+                        <span class="infobox-label">Aliases</span>
+                        <span class="infobox-value">The Immortal Beast Supreme Tiger</span>
+                    </div>
+                    <div class="infobox-row">
+                        <span class="infobox-label">Occupation</span>
+                        <span class="infobox-value">Supreme Deity</span>
+                    </div>
+                </div>
+
+                <div class="infobox-section" contenteditable="false">
+                    <div class="infobox-header">Status</div>
+                    <div class="infobox-row">
+                        <span class="infobox-label">Domain</span>
+                        <span class="infobox-value">Twin Holding Heavenly Domain</span>
+                    </div>
+                    <div class="infobox-row">
+                        <span class="infobox-label">Role</span>
+                        <span class="infobox-value">Swallowing Heavens Mantra</span>
+                    </div>
+                </div>
+
+                <div class="infobox-section" contenteditable="false">
+                    <div class="infobox-header">Cultivation</div>
+                    <div class="infobox-row">
+                        <span class="infobox-label">Level</span>
+                        <span class="infobox-value">Supreme Deity (Innate)</span>
+                    </div>
+                    <div class="infobox-row">
+                        <span class="infobox-label">Dao</span>
+                        <span class="infobox-value">None (Filth)</span>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    <script src="../../scripts/editor.js"></script>
+    <script src="../../scripts/main.js"></script>
+
+</body>
+
+</html>

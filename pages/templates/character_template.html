@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{CHARACTER_NAME}} | Regressor's Tale of Cultivation Wiki</title>
+    <link rel="stylesheet" href="../../styles/main.css">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap">
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <style>
+        /* Theme: {{THEME_NAME}} */
+        .character-theme- {
+                {
+                CHARACTER_ID
+            }
+        }
+
+            {
+            --accent-primary: #888888;
+            /* Replace with primary color */
+            --accent-secondary: #555555;
+            /* Replace with secondary color */
+            /* background: #0b0b0f !important; */
+        }
+
+        .character-theme- {
+                {
+                CHARACTER_ID
+            }
+        }
+
+        .hero {
+            background: linear-gradient(to bottom, rgba(10, 10, 15, 0.5) 0%, #0b0b0f 100%),
+                url('../../assets/images/placeholder.png') center top/cover no-repeat;
+        }
+
+        .character-theme- {
+                {
+                CHARACTER_ID
+            }
+        }
+
+        .hero-title {
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Sidebar Theme */
+        .character-theme- {
+                {
+                CHARACTER_ID
+            }
+        }
+
+        .infobox-title {
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+    </style>
+</head>
+
+<body class="character-theme-{{CHARACTER_ID}}">
+
+    <nav class="nav">
+        <div class="nav-container">
+            <a href="../../index.html" class="nav-logo">
+                <img src="../../assets/logo_character.png" alt="RToC" class="nav-logo-img"
+                    style="width:36px; height:36px; border-radius:8px; object-fit:cover;">
+                RToC Wiki
+            </a>
+            <ul class="nav-links">
+                <li><a href="../../index.html" class="nav-link">Home</a></li>
+                <li><a href="../characters.html" class="nav-link">Characters</a></li>
+                <li><a href="../concepts.html" class="nav-link">Concepts</a></li>
+                <li><a href="../plot.html" class="nav-link">Plot</a></li>
+                <li><a href="../cultivation.html" class="nav-link">Cultivation</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">{{CHARACTER_NAME}}</h1>
+            <p class="hero-subtitle">[TITLE/EPITHET]</p>
+        </div>
+    </header>
+
+    <main class="section">
+        <div class="character-layout">
+            <!-- Main Content -->
+            <div class="character-main" contenteditable="false">
+                <div class="character-header">
+                    <div class="character-quote">
+                        "[INSERT CHARACTER QUOTE HERE]"
+                    </div>
+                    <div class="spoiler character-section-content revealed">
+                        <strong>{{CHARACTER_NAME}}</strong> [SHORT INTRO]
+                    </div>
+                </div>
+
+                <div class="character-section-content">
+                    <h2 class="section-title">Overview</h2>
+                    <p>[OVERVIEW PARAGRAPH]</p>
+                </div>
+
+                <div class="character-section-content">
+                    <h2 class="section-title">Appearance</h2>
+                    <div class="spoiler revealed" style="padding: 1.5rem; min-height: 80px;">
+                        <p>[APPEARANCE DETAILS]</p>
+                    </div>
+                </div>
+
+                <div class="character-section-content">
+                    <h2 class="section-title">Personality</h2>
+                    <p>[PERSONALITY DETAILS]</p>
+                </div>
+
+                <div class="character-section-content">
+                    <h2 class="section-title">Relationships</h2>
+                    <h3>Allies</h3>
+                    <ul
+                        style="list-style-type: disc; margin-left: 1.5rem; color: var(--text-secondary); line-height: 1.8;">
+                        <li>[NAME]</li>
+                    </ul>
+                </div>
+
+                <div class="character-section-content">
+                    <h2 class="section-title">Prowess</h2>
+                    <div class="infobox-row">
+                        <span class="infobox-label">Peak Cultivation</span>
+                        <span class="infobox-value">[RANK]</span>
+                    </div>
+                </div>
+
+                <div class="character-section-content">
+                    <h2 class="section-title">Trivia</h2>
+                    <ul
+                        style="list-style-type: disc; margin-left: 1.5rem; color: var(--text-secondary); line-height: 1.8;">
+                        <li>[FACT 1]</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Sidebar Infobox -->
+            <aside class="character-sidebar" style="outline-offset: 4px;">
+                <h3 class="infobox-title" contenteditable="false">{{CHARACTER_NAME}}</h3>
+                <div class="infobox-image" contenteditable="false">
+                    <div class="carousel-container">
+                        <div class="carousel-track">
+                            <img src="../../assets/images/placeholder.png" alt="{{CHARACTER_NAME}}"
+                                class="carousel-img active">
+                        </div>
+                    </div>
+                    <div id="carousel-caption"
+                        style="text-align: center; font-size: 0.8rem; margin-top: 0.5rem; min-height: 1.2em; font-weight: 500;">
+                        Caption</div>
+                </div>
+
+                <div class="infobox-section" contenteditable="false">
+                    <div class="infobox-header">Personal Info</div>
+                    <div class="infobox-row">
+                        <span class="infobox-label">Race</span>
+                        <span class="infobox-value">[RACE]</span>
+                    </div>
+                    <div class="infobox-row">
+                        <span class="infobox-label">Gender</span>
+                        <span class="infobox-value">[GENDER]</span>
+                    </div>
+                    <div class="infobox-row">
+                        <span class="infobox-label">Age</span>
+                        <span class="infobox-value">[AGE]</span>
+                    </div>
+                </div>
+
+                <div class="infobox-section" contenteditable="false">
+                    <div class="infobox-header">Status</div>
+                    <div class="infobox-row">
+                        <span class="infobox-label">State</span>
+                        <span class="infobox-value">[STATUS]</span>
+                    </div>
+                    <div class="infobox-row">
+                        <span class="infobox-label">Affiliation</span>
+                        <span class="infobox-value">[AFFILIATION]</span>
+                    </div>
+                </div>
+            </aside>
+            <!-- Comments Section -->
+            <div id="comments-section"></div>
+        </div>
+    </main>
+
+    <script src="../../scripts/editor.js"></script>
+    <script src="../../scripts/comments.js"></script>
+    <script src="../../scripts/main.js"></script>
+
+</body>
+
+</html>

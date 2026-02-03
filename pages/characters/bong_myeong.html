@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bong Myeong | Regressor's Tale of Cultivation Wiki</title>
+    <link rel="stylesheet" href="../../styles/main.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap"
+        rel="stylesheet">
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <style>
+        /* Bong Myeong Theme - Liberation/Rainbow/Circuitry Theme */
+        .character-theme-bong-myeong {
+            --accent-primary: #ff4081;
+            /* Pink Accent */
+            --accent-secondary: #7c4dff;
+            /* Deep Purple Accent */
+            --text-highlight: #f8faff;
+            /* White-ish */
+            background: #12002b !important;
+            /* Deep Space Violet */
+        }
+
+        /* Hero Background */
+        .character-theme-bong-myeong .hero {
+            min-height: 60vh;
+            background: linear-gradient(to bottom, rgba(18, 0, 43, 0.4) 0%, #12002b 100%),
+                url('../../assets/images/bong_myeong.png') center top/cover no-repeat;
+            background-position: center 20%;
+        }
+
+        /* Title Gradient - Rainbow/Iridescent */
+        .character-theme-bong-myeong .hero-title {
+            background: linear-gradient(90deg, #ff5252, #ffeb3b, #00e676, #2979ff, #d500f9);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: drop-shadow(0 0 15px rgba(255, 64, 129, 0.4));
+            animation: rainbow-text 5s linear infinite;
+        }
+
+        /* Sidebar Theme */
+        .character-theme-bong-myeong .infobox-title {
+            background: linear-gradient(135deg, #ff4081 0%, #7c4dff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: drop-shadow(0 2px 4px rgba(124, 77, 255, 0.3));
+        }
+
+        .character-theme-bong-myeong .character-sidebar {
+            background: rgba(20, 10, 30, 0.95);
+            border: 1px solid rgba(124, 77, 255, 0.4);
+            box-shadow: 0 4px 20px rgba(124, 77, 255, 0.2);
+            /* Circuitry pattern overlay */
+            background-image:
+                linear-gradient(rgba(124, 77, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(124, 77, 255, 0.05) 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+
+        .character-theme-bong-myeong .infobox-header {
+            background: rgba(124, 77, 255, 0.15);
+            color: #b388ff;
+            border-left: 3px solid #651fff;
+        }
+
+        .character-theme-bong-myeong .character-quote {
+            border-left-color: #ff4081;
+            background: linear-gradient(90deg, rgba(255, 64, 129, 0.1), transparent);
+            color: #ff80ab;
+            font-style: italic;
+        }
+
+        .character-theme-bong-myeong .section-title {
+            color: #ea80fc;
+            border-bottom-color: rgba(234, 128, 252, 0.3);
+        }
+
+        @keyframes rainbow-text {
+            to {
+                background-position: 200% center;
+            }
+        }
+    </style>
+</head>
+
+<body class="character-theme-bong-myeong">
+
+    <nav class="nav" style="background: rgba(18, 0, 43, 0.95); box-shadow: rgba(0, 0, 0, 0.4) 0px 4px 20px;">
+        <div class="nav-container">
+            <a href="../../index.html" class="nav-logo">
+                <div class="nav-logo-icon">R</div>
+                RToC Wiki
+            </a>
+            <ul class="nav-links">
+                <li><a href="../../index.html" class="nav-link">Home</a></li>
+                <li><a href="../characters.html" class="nav-link"
+                        style="color: #ffffff; background: rgba(255, 64, 129, 0.2);">Characters</a></li>
+                <li><a href="../concepts.html" class="nav-link">Concepts</a></li>
+                <li><a href="../plot.html" class="nav-link">Plot</a></li>
+                <li><a href="../cultivation.html" class="nav-link">Cultivation</a></li>
+                <li><a href="../locations.html" class="nav-link">Locations</a></li>
+            </ul>
+            <div class="nav-search">
+                <ion-icon name="search-outline" class="nav-search-icon"></ion-icon>
+                <input type="text" placeholder="Search the wiki...">
+            </div>
+            <button class="login-btn">Log In</button>
+        </div>
+    </nav>
+
+    <!-- Login Modal -->
+    <div class="modal-overlay">
+        <div class="login-modal">
+            <div class="modal-header">
+                <button class="modal-close"><ion-icon name="close-outline"></ion-icon></button>
+                <h2 class="modal-title">Welcome Back</h2>
+                <p class="modal-subtitle">Log in to the RToC Wiki Community</p>
+            </div>
+
+            <div class="social-login">
+                <button class="social-btn discord">
+                    <ion-icon name="logo-discord"></ion-icon>
+                    Continue with Discord
+                </button>
+                <button class="social-btn google">
+                    <ion-icon name="logo-google"></ion-icon>
+                    Continue with Google
+                </button>
+            </div>
+
+            <div class="divider">or</div>
+
+            <div class="auth-form">
+                <div class="form-group">
+                    <input type="email" placeholder="Email Address">
+                </div>
+                <div class="form-group">
+                    <input type="password" placeholder="Password">
+                </div>
+                <button class="auth-submit">Log In</button>
+            </div>
+
+            <div class="auth-footer">
+                Don't have an account? <span class="auth-link">Create Account</span>
+            </div>
+        </div>
+    </div>
+
+    <header class="hero" style="min-height: 40vh; padding-bottom: 2rem;">
+        <div class="hero-content">
+            <h1 class="hero-title">Bong Myeong</h1>
+            <p class="hero-subtitle">The Liberation Supreme Deity</p>
+        </div>
+    </header>
+
+    <main class="section">
+        <div class="character-layout">
+            <!-- Main Content -->
+            <div class="character-main" contenteditable="false">
+                <div class="character-header">
+                    <div class="spoiler character-section-content revealed">
+                        <strong>Bong Myeong</strong> (Gongmyo Cheon-saek), the <strong>Liberation Supreme
+                            Deity</strong>, is the youngest Supreme Deity, having ascended only forty thousand years
+                        ago. Ruler of the Earth Boundary Heavenly Domain, their symbol is the [Bird Trapped in a Cage].
+                    </div>
+                </div>
+
+                <div class="character-section-content">
+                    <h2 class="section-title">Overview</h2>
+                    <p>Bong Myeong governs over the realms of Qi Refining 6th Star and Sacred Vessel. Originally a full
+                        Supreme Deity, they were demoted to a half-step Supreme Deity after the timelines were split by
+                        the Radiance Mantra.</p>
+                    <p style="margin-top: 1rem;">They are also known as the <strong>Owner of Liberation</strong>.
+                        Despite their high status, they are the youngest among the Supreme Deities and have a unique
+                        connection to the concept of liberation and circuitry.</p>
+                </div>
+
+                <div class="character-section-content">
+                    <h2 class="section-title">Techniques & Abilities</h2>
+
+                    <h3>Liberation Peach Garden Village</h3>
+                    <p>Bong Myeong's signature Immortal Art. It consists of a world inside a painting where countless
+                        beings are trapped. These beings are promised release if they fulfill their assigned roles for
+                        100 years. By acting diligently, they accumulate experience points and increase their rank,
+                        gaining special privileges.</p>
+                    <p style="margin-top: 0.5rem;">However, the world operates under unique rules that gradually consume
+                        those trapped within. The karma accumulated from playing their roles solidifies, effectively
+                        trapping them further. Within this domain, standard attraction force, immortal arts,
+                        cultivation, and manifestation cannot be used. Those who lose all power become wandering
+                        spirits.</p>
+
+                    <h3 style="margin-top: 1.5rem;">Imperial Throne Circuitry</h3>
+                    <p>A unique cultivation method created by Bong Myeong. It involves creating circuits using star
+                        veins across an entire Heavenly Domain. These circuits amplify the power drawn from the Origin
+                        Essence of Liberation. It is described as being similar to the Mad Lord's circuits, but evolved
+                        a quadrillion times in complexity and power.</p>
+                </div>
+
+                <div class="character-section-content">
+                    <h2 class="section-title">Relationships</h2>
+                    <h3>Allies</h3>
+                    <ul
+                        style="list-style-type: disc; margin-left: 1.5rem; color: var(--text-secondary); line-height: 1.8;">
+                        <li><strong>Heavenly Punishment Supreme Deity</strong>: A fellow Supreme Deity.</li>
+                    </ul>
+
+                    <h3 style="margin-top: 1.5rem;">Relatives</h3>
+                    <ul
+                        style="list-style-type: disc; margin-left: 1.5rem; color: var(--text-secondary); line-height: 1.8;">
+                        <li><strong>Glass Peacock</strong>: Ancestor.</li>
+                    </ul>
+                </div>
+
+                <div class="character-section-content">
+                    <h2 class="section-title">Prowess</h2>
+                    <div class="infobox-row">
+                        <span class="infobox-label">Peak Cultivation</span>
+                        <span class="infobox-value">Supreme Deity (Half-step)</span>
+                    </div>
+                    <div class="infobox-row">
+                        <span class="infobox-label">Domain</span>
+                        <span class="infobox-value">Earth Boundary Heavenly Domain</span>
+                    </div>
+                </div>
+
+                <div class="character-section-content"
+                    style="margin-top: 3rem; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 2rem;">
+                    <h2 class="section-title">See Also</h2>
+                    <div
+                        style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem;">
+                        <a href="heavenly_punishment_supreme_deity.html" class="nav-link"
+                            style="display: block; background: var(--bg-secondary); padding: 1rem; border-radius: 8px; text-align: center; border: 1px solid rgba(255,255,255,0.1); transition: all 0.2s;">
+                            <div style="font-weight: 600; margin-bottom: 0.5rem; color: var(--text-primary);">Heavenly
+                                Punishment</div>
+                            <div style="font-size: 0.8em; color: var(--text-secondary);">Ally</div>
+                        </a>
+                        <a href="../characters.html" class="nav-link"
+                            style="display: block; background: var(--bg-secondary); padding: 1rem; border-radius: 8px; text-align: center; border: 1px solid rgba(255,255,255,0.1); transition: all 0.2s;">
+                            <div style="font-weight: 600; margin-bottom: 0.5rem; color: var(--text-primary);">All
+                                Characters</div>
+                            <div style="font-size: 0.8em; color: var(--text-secondary);">View Full Roster</div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sidebar Infobox -->
+            <aside class="character-sidebar" style="outline-offset: 4px;">
+                <h3 class="infobox-title" contenteditable="false">Bong Myeong</h3>
+                <div class="infobox-image" contenteditable="false">
+                    <div class="carousel-container">
+                        <div class="carousel-track">
+                            <img src="../../assets/images/bong_myeong.png" alt="Bong Myeong" class="carousel-img active"
+                                data-caption="Bong Myeong Fanart by @Failose_">
+                        </div>
+                    </div>
+                    <div id="carousel-caption"
+                        style="text-align: center; font-size: 0.8rem; margin-top: 0.5rem; min-height: 1.2em; font-weight: 500;">
+                        Fanart by @Failose_</div>
+                </div>
+
+                <div class="infobox-section" contenteditable="false">
+                    <div class="infobox-header">Personal Info</div>
+                    <div class="infobox-row">
+                        <span class="infobox-label">Real Name</span>
+                        <span class="infobox-value">Gongmyo Cheon-saek</span>
+                    </div>
+                    <div class="infobox-row">
+                        <span class="infobox-label">Aliases</span>
+                        <span class="infobox-value">Liberation Supreme Deity</span>
+                    </div>
+                    <div class="infobox-row">
+                        <span class="infobox-label">Race</span>
+                        <span class="infobox-value">Falcon</span>
+                    </div>
+                    <div class="infobox-row">
+                        <span class="infobox-label">Occupation</span>
+                        <span class="infobox-value">Supreme Deity</span>
+                    </div>
+                </div>
+
+                <div class="infobox-section" contenteditable="false">
+                    <div class="infobox-header">Status</div>
+                    <div class="infobox-row">
+                        <span class="infobox-label">Domain</span>
+                        <span class="infobox-value">Liberation</span>
+                    </div>
+                    <div class="infobox-row">
+                        <span class="infobox-label">Symbol</span>
+                        <span class="infobox-value">Bird Trapped in a Cage</span>
+                    </div>
+                </div>
+
+                <div class="infobox-section" contenteditable="false">
+                    <div class="infobox-header">Cultivation</div>
+                    <div class="infobox-row">
+                        <span class="infobox-label">Level</span>
+                        <span class="infobox-value">Supreme Deity</span>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    <script src="../../scripts/editor.js"></script>
+    <script src="../../scripts/main.js"></script>
+
+</body>
+
+</html>
