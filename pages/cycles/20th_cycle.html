@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#4f46e5">
+    <title>20th & 21st Cycles | RToC Wiki</title>
+    <link rel="icon" type="image/jpeg" href="../../assets/images/seo_eun_hyun_cover.jpg">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap"
+        rel="stylesheet">
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <style>
+        .cycle-article {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #312e81 0%, #1e1b4b 100%);
+            min-height: 40vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 4rem 2rem;
+            position: relative;
+            margin-bottom: 3rem;
+        }
+
+        .hero-title {
+            font-family: 'Cinzel', serif;
+            font-size: 3rem;
+            color: #fff;
+            text-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+            margin-bottom: 0.5rem;
+            line-height: 1.2;
+        }
+
+        .hero-subtitle {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.9);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+        }
+
+        .hero-desc {
+            margin-top: 1.5rem;
+            font-size: 1.1rem;
+            color: #e5e7eb;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            font-style: italic;
+        }
+
+        /* Content Styling */
+        .toc-container {
+            background: rgba(20, 20, 25, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 3rem;
+            display: inline-block;
+            min-width: 250px;
+        }
+
+        .toc-title {
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #fff;
+            text-align: center;
+        }
+
+        .toc-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .toc-list li {
+            margin-bottom: 0.5rem;
+        }
+
+        .toc-list a {
+            color: #818cf8;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.2s;
+        }
+
+        .toc-list a:hover {
+            color: #fff;
+            text-decoration: underline;
+        }
+
+        .toc-sublist {
+            padding-left: 1.5rem;
+            margin-top: 0.5rem;
+            list-style: none;
+        }
+
+        .cycle-section {
+            margin-bottom: 4rem;
+            scroll-margin-top: 100px;
+        }
+
+        .cycle-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2rem;
+            color: #818cf8;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid rgba(129, 140, 248, 0.3);
+            display: inline-block;
+            padding-bottom: 0.5rem;
+        }
+
+        .cycle-subtitle {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.6rem;
+            color: #a5b4fc;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .cycle-content {
+            line-height: 1.8;
+            color: #e2e8f0;
+            margin-bottom: 1.5rem;
+            text-align: justify;
+        }
+
+        /* Image Styling */
+        .img-container {
+            display: flex;
+            justify-content: center;
+            margin: 2rem 0;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .img-display {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(129, 140, 248, 0.2);
+            margin-bottom: 0.5rem;
+        }
+
+        .img-caption {
+            color: #94a3b8;
+            font-size: 0.9rem;
+            font-style: italic;
+        }
+
+        .info-card {
+            background: rgba(129, 140, 248, 0.05);
+            border: 1px solid rgba(129, 140, 248, 0.2);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-top: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .info-label {
+            font-weight: 600;
+            color: #818cf8;
+        }
+
+        /* Navigation */
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 2rem;
+            background: rgba(129, 140, 248, 0.1);
+            border-radius: 8px;
+            color: #818cf8;
+            transition: all 0.2s;
+            text-decoration: none;
+            font-weight: 600;
+            border: 1px solid rgba(129, 140, 248, 0.2);
+        }
+
+        .nav-btn:hover {
+            background: rgba(129, 140, 248, 0.2);
+            transform: translateY(-2px);
+            color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="nav">
+        <div class="nav-container">
+            <a href="../../index.html" class="nav-logo">
+                <img src="../../assets/logo_character.png" alt="RToC" class="nav-logo-img"
+                    style="width:36px; height:36px; border-radius:8px; object-fit:cover;">
+                RToC Wiki
+            </a>
+            <ul class="nav-links">
+                <li><a href="../../index.html" class="nav-link">Home</a></li>
+                <li><a href="../characters.html" class="nav-link">Characters</a></li>
+                <li><a href="../concepts.html" class="nav-link">Concepts</a></li>
+                <li><a href="../plot.html" class="nav-link"
+                        style="color: var(--text-primary); background: rgba(139, 92, 246, 0.1);">Plot</a></li>
+                <li><a href="../cultivation.html" class="nav-link">Cultivation</a></li>
+                <li><a href="../martial_arts.html" class="nav-link">Martial Arts</a></li>
+                <li><a href="../locations.html" class="nav-link">Locations</a></li>
+            </ul>
+            <div class="nav-search">
+                <ion-icon name="search-outline" class="nav-search-icon"></ion-icon>
+                <input type="text" placeholder="Search the wiki...">
+            </div>
+            <button class="login-btn">Log In</button>
+        </div>
+    </nav>
+
+    <!-- Hero Header -->
+    <header class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">What Does a Person Live For<br><span style="font-size: 2rem;">&</span><br>Laugh. Only
+                You Will Be Laughing</h1>
+            <p class="hero-subtitle">20th & 21st Cycles</p>
+            <p class="hero-desc">
+                Covering the journey through the Bright Cold Realm and the confrontation with Blood Yin.<br>
+                Chapter 411 - Chapter 467
+            </p>
+        </div>
+    </header>
+
+    <div class="cycle-article">
+        <div class="toc-container">
+            <div class="toc-title">Contents</div>
+            <ul class="toc-list">
+                <li><a href="#cycle-20">1 20th Cycle</a>
+                    <ul class="toc-sublist">
+                        <li><a href="#disasters">1.1 Three Great Disasters</a></li>
+                        <li><a href="#face-to-face">1.2 Face to Face</a></li>
+                        <li><a href="#broken-ones">1.3 Broken Ones</a></li>
+                        <li><a href="#live-for">1.4 What Does a Person Live For</a></li>
+                        <li><a href="#timeline-20">1.5 Timeline</a></li>
+                    </ul>
+                </li>
+                <li><a href="#cycle-21">2 21st Cycle</a>
+                    <ul class="toc-sublist">
+                        <li><a href="#her">2.1 Her</a></li>
+                        <li><a href="#descend">2.2 Descend</a></li>
+                        <li><a href="#mad-lord">2.3 Mad Lord</a></li>
+                        <li><a href="#yeons-heart">2.4 Yeon’s Heart</a></li>
+                        <li><a href="#key">2.5 Key</a></li>
+                        <li><a href="#snake-not-found">2.6 The Place the Snake Cannot Be Found</a></li>
+                        <li><a href="#snake-cannot-find">2.7 The Place the Snake Cannot Find</a></li>
+                        <li><a href="#snake-can-find">2.8 The Place the Snake Can Find</a></li>
+                        <li><a href="#found-it">2.9 Found It</a></li>
+                        <li><a href="#laugh">2.10 Laugh. Only You Will Be Laughing</a></li>
+                        <li><a href="#timeline-21">2.11 Timeline</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <!-- 20th Cycle -->
+        <section id="cycle-20" class="cycle-section">
+            <h2 class="cycle-title">20th Cycle</h2>
+
+            <section id="disasters">
+                <h3 class="cycle-subtitle">Three Great Disasters</h3>
+                <div class="cycle-content">
+                    <p>Eun-hyun opens his eyes in the middle of a regression. He notices a seat that previously appeared
+                        to be watching him has dimmed severely, and feels grateful towards the God of Time. All the
+                        Governing Immortals are able to perceive him this regression, as it occurred due to a Heavenly
+                        Venerable’s power. Through the power of the Heavenly Venerable of Time, he returns to the
+                        instant after the Owner of Great Mountain has annihilated the Twilight Domain. Seo Eun-hyun
+                        unfolds his Integrated Dao Domain and pulls in his surviving comrades. The Supreme Deity of
+                        Light takes Great Mountain away. Before going, Great Mountain says they will meet [above], and
+                        kills ten of the surviving twenty-three.</p>
+
+                    <p>Eun-hyun faces three Esteemed One level vestiges. He realises he must break the star of
+                        misfortune, set on him by the Entering Nirvana True Persons he met in Nether Ghost Realm. With
+                        the help of his comrades, Eun-hyun succeeds in destroying the star. He lets go of the Salt
+                        Mountain of Penglai Island. Yuk Yo and Baek Rin enter the world, and it sucks in all the
+                        Vestiges around them.</p>
+
+                    <p>The remains of the Wuji Ghost Cult enter the scroll of Lofty Dragon. Only Kim Young-hoon, Jeon
+                        Myeong-hoon, Oh Hyun-seok, Kim Yeon, Buk Hyang-hwa, Hong Fan, Seo Ran, Shi Ho, Yeon Jin, Wei
+                        Shi-hon and Eum Wa remain. Eun-hyun gives the Heavenly Lotus Fruit to Gyo Yeom, whom he had met
+                        in the eighteenth cycle. Gyo Yeom takes some juice and returns it to him. The remains of the
+                        Cult hold a funeral and vow revenge. They have all gotten stronger for having witnessed Great
+                        Mountain.</p>
+
+                    <p>Eun-hyun rushes to the Human Race territory, with his friends in his Domain. He warns them about
+                        the advent of the Ghost Guiding Holy Mother, but the Grand Cultivators of the Human Race refuse
+                        to believe him. On Jeon Myeong-hoon’s suggestion, they begin to forcefully drive the Human Race
+                        out of their territory. During the battle, Azure Tiger Saint defects to the Wuji Religious
+                        Order. They destroy the Human Tribe’s territory.</p>
+                </div>
+            </section>
+
+            <section id="face-to-face">
+                <h3 class="cycle-subtitle">Face to Face</h3>
+                <div class="cycle-content">
+                    <p>Black Ghost Valley and Azure Heaven Creation Sect are now with Seo Eun-hyun. Seo Eun-hyun warns
+                        Black Ghost Valley about Kang Min-hee’s impending rampage. He orders them to move the Human
+                        Tribe into the Heart Tribe territory. The Sacred Master of Bright Cold, Baek Woon, suddenly
+                        summons his consciousness into her White Jade Pavilion.</p>
+
+                    <p>Baek Woon asks about Seo Eun-hyun’s experience with Great Mountain. Seo Eun-hyun cannot answer as
+                        it involves too many Governing Immortals. He begs her to help them confront Kang Min-hee, but
+                        she refuses. She says she must check if he has any attraction force with Great Mountain, and
+                        accelerates their consciousness. While checking for attraction force, she allows Seo Eun-hyun to
+                        ask questions. She says she merely manages the realm of Bright Cold, and is not required to
+                        protect the dwellers.</p>
+
+                    <p>She tells him all Middle Realms are bodies of dead True Immortals. She tells him of the death of
+                        Vast Cold, and the fear of a humongously powerful Vestige rising from their body. She says she
+                        had to lower her cultivation from True Person to Sacred Master after the death of Lofty Dragon.
+                        She says she has summoned Jang Ik, who should arrive in a “mere” five hundred years. She
+                        concludes her investigation and gives Seo Eun-hyun a clean bill of health. She allows one more
+                        question. She shows Seo Eun-hyun how the Middle Realms are arranged; the corpses appear as if
+                        they are reaching towards the Head Realm, the “ominous world”. She releases Seo Eun-hyun’s
+                        consciousness. Seo Eun-hyun finds Kang Min-hee is descending. He orders his comrades to take the
+                        Nether Crossing Ships and run. He leads her on a chase as she steadily absorbs the resentment of
+                        the victims of the Human Race. All of a sudden he is greeted by Seo Hweol.</p>
+                </div>
+            </section>
+
+            <section id="broken-ones">
+                <h3 class="cycle-subtitle">Broken Ones</h3>
+                <div class="cycle-content">
+                    <p>Seo Hweol is using a projection cast by Oh Hye-seo, whom he has married. He offers an alliance to
+                        push Kang Min-hee out of the Bright Cold Realm. For his plan to succeed, he also requires the
+                        Mad Lord. He says he can temporarily restore Mad Lord to Jo Yeon, and he also needs to find his
+                        main body to undo the seal placed on him by the Reaper within Kang Min-hee. Seo Eun-hyun agrees
+                        to help him. They dump Kang Min-hee into the Void Spirit Pond near the Heaven Earth Palace,
+                        seize Hon Won, and run away.</p>
+                </div>
+            </section>
+
+            <section id="live-for">
+                <h3 class="cycle-subtitle">What Does a Person Live For</h3>
+                <div class="cycle-content">
+                    <p>During their run to the Mad Lord, Seo Eun-hyun discovers all of Hon Won’s memories towards Yeon
+                        Wei are distorted. Seo Eun-hyun and Seo Hweol invade the Wonderful Mysterious Fortress, and
+                        begin ‘curing’ the Mad Lord.</p>
+
+                    <p>They manage to cover up Mad Lord’s most hated memory, and Mad Lord comes to his senses. He
+                        immediately attacks both Seo Eun-hyun and Seo Hweol, as he hates the latter. He listens to what
+                        Seo Eun-hyun has to say out of respect for his disciple. Kim Yeon’s projection convinces Mad
+                        Lord. He agrees to help as long as Seo Hweol remains out of sight.</p>
+
+                    <p>Yeon Wei suddenly sends her consciousness through Kim Yeon. She demands to know what happened to
+                        the disciples of the Golden Divine Heavenly Thunder Sect. She begins calling Seo Eun-hyun “God”
+                        and says she realised Seo Eun-hyun has the same aura as the [being] behind Hon Won. She begs Seo
+                        Eun-hyun to spare her descendants and take her as his last kill. Seo Eun-hyun is stunned
+                        speechless, and is saved from answering when Hon Won confronts her. Yeon Wei once again asks if
+                        Seo Eun-hyun will grant her request. Seo Eun-hyun has no choice but to say he is not a True
+                        Immortal.</p>
+
+                    <p>After Yeon Wei’s projection has left, Seo Eun-hyun asks the Mad Lord if someone he wanted to
+                        protect did not want his protection. Mad Lord says he has never considered it. Then he asks how
+                        he looks to the eyes of someone who has reached far beyond his lover. Seo Eun-hyun tells him he
+                        is merely half a step away from Entering Heavens Beyond the Path.</p>
+
+                    <p>Kang Min-hee suddenly summons herself into the Bright Cold Realm, due to the Nether Crossing
+                        Ship. Buk Hyang-hwa’s consciousness is sent over by Kim Yeon. They create a miniature Realm
+                        Annihilation Heavenly Void Formation and teleport to where Kang Min-hee is. With the Mad Lord’s
+                        help, they manage to charge the Nether Crossing Ship. Hong fan creates a substitute for Seo
+                        Ran’s blood for Seo Hweol to use. Seo Hweol gives a liquid to Hong Fan to pour onto Kang
+                        Min-hee. However, Hong Fan inexplicably hesitates on seeing Kang Min-hee, and falls into a daze.
+                        Kim Yeon arrives to assist, burning in an unstable pink form. She manifests the bodies of their
+                        comrades, and they hold back Kang Min-hee. Seo Eun-hyun manages to enter Kang Min-hee’s heart
+                        essence. Inside, he shares a conversation with her, and she comes to terms with the fact that
+                        Seo Eun-hyun will never see her as a romantic partner ever again. She tells him that life is
+                        sorrow. Seo Hweol’s liquid spills on her. The liquid forms a ‘door’.</p>
+
+                    <p>She is summoned to a place in the Astral Realm where only Seo Hweols exist. This scene is also
+                        visible to the Mad Lord, who loses his sanity. Seo Hweol controls the Star Veins and pulls Kang
+                        Min-hee in, with the help of Oh Hye-seo and Seo Eun-hyun. She pulls the Nether Crossing Ship
+                        towards herself. All the Head Realm Elders of the Black Ghost Valley sacrifice themselves to
+                        stop her. Seo Eun-hyun consumes the Havenly Lotus Fruit and rises to Grand Perfection of
+                        Integration.</p>
+
+                    <p>As he proceeds, the next Step is visible to him. However, he refuses to swing his sword, as he
+                        would be cutting down Kang Min-hee. A voice arises within him, telling him to cut, to swing his
+                        sword. He realises what he thought was “enlightenment’ was a Heart Demon raised by the Heavenly
+                        Lotus Fruit. He declares his path is one where he cannot sever his connections and charges
+                        forward. He realises the Heavenly Lotus Fruit contained the split soul of Blood Yin. He rips out
+                        the remaining influence. He moves forward, undeterred, despite Kang Min-hee trying to make him
+                        leave. He enters her Heart Essence, and embraces her. He orders All Heavens to strike, dying
+                        with Kang Min-hee in his arms.</p>
+
+                    <div class="info-card">
+                        <p style="font-style: italic; text-align: center;">"Come down."<br>The next
+                            moment.<br><br>"All-Heavens."<br>—Seo Eun-hyun</p>
+                        <hr style="border-top: 1px solid rgba(129, 140, 248, 0.2); margin: 1rem 0;">
+                        <div class="info-line"><span class="info-label">Martial Realm:</span> Second Step Before the
+                            Throne</div>
+                        <div class="info-line"><span class="info-label">Cultivation Realm:</span> Integration</div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="timeline-20">
+                <h3 class="cycle-subtitle">20th Cycle Timeline</h3>
+                <div class="cycle-content">
+                    <div class="img-container">
+                        <img src="../../assets/images/timeline_20th_cycle.png" alt="Timeline 20th Cycle"
+                            class="img-display">
+                        <span class="img-caption">Timeline: 20th Cycle</span>
+                    </div>
+                </div>
+            </section>
+        </section>
+
+        <!-- 21st Cycle -->
+        <section id="cycle-21" class="cycle-section">
+            <h2 class="cycle-title">21st Cycle</h2>
+
+            <section id="her">
+                <h3 class="cycle-subtitle">Her</h3>
+                <div class="cycle-content">
+                    <p>Seo Eun-hyun comes out of the regression only to find the regression point has inexplicably been
+                        fixed once again. He is now standing on the Nether Crossing Ship, moments before Heo Gwak and
+                        the others sacrifice themselves. At the same time, He feels a strong sense of disgust. He
+                        carefully unleashes a single strike of the Second Step and succeeds in pushing Kang Min-hee into
+                        the Astral Realm. He embeds the Heavenly Lotus Fruit containing Blood Yin’s split soul in Kang
+                        Min-hee’s bosom, preventing Seo Hweol from making a move on her. He uses the Dao of the Heart
+                        Sword to create the Sub-Heart Sword, Transcending Mountain Ridge Embedment. Seo Eun-hyun falls
+                        into the Heart Tribe territory after, exhausted by his move.</p>
+
+                    <p>Seo Eun-hyun wakes up in Buk Hyang-hwa’s lap. She tells him they are in Cedar Wood Grove, and the
+                        Heart Tribe’s Supreme Council wishes to meet him. She also tells Seo Eun-hyun she will track the
+                        connection between her norigae and his Canvas. Seo Eun-hyun reluctantly lets her. He goes
+                        outside to see Kim Young-hoon sparring against avatars of the Heart Tribe Supreme Council. Kim
+                        Yeon tells him about the status of the Human Race and reveals Buk Hyang-hwa is about to die due
+                        to the backlash of her Law Pattern Talent, which does not allow the wielder to exceed their
+                        fate. Grand Cultivator Gol asks for Seo Eun-hyun’s forgiveness at not trusting him. Seo
+                        Eun-hyun, devastated by Buk Hyang-hwa’s death steps into the field where Kim Young-hoon spars.
+                        He spars with all of them at once, before stopping. He asks their stance on the Human Race, and
+                        they agree to let them live if Seo Eun-hyun exchanges a genuine single strike with one of them.
+                        Seo Eun-hyun, afraid of killing them, initially refuses, but agrees after seeing their will. The
+                        strike kills the swordsman of the Small Person Race, Gyeong Chang, Jang Ik’s senior most
+                        disciple.</p>
+
+                    <p>After the duel, Seo Eun-hyun is guided to a shrine and told to consolidate his understanding of
+                        the Second Step Before the Throne. Within the shrine, Seo Eun-hyun infuses all the power of the
+                        Canvas into the Colourless Glass Swords, as he can now keep his across regressions. Through
+                        emptying the Canvas, he solidifies his realisation and names his realm Void Shattering. As a
+                        result, he can now completely embody the feelings in his history. He exits the cage to find ten
+                        years have passed. In those ten years, Baek Woon has declared him an Esteemed One. Buk Hyang-hwa
+                        tells him she has found there is a similarity beteween Seo Eun-hyun’s Canvas, Ancient Force, and
+                        the Head Realm. She says she must investigate the norigae, which was made by her mother. Seo
+                        Eun-hyun realises he has now cast off his obsession, as the dark blue of sorrow around him has
+                        been replaced by the blue of sadness. He leaves to check his Esteemed One title. He is given a
+                        scroll and opens it using a single strike of Void Shattering.</p>
+
+                    <p>Seo Eun-hyun discovers he has been granted a star (celestial body) named Within Heavens, as his
+                        Esteemed One title. Seo Eun-hyun is displeased by the name due to its implications, and meets
+                        with Baek Woon. Baek Woon offers several names, but all contain the characters for ‘light’ or
+                        ‘heaven’, which Seo Eun-hyun cannot accept. Baek Woon tells him he must accept a title, as all
+                        Esteemed Ones of the Bright Cold Realm must have the characters of light or heaven to avoid
+                        falling into the Four Realms of Death. Seo Eun-hyun still refuses a title, and Baek Woon
+                        attempts to force on on him. She claims he is her sucessor. Seo Eun-hyun steps back to the Heart
+                        Tribe territory, and brings Jeon Myeong-hoon with him to Baek Woon, They attempt to remove the
+                        lighting spears from Baek Woon’s body, but it causes her immense pain, and they fail. The entire
+                        Bright Cold Realm views this as an attack on their Sacred Master. As a result she drops to Star
+                        Shattering, and Bright Cold is temporarily left without a Sacred Master.</p>
+
+                    <p>Due to Baek Woon’s fall, Bright Cold is being invaded by Vestiges. Seo Eun-hyun uses the Supreme
+                        Council as ‘terminals’ to wipe out all Vestiges. Yu Yeon, one of Jang Ik’s disciples, spars with
+                        Seo Eun-hyun. She tells him she has always been with Gyeon Chang, and they become disciples of
+                        Jang Ik together. She sheds her shell and her desire to follow her senior brother echoes through
+                        her heart. As she perishes, Seo Eun-hyun awakens the Divine power of Wind.</p>
+
+                    <p>As the years pass, Buk Hyang-hwa grows weaker. Twenty years after their arrival in Cedar Wood
+                        Grove, Ryeo Hwa asks Seo Eun-hyun for a duel. She explains she is not the Ryeo Hwa Seo Eun-hyun
+                        met twenty years ago, but a flower carrying their memories. She says she intends to pass on the
+                        existence of Ryeo Hwa to Seo Eun-hyun. They duel, ending with Ryeo Hwa’s Flower Soul passing on
+                        to Seo Eun-hyun. As she dies, Seo Eun-hyun awakens the Divine power of Cold. Purple Soul Filling
+                        the Heavens fuses with her Flower Soul to evolve into Flower Soul Filling the Heavens. As Flower
+                        Soul Filling the Heavens settles into his body, Seo Eun-hyun recalls a memory from the distant
+                        past he had forgotten- back in Seoak Village, when he met the child’s [sister].</p>
+                </div>
+            </section>
+
+            <section id="descend">
+                <h3 class="cycle-subtitle">Descend</h3>
+                <div class="cycle-content">
+                    <p>The [sister] refuses to introduce [herself]. [She] tells Seo Eun-hyun the heart is the ‘end’
+                        itself. She reveals cultivating the Heart leads to the End of the universe, as Vast Cold altered
+                        the condition to be as as such. She offers to raise Seo Eun-hyun to True Immortal immediately if
+                        Seo Eun-hyun stops cultivating the Heart. Seo Eun-hyun begins to accept, when he has a flashback
+                        of the 16th cycle…</p>
+
+                    <p
+                        style="font-style: italic; margin-left: 2rem; border-left: 3px solid #818cf8; padding-left: 1rem;">
+                        It's a certain scene.<br>
+                        A withered, aged hand is holding someone else's hand.<br><br>
+                        The sturdy-looking 'someone' is standing with the light at their back, looking at me with a
+                        complicated expression while holding my hand.<br><br>
+                        — Gu Ju (九疇/Nine Categories). Your name is...Gu Ju.<br>
+                        —16th Cycle
+                    </p>
+
+                    <p>Seo Eun-hyun refuses, reciting a poem he recalls from the 16th Cycle. [She] accepts this answer,
+                        and warns him to beware of the “North”.</p>
+
+                    <p>Seo Eun-hyun returns to the present, and finds Hong Fan in front of him. He thanks Hong Fan for
+                        staying by this side, and they bury Ryeo Hwa.</p>
+
+                    <p>Twenty years pass. Seo Eun-hyun succeeds in subduing Jae Hu, another of the supreme council,
+                        without killing him. He has awakened all Divine Powers but that of Rain. Kim Young-hoon finds
+                        him and tells him he is being challenged by Buk Hyang-hwa. She uses the norigae, displaying
+                        various spells and abilities through it. As he dances through the moves, he sees his marriage
+                        with her in the 10th Cycle. He awakens the Divine Power of Rain, and shatters the circle Buk
+                        Hyang-hwa had made. She has succeeded in reaching [that person]. She gives Seo Eun-hyun the
+                        norigae and tells him she has found a pathway to where Cheongmun Ryeong is. She tells her her
+                        Law Pattern Talent is from a great being she had often dreamt of in the form of a bird. She says
+                        she is dying as she tried to research the norigae. She declares she will escape her fate and
+                        enters Penglai Island, where Cheongmun Ryeong is. Hyang-hwa turns into salt and passes. The
+                        norigae has now turned to Salt Crystal. Seo Eun-hyun tells everyone they can enter the world
+                        Hyang-hwa went- for that, they must kill the Mad Lord.</p>
+
+                    <p>In one of the Tall Tree Race’s colonies, the Mad Lord has set camp. He is amused to note one in
+                        every ten harbour malicious desires towards Baek Woon. He is preparing to grind down the entire
+                        Bright Cold Realm to create an Artificial Star for [Her]. Meanwhile, Seo Eun-hyun and his
+                        comrades begin their mission. They break into the Wonderfully Mysterious Fortress. Seo Eun-hyun
+                        fights [Her], and manages to unveil her face. They continue fighting. When Seo Eun-hyun tells
+                        [Her] to disappear, he hears a voice refute him, and [She] returns to the Fortress. Inside, Mad
+                        Lord has a fit of anger and vows to capture all of Seo Eun-hyun’s comrades.</p>
+
+                    <p>Kim Yeon recalls her life. She remembers her shame at not truly loving Seo Eun-hyun. She creates
+                        a clone out of her desire, and a pure-white Kim Yeon forms. She attempts to enter the control
+                        room, but sees Oh Hye-seo instead. Oh Hye-seo tells Kim Yeon Seo Hweol’s ‘superior’ will soon
+                        descend and judge everyone, and asks her activate Yeon’s Play, as that is what Seo Hweol wants.
+                        Kim Yeon decides to follow her plan.</p>
+
+                    <p>Blood Yin descends into the Bright Cold Realm.</p>
+                </div>
+            </section>
+
+            <section id="mad-lord">
+                <h3 class="cycle-subtitle">Mad Lord</h3>
+                <div class="cycle-content">
+                    <p>Yuan Yu suddenly acts up as Blood Yin descends. Seo Hweol has taken control of him. He pretends
+                        to threaten Seo Eun-hyun while communicating through Seo Eun-hyun’s one sided Heart Language and
+                        making an alliance. They use Black Ancient Paper using Seo Eun-hyun's Immortal Beast Blood and
+                        enter a secret place. The space has the Ancient God and Ancestor of the Human Race, [God of
+                        Names]. Inside the space, Seo Hweol tells Seo Eun-hyun the body of Vast Cold has lost it’s soul,
+                        yet it still lives.</p>
+
+                    <p>Seo Hweol tells Seo Eun-hyun the story of Blood Yin. The Yu Hao Te of Vice planned to take over
+                        Vast Cold’s body and regain their former authority. The Yu Hao Te of Vice had a terrifying war
+                        with Yu Hao Te’s Immortal Treasure, Sae Eum, and the successor of Ancient Force True Lord, known
+                        as Lofty Dragon. Lofty Dragon and Sae Eum sacrificed themselves to shackle Blood Yin with his
+                        name. And thus, True Devil and Blood Yin Realm were made. Blood Yin panned to create a new seat,
+                        and then merge it with his Seat of Vice.</p>
+
+                    <p>Seo Hweol asks Seo Eun-hyun about Seo Ran. Seo Eun-hyun refuses to cooperate if Seo Hweol tries
+                        to harm Seo Ran. Seo Hweol agrees and they form an alliance.</p>
+
+                    <p>Once back outside, Seo Hweol reveals the Mad Lord’s Fortress contains the power of Vast Cold, and
+                        can be used to fight against Blood Yin. At that moment, the Seven Esteemed Ones of an Era of
+                        Blood Yin arrive to destroy the Fortress. Seo Eun-hyun decides to attack them.</p>
+
+                    <p>Due to the arrival of the Esteemed Ones, all but Hong Fan are immobilised. Mad Lord, in his state
+                        of pain, asks if Kim Yeon is ready. Seo Eun-hyun says he does not know. He retrieves the essence
+                        avatar of Jang Ik from Kim Young-hoon and faces the Esteemed Ones. Using 19 of the 22 he holds,
+                        he destroys five of the seven projections.</p>
+
+                    <p>Back in the Fortress, Kim Young-hoon has succeeded in freeing himself from the coral. He agonises
+                        about advancing to Void Shattering. He finds his own enlightenment, and manages a Single Strike
+                        of the Second Step, injuring Gyu Cheon, one of the Esteemed Ones. Dues to Blood Yin encroaching
+                        into the Bright Cold Realm, the Esteemed Ones summon their main bodies. Mad Lord is
+                        incapacitated, which means Yeon’s Play cannot be activated. Seo Hweol says he can help heal the
+                        Mad Lord, by reviving his memories and erasing Blood Yin’s taint.</p>
+                </div>
+            </section>
+
+            <section id="yeons-heart">
+                <h3 class="cycle-subtitle">Yeon’s Heart</h3>
+                <div class="cycle-content">
+                    <p>At the age of ten, Jo Yeon awakened his talent, a Seven-Coloured Extraordinary Law Pattern
+                        Talent. Jo Yeon was bullied and mistreated by his peers, and later conducted the funeral of his
+                        abusive father. Jo Yeon reached Qi Building within twenty years before leaving to wander the
+                        martial world. He found his mother’s grave, paying his respects, when he was confronted by Wol
+                        Bi, a member of the family his mother had been sold to. They spar, which ended in Wol Bi’s loss
+                        and a lifelong friendship. They parted way five years later, Wol Bi to find a disciple and Jo
+                        Yeon to return to his clan.</p>
+
+                    <p>Ten years later, Jo Yeon brought his perfected gift for Wol Bi to the ruins of the Wol Clan. His
+                        Clan, the Jo Clan, had destroyed them. Jo Yeon destroyed the three martial sects requesting the
+                        Wol Clan’s annihilation, where he met Wol Bi’s disciple. Overjoyed, he fights her, and loses,
+                        exalting in the progression of Wol Bi’s legacy. She introduces herself as Wol Ha-eun.</p>
+
+                    <p>Wol Ha-eun and Jo Yeon roamed the martial world together. They arrived in Seoak Village and
+                        rescue the villagers from a Black Snake. However, Jo Yeon as poisoned by the Snake. To prevent
+                        this from happening again, Wol Ha-eun taught him some basic steps. As they danced together, they
+                        acknowledge their love for each other. One day, when they entered a restaurant, just as Jo Yeon
+                        is about to ask her hand in marriage, they are accosted by a man in tattered robes, claiming to
+                        be the father of one of the beasts they had slain. They are chilled by the man’s gratefulness
+                        and indifference. He suddenly asked for the couple to split, which they naturally refuse. After
+                        the man who threatens them left, Wol Ha-eun asked Jo Yeon’s hand in marriage, which he
+                        gratefully accepts. Through this, Jo Yeon became a Six-Patterned Law Talent, and they promised
+                        to exchange vows under the quince tree. However, Jo Yeon was suddenly recalled by his clan and
+                        told to marry. He refused, citing Wol Ha-eun, but is punished for it. He was locked in a room
+                        with a brainwashing barrier. He reverse engineers it and escapes, and runs to the quince tree,
+                        where Wol Ha-eun awaits him. They carried out the wedding ceremony, and became husband and wife.
+                        However, they are caught by the Elder of the Jo Clan. He demands Wol Ha-eun and Jo Yoen be
+                        separated for twenty years. Jo Yeon swore to raise his cultivation to Core Formation by that
+                        time.</p>
+
+                    <p>While in training, a late-stage disciple born with the Five-Pattern Law Talent gave Jo Yeon three
+                        Emotion Advancement Pills. Jo Yeon felt odd, but took the pills anyway.</p>
+
+                    <p>Ten years after confinement, Jo Yeon exits at the Core Formation Stage, as a Four-Pattern Law
+                        Talent. He is given an artifact to track Wol Ha-eun down. He follows the artifact to the pill
+                        refining chamber. The late-stage disciple who gave him the pills taunts him, telling she was
+                        refined into pills, the same pills Jo Yeon ate. Jo Yeon was forced to ignore it, due to the
+                        discple’s uncle being at Grand Perfection Core Formation.</p>
+
+                    <p>That day Jo Yeon went mad.</p>
+
+                    <p>Six hundred years passed. The Jo Clan were planning their takeover of the Head Realm, when Jo
+                        Yeon entered the room. He had become a One-Pattern Law Talent. Jo Yeon told them to either bring
+                        his wife back or to ask for her forgiveness. He killed an Elder who tries to object. The ten
+                        Heavenly Being Supreme Elders also appeared. Jo Yeon revealed [Her], a puppet at the Grand
+                        Perfection of Heavenly Being. He began to refine Emotion Advancement pills of all of his clan
+                        members. As he sobbed in agony, having eaten the entire Jo Clan, he vowed to meet Ha-eun again,
+                        and declared himself the father of monsters.</p>
+
+                    <div class="info-card">
+                        <p style="text-align: center;">Jo Yeon thus became the Mad Lord (怪君).<br>— Mad Lord's
+                            transformation</p>
+                    </div>
+
+                    <p>Back in the present, Seo Eun-hyun questions the Owner of Salt Moutain’s repentant enlightenment.
+                        Seo Hweol warns Seo Eun-hyun, as devilish energy enters his body. An illusion of Cheongmun
+                        Ryeong appears from Seo Eun-hyun’s Canvas, which tells him to get a grip. Seo Eun-hyun
+                        acknowledges the knowledge he has given himself, and advances. Seo Eun-hyun tells the Mad Lord
+                        he is a sinner. However, his Her accumulated everything on her own. Her heart remains whole
+                        inside him. Mad Lord reaches Entering Heavens Beyond the Path... Heart of Love.</p>
+
+                    <p>Mad Lord and [Her] begin to dance, and all negative emotions are wiped away. He draws out a pink
+                        hue onto Kim Yeon’s white form. Yeon’s Play is activated. As the play ends, Jo Yeon apologises
+                        to Kim Yeon, and gives her a quince flower made of his and [Her]’s Qi. Jo Yeon takes out two
+                        cups of White-Red wine and sets one in front of [Her]. He drinks the wine with the last of his
+                        strength… and [Her], moving on her own, pours the wine on [Her] face, as if drinking.</p>
+
+                    <p>Kim Yeon accepts the flower, and come to realies Love is infact, every emotion. She suddenly
+                        arrives at place she has never been before. A being behind a Peach Blossom Tree tells her they
+                        believe Immortal Cultivation is Progress. They tell her she has always been moving forward, and
+                        says her heart has never changed, merely expressed it differently. The being tells her they are
+                        the Seat Holder of End, Tridacna Vast Cold Heavenly King. Kim Yeon returns to the top of the
+                        Fortress and begins dancing. She reaches her own Entering Heavens Beyond the Path, Full Blossom.
+                        Thanks to her, Blood Yin is pushed back.</p>
+                </div>
+            </section>
+
+            <section id="key">
+                <h3 class="cycle-subtitle">Key</h3>
+                <div class="cycle-content">
+                    <p>Yeon begins to use Mad Lord’s artificial stars, displaying the power of a Star Shattering
+                        cultivator. Hweol places Tainted Soul FIlling the Heavens on Seo Eun-hyun, and the latter goes
+                        forth to confront Blood Yin. Blood Yin attempts to seduce Seo Eun-hyun, but Seo Eun-hyun
+                        resists. Seo Eun-hyun attempts to convince Blood Yin to give up on Vast Cold’s body, but Blood
+                        Yin refuses, saying only They are worthy. Seo Eun-hyun vows to save Baek Woon, whom Blood Yin
+                        has captured, and begins fighting Blood Yin. Blood Yin attempts to judge Seo Eun-hyun, but Seo
+                        Eun-hyun is already under the effect of Karmic Fire. Blood Yin takes a mental hit, believing the
+                        Reapers stand against him. Seo Eun-hyun uses this moment to dig out Baek Woon, and uses Jeon
+                        Myeong-hoon to strike tribulation on her. They successfully drive out Blood Yin’s will. Blood
+                        Yin takes offense and tries to bring his main body over. Baek Woon summons the Radiance Eight
+                        Immortals to stop Blood Yin. Due to the light, the norigae opens a path into the place where
+                        both Cheongmun Ryeong and Buk Hyang-hwa are. As they escape, Blood Yin prophecies they will meet
+                        in a hundred years. As they are sucked into the dream world, Seo Hweol attempts to kidnap Seo
+                        Ran, but is stopped by Seo Eun-hyun. He breaks into mad laughter when Seo Eun-hyun called Seo
+                        Ran his friend.</p>
+
+                    <p>Baek Woon is restored to her former glory by the Radiance Eight. She sees the norigae, and throws
+                        it into the Astral Realm.</p>
+                </div>
+            </section>
+
+            <section id="snake-not-found">
+                <h3 class="cycle-subtitle">The Place the Snake Cannot Be Found</h3>
+                <div class="cycle-content">
+                    <p>Seo Eun-hyun awakens to find he is back in Ascension Path, and Seo Ran is in place of Kang
+                        Min-hee. After putting everyone to sleep, Seo Eun-hyun realises he is in a world similar to
+                        Penglai. The world appears to based off their memories of Ascension Path and Earth, having
+                        plants only found in the latter place. Seo Ran approaches Seo Eun-hyun and says he has some of
+                        his memories. They return to the others and settle down into a cave. Seo Eun-hyun attempts to
+                        suck in the Qi of the surrounding world, but finds very small amounts of it existing. Due to the
+                        absence of Qi, Seo Eun-hyun cannot fully use the Canvas. A two-headed creature appears, calling
+                        itself master of the forest. In return for letting them be, it demands an arm and sexual
+                        favours. Seo Eun-hyun refuses. The snake takes offense and tries to attack, but is rebuffed by
+                        Seo Eun-hyun. The defeated snake is the concubine of Shi Ho, one of the Three Rulers of the
+                        continent. The snake has information that leads them to believe it has been 10,000 years since
+                        their ascension. The Three Powers are Supreme Elder of the Azure Heaven Creation Sect, Cheongmun
+                        Sunwoo, Salt Sea Master Cheongmun Ryeong and Heavenly Chess Piece Shi Ho. While in the cave,
+                        someone tells Seo Eun-hyun he brought the snake in the first time he entered, and says they
+                        won’t forgive Seo Eun-hyun if it happens again. Seo Eun-hyun promises to be careful before
+                        realising he has no idea who he is talking to.</p>
+
+                    <p>The rest of Seo Eun-hyun’s comrades wake up. They are bewildered by the current situation. The
+                        snake, Twin-Head, and Seo Eun-hyun orchestrate an act to convince the others they are no longer
+                        on Earth. Twin-Head then gives all of them a ride. They soon reach the edge of Ascension Path,
+                        where Seo Eun-hyun discovers the island is now resting on the desert sands. As they traverse the
+                        desert to the Eastern Tribes, Twin-Head explains the world they find themselves in. They
+                        eventually arrive at the nation of Manli and settle down there.</p>
+
+                    <p>Ten years pass. Seo Eun-hyun has become the strongest in the East, and has created a martial art
+                        that mimics the Formless Sword. He plans to retrieve an “item” given to a local tribe leader.
+                        Seo Ran has been having fits in this world. Oh Hyun-seok steals the item and they flee to the
+                        Western Nations.</p>
+                </div>
+            </section>
+
+            <section id="snake-cannot-find">
+                <h3 class="cycle-subtitle">The Place the Snake Cannot Find</h3>
+                <div class="cycle-content">
+                    <p>They arrive at Cheon-eum city, formerly Cheon-saek city. Seo Eun-hyun is confused as the layout
+                        of the Cheon-saek city thousands of years ago and the current Cheon-eum city remain the same. He
+                        learns Cheongmun Ryeong is in Shengzi and follows him there. Seo Eun-hyun goes to attend Salt
+                        Sea’s dharma ceremony, when a few ruffian exhort him for a proper seat. The ruffians are pushed
+                        aside by a tall one wrapped in bandages. They are Cheongmeon Ryeong’s only disciple. They tell
+                        Seo Eun-hyun to get lost, but Seo Eun-hyun refuses. They begin fighting. The tall one says they
+                        will kill Seo Eun-hyun as only one disciple is enough, and only Seo Eun-hyun seems worthy
+                        enough. During their battle, Seo Eun-hyun glances at a merchant ship, which his opponent
+                        destroys out of spite. Suddenly Seo Eun-hyun notices the flag of the ship is Penglai’s. One of
+                        the seamen in the fallen ship tells Seo Eun-hyun Penglai is on the other side of the planet. Seo
+                        Eun-hyun is stunned to learn this world is round, not flat.</p>
+
+                    <p>While Seo Eun-hyun and the bandaged monster fight, the latter makes a hand seal and uses the
+                        deaths of the sailors for a spell using water. The sea of blood attempts to trap Seo Eun-hyun,
+                        forming a massive red crystal. Seo Eun-hyun uses the item of the Eastern Tribes, the Howling
+                        Resplendent Sword, and breaks through. They fight until Seo Eun-hyun loses, with the bandaged
+                        man mocking his swordmanship.</p>
+
+                    <p>Seo Eun-hyun wakes up to find a physician resembling Buk Hyang-hwa tending to him. The bandaged
+                        monster is also there, but he says he will no longer try to kill Seo Eun-hyun as his master
+                        forbade it. The physician introduces herself as Baek Ran. Seo Eun-hyun thanks her and exits the
+                        room. He finds himself in a large courtyard. The bandaged one says Seo Eun-hyun may participate
+                        for the selection here. He also says he will kill Seo Eun-hyun if he fails, and guides him to
+                        Cheongmun Ryeong. The latter gives Seo Eun-hyun a basic cultivation manual and gives Seo
+                        Eun-hyun a plum, with the instructions of never taking it out of his mouth. Seo Eun-hyun agrees
+                        and goes to work</p>
+
+                    <p>While doing chores, he notices some take the plum out of their mouths. The plums appear rotten,
+                        which confuses Seo Eun-hyun. His plum remains unspoiled.</p>
+
+                    <p>A month passes. Seo Eun-hyun notices he is losing strength, but his heart becomes cleared the
+                        more he practices the nameless method. Only four contenders remain. Gak Am, Cheongmun Ryeong’s
+                        only disciple, calls them out and transmits his master’s words, telling them to remember the
+                        plum when they are hungry or thirsty. Yet another month passes. Seo Eun-hyun and one other
+                        remain. The other disciple spits the plum out in anger, complaining about the wasting away of
+                        her beauty and leaves.</p>
+
+                    <p>Four more months pass. Seo Eun-hyun’s fingernails are dropping of his hands. He hasn’t eaten food
+                        nor drunk water for a month yet remains alive. As he sweeps the estate, he wonders why he
+                        obsesses over his connections. As he ponders, he suddenly perceives the form of Great Mountain.
+                        Snapping to his senses, he realises it is the bandaged one, Gak Am. Gak Am begins whipping him,
+                        calling him lazy. Seo Eun-hyun looks into their eyes and realises Gak Am is afraid Seo Eun-hyun
+                        will succeed. Gak Am asks him if Seo Eun-hyun isn’t afraid of death. Seo Eun-hyun says he is
+                        not, as he has found his Dao, the Dao of Myriad Forms and Connections. Seo Eun-hyun has also
+                        realised he has succeed the test. Gak Am tells Seo Eun-hyun their name is actually गा ॐ. Seo
+                        Eun-hyun cannot pronounce it, so calls them Gwak Am instead. Cheongmun Ryeong appears,
+                        congratulating Seo Eun-hyun on passing the test and beginning his education in Immortal Arts.
+                    </p>
+                </div>
+            </section>
+
+            <section id="snake-can-find">
+                <h3 class="cycle-subtitle">The Place the Snake Can Find</h3>
+                <div class="cycle-content">
+                    <p>Cheongmun Ryeong taps Seo Eun-hyun’s back, and all of his vitality is restored. Seo Eun-hyun asks
+                        him to take a look at Seo Ran, so his Master sends Gwak Am with Seo Eun-hyun. Gwak Am clears Seo
+                        Ran’s head, curing her madness. Due to the ‘treatment’, Kim Young-hoon is sent to fetch Baek
+                        Ran.</p>
+
+                    <p>Cheongmun Ryeong begins Seo Eun-hyun’s education in Immortal Arts. Cheongmun Ryeong teaches him
+                        how to change the world through the power of his heart. The primal forms are in fact, the same
+                        as the Divine Powers at the Integration stage. Cheongmun Ryeong tells Seo Eun-hyun Immortal
+                        Cultivation is someone’s Immortal Art, twisting the original system of the Heart into one where
+                        the practitioner gained power and authority.</p>
+
+                    <p>Nearly hundred years pass. Oh Hyun-seok is an assassin on a mission to kill a group of
+                        barbarians. He arrives after the targets have finished a raid and kills them. Inside the
+                        destroyed village, he discovers an orphaned child. Meanwhile, Seo Eun-hyun has come to
+                        understand the Immortal Arts Various Omens; Examination of Doubts; Five Epochs, Three Spirits;
+                        and Eight Paths, One Extreme. Cheongmun Ryeong tells Seo Eun-hyun the rest of his training must
+                        happen outside the Dream World. For the last thirty years, he has been prolonging his lifespan
+                        solely to teach Seo Eun-hyun. Cheongmun Ryeong asks Gwak Am to refrain from killing Seo Eun-hyun
+                        before he is strong enough. Seo Eun-hyun must complete his own Immortal Art, but Cheongmun
+                        Ryeong says effort alone won’t be enough. He tells Seo Eun-hyun and Gwak Am to travel to the
+                        west and east for several years.</p>
+
+                    <p>Seo Eun-hyun goes to where his friends are staying. Baek Ran is now incredibly old. She tells
+                        them of a dream she had, which mirror Buk Hyang-hwa’s memories. Kim Yeon is the only one other
+                        than Seo Ran and Seo Eun-hyun to regain her memories. Seo Eun-hyun takes all of his comrades on
+                        his journey. Kim Yeon stays behind to look after Baek Ran. Oh Hyun-seok says he must find a
+                        proper family for the girl he has picked up.</p>
+                </div>
+            </section>
+
+            <section id="found-it">
+                <h3 class="cycle-subtitle">Found It</h3>
+                <div class="cycle-content">
+                    <p>The group arrives in Pengali, where they meet Yuk Yo and Baek Rin. Seo Ran is for some reason
+                        anxious on seeing her. Yuk Yo tells Seo Eun-hyun the hidden light began to turn an ominous red
+                        thirty years ago. Oh Hyun-seok tries to leave the child with her, but the child refuses to let
+                        him go. He decides to stay with her. When they leave, on Seo Eun-hyun’s asking, Seo Ran says he
+                        wished to see Yuk Yo and Baek Ran suffer, as she was not with Seo Ran. This attitude disgusts
+                        and confuses Seo Ran herself.</p>
+
+                    <p>News of Cheongmun Ryeong’s impending death arrives. Seo Eun-hyun leaves his comrades and quickly
+                        proceeds to Ascension Path. Gwak Am is waiting there. He forbids Seo Eun-hyun from entering as
+                        he can see Seo Eun-hyun has yet to understand Immortal Arts further. Seo Eun-hyun attempts to
+                        force his way in, but is forced to back down. Gwak Am proclaims Seo Eun-hyun will never step
+                        into this place until he manages to grasp the beginning of his Immortal Art, sealing of
+                        Ascension Path.</p>
+
+                    <p>Seo Eun-hyun forlornly returns to his comrades. They proceed traveling west, where they meet the
+                        Azure Tiger Saint, who has also regained his memories. They talk a little about Oh Hyun-seok.
+                    </p>
+
+                    <p>98 years after falling into this world, Seo Eun-hyun returns to where Baek Ran and Kim Yeon are
+                        staying. On Baek Ran’s request, Seo Eun-hyun tells her his story outside the Dream Realm. Baek
+                        Ran, having regained her memories of being Buk Hyang-hwa, transmits her words to Seo Eun-hyun;
+                        the world inside the Dream Realm is a world that truly exists. She tells Seo Eun-hyun to not
+                        blame himself, and says the hearts of those he cares about remain with him. She says the words
+                        Buk Hyang-hwa wanted to tell him were for him to forgive himself. Saying thus, she dies. Seo
+                        Eun-hyun, with the pain in his heart, immediately goes to Ascension Path, declaring today Gwak
+                        Am must let him in. He pierces through the seal and walks in.</p>
+
+                    <p>As he walks, he finds himself inside the desert of his unnamed Dao Domain, with charcoal demons
+                        and Tribulation Fire burning across it. He transforms into the 21 headed Ghost King, and merges
+                        all the ‘instances’ into one. The Tribulation Fire melts all the sand and demons in his desert,
+                        changing it to glass as rain pours down. He says while effort is important, to understand
+                        Immortal Arts, one must look into their Heart. All the methods he has ever learnt condense
+                        together to form his Immortal Art; Crystal Glass to Treading Sea. He enters the shrine, and pays
+                        his respects to Cheongmun Ryeong’s corpse. As he bows ten times, Cheongmun Ryeong’s soul turns
+                        into salt. Seo Eun-hyun notices an unbandaged Gwak Am. They are kneeling with their back to Seo
+                        Eun-hyun in front of a tablet with the inscription ‘Salt Sea Supreme Deity’. Gwak Am reminds Seo
+                        Eun-hyun of their promise of meeting above, revealing that they are the grave keeper of their
+                        Master, Owner of Salt Mountain, and their identity as the Great Mountain Supreme Deity who
+                        killed the Wuji Cult. He claims Seo Eun-hyun made his way in with the help of the
+                        black-snake-bracelet given to him by Hong Fan, and expels Seo Eun-hyun and his comrades from the
+                        world of Salt Mountain. As they exit the Dream Realm, Gwak Am tells Seo Eun-hyun a massive
+                        misfortune awaits him and whispers a method to desecrate fate.</p>
+                </div>
+            </section>
+
+            <section id="laugh">
+                <h3 class="cycle-subtitle">Laugh. Only You Will Be Laughing</h3>
+                <div class="cycle-content">
+                    <p>Kim Yeon regrets not being able to save Buk Hyang-hwa. As she is expelled from the world, Buk
+                        Hyang-hwa’s soul reveals she prayed for Mad Lord’s Talent to pass onto Kim Yeon. Hers also
+                        merges with the mark on Kim Yeon. Kim Yeon finds herself in a mysterious place in front of a
+                        bird. The bird says for a ‘servant of death’, a price must be paid to inherit the fate she was
+                        given. Kim Yeon vows to carry the misfortune in her embrace. The Bird says Kim Yeon will never
+                        speak another word as long as she uses the Liberation Law Talent, until she reaches the
+                        ‘Thirty-Third Heaven’.</p>
+
+                    <p>Oh Hyun-seok’s vision fades, as he sees his adopted daughter disappearing. He gives her a China
+                        Aster flower, and refrains from crying until he is out of his daughter’s sight. As he emerges,
+                        he cries out, saying life is pleasure.</p>
+
+                    <p>Seo Eun-hyun finds himself surrounded by his comrades and hears Oh Hyun-seok yelling. He begins
+                        sending his comrades into the True Devil Realm, but Blood Yin appears, immediately killing him.
+                    </p>
+
+                    <div class="info-card">
+                        <div class="info-line"><span class="info-label">Martial Realm:</span> Second Step Before the
+                            Throne/Void Shattering</div>
+                        <div class="info-line"><span class="info-label">Cultivation Realm:</span> Integration</div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="timeline-21">
+                <h3 class="cycle-subtitle">21st Cycle Timeline</h3>
+                <div class="cycle-content">
+                    <div class="img-container">
+                        <img src="../../assets/images/timeline_21st_cycle.png" alt="Timeline 21st Cycle"
+                            class="img-display">
+                        <span class="img-caption">Timeline: 21st Cycle</span>
+                    </div>
+                </div>
+            </section>
+        </section>
+
+        <div class="nav-buttons">
+            <a href="19th_cycle.html" class="nav-btn">
+                <ion-icon name="arrow-back-outline"></ion-icon> Previous Arc: Cult (19th Cycle)
+            </a>
+            <a href="22nd_cycle_998th_cycle.html" class="nav-btn">
+                Next Arc: Divine Descent (22nd Cycle to 998th Cycle) <ion-icon name="arrow-forward-outline"></ion-icon>
+            </a>
+        </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div class="modal-overlay">
+        <div class="login-modal">
+            <div class="modal-header">
+                <button class="modal-close"><ion-icon name="close-outline"></ion-icon></button>
+                <h2 class="modal-title">Welcome Back</h2>
+                <p class="modal-subtitle">Log in to the RToC Wiki Community</p>
+            </div>
+
+            <div class="social-login">
+                <button class="social-btn discord">
+                    <ion-icon name="logo-discord"></ion-icon>
+                    Continue with Discord
+                </button>
+                <button class="social-btn google">
+                    <ion-icon name="logo-google"></ion-icon>
+                    Continue with Google
+                </button>
+            </div>
+
+            <div class="divider">or</div>
+
+            <div class="auth-form">
+                <div class="form-group">
+                    <input type="email" placeholder="Email Address">
+                </div>
+                <div class="form-group">
+                    <input type="password" placeholder="Password">
+                </div>
+                <button class="auth-submit">Log In</button>
+            </div>
+
+            <div class="auth-footer">
+                Don't have an account? <span class="auth-link">Create Account</span>
+            </div>
+        </div>
+    </div>
+
+    <script src="../../scripts/editor.js"></script>
+    <script src="../../scripts/main.js"></script>
+</body>
+
+</html>
