@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0a0a0f">
+    <title>General Seo | RToC Wiki</title>
+    <link rel="icon" type="image/jpeg" href="../../assets/images/seo_eun_hyun_cover.jpg">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap"
+        rel="stylesheet">
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <style>
+        .cycle-article {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        .wiki-header {
+            margin-bottom: 3rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 2rem;
+        }
+
+        .wiki-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2.5rem;
+            background: linear-gradient(135deg, #fff, #a5b4fc);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .wiki-subtitle {
+            font-size: 1.1rem;
+            color: #8B5CF6;
+            margin-bottom: 1.5rem;
+        }
+
+        .intro-box {
+            background: rgba(30, 30, 40, 0.5);
+            border-left: 4px solid #8B5CF6;
+            padding: 1.5rem;
+            font-style: italic;
+            color: #ccc;
+            margin-bottom: 2rem;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .toc-container {
+            background: rgba(20, 20, 25, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 3rem;
+            display: inline-block;
+            min-width: 250px;
+        }
+
+        .toc-title {
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #fff;
+            text-align: center;
+        }
+
+        .toc-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .toc-list li {
+            margin-bottom: 0.5rem;
+        }
+
+        .toc-list a {
+            color: #8B5CF6;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.2s;
+        }
+
+        .toc-list a:hover {
+            color: #fff;
+            text-decoration: underline;
+        }
+
+        .cycle-section {
+            margin-bottom: 4rem;
+            scroll-margin-top: 100px;
+        }
+
+        .cycle-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.8rem;
+            color: #fff;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid rgba(139, 92, 246, 0.3);
+            display: inline-block;
+            padding-bottom: 0.3rem;
+        }
+
+        .section-subtitle {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.4rem;
+            color: #a5b4fc;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .cycle-content {
+            line-height: 1.8;
+            color: #e2e8f0;
+            margin-bottom: 1.5rem;
+            text-align: justify;
+        }
+
+        .info-card {
+            background: rgba(139, 92, 246, 0.05);
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+        }
+
+        .info-line {
+            margin-bottom: 0.3rem;
+        }
+
+        .info-label {
+            font-weight: 600;
+            color: #a5b4fc;
+        }
+
+        .timeline-container {
+            margin-top: 1rem;
+            background: #fff;
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .timeline-img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .art-image-container {
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        .art-image {
+            max-width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+            max-height: 500px;
+        }
+
+        .image-caption {
+            margin-top: 0.5rem;
+            font-style: italic;
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="nav">
+        <div class="nav-container">
+            <a href="../../index.html" class="nav-logo">
+                <img src="../../assets/logo_character.png" alt="RToC" class="nav-logo-img"
+                    style="width:36px; height:36px; border-radius:8px; object-fit:cover;">
+                RToC Wiki
+            </a>
+            <ul class="nav-links">
+                <li><a href="../../index.html" class="nav-link">Home</a></li>
+                <li><a href="../characters.html" class="nav-link">Characters</a></li>
+                <li><a href="../concepts.html" class="nav-link">Concepts</a></li>
+                <li><a href="../plot.html" class="nav-link"
+                        style="color: var(--text-primary); background: rgba(139, 92, 246, 0.1);">Plot</a></li>
+                <li><a href="../cultivation.html" class="nav-link">Cultivation</a></li>
+                <li><a href="../martial_arts.html" class="nav-link">Martial Arts</a></li>
+                <li><a href="../locations.html" class="nav-link">Locations</a></li>
+            </ul>
+            <div class="nav-search">
+                <ion-icon name="search-outline" class="nav-search-icon"></ion-icon>
+                <input type="text" placeholder="Search the wiki...">
+            </div>
+            <button class="login-btn">Log In</button>
+        </div>
+    </nav>
+
+    <div class="cycle-article">
+        <header class="wiki-header">
+            <h1 class="wiki-title">General Seo</h1>
+            <h2 class="wiki-subtitle">13th Regression (Life as a Puppet)</h2>
+            <div class="intro-box">
+                Seo Eun-hyun realises the regression point is fixed! Before he can do much, he is kidnapped by the Mad
+                Lord...
+            </div>
+            <div class="toc-container">
+                <div class="toc-title">Contents</div>
+                <ul class="toc-list">
+                    <li><a href="#madman">1 Madman</a></li>
+                    <li><a href="#yeon">2 Yeon's Yeon</a></li>
+                    <li><a href="#timeline">3 Timeline</a></li>
+                </ul>
+            </div>
+        </header>
+
+        <!-- Madman -->
+        <section id="madman" class="cycle-section">
+            <h2 class="cycle-title">Madman</h2>
+            <div class="cycle-content">
+                <p>Eun-hyun awakes to find his regression point has been fixed. He does not reveal the energy of the
+                    Formless Sword. The Four-Axis wood-man tells the human race to follow him. Mad Lord says he wants to
+                    go to the Light Spirit Pond first, to circulate blood in [Her]. He has a fit and decides to capture
+                    the wood-man. He reveals the Wonderfully Mysterious Fortress, captures the wood-man and kidnaps
+                    Eun-hyun before fleeing.</p>
+
+                <p>After running for a while, the Mad Lord stops and sets base. He opens the Wonderfully Mysterious
+                    Fortress, and begins collecting all the ‘materials’ nearby. Eun-hyun contemplates suicide, but is
+                    unable to carry it out, as [She] has frozen the heaven and earth spiritual energy. Within the
+                    Fortress, Eun-hyun sees puppets behaving as if they are living people and a mental restraint on Kim
+                    Yeon. He prepares to strike the Mad Lord when he asks then if they will not greet their master.
+                    Eun-hyun hesitates, while the Mad Lord dissolves the restraint on Yeon and tells him he has given
+                    her the Red Spirit Ginseng. He introduces himself as the Mad Lord, Jo Yeon. He asks Kim Yeon to
+                    leave, and asks Eun-hyun about his Formless Sword and his vision of the heart essence. He then
+                    grafts a puppet arm onto Eun-hyun, wondering if he can still produce the Formless Sword that way.
+                    After seeing that he can, the Mad Lord tells Eun-hyun to go to his quarters.</p>
+
+                <p>Eun-hyun goes to Kim Yeon and tells her about the world. The next day, the Mad Lord gives them The
+                    Wonderfully Mysterious Heart Canon, and tells them to use it until Qi Building, when they will
+                    receive the Wonderfully Mysterious Innate Heart Canon.</p>
+
+                <p>Half a year later, Eun-hyun has reached Qi Refining 14th star. Both of his arms are now puppet arms.
+                    Kim Yeon has failed to break through her Heavenly Rejection. Kim Yeon refuses to use puppet as they
+                    make her mind “become strange”.</p>
+
+                <p>A month later, having reached the peak of early Qi Building, Eun-hyun assists Yeon in managing the
+                    madness. She successfully breaks through. Right after, the Mad Lord appears, fresh after making
+                    another Four-Axis puppet and creating a “mass production line”, ready for war.</p>
+
+                <p>Years later, Eun-hyun has reached Core Formation, while Yeon is at Nascent Soul. Eun-hyun has
+                    realised that the Mad Lord has reached an ‘incomplete’ form of Entering Heavens, which grants him
+                    sight, but not manifestation. Kim Yeon attempts to get closer, But Eun-hyun rebuffs her advances.
+                </p>
+
+                <p>One day, the Mad Lord calls Eun-hyun. He tells him he intends to turn both Eun-hyun and Kim Yeon into
+                    puppets to ensure they survive his war. Eun-hyun manages to convince the Mad Lord to only transform
+                    him into a puppet under Kim Yeon’s control. The Mad Lord is overjoyed and agrees.</p>
+
+                <div class="art-image-container">
+                    <img src="../../assets/images/yeon_crying_puppet.png"
+                        alt="Yeon when she learns Eun-hyun is now a puppet" class="art-image">
+                    <div class="image-caption">Yeon when she learns Eun-hyun is now a puppet</div>
+                </div>
+
+                <p>After the transformation into General Seo, Eun-hyun is stunned to realise his soul is housed within
+                    the puppet. HE can no longer control his body. Kim Yeon is devastated by this turn of events and
+                    vows to avenge Eun-hyun. Eun-hyun realises the circuits within the puppet are steadily replacing his
+                    soul, creating an artificial replacement. The centipede he picked up in Ascension Path climbs up and
+                    gnaws a key circuit. This allows Eun-hyun to begin taking control of the puppet. Sadly, the puppet
+                    kills the centipede.</p>
+
+                <p>Eighty years later, Yeon tells Eun-hyun about the Lightning Harbinger Jeon Myeong-hoon, Kang
+                    Min-hee’s strength, Oh Hyun-seok’s happiness, and Oh Hye-seo’s rumoured marriage to Seo Hweol.
+                    When the puppet does not answer, she throws a fit. Eun-hyun meanwhile is attempting to take over the
+                    Wonderful Mysterious Fortress.</p>
+
+                <p>Five hundred years later, Kim Yeon tells him Jeon Myeong-hoon is still at large, Kang Min-hee has
+                    started transforming into a monstrous existence, and Oh Hyun-seok has succumbed to pleasure after
+                    the death of the Azure Tiger Saint. There is no news about Oh Hye-seo. Eun-hyun, meanwhile, has
+                    realised the mass of intent all the puppets give off is collected by the Fortress, presumably
+                    creating a ‘soul’ for [Her].</p>
+            </div>
+        </section>
+
+        <!-- Yeon's Yeon -->
+        <section id="yeon" class="cycle-section">
+            <h2 class="cycle-title">Yeon's Yeon</h2>
+            <div class="cycle-content">
+                <p>Eun-hyun uses all his knowledge to pat Kim Yeon’s shoulder, which catalyses her completion of the
+                    Wonderfully Mysterious Innate Heart Canon, allowing them to communicate using Heart Language.</p>
+
+                <div class="art-image-container">
+                    <img src="../../assets/images/yeons_play.png" alt="Yeon's Play (Yeon's Yeon)" class="art-image">
+                    <div class="image-caption">Yeon's Play (Yeon's Yeon)</div>
+                </div>
+
+                <p>One thousand years after Eun-hyun’s modification into a puppet, the Mad Lord allies with Seo Hweol to
+                    kill Kang Min-hee, who has turned into the Ghost Guiding Holy Mother. [She] is now quasi-Star
+                    Shattering. During the fight, a casual strike from the Holy Mother destroys [Her]. Hweol betrays the
+                    Mad Lord and seals him with the Holy Mother before teleporting away. A small, green child carrying
+                    green podaos, appears with the mission of annihilating both the Holy Mother and the Mad Lord. He is
+                    the ‘avatar’ of someone at an equivalent stage to Star Shattering. He introduces himself as the
+                    supreme leader of the Heart Tribe, Heaven-Entrapping Esteemed One, Jang Ik, and splits the Fortress
+                    in one strike. The Mad Lord survives, fleeing. Kim Yeon decides to use this as an opportunity to
+                    shatter [Her] and kill the Mad Lord. She turns a boiling white, resembling a ghost of tangled
+                    threads. As Kim Yeon advances, the Mad Lord Jo Yeon regains his sanity and retreats to a hidden
+                    layer with [Her]. When she confronts him, Jo Yeon tells her he has been waiting for her to
+                    ‘complete’ the Wonderfully Mysterious Fortress. As soon as Kim Yeon takes complete control, Jo Yeon
+                    activates Yeon’s Play, creating an alternate space-time which feeds off Kim Yeon and Jo Yeon’s
+                    lifespans. Eun-hyun rushes to Kim Yeon’s side. He tries to cut her connection to Yeon’s Play using
+                    the Formless Sword, but fails. He notices someone has left a green podao in his Sword Hell. Eun-hyun
+                    uses Jang Ik’s single strike to break the alternate space-time and “destroy” the Fortress. Jo Yeon
+                    dies from the effort of Yeon’s Play. Seo Hweol appears again and decimated the entire area. Just
+                    before they die, Eun-hyun and Kim Yeon share a kiss, with Eun-hyun promising to give her his heart
+                    again.</p>
+            </div>
+            <div class="info-card">
+                <div class="info-line"><span class="info-label">Martial Realm:</span> Treading Heavens</div>
+                <div class="info-line"><span class="info-label">Cultivation Realm:</span> Core
+                    Formation(human)/Four-Axis (puppet)</div>
+            </div>
+        </section>
+
+        <!-- Timeline -->
+        <section id="timeline" class="cycle-section">
+            <div class="timeline-container">
+                <h4 style="color:#333; margin-bottom:0.5rem;">Timeline: 13th Cycle</h4>
+                <img src="../../assets/images/timeline_13th_cycle.png" alt="Timeline 13th Cycle" class="timeline-img">
+            </div>
+        </section>
+
+    </div>
+
+    <!-- Login Modal -->
+    <div class="modal-overlay">
+        <div class="login-modal">
+            <div class="modal-header">
+                <button class="modal-close"><ion-icon name="close-outline"></ion-icon></button>
+                <h2 class="modal-title">Welcome Back</h2>
+                <p class="modal-subtitle">Log in to the RToC Wiki Community</p>
+            </div>
+
+            <div class="social-login">
+                <button class="social-btn discord">
+                    <ion-icon name="logo-discord"></ion-icon>
+                    Continue with Discord
+                </button>
+                <button class="social-btn google">
+                    <ion-icon name="logo-google"></ion-icon>
+                    Continue with Google
+                </button>
+            </div>
+
+            <div class="divider">or</div>
+
+            <div class="auth-form">
+                <div class="form-group">
+                    <input type="email" placeholder="Email Address">
+                </div>
+                <div class="form-group">
+                    <input type="password" placeholder="Password">
+                </div>
+                <button class="auth-submit">Log In</button>
+            </div>
+
+            <div class="auth-footer">
+                Don't have an account? <span class="auth-link">Create Account</span>
+            </div>
+        </div>
+    </div>
+
+    <script src="../../scripts/editor.js"></script>
+    <script src="../../scripts/main.js"></script>
+</body>
+
+</html>

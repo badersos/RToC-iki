@@ -16,6 +16,56 @@
         rel="stylesheet">
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <style>
+        .plot-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        .realm-section {
+            margin-bottom: 3rem;
+            background: rgba(30, 30, 40, 0.5);
+            border-radius: 16px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .realm-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.8rem;
+            color: var(--accent-primary);
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid rgba(139, 92, 246, 0.3);
+            padding-bottom: 0.5rem;
+            display: inline-block;
+        }
+
+        .cycles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 1rem;
+        }
+
+        .cycle-link {
+            display: block;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            text-decoration: none;
+            color: var(--text-primary);
+            transition: all 0.3s ease;
+            text-align: center;
+            font-weight: 500;
+            border: 1px solid transparent;
+        }
+
+        .cycle-link:hover {
+            background: rgba(139, 92, 246, 0.2);
+            border-color: var(--accent-primary);
+            transform: translateY(-2px);
+        }
+    </style>
 </head>
 
 <body>
@@ -44,18 +94,74 @@
         </div>
     </nav>
 
-    <header class="hero" style="min-height: 40vh; padding-bottom: 2rem;">
+    <header class="hero" style="min-height: 30vh; padding-bottom: 2rem;">
         <div class="hero-content">
-            <h1 class="hero-title">Plot Summary</h1>
+            <h1 class="hero-title">Regression Cycles</h1>
+            <p class="hero-description">The journey of Seo Eun-hyun through the timelines.</p>
         </div>
     </header>
 
-    <section class="section">
-        <div class="section-header">
-            <h2 class="section-title">Under Construction</h2>
-            <p class="section-subtitle">This page is currently being populated with data.</p>
-        </div>
-    </section>
+    <div class="plot-container">
+
+        <!-- Mortal Realm -->
+        <section class="realm-section">
+            <h2 class="realm-title">Mortal Realm</h2>
+            <div class="cycles-grid">
+                <a href="cycles/mortal_realm_01.html#0th" class="cycle-link">0th Cycle</a>
+                <a href="cycles/mortal_realm_01.html#1st" class="cycle-link">1st Cycle</a>
+                <a href="cycles/mortal_realm_01.html#2nd" class="cycle-link">2nd Cycle</a>
+                <a href="cycles/mortal_realm_01.html#3rd" class="cycle-link">3rd Cycle</a>
+                <a href="cycles/mortal_realm_01.html#4th" class="cycle-link">4th Cycle</a>
+                <a href="cycles/mortal_realm_01.html#5th" class="cycle-link">5th Cycle</a>
+                <a href="cycles/mortal_realm_01.html#6th" class="cycle-link">6th Cycle</a>
+                <a href="cycles/mortal_realm_02.html#7th" class="cycle-link">7th Cycle</a>
+                <a href="cycles/mortal_realm_02.html#8th" class="cycle-link">8th Cycle</a>
+                <a href="cycles/mortal_realm_02.html#9th" class="cycle-link">9th Cycle</a>
+                <a href="cycles/mortal_realm_03.html#10th" class="cycle-link">10th Cycle</a>
+                <a href="cycles/mortal_realm_03.html#11th" class="cycle-link">11th Cycle</a>
+                <a href="cycles/mortal_realm_03.html#12th" class="cycle-link">12th Cycle</a>
+                <a href="cycles/mortal_realm_04.html" class="cycle-link">13th Cycle</a>
+            </div>
+        </section>
+
+        <!-- Middle Realm -->
+        <section class="realm-section">
+            <h2 class="realm-title">Middle Realm</h2>
+            <div class="cycles-grid">
+                <a href="cycles/13th_cycle.html" class="cycle-link">13th Cycle</a>
+                <a href="cycles/14th_cycle.html" class="cycle-link">14th Cycle</a>
+                <a href="cycles/15th_cycle.html" class="cycle-link">15th Cycle</a>
+                <a href="cycles/16th_cycle.html" class="cycle-link">16th Cycle</a>
+                <a href="cycles/17th_cycle.html" class="cycle-link">17th Cycle</a>
+                <a href="cycles/18th_cycle.html" class="cycle-link">18th Cycle</a>
+                <a href="cycles/19th_cycle.html" class="cycle-link">19th Cycle</a>
+                <a href="cycles/20th_cycle.html" class="cycle-link">20th Cycle</a>
+                <a href="cycles/21st_cycle.html" class="cycle-link">21st Cycle</a>
+                <a href="cycles/22nd_998th_cycle.html" class="cycle-link">22nd Cycle - 998th Cycle</a>
+                <a href="cycles/998th_cycle.html" class="cycle-link">998th Cycle</a>
+                <a href="cycles/999th_cycle.html" class="cycle-link">999th Cycle</a>
+            </div>
+        </section>
+
+        <!-- Immortal Realm -->
+        <section class="realm-section">
+            <h2 class="realm-title">Immortal Realm</h2>
+            <div class="cycles-grid">
+                <a href="cycles/1000th_cycle.html" class="cycle-link">1000th Cycle</a>
+                <a href="cycles/1001st_cycle.html" class="cycle-link">1001st Cycle</a>
+                <a href="cycles/1002nd_cycle.html" class="cycle-link">1002nd Cycle</a>
+                <a href="cycles/1003rd_cycle.html" class="cycle-link">1003rd Cycle</a>
+                <a href="cycles/1004th_cycle.html" class="cycle-link">1004th Cycle</a>
+                <a href="cycles/1005th_cycle.html" class="cycle-link">1005th Cycle</a>
+                <a href="cycles/1006th_2010th_cycle.html" class="cycle-link">1006th Cycle - 2010th Cycle</a>
+                <a href="cycles/2010th_cycle.html" class="cycle-link">2010th Cycle</a>
+                <a href="cycles/2011th_cycle.html" class="cycle-link">2011th Cycle</a>
+                <a href="cycles/2012th_cycle.html" class="cycle-link">2012th Cycle</a>
+                <a href="cycles/2013th_cycle.html" class="cycle-link">2013th Cycle</a>
+            </div>
+        </section>
+
+    </div>
 
     <!-- Login Modal -->
     <div class="modal-overlay">

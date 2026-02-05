@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0a0a0f">
+    <title>Heavens Beyond the Path | RToC Wiki</title>
+    <link rel="icon" type="image/jpeg" href="../../assets/images/seo_eun_hyun_cover.jpg">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap"
+        rel="stylesheet">
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <style>
+        .cycle-article {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        .wiki-header {
+            margin-bottom: 3rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 2rem;
+        }
+
+        .wiki-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2.5rem;
+            background: linear-gradient(135deg, #fff, #a5b4fc);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .wiki-subtitle {
+            font-size: 1.1rem;
+            color: #8B5CF6;
+            margin-bottom: 1.5rem;
+        }
+
+        .intro-box {
+            background: rgba(30, 30, 40, 0.5);
+            border-left: 4px solid #8B5CF6;
+            padding: 1.5rem;
+            font-style: italic;
+            color: #ccc;
+            margin-bottom: 2rem;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .toc-container {
+            background: rgba(20, 20, 25, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 3rem;
+            display: inline-block;
+            min-width: 250px;
+        }
+
+        .toc-title {
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #fff;
+            text-align: center;
+        }
+
+        .toc-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .toc-list li {
+            margin-bottom: 0.5rem;
+        }
+
+        .toc-list a {
+            color: #8B5CF6;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.2s;
+        }
+
+        .toc-list a:hover {
+            color: #fff;
+            text-decoration: underline;
+        }
+
+        .cycle-section {
+            margin-bottom: 4rem;
+            scroll-margin-top: 100px;
+        }
+
+        .cycle-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.8rem;
+            color: #fff;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid rgba(139, 92, 246, 0.3);
+            display: inline-block;
+            padding-bottom: 0.3rem;
+        }
+
+        .cycle-content {
+            line-height: 1.8;
+            color: #e2e8f0;
+            margin-bottom: 1.5rem;
+            text-align: justify;
+        }
+
+        .info-card {
+            background: rgba(139, 92, 246, 0.05);
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+        }
+
+        .info-line {
+            margin-bottom: 0.3rem;
+        }
+
+        .info-label {
+            font-weight: 600;
+            color: #a5b4fc;
+        }
+
+        .timeline-container {
+            margin-top: 1rem;
+            background: #fff;
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .timeline-img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .messages-box {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid #333;
+            padding: 1.5rem;
+            border-radius: 8px;
+            font-family: monospace;
+            color: #fbbf24;
+            margin-top: 2rem;
+        }
+
+        .message-item {
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px dashed rgba(255, 255, 255, 0.1);
+        }
+
+        .message-item:last-child {
+            border-bottom: none;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="nav">
+        <div class="nav-container">
+            <a href="../../index.html" class="nav-logo">
+                <img src="../../assets/logo_character.png" alt="RToC" class="nav-logo-img"
+                    style="width:36px; height:36px; border-radius:8px; object-fit:cover;">
+                RToC Wiki
+            </a>
+            <ul class="nav-links">
+                <li><a href="../../index.html" class="nav-link">Home</a></li>
+                <li><a href="../characters.html" class="nav-link">Characters</a></li>
+                <li><a href="../concepts.html" class="nav-link">Concepts</a></li>
+                <li><a href="../plot.html" class="nav-link"
+                        style="color: var(--text-primary); background: rgba(139, 92, 246, 0.1);">Plot</a></li>
+                <li><a href="../cultivation.html" class="nav-link">Cultivation</a></li>
+                <li><a href="../martial_arts.html" class="nav-link">Martial Arts</a></li>
+                <li><a href="../locations.html" class="nav-link">Locations</a></li>
+            </ul>
+            <div class="nav-search">
+                <ion-icon name="search-outline" class="nav-search-icon"></ion-icon>
+                <input type="text" placeholder="Search the wiki...">
+            </div>
+            <button class="login-btn">Log In</button>
+        </div>
+    </nav>
+
+    <div class="cycle-article">
+        <header class="wiki-header">
+            <h1 class="wiki-title">Heavens Beyond the Path</h1>
+            <h2 class="wiki-subtitle">7th to 9th Regression</h2>
+            <div class="intro-box">
+                Eun-hyun has repeatedly failed to break through the Seven Star Ritual. He continues his attempts to
+                advance while he hones his Martial Skills.
+            </div>
+            <div class="toc-container">
+                <div class="toc-title">Contents</div>
+                <ul class="toc-list">
+                    <li><a href="#7th">1 7th Regression</a></li>
+                    <li><a href="#8th">2 8th Regression</a></li>
+                    <li><a href="#9th">3 9th Regression</a></li>
+                    <li><a href="#messages">4 Messages encountered in these cycles</a></li>
+                </ul>
+            </div>
+        </header>
+
+        <!-- 7th Regression -->
+        <section id="7th" class="cycle-section">
+            <h2 class="cycle-title">7th Regression</h2>
+            <div class="cycle-content">
+                <p>Eun-hyun attempts to convince Sir Byuk-ho, White Bone Ghost Devil and Azure Tiger Saint to accept him
+                    into their sects, but they refuse, citing their coming ascension. They also warn him to stay away
+                    from Mad Lord, as he may lose his sanity at any time. He manages to convince the Sea Dragon King to
+                    take Kim Yeon with him. The Dragon King creates a rift for Eun-hyun and Young-hoon to exit Ascension
+                    path, but Eun-hyun chooses to stay. Eun-hyun notices a stele floating above the ascension gate, with
+                    an incomplete warning for future generations. He wonders what it means, before settling down to
+                    cultivate. It took him ten years to reach Qi Refining 7th Star. Eun-hyun attemps the 7th Star
+                    Ritual. Due to isolation and desperation, he went crazy, hallucinating all the people he had met
+                    over his regressions, controlling numerous weapons through Sword Contol. He investigates the stele
+                    and realises the original structure has flown off north. He eventually creates a Gang Sphere,
+                    reaching Ultimate Pinnacle. He uses the Gang Sphere to break through the clouds of Heavenly
+                    Rejection, and succefully completes the Seven Star Ritual. He also forms an Inner Core to
+                    efficiently store his internal energy.</p>
+
+                <p>Upon reaching the 9th star, Eun-hyun decides to leave Ascension Path. He heads north, to find the
+                    remains of the stele and is stunned to discover the words "Golden Divine Heaven Thunder" on it. He
+                    sees a mysterious black castle, but decides against exploring it. He then goes to the Cheongmun Clan
+                    again to meet Cheongmun Ryeong. He rejects Cheonmun Ryeong's offer of joining the clan after
+                    learning the foundations of the 8th to the 14th Star from him. Eun-hyun then reaches out to Kim
+                    Young-hoon. Young-hoon has reached Ultimate Pinnacle and killed the Makli Clan. He was then
+                    protected by the Jin Clan. Eun-hyun cultivates for the rest of his lifespan, reaching Qi Refining
+                    14th Star. Towards the end, he goes to Shengzi and attempts to defy his lifespan. However, he is
+                    struck by blue lightning, and dies.</p>
+            </div>
+            <div class="info-card">
+                <div class="info-line"><span class="info-label">Martial Realm:</span> Ultimate Pinnacle</div>
+                <div class="info-line"><span class="info-label">Cultivation Realm:</span> Qi Refining 14th Star</div>
+            </div>
+            <div class="timeline-container">
+                <h4 style="color:#333; margin-bottom:0.5rem;">Timeline: 7th Cycle</h4>
+                <img src="../../assets/images/timeline_7th_cycle.png" alt="Timeline 7th Cycle" class="timeline-img">
+            </div>
+        </section>
+
+        <!-- 8th Regression -->
+        <section id="8th" class="cycle-section">
+            <h2 class="cycle-title">8th Regression</h2>
+            <div class="cycle-content">
+                <p>Eun-hyun is acknowledged by the White Fox of Ascension Path and The Immortals that take his
+                    colleagues, who mistake his Inner Core for a Demon Core. Azure Tiger Saint gives him a
+                    recommendation for the Cheongmun Clan. Jin Byuk-ho tells him about Shattered Heaven Peak, where
+                    Eun-hyun could learn about the history of Yang Su-jin and the Golden Divine Heavenly Thunder Sect.
+                    The Sea Dragon King gives him a demon beast method, and tells Eun-hyun to go to Black Wind Sea's
+                    Utmost Chaos Island, where Eun-hyun could learn Demon Script from Seo Hweol's descendant, Seo Ran.
+                </p>
+
+                <p>For the next 11 years, Eun-hyun stays in Ascension Path and recovers his cultivation to the 14th Star
+                    Of Qi Refining. He goes to Cheongmun Ryeong once more to obtain his teachings. As he leaves, the
+                    entire attemps Cheongmun Clan to chase Eun-hyun down to recruit him forcibly, but he escapes.</p>
+
+                <p>After seeing his disciples, Eun-hyun tracks Young-hoon down. In the time Eun-hyun had reached the
+                    14th Star of Refining, Kim Young-hoon had reached Five Energies Converging To The Origin. After a
+                    spar, Eun-hyun leaves to go find Seo Ran. Young-hoon promises his realm will be above Eun-hyun's
+                    next time they meet. Eun-hyun then went to the Black Wind Sea's Utmost Chaos Island where he met Seo
+                    Ran. Seo Ran tells Eun-hyun he feels like a complete demon. Eun-hyun then proceeds to awaken his
+                    demon senses. Seo Ran proceeds to teach Eun-hyun the demon language and script. After Eun-hyun
+                    learns the language, he promises Seo Ran he will help him destroy a particular barrier and obtain
+                    the treasure inside in three years. Eun-hyun discovers the manual given to him by Seo Hweol is
+                    titled Summoning Wind, Dragon Transformation. He practices the technique for a year and realises his
+                    consciousness can turn into that of a Dragon. He then travels to Shattered Heaven Peak in Shengzi,
+                    where he spends months attempting the advancement to Qi Building. He travels to meet Young-hoon in
+                    hopes of furthering his enlightenment in Ultimate Pinnacle. He realises both of them had different
+                    elightenments; while Eun-hyun achieved through the principle of Three Talents, Young-hoon seemed to
+                    used "family". Eun-hyun then shares the awakening of demon senses with Young-hoon. They spend time
+                    discussing demon methods.</p>
+
+                <p>Eun-hyun then leaves to keep his promise with Seo Ran. Seo Ran reveals he needed three years to
+                    prepare a dharma treasure. They go to the shipwreck of a Nether Crossing Ship, All the ghosts around
+                    the ship scream at Eun-hyun, calling him a big ghost. At the bottom layer of the Nether Crossing
+                    Ship, they find the remenant of a Heavenly Being cultivator, now at the Core Formation stage.
+                    Overwhelmed, Seo Ran and Eun-hyun flee from the remenant soul. Seo Ran tells Eun-hyun to return in
+                    ten years, so he has enough energy in his dharma treasure to combat the ghost.</p>
+
+                <p>Seo Eun-hyun then leaves for the mountains near Yanguo and begins practising the Water Surpassing
+                    Path. He realises practising multiple path with the Surpassing Path to Cultivation increases his
+                    rate of recovery. Kim Young-hoon visits and rants about being unable to see the next realm.
+                    Young-hoon also warns Eun-hyun from practising Summoning Wind, Dragon Transformation, as a
+                    dragon-shaped consciousness does not suit humans. After that, Young-hoon would visit more
+                    frequently, and the two would discuss and share their learnings. A few years later, a Jin Clan
+                    cultivator tracks down Eun-hyun's dwelling. They have a short duel, which Eun-hyun wins. He then
+                    leaves for the Black Sea.</p>
+
+                <p>Seo Ran and Eun-hyun challenge the Nether Crossing Ship again. The ghost reveals he has found Seo
+                    Ran's treasure; it is a jade slip. This time they severely weaken the remnant ghost. The ghost gives
+                    up resisting the pull of the Netherworld and instead enters a berserk state. Eun-hyun tells Seo Ran
+                    they must escape, but Seo Ran refuse to leave without the jade slip. Eun-hyun attempts to seize the
+                    jade slip. He succeeds, but is nearly killed by the ghost. Seo Ran steps in and blocks the attack
+                    sustaining a fatal wound. Seo Ran transforms into his true form, revealing himself as a dragon-human
+                    hybrid. He states he was bullied and discriminated against within the Sea Dragon race. Eun-hyun
+                    attempts to drag Seo Ran away, but is stunned when he can't move his body. Seo Ran reveals the true
+                    name of Summoning Wind, Dragon Transformation, is Summoning Wind, Coagulating Core Transformation.
+                    It turns the practitioner's demon core into a elixir and forces the practitioner to obey the Sea
+                    Dragon race's commands. The ancestors of the Makli Clan used this art. Consuming Eun-hyun's core
+                    would let Seo Ran escape, but he cannot do that to friend. Seo Ran tells Eun-hyun Seo Hweol is not
+                    to be trusted as he wears his smiles as masks. He apologises for deceiving Eun-hyun all this time.
+                    Eun-hyun attemps to free himself in order to save Seo Ran, but Seo Ran stops him and reveals the
+                    space-breaking bead given to him by Seo Hweol, which would destroy the Nether Crossing Ship and kill
+                    him. Seo Ran forces Eun-hyun outside, and detonates the space-breaking bead.</p>
+
+                <p>Eun-hyun mourns the death of Seo Ran. He takes the demon beast manuals previously possessed by Seo
+                    Ran and gives them to Young-hoon. He leaves for Shattered Heaven Peak to master the Fire Surpassing
+                    Path. Kim Young-hoon contacts him, give him Entering Heavens Beyond the Path Martial Arts, and burns
+                    his life in an attempt to reach the next realm. Eun-hyun mourns the death of both of his friends and
+                    continues cultivating. As blue lightening strikes him, he realises Heaven, Earth and Man influence
+                    each other, forming nine Gang Spheres.</p>
+            </div>
+            <div class="info-card">
+                <div class="info-line"><span class="info-label">Martial Realm:</span> Ultimate Pinnacle (9 Gang spheres)
+                </div>
+                <div class="info-line"><span class="info-label">Cultivation Realm:</span> Qi Refining 14th star</div>
+            </div>
+            <div class="timeline-container">
+                <h4 style="color:#333; margin-bottom:0.5rem;">Timeline: 8th Cycle</h4>
+                <img src="../../assets/images/timeline_8th_cycle.png" alt="Timeline 8th Cycle" class="timeline-img">
+            </div>
+        </section>
+
+        <!-- 9th Regression -->
+        <section id="9th" class="cycle-section">
+            <h2 class="cycle-title">9th Regression</h2>
+            <div class="cycle-content">
+                <p>Eun-hyun realises his head is about to explode as his body cannot support his large consciousness. He
+                    quickly undergoes rejuvenation and forms an inner core. This attracts the white fox, who attacks
+                    him. The fox chases him for three days. On the third day, the White Bone Devil and Sir Byuk-ho kill
+                    the fox for its demon core. Eun-hyun attempts to convince them to take Kim Yeon and Oh Hye-seo along
+                    with the other three, but the Mad Lord senses Kim Yeon’s consciousness and confronts them. During
+                    their exchange, Oh Hye-seo awakens her abilities, calling the Sea Dragon King. Seo Hweol mediates
+                    between them, leading to the original master-disciple distribution as fated. He then gives Eun-hyun
+                    the manual for Summoning Wind, Dragon Transformation and the space-breaking bead, which he was
+                    unable to give to Seo Ran this cycle. All the cultivators except Mad Lord leave. Eun-hyun asks Mad
+                    Lord about fate. Mad Lord shows him how ‘fate’ resembles ‘constellations’ and how events exert
+                    ‘attraction force’ just like celestial objects. He says it is necessary to have power (strength) to
+                    escape the force of fate. He then goes mad and pushes Eun-hyun and Kim Young-hoon into a spatial
+                    rift.</p>
+
+                <p>Eun-hyun leaves after settling Young-hoon in Yanguo. He throws the space-breaking bead into the sea,
+                    and decides to meet Seo Ran after he reaches Qi Building, and settles down at Shattered Heaven Peak.
+                    Thirteen years after the regression, Young-hoon tracks down Eun-hyun. Eun-hyun is stunned to see him
+                    at the peak of Ultimate Pinnacle. Young-hoon says he does not want to walk the path to Entering
+                    Heavens Beyond the Path alone, so has come to train with Eun-hyun. After a spar, Young-hoon tells
+                    Eun-hyun he has realised the enlightenment for Entering Heavens is different for each person.</p>
+
+                <p>One day, Young-hoon comes across Eun-hyun’s unconscious body training. He resolves to practise with
+                    no fear of death. Soon after, Young-hoon reaches Entering Heavens, grasping the Surpassing Radiant
+                    Saber, the manifestation of his desire to “return’. He tells Eun-hyun he has realised life is joy,
+                    and collapses. Upon awakening, he is shocked to see Eun-hyun has already condensed his heart.
+                    However, he refuses to say anything and simply seats himself on a mountain peak, waiting for
+                    Eun-hyun to advance while nudging his heart essence. Eun-hyun is unaware of this and is instead
+                    frustrated by Young-hoon’s silence. He continues his attempts to reach Qi Building and Entering
+                    Heavens, but keeps failing. At the end of his lifespan, through Young-hoon’s hints, he finally
+                    realises he is already perfect and advances to both, grasping the Formless Sword, the manifestation
+                    of his desire to “break free from fate”. He also extends his lifespan by three hundred years. As he
+                    nearly utters "Shattered Heaven Peak," he sees a message left by Yang Su-jin, informing Eun-hyun he
+                    and his colleagues are Enders and that they should never reveal their fates.[1] They are attacked by
+                    a cultivator patrol but fend it off easily. The then spar together, which Young-hoon barely wins, at
+                    the cost of his health.</p>
+
+                <p>After Young-hoon recovers, they leave to go to Seo Ran, and help him challenge the Nether Crossing
+                    Ship. Eun-hyun and Young-hoon batter the ghost. The ghost attempts to possess Eun-hyun but is
+                    severely damaged by his heart essence. He introduces himself as Song Jin and promises to fulfil any
+                    wish the others have, in exchange for allowing him to pass on where he wishes. Seo ran finds the
+                    jade slip, and Song Jin teaches Eun-hyun the method of steering the Nether Crossing Ship. He also
+                    provides a Qi Building cultivation method, Yin Soul Ghost Incantation.</p>
+
+                <p>Seo Ran, Eun-hyun and Young-hoon visit the Serving Command Palace, where they hope to find the
+                    Longevity Fruit to extend Young-hoon’s lifespan. They discover they cannot enter the Palace as there
+                    is a barrier. Eun-hyun is disappointed. On Young-hoon’s last day, Young-hoon cuts down the blue
+                    lightning, denying fate. The next day, he is wrinkled and with white hair. He survives for another
+                    49 days before cutting a rift using his Saber and vanishing, leaving some advice for Eun-hyun.</p>
+
+                <p>Seo Ran and Eun-hyun enter the Serving Command Palace. They find the place in ruins and a budding
+                    Longevity Fruit. Eun-hyun decides to stay in the Palace and attempts to ripen the Longevity Fruit.
+                    He also cultivates alongside the tree, practicing Yin Soul Ghost Incantation and Cheongmun Ryeong’s
+                    Thousand Lusters to Forest Sea.</p>
+
+                <p>250 years later, the Serving Command Palace opens above the Heaven-Treading desert. A set of Core
+                    Formation cultivators fleeing from the Nascent Soul, Bloodwood practitioner Yuan Li. Yuan Li
+                    collects the Serving Command Seal from the Palace. He offers to take Eun-hyun as a disciple, and
+                    implants the Five Elements Blood Curse Banner. Eun-hyun refuses and attempts to run, cutting apart
+                    space the same way Young-hoon did, but Yuan Li still captures him. He offers to take Eun-hyun as a
+                    disciple again, but refuses. Eun-hyun destroys the Longevity Tree to prevent Yuan Li from taking it
+                    and explodes from Yuan Li's attack. (Yuan Li mysteriously turns into a flower and perishes.)</p>
+            </div>
+            <div class="info-card">
+                <div class="info-line"><span class="info-label">Martial Realm:</span> Entering Heavens Beyond the Path
+                </div>
+                <div class="info-line"><span class="info-label">Cultivation Realm:</span> Qi Building Second
+                    Constellation</div>
+            </div>
+            <div class="timeline-container">
+                <h4 style="color:#333; margin-bottom:0.5rem;">Timeline: 9th Cycle</h4>
+                <img src="../../assets/images/timeline_9th_cycle.png" alt="Timeline 9th Cycle" class="timeline-img">
+            </div>
+        </section>
+
+        <!-- Messages Section -->
+        <section id="messages" class="cycle-section">
+            <h2 class="cycle-title">Messages from Yang Su-jin</h2>
+            <div class="messages-box">
+                <div class="message-item">
+                    [I am Yang Su-jin, the first Sect Master of Golden Divine Heavenly Thunder Sect, the remnant shadow
+                    of the fate left behind. You, the next generation's Ender. Entering this space means that you've
+                    miraculously achieved the conditions I set. Before realizing your fate, entering Shattered Heaven
+                    Peak, surviving the heavenly lightning, and uttering 'Shattered Heaven' - all Enders who
+                    miraculously achieve this near-impossible probability can come here.]
+                </div>
+                <div class="message-item">
+                    [I, the founder of the Golden Divine Heavenly Thunder Sect, Yang Su-jin, have created an attraction
+                    of fate within Shattered Heaven Peak that inevitably draws in Enders. Therefore, an Ender will
+                    inevitably come to Shattered Heaven Peak at some point. However, for an Ender, who is less than a
+                    bug before realizing their fate, to be struck by heavenly lightning here and survive against all
+                    odds, and to then utter 'Shattered Heaven,' would require an unbelievable miracle. Such an event is
+                    impossible, but without a miracle, there will be no escaping [it]s notice. Thus, I leave this
+                    warning here for future generations, relying solely on the possibility of such a miracle.]
+                </div>
+                <div class="message-item">
+                    [Future generations, whether you are the next Ender, or the one after, or even thousands or millions
+                    of generations later, never reveal the fate you have been given. I don't know what gift you may have
+                    received, but under no circumstances should you ever speak of it. No matter where you go in the
+                    Three Thousand Worlds, [it] will know what you have received. Keeping your fate a secret is the only
+                    slim chance you have.]
+                </div>
+                <div class="message-item">
+                    [If you have already revealed your secret, then, future generations, even that slim chance has
+                    vanished. Do not even think of returning to your homeland or escaping the curse of fate. Just give
+                    up on the thought of cultivation, live ordinarily among mortals, and die an ordinary death.
+                    Forgetting your homeland forever and living and dying that way is the only way to find happiness for
+                    an Ender who has revealed their own fate.]
+                </div>
+                <div class="message-item">
+                    [Everyone living their fate feels averse to revealing it. Especially for an Ender, this feeling is
+                    much stronger. Yet, many take their fate lightly and end up revealing it. I, too, once revealed my
+                    fate and ended up like this, so, future generations, heed my warning. Even if you don't reveal your
+                    fate, [it] will be after you, but if you do reveal your fate, any means of resistance against [it]
+                    will completely disappear. Future generations, never take my warning lightly. Never...]
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- Login Modal -->
+    <div class="modal-overlay">
+        <div class="login-modal">
+            <div class="modal-header">
+                <button class="modal-close"><ion-icon name="close-outline"></ion-icon></button>
+                <h2 class="modal-title">Welcome Back</h2>
+                <p class="modal-subtitle">Log in to the RToC Wiki Community</p>
+            </div>
+
+            <div class="social-login">
+                <button class="social-btn discord">
+                    <ion-icon name="logo-discord"></ion-icon>
+                    Continue with Discord
+                </button>
+                <button class="social-btn google">
+                    <ion-icon name="logo-google"></ion-icon>
+                    Continue with Google
+                </button>
+            </div>
+
+            <div class="divider">or</div>
+
+            <div class="auth-form">
+                <div class="form-group">
+                    <input type="email" placeholder="Email Address">
+                </div>
+                <div class="form-group">
+                    <input type="password" placeholder="Password">
+                </div>
+                <button class="auth-submit">Log In</button>
+            </div>
+
+            <div class="auth-footer">
+                Don't have an account? <span class="auth-link">Create Account</span>
+            </div>
+        </div>
+    </div>
+
+    <script src="../../scripts/editor.js"></script>
+    <script src="../../scripts/main.js"></script>
+</body>
+
+</html>
