@@ -4,15 +4,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#0a0a0f">
-    <title>General Seo | RToC Wiki</title>
+    <meta name="theme-color" content="#8B5CF6">
+    <title>General Seo (13th Cycle) | RToC Wiki</title>
     <link rel="icon" type="image/jpeg" href="../../assets/images/seo_eun_hyun_cover.jpg">
     <link rel="stylesheet" href="../../styles/main.css">
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap"
         rel="stylesheet">
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
@@ -23,38 +23,46 @@
             padding: 2rem 1rem;
         }
 
-        .wiki-header {
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #8B5CF6 0%, #000000 100%);
+            min-height: 40vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 4rem 2rem;
+            position: relative;
             margin-bottom: 3rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            padding-bottom: 2rem;
         }
 
-        .wiki-title {
-            font-family: 'Outfit', sans-serif;
-            font-size: 2.5rem;
-            background: linear-gradient(135deg, #fff, #a5b4fc);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
+        .hero-title {
+            font-family: 'Cinzel', serif;
+            font-size: 3.5rem;
+            color: #fff;
+            text-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
             margin-bottom: 0.5rem;
         }
 
-        .wiki-subtitle {
+        .hero-subtitle {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.5rem;
+            color: rgba(255, 255, 255, 0.9);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .hero-desc {
+            margin-top: 1.5rem;
             font-size: 1.1rem;
-            color: #8B5CF6;
-            margin-bottom: 1.5rem;
-        }
-
-        .intro-box {
-            background: rgba(30, 30, 40, 0.5);
-            border-left: 4px solid #8B5CF6;
-            padding: 1.5rem;
+            color: rgba(255, 255, 255, 0.8);
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
             font-style: italic;
-            color: #ccc;
-            margin-bottom: 2rem;
-            border-radius: 0 8px 8px 0;
         }
 
+        /* Content Styling */
         .toc-container {
             background: rgba(20, 20, 25, 0.6);
             border: 1px solid rgba(255, 255, 255, 0.1);
@@ -100,20 +108,12 @@
 
         .cycle-title {
             font-family: 'Outfit', sans-serif;
-            font-size: 1.8rem;
-            color: #fff;
-            margin-bottom: 1rem;
+            font-size: 2rem;
+            color: #8B5CF6;
+            margin-bottom: 1.5rem;
             border-bottom: 2px solid rgba(139, 92, 246, 0.3);
             display: inline-block;
-            padding-bottom: 0.3rem;
-        }
-
-        .section-subtitle {
-            font-family: 'Outfit', sans-serif;
-            font-size: 1.4rem;
-            color: #a5b4fc;
-            margin-top: 2rem;
-            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
         }
 
         .cycle-content {
@@ -123,56 +123,70 @@
             text-align: justify;
         }
 
+        /* Image Styling */
+        .img-container {
+            display: flex;
+            justify-content: center;
+            margin: 2rem 0;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .img-display {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            margin-bottom: 0.5rem;
+        }
+
+        .img-caption {
+            color: #94a3b8;
+            font-size: 0.9rem;
+            font-style: italic;
+        }
+
         .info-card {
             background: rgba(139, 92, 246, 0.05);
             border: 1px solid rgba(139, 92, 246, 0.2);
-            padding: 1rem;
+            padding: 1.5rem;
             border-radius: 8px;
-            margin-bottom: 1.5rem;
-            font-size: 0.9rem;
-        }
-
-        .info-line {
-            margin-bottom: 0.3rem;
+            margin-top: 2rem;
         }
 
         .info-label {
             font-weight: 600;
-            color: #a5b4fc;
+            color: #8B5CF6;
         }
 
-        .timeline-container {
-            margin-top: 1rem;
-            background: #fff;
-            padding: 1rem;
+        /* Navigation */
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 2rem;
+            background: rgba(139, 92, 246, 0.1);
             border-radius: 8px;
-            text-align: center;
+            color: #8B5CF6;
+            transition: all 0.2s;
+            text-decoration: none;
+            font-weight: 600;
+            border: 1px solid rgba(139, 92, 246, 0.2);
         }
 
-        .timeline-img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 4px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        }
-
-        .art-image-container {
-            margin: 2rem 0;
-            text-align: center;
-        }
-
-        .art-image {
-            max-width: 100%;
-            border-radius: 8px;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
-            max-height: 500px;
-        }
-
-        .image-caption {
-            margin-top: 0.5rem;
-            font-style: italic;
-            color: #94a3b8;
-            font-size: 0.9rem;
+        .nav-btn:hover {
+            background: rgba(139, 92, 246, 0.2);
+            transform: translateY(-2px);
+            color: #fff;
         }
     </style>
 </head>
@@ -203,25 +217,28 @@
         </div>
     </nav>
 
-    <div class="cycle-article">
-        <header class="wiki-header">
-            <h1 class="wiki-title">General Seo</h1>
-            <h2 class="wiki-subtitle">13th Regression (Life as a Puppet)</h2>
-            <div class="intro-box">
+    <!-- Hero Header -->
+    <header class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">General Seo</h1>
+            <p class="hero-subtitle">13th Regression (Life as a Puppet)</p>
+            <p class="hero-desc">
                 Seo Eun-hyun realises the regression point is fixed! Before he can do much, he is kidnapped by the Mad
                 Lord...
-            </div>
-            <div class="toc-container">
-                <div class="toc-title">Contents</div>
-                <ul class="toc-list">
-                    <li><a href="#madman">1 Madman</a></li>
-                    <li><a href="#yeon">2 Yeon's Yeon</a></li>
-                    <li><a href="#timeline">3 Timeline</a></li>
-                </ul>
-            </div>
-        </header>
+            </p>
+        </div>
+    </header>
 
-        <!-- Madman -->
+    <div class="cycle-article">
+        <div class="toc-container">
+            <div class="toc-title">Contents</div>
+            <ul class="toc-list">
+                <li><a href="#madman">1 Madman</a></li>
+                <li><a href="#yeon">2 Yeon's Yeon</a></li>
+                <li><a href="#timeline">3 Timeline</a></li>
+            </ul>
+        </div>
+
         <section id="madman" class="cycle-section">
             <h2 class="cycle-title">Madman</h2>
             <div class="cycle-content">
@@ -263,10 +280,10 @@
                     puppets to ensure they survive his war. Eun-hyun manages to convince the Mad Lord to only transform
                     him into a puppet under Kim Yeon’s control. The Mad Lord is overjoyed and agrees.</p>
 
-                <div class="art-image-container">
+                <div class="img-container">
                     <img src="../../assets/images/yeon_crying_puppet.png"
-                        alt="Yeon when she learns Eun-hyun is now a puppet" class="art-image">
-                    <div class="image-caption">Yeon when she learns Eun-hyun is now a puppet</div>
+                        alt="Yeon when she learns Eun-hyun is now a puppet" class="img-display">
+                    <span class="img-caption">Yeon when she learns Eun-hyun is now a puppet</span>
                 </div>
 
                 <p>After the transformation into General Seo, Eun-hyun is stunned to realise his soul is housed within
@@ -289,16 +306,15 @@
             </div>
         </section>
 
-        <!-- Yeon's Yeon -->
         <section id="yeon" class="cycle-section">
             <h2 class="cycle-title">Yeon's Yeon</h2>
             <div class="cycle-content">
                 <p>Eun-hyun uses all his knowledge to pat Kim Yeon’s shoulder, which catalyses her completion of the
                     Wonderfully Mysterious Innate Heart Canon, allowing them to communicate using Heart Language.</p>
 
-                <div class="art-image-container">
-                    <img src="../../assets/images/yeons_play.png" alt="Yeon's Play (Yeon's Yeon)" class="art-image">
-                    <div class="image-caption">Yeon's Play (Yeon's Yeon)</div>
+                <div class="img-container">
+                    <img src="../../assets/images/yeons_play.png" alt="Yeon's Play (Yeon's Yeon)" class="img-display">
+                    <span class="img-caption">Yeon's Play (Yeon's Yeon)</span>
                 </div>
 
                 <p>One thousand years after Eun-hyun’s modification into a puppet, the Mad Lord allies with Seo Hweol to
@@ -328,14 +344,25 @@
             </div>
         </section>
 
-        <!-- Timeline -->
         <section id="timeline" class="cycle-section">
-            <div class="timeline-container">
-                <h4 style="color:#333; margin-bottom:0.5rem;">Timeline: 13th Cycle</h4>
-                <img src="../../assets/images/timeline_13th_cycle.png" alt="Timeline 13th Cycle" class="timeline-img">
+            <h2 class="cycle-title">Timeline</h2>
+            <div class="cycle-content">
+                <div class="img-container">
+                    <img src="../../assets/images/timeline_13th_cycle.png" alt="Timeline 13th Cycle"
+                        class="img-display">
+                    <span class="img-caption">Timeline: 13th Cycle</span>
+                </div>
             </div>
         </section>
 
+        <div class="nav-buttons">
+            <a href="mortal_realm_03.html#12th" class="nav-btn">
+                <ion-icon name="arrow-back-outline"></ion-icon> Previous Arc: 12th Cycle
+            </a>
+            <a href="mortal_realm_05.html" class="nav-btn">
+                Next Arc: Painting a Canvas (14th) <ion-icon name="arrow-forward-outline"></ion-icon>
+            </a>
+        </div>
     </div>
 
     <!-- Login Modal -->

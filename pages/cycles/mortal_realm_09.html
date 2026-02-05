@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#4338ca">
+    <title>For Seo, Towards Seo (18th Cycle) | RToC Wiki</title>
+    <link rel="icon" type="image/jpeg" href="../../assets/images/seo_eun_hyun_cover.jpg">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap"
+        rel="stylesheet">
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <style>
+        .cycle-article {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #4338ca 0%, #000000 100%);
+            min-height: 40vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 4rem 2rem;
+            position: relative;
+            margin-bottom: 3rem;
+        }
+
+        .hero-title {
+            font-family: 'Cinzel', serif;
+            font-size: 3.5rem;
+            color: #fff;
+            text-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+            margin-bottom: 0.5rem;
+        }
+
+        .hero-subtitle {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.5rem;
+            color: rgba(255, 255, 255, 0.9);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .hero-desc {
+            margin-top: 1.5rem;
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.8);
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            font-style: italic;
+        }
+
+        /* Content Styling */
+        .toc-container {
+            background: rgba(20, 20, 25, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 3rem;
+            display: inline-block;
+            min-width: 250px;
+        }
+
+        .toc-title {
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #fff;
+            text-align: center;
+        }
+
+        .toc-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .toc-list li {
+            margin-bottom: 0.5rem;
+        }
+
+        .toc-list a {
+            color: #818cf8;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.2s;
+        }
+
+        .toc-list a:hover {
+            color: #fff;
+            text-decoration: underline;
+        }
+
+        .cycle-section {
+            margin-bottom: 4rem;
+            scroll-margin-top: 100px;
+        }
+
+        .cycle-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2rem;
+            color: #818cf8;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid rgba(129, 140, 248, 0.3);
+            display: inline-block;
+            padding-bottom: 0.5rem;
+        }
+
+        .cycle-content {
+            line-height: 1.8;
+            color: #e0e7ff;
+            margin-bottom: 1.5rem;
+            text-align: justify;
+        }
+
+        /* Image Styling */
+        .img-container {
+            display: flex;
+            justify-content: center;
+            margin: 2rem 0;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .img-display {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(67, 56, 202, 0.2);
+            margin-bottom: 0.5rem;
+        }
+
+        .img-caption {
+            color: #94a3b8;
+            font-size: 0.9rem;
+            font-style: italic;
+        }
+
+        .info-card {
+            background: rgba(67, 56, 202, 0.05);
+            border: 1px solid rgba(67, 56, 202, 0.2);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-top: 2rem;
+        }
+
+        .info-label {
+            font-weight: 600;
+            color: #818cf8;
+        }
+
+        .quote-box {
+            background: rgba(0, 0, 0, 0.2);
+            border-left: 3px solid #818cf8;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            font-style: italic;
+            color: #e0e7ff;
+        }
+
+        /* Navigation */
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 2rem;
+            background: rgba(67, 56, 202, 0.1);
+            border-radius: 8px;
+            color: #818cf8;
+            transition: all 0.2s;
+            text-decoration: none;
+            font-weight: 600;
+            border: 1px solid rgba(67, 56, 202, 0.2);
+        }
+
+        .nav-btn:hover {
+            background: rgba(67, 56, 202, 0.2);
+            transform: translateY(-2px);
+            color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="nav">
+        <div class="nav-container">
+            <a href="../../index.html" class="nav-logo">
+                <img src="../../assets/logo_character.png" alt="RToC" class="nav-logo-img"
+                    style="width:36px; height:36px; border-radius:8px; object-fit:cover;">
+                RToC Wiki
+            </a>
+            <ul class="nav-links">
+                <li><a href="../../index.html" class="nav-link">Home</a></li>
+                <li><a href="../characters.html" class="nav-link">Characters</a></li>
+                <li><a href="../concepts.html" class="nav-link">Concepts</a></li>
+                <li><a href="../plot.html" class="nav-link"
+                        style="color: var(--text-primary); background: rgba(139, 92, 246, 0.1);">Plot</a></li>
+                <li><a href="../cultivation.html" class="nav-link">Cultivation</a></li>
+                <li><a href="../martial_arts.html" class="nav-link">Martial Arts</a></li>
+                <li><a href="../locations.html" class="nav-link">Locations</a></li>
+            </ul>
+            <div class="nav-search">
+                <ion-icon name="search-outline" class="nav-search-icon"></ion-icon>
+                <input type="text" placeholder="Search the wiki...">
+            </div>
+            <button class="login-btn">Log In</button>
+        </div>
+    </nav>
+
+    <!-- Hero Header -->
+    <header class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">For Seo, Towards Seo</h1>
+            <p class="hero-subtitle">18th Cycle</p>
+            <p class="hero-desc">
+                Seo Eun-hyun discovers the regression check point has reset once again. As they ascend, he creates a
+                clone and sends in another direction.
+            </p>
+        </div>
+    </header>
+
+    <div class="cycle-article">
+        <div class="toc-container">
+            <div class="toc-title">Contents</div>
+            <ul class="toc-list">
+                <li><a href="#name">1 My Name is</a></li>
+                <li><a href="#avenger">2 Avenger</a></li>
+                <li><a href="#her">3 Her</a></li>
+                <li><a href="#protection">4 Taenghwa/Protection</a></li>
+                <li><a href="#forseo">5 For Seo, Towards Seo</a></li>
+                <li><a href="#haveyou">6 Have You Been Well</a></li>
+                <li><a href="#notalord">7 Not a Lord</a></li>
+                <li><a href="#farewell">8 Farewell</a></li>
+                <li><a href="#timeline">9 Timeline</a></li>
+            </ul>
+        </div>
+
+        <section id="name" class="cycle-section">
+            <h2 class="cycle-title">My Name is</h2>
+            <div class="cycle-content">
+                <p>When Eun-hyun awakens, he is stunned to find he has now regressed back to when the vestige had
+                    swallowed them; his regression point has reset. He still feels the three pulls of attraction
+                    force–one to Bright Cold, another by the Nether Crossing Ship, and one from the Immortal Beast
+                    Blood. Eun-hyun inserts a Gu within Yuan Yu and sends it off in the direction of the force felt by
+                    the Ship. His companions enter the Peach Garden Painting as soon as they land on the Flying Immortal
+                    Platform. Eun-hyun takes the scroll and flees. Hon Won chases him for a while before sending out an
+                    attack force of Four-Axis cultivators, which Eun-hyun defeats easily. Seo Hweol appears out of
+                    nowhere and proposes an alliance. Hweol also hints at knowing Eun-hyun, Myeong-hoon and Hong Fan are
+                    True Immortals. Hweol also lies and says he is Blood Yin. Eun-hyun also lies and hints at a
+                    connection to Netherworld. Hweol also reveals Hon Won obtained the Supervisory Eye right before
+                    their ascension. Eun-hyun bids Hweol farewell and kills him. He keeps Seo Hweol’s face.</p>
+                <p>Meanwhile, Yuan Yu has ascended. He finds himself on the Black Ghost Valley’s secret Flying Immortal
+                    Platform. When asked for an introduction, he blurts out the name Seo Li. He undergoes the joining
+                    process for Black Ghost Valley.</p>
+                <p>Eun-hyun sends Myeong-hoon and Hong Fan off to the ruins of the Thunder Sect, while he attacks the
+                    Integration Grand Cultivators of the Human Alliance. He is confronted by six cultivators, and fights
+                    Inspector Wi Ryeon-shin. Once Eun-hyun has proven himself, he is accepted as an Integration level
+                    powerhouse of the Human Race Alliance.</p>
+                <p>Seo Li passes the entrance examination for the Valley, accidentally killing the examiner. While being
+                    taken to accept a Ghost King, he learns the Valley offers several resurrection opportunities. When
+                    Li enters the shrine, all the Ghost Kings mistake him for a Reaper of the Underworld and flee. Seo
+                    Li is forced to cover himself in curses. He obtains a loyal servant in a Ghost King called Bi Yul,
+                    whose family developed the Yin Soul Ghost incantation.</p>
+                <p>Eun-hyun receives a threatening letter from Gyu Ryeon. He plans to have Oh Hyun-seok retreat from the
+                    True Devil Realm, saving the Azure Tiger Saint, He also plans to send the Mad Lord to Hyeon Eum to
+                    keep the latter in check.</p>
+                <p>Seo Li is guided to the Method Repository. With Bi Yul’s help, he takes the Ghost Immortal Kui
+                    Devilish Secrets but is warned about the difficulty. He heads to the Duty Hall and accepts a task
+                    put out by the Black Scaled Fish Commanding Sect requiring a curse sorcerer.</p>
+            </div>
+        </section>
+
+        <section id="avenger" class="cycle-section">
+            <h2 class="cycle-title">Avenger</h2>
+            <div class="cycle-content">
+                <p>Eun-hyun uses the face of Seo Hweol to disguise himself and attacks the portal to the True Devil
+                    Realm, destabilising it. This forces an early retreat, and plants the doubt of Hweol’s survival in
+                    Gyu Ryeon’s mind. Right after the mission, Eun-hyun receives a message from Myeong-hoon, telling him
+                    four or five disciples of the Golden Divine Heavenly Thunder Sect are in the Nether Ghost Realm,
+                    researching the Five Blessings Axes. Eun-hyun is very interested by the news of the Axes and
+                    disregards the disciples, much to Seo Li’s confusion.</p>
+                <p>Seo Li practices the Devilish Secrets, which he finds surprisingly simple. He masters the technique
+                    in the hour. The next day, he leaves for the Commanding Sect. Bi Yul tells him it is possible the
+                    mission was ordered by someone of the Earth Tribe.</p>
+                <p>Gyu Ryeon is contacted by the Commanding Sect and told the curse sorcerers have been gathered. She is
+                    looking for a poison cultivator and swears revenge on Seo Eun-hyun for having killed Seo Hweol.</p>
+                <p>The Commanding Sect subjects the gathered curse sorcerers to a trial. They are to pass through the
+                    gates without touching the Bi, a creature made from Vestiges, in front of it. Seo Li uses his curse
+                    to melt a passageway through the Bi and walks through it. Bi Yul tells him Vestiges are husks left
+                    when ascending to True Immortality. More tests follow, and Seo Li continues leading the pack. In the
+                    end, only ten curse sorcerers remain. Seo Li tours the sect with Hyeon Gwi before the mission
+                    begins. He learns the old symbol was that of a [Black Snake Biting its Tail], which enraged their
+                    patron, Hyeon Eum.</p>
+                <p>On hearing this, Eun-hyun asks Hong Fan if he has felt any callings from higher beings as he
+                    practices Serpent Cultivation techniques. Hong Fan replies in the negative. He also asks for going
+                    to the True Dragon Alliance Territory to complete a job. After Hong Fan leaves, Myeong-hoon arrives
+                    and tells him he has found a path to Nether Ghost, and also found out Kang Min-hee is on the ‘side
+                    path’ to the Nether Ghost Realm. Myeong-hoon asks Eun-hyun to contact Min-hee as they seemed to have
+                    a good relationship. Eun-hyun, however, remembers their relationship as awkward, as they had dated
+                    for a brief while before breaking up. Seo Li decides to collect information before having Eun-hyun
+                    contact Min-hee. He learns she has not changed much, so Eun-hyun decides to use Kim Yeon instead, as
+                    he does not want to force her to open the side path for a “mere couple of disciples”.</p>
+                <p>Seo Li is worried about how the main body disregards the disciple of the Golden Divine Heavenly
+                    Thunder Sect. He resolves to cultivate further and unearth the root. As he cultivates, Li unlocks
+                    Nether Perception. He also rises to late Nascent Soul. By the next day, he has reached Grand
+                    Perfection of Nascent Soul to his own dumbfoundment. He continues to assist the Commanding Sect in
+                    creating the curse. When Eun-hyun is leaving to take a break, Hyeon Gwi tells him they plan to
+                    escape from the grasp of the Black Dragon King, and they require items from the Lofty Dragon’s
+                    storage scroll to escape. Eun-hyun agrees to help, and receives a Book in the language of the
+                    Netherworld titled “Ritual Scripture of the Wealth Virtue”, which will grant him a Five Blessings
+                    Wealth Axes.</p>
+            </div>
+        </section>
+
+        <section id="her" class="cycle-section">
+            <h2 class="cycle-title">Her</h2>
+            <div class="cycle-content">
+                <p>Eun-hyun and Myeong-hoon go to rescue Kim Yeon. When the Mad Lord appears, Eun-hyun begins calling
+                    him “Old Man”, similar to Seo Hweol. He tells him Hweol is getting married and gives him the
+                    coordinates for the Black Dragon King. He enters the Fortress and pretends he is getting to know his
+                    new home. He finds Kim Yeon and discovers she has reached the Pinnacle Realm. They exit the
+                    fortress. Eun-hyun strikes the Mad Lord with the Sea of Righteousness and Mountain of Grace,
+                    allowing him to regain his senses for a while. Jo Yeon tells them to escape while he is sane. He
+                    also sends along teaching material for Kim Yeon. While reading the message, Eun-hyun feels as if Seo
+                    Li’s fears are true.</p>
+                <p>Seo Li is relieved to learn the main body has realised there's something wrong. He goes to introduce
+                    himself to Kang Min-hee in the Ghost Soul Hall. Bi Yul attempts to have Seo Li accepted into the
+                    Hall, and Min-hee tells him to return with a thousand merit points. Seo Li introduces himself and
+                    asks if this is her main body. Min-hee tells him her main body is on the side path to the Nether
+                    Ghost Realm, and has reached Four-Axes. She and Seo Li converse for a while. She tells him he
+                    reminds her of someone.</p>
+                <p>Kim Yeon tells Eun-hyun she is resolved to pursue the Wonderfully Mysterious Innate Heart Canon to
+                    its limit. Eun-hyun goes to attend the Grand Cultivators meeting. There he learns the Alliance
+                    believes the Black Dragon King has betrayed them. When Hon Won says he should have killed Hyeon Eum
+                    when he had the chance, Grand Cultivator Eung mentions his fiance, driving him into a rage. Tae
+                    Yeol-jeon intimidates him into staying calm.</p>
+            </div>
+        </section>
+
+        <section id="protection" class="cycle-section">
+            <h2 class="cycle-title">Taenghwa/Protection</h2>
+            <div class="cycle-content">
+                <p>After the meeting, Eun-hyun goes up to Tae Yeol-jeon, who is also from the Heart Tribe and a nun.
+                    They have a ten-move spar. She tells him her meaning is to be the ‘Highest’. Her manifestation is
+                    called Heart and Heaven Taenghwa Painting. Eun-hyun realises her techniques are not meant to kill,
+                    but to impart enlightenment on the opponent. He hears the Formless sword echo his sentiments of the
+                    Dao. Inside Yeol-jeon’s heart essence, he sees seven colossal Heavenly Kings are seated inside an
+                    enormous Taenghwa, forming a circle beneath a white lotus and wearing benevolent smiles. She tells
+                    him the Seven Brilliance Kings are beings bringing enlightenment. She invites him to her Temple.</p>
+                <p>Hyeon Eum rises out of the rubble of his palace. He has been in battle with the Mad Lord. He seems to
+                    realise the latter is a True Immortal, as he uses Immortal Arts. He respectfully monologues for a
+                    while, until the Mad Lord gets bored and kills him.</p>
+                <p>Seo Li and the other curse sorcerers at the Black Scaled Fish Commanding Sect are told to stop and
+                    leave. In the Serving Command Arc, Gyu Ryeon’s successor and sister, Gyu Hwa, tells her the Mad Lord
+                    was looking for Seo Hweol. She says it is possible he is cheating on her with his human pet, and
+                    used Eun-hyun as a scapegoat.</p>
+                <p>Eun-hyun and Kim Yeon go to meet Tael Yeol-jeon at the Grand Nirvana Hall. She tells them about the
+                    Seven Brilliance Kings and the Future King. Eun-hyun feels sick after listening to this story, and
+                    as a result, Seo Li vomits blood in front of Kang Min-hee. Eun-hyun goes to sleep for a while.</p>
+                <p>Kang Min-hee gives Seo Li a pill to recover. He is worried about the safety of both the main body and
+                    Kim Yeon. Min-hee tells him a story from Earth, when Eun-hyun got sick because he gave her his
+                    umbrella, and says she wishes she had caught the cold instead. Once the main body awakens, Seo Li
+                    tells Eun-hyun everything except Min-hee’s last statement.</p>
+                <p>Eun-hyun and Tael Yeol-jeon discuss her manifestation. He receives a few methods to reach Integration
+                    from her. After they return to Heavenly Cauldron Mountain, Eun-hyun asks Kim Yeon to contact
+                    Min-hee. Min-hee asks for a meeting after the full moon.</p>
+                <p>Seo Li is assigned a mission to open a gate for the Grand Elder Kang Min-hee into the Bright Cold
+                    Realm after the full moon. Min-hee has Seo Li stay while she waits for Kim Yeon. As they talk, Seo
+                    Li naturally falls into the habits Eun-hyun displayed while dating Min-hee. Kim Yeon arrives a while
+                    later. During their conversation, Yeon asks for Min-hee’s permission to date Eun-hyun. Min-hee
+                    happily gives it. At the end of their conversation, Yeon tells Min-hee Jeon Myeong-hoon needs to use
+                    the side path to rescue the disciples of his sect. Min-hee agrees to let him through.</p>
+                <p>Eun-hyun summons Yeon Wei and asks her about the Nether Ghost Realm. He also asks her about Hon Won.
+                    Yeon Wei reveals the two were actually betrothed. While Eun-hyun listens to her tale, Kang Min-hee
+                    attacks Seo Li, mistaking him for a Ghost King that followed her around on Earth.</p>
+                <p>Eun-hyun learns Hon Won suddenly fell in love with a non-existent disciple of the Golden Divine
+                    Heavenly Thunder Sect, called Cheon Ra. He developed this sudden delusion as a result of facing a
+                    god-like being. Yeon Wei was forced to annihilate her sect on orders from the Sacred Master of
+                    Bright Cold, Baek Woon, and managed to cure Hon Won. As a result, Hon Won believes his lover was
+                    killed by Yeon Wei. The main body believes Hon Won is more pitiful; Seo Li believes Yeon Wei is.
+                    This disagreement in their thoughts confuses Seo Li even further.</p>
+                <p>As the fight with Kang Min-hee progresses, Seo Li decides to rise to Heavenly Being. As he does so,
+                    he glimpses a path death, presumably his original Ender fate. He creates a devilish technique that
+                    only sucks in heaven and earth energy from inanimate objects with a radius of 1000 li, and names it
+                    Great Desert To Dead Sea. He has Eun-hyun retrieve the mind healing art, Spirit Sealing Bodkin, to
+                    heal Min-hee. The main body passes on the art, and also warns Seo Li to keep his emotions in check.
+                    Seo Li rises to late Heavenly Being, and uses the art on her. At the same time, he receives the Vast
+                    Cold Heavenly Circle as a gift for blessing In and Yeon. Min-hee regains her senses and realises Seo
+                    Li is Eun-hyun’s clone. As a result of the treatment, she realises the Ghost from Earth has died.
+                    She forgets about realising Seo Li is a clone of Eun-hyun, due to the main body sealing it. Seo Li
+                    has an argument with the main body over this.</p>
+            </div>
+        </section>
+
+        <section id="forseo" class="cycle-section">
+            <h2 class="cycle-title">For Seo, Towards Seo</h2>
+            <div class="cycle-content">
+                <p>Hong Fan returns from the poison job, which he says has gotten cancelled. He states a problem has
+                    appeared in Eun-hyun’s consciousness waves. He also expresses an interest in Buddhism on spotting
+                    the manuals, so Eun-hyun takes him to the Grand Nirvana Temple. Upon seeing Tael Yeol-jeon, Hong Fan
+                    immediately proposes. He is incredibly agitated. Tael Yeol-jeon, being a nun, naturally refuses.
+                    Hong Fan is crushed. On Eun-hyun’s questioning, Hong Fan says he felt forgotten memories surface
+                    when he faced her. Eun-hyun returns to his cave residence in a bad mood where he meets Seo Li. Li
+                    tells Eun-hyun he has a gentle smile on his face. He says he will seal the main body in his cave.
+                    Eun-hyun agrees and enters the cave. Just before sealing the cave, Eun-hyun draws out the Formless
+                    Sword at Seo Li’s request.</p>
+                <p>Seo Li has realised Seo Hweol has somehow taken over the main body. He tells Hong Fan to inform the
+                    Grand Cultivators he will be in seclusion for a thousand years. Three days later, they meet Oh
+                    Hyun-seok, who is returning from the True Devil Realm. He has reached Grand Perfection of Nascent
+                    Soul.</p>
+                <p>Seo Li stands by Kang Min-hee when she meets Myeong-hoon and Kim Yeon. Seo Li is the Ghost Soul Hall
+                    Chief. They send Myeong-hoon off to the side path.</p>
+                <p>Eun-hyun has realised Hweol is trying to take over him. Hweol has isolated Eun-hyun within his heart
+                    essence. Eun-hyun vows to escape, and continues honing his martial prowess.</p>
+                <p>Five years later, Kang Min-hee, who has become quite close with Seo Li, re-enters the side path. He
+                    receives the Six Extremes Yin Thunder Body and begins practicing it, merging it with the Great
+                    Desert to Dead Sea.</p>
+                <p>Fifty years pass. Seo Li has reached Grand Perfection of Nascent Soul. He is stunned to find he
+                    cannot use the Formless Sword anymore.</p>
+                <p>Thirty years pass. Kang Min-hee has yet to return from the side path. Seo Li is now a Black Grand
+                    Elder. He is told the side path is blocked. Heo Gwak tells him the only way to enter the side path,
+                    is via the Swiftwind Domain. Seo Li feels a forboding from this name.</p>
+                <p>Seo Hweol, in Seo Eun-hyun, sits surrounded by the mist of the Canvas of Myriad Forms and
+                    Connections. He is attempting to reverse-engineer the mist and completely supplant Eun-hyun.</p>
+                <p>Three hundred and twenty years pass. Seo Li advances to the Four-Axis stage. He transforms into an
+                    eighteen-headed Ghost King. Through his Six Extremes Yin Thunder Body, he manifests the six
+                    extremes. Hong Fan also rises to Four-Axis, getting younger in appearance. Seo Li is contacted by
+                    Heo Gwak, who requests his help in opening a side path. They connect to the side path. The two Grand
+                    Elders and Seo Li go in different directions. As he keeps walking, Seo Li encounters Min-hee. She
+                    has reached the Integration stage, and now remembers Seo Li is in fact Seo Eun-hyun. She teases him
+                    about having forgotten the scene inside her domain. When Li asks her why she hasn’t returned, she
+                    says she is taking care of the ghosts and helping them attain peace by listening to their stories.
+                    She has also decided to leave Black Ghost Valley as she finds their treatment of enemy souls
+                    deplorable. She intends to guide all spirits to the Underworld. She teases him a little again. He
+                    gives a Gu and tells her to contact him if she ever feels odd. He then leaves.</p>
+                <p>On the way out, Seo Li does not tell Heo Gwak and Heo Ryeon about Min-hee, as promised. Disappointed,
+                    the three exit the side path. As Seo Li leaves the path, he feels a voice deep inside him say he
+                    should have done all he could. In her domain, Kang Min-hee wishes Eun-hyun had told her he missed
+                    her, and discards the Gu.</p>
+            </div>
+        </section>
+
+        <section id="haveyou" class="cycle-section">
+            <h2 class="cycle-title">Have You Been Well</h2>
+            <div class="cycle-content">
+                <p>Hyeon Gwi and a contingent of Heavenly Being and Nascent Soul cultivators pick up Seo Li and take him
+                    to the gate of Lofty Dragon’s scroll, which is a pond. The other tribes around the pond are
+                    frightened by Seo Li’s appearance and consider him a hedonistic murderer. When the gateway opens,
+                    Seo Li helps Hyeon Gwi and his comrades enter. They find themselves in a space similar to the Dead
+                    Earth Domain. Hyeong Gwi tells him to read the celestial energy to arrive at their destination. They
+                    find themselves in front of a grand ancient palace with the inscription Scroll of Lofty Dragon,
+                    Envoy of Health and Care. Hyeon Gwi tells Seo Li they need him to suppress the Calamity Flame while
+                    they retrieve the Heavenly Lotus Fruit and Recognising Sin Taengwa. As they proceed, Seo Li notices
+                    his squad leaving traps behind. On the walls, he notices a pattern left behind by a flying sword.
+                    Seo Li attempts to decipher the message but fails. Eun-hyun, within his Heart essence, deciphers the
+                    message[1], and receives the power of the sword formation left behind. He integrates the words of
+                    the old man in the message, and swears to break out. On exploring further, Seo Li discovers a jade
+                    slip with an erotic painting. Out of respect for the previous owner, he destroys it. He receives a
+                    message the owner left behind[2], which shows him a scene of everyday life. An old man is seen
+                    writing about Immortal Arts[3]. Suddenly, the man stops writing and eats the book he was writing in.
+                    When he regains his senses, he panics, realising he is the resurrection vessel for some Immortal. He
+                    splits his stomach, releasing a strange stone. His breakdown leads him to craft erotic paintings. He
+                    eventually leaves the room and dies.</p>
+                <p>Seo Li compares this to Cheongmun Ryeong’s situation. He discovers a seal on the roof and undoes it
+                    find a liquid in place of the stones. This liquid slightly dazes him, like a weak effect of the
+                    dream in the Head Realm. Within the liquid, he discovers the formula for controlling “Clear Scale
+                    Armour”. He returns to Hyeon Gwi’s group and they proceed to the second level. Before he begins
+                    climbing, he meets Gyo Yeom, member of the Blood Shark Race. He tells him about the Dao Departure
+                    Layer, and the Sea Offering Altar. He does not go with Seo Li as he considers him a hedonistic
+                    murderer.</p>
+                <p>Seo Li begins having doubts about Hyeon Gwi. He tells them he is going to the Sea Offering Altar,
+                    while the rest to the Human Offering Altar. Within, he finds several Taenghwas depicting dragons. He
+                    also finds a jade slip containing a journal.[4] Seo Li learns the Taenghwa were passed down from the
+                    Death God. He finds them similar to the ones at the Grand Nirvana Temple.</p>
+                <p>Seo Hweol has found what he believes is the pillar of the Canvas. He proceeds into the mist.</p>
+                <p>In the scroll, Seo Li finds a technique called Salt Sea Returning Dew Jade and harvests a Seo Orchid
+                    Fruit. He returns to Hyeon Gwi and proceeds to the Calamity Flame. Gyo Yeom has already arrived and
+                    is attempting to satisfy the flames with a blood sacrifice. The Commanding Sect attacks the Earth
+                    Tribe Group, who control the Calamity Flame. Seo Li subdues the Flame easily. Gyo Yeom quickly
+                    escapes, but his followers are captured. He reaches the third floor and runs to the Melia Tree, only
+                    to discover Nok Ju of the Tall Tree Race and Baek Wi-ik of the Paired Wings Race have claimed the
+                    fruit. Gyo Yeom begs for a few drops of the juice, but the duo make flimsy excuses. In a fit of
+                    rage, Gyo Yeom insults both their races.[5] Before the duo can attack, Seo Li also arrives. He says
+                    they only need the fruit and the Taenghwa. Seo Li assists Gyo Yeom. They win with the assistance of
+                    the Black Scaled Fish Commanding Sect. Hyeon Gwi is missing.</p>
+                <p>Hyeon Gwi has found the Western Heaven Taenghwa, releasing a wave that presumably awakens Kang
+                    Min-hee as the Ghost Guiding Holy Mother. Hyeon Gwi returns. Gyo Yeom receives a cup full of juice,
+                    and leaves. As he leaves, Seo Li notices three characters underneath the altar; Water (氵)Departure
+                    (去) Xiezhi (廌). The characters combine to give Law (灋). He remembers the Dao departure layer had
+                    twenty-one dragon Taenghwas and deduces these strokes are for entering the Xiezhi Worship layer. He
+                    gets on the altar and performs the dance. He finds he now has a Dream Body. He finds a side path far
+                    deeper than the last one.</p>
+                <p>Hyeon Gwi approaches the physical body on the altar. He asks for assistance in sealing the Karmic
+                    Fire. Seo Li finds he is lying and kills him. The rest of the Commanding Sect continue attacking Seo
+                    Li. They undo Hyeon Eum’s restraints and unleash their full power. The traps Seo Li assumed were for
+                    other people trap him instead. He is the made the new pillar for the seal on Karmic Fire. Seo Li
+                    manages to leave a Mysteriously Bizzare Gu on each of them. As they exit the Scroll, they are
+                    confronted by Seo Hweol.</p>
+            </div>
+        </section>
+
+        <section id="notalord" class="cycle-section">
+            <h2 class="cycle-title">Not a Lord</h2>
+            <div class="cycle-content">
+                <p>Seo Li is shocked by Seo Hweol’s sudden appearance. He knows the barrier should have held for five
+                    hundred years more. Seo Hweol says he simply had Wi Ryeon-seon open it for him. Seo Li attempts to
+                    attack Seo Hweol using the Black Scaled Fish Commanding Sect cultivators, but fails. Hweol tells Seo
+                    Li the scroll was made to protect the species of Bright Cold during the battle between himself and
+                    Love of Virtue. He reopens the Scroll using his Health Axis and enters. He absorbs all of Seo Li’s
+                    Gu, allowing the latter to observe his approach. Seo Li isn’t too worried as he is sealed, but Seo
+                    Hweol appears to read his thoughts. Seo Li thinks and decides Seo Hweol cannot read all of his
+                    thoughts, so he blocks him off using a multitude of useless thoughts.</p>
+                <p>The Dream Body has reached the Xiezhi Worship layer. He finds himself in an Office belonging to the
+                    Ancient Force True Lord, Hae Nyeong. The Body finds a jade slip with Hae Nyeong’s will.[6] The Dream
+                    Body, having survived despite hearing the names of so many True Immortals, gains knowledge. He
+                    learns the Clear Tears are actually the Clear Scale Armour, and exits the seal to fight Seo Hweol.
+                    He traps Seo Hweol in the Armour. Cultivators from other races appear and attack Eun-hyun. All of
+                    them are being controlled by Seo Hweol. Hweol breaks through and claims the body he is currently
+                    possessing is merely Seo Eun-hyun’s clone. He believes Seo Li is the main body. Hweol advances to
+                    the Four-Axis. Seo Li finds himself unable to interfere and his faces parasitised by Hweol. Hweol
+                    attempts to forcefully parasitise Seo Li, but is rebuffed by Seo Eun-hyun. In his hand is a sword
+                    that shines in all of heavens’ natural colors. Hweol cannot see the sword. Eun-hyun tells Seo Li he
+                    needs his help to reclaim his body.</p>
+                <p>Seo Li calls Eun-hyun the main body, while En-hyun tells him to use his name. Eun-hyun explains Seo
+                    Hweol’s ability as an assimilation. Since Eun-hyun spent nearly three thousand years with the
+                    brain-washing in place, he turned into a Seo Hweol.</p>
+                <p>As they fight, Seo Eun-hyun tells Seo Li they have completely diverged, starting from Seo Li’s love
+                    for Kang Min-hee. Seo Hweol tells the two he has found the pillar of the Canvas. Within the mist, he
+                    sees woman stroking a jade norigae. He finds the norigae is the pillar, and asks for it. The woman,
+                    a guest, refuses. Hweol grabs hold of the jade and sees an [inverted cone].</p>
+                <p>Parts of Seo Hweol begin turning into salt. Eun-hyun and Seo Li continue with their attacks.
+                    Suddenly, a part of Seo Li’s head turns to salt. All across the Three Thousand Worlds, those who
+                    interacted with Seo Hweol find a part of them excreting salt.</p>
+            </div>
+        </section>
+
+        <section id="farewell" class="cycle-section">
+            <h2 class="cycle-title">Farewell</h2>
+            <div class="cycle-content">
+                <p>Seo Eun-hyun is still within Seo Hweol’s heart essence. He learns Hweol uses an Immortal Art, Tainted
+                    Soul Filling the Heavens, and has multiple [Seo Hweols]. Within, Eun-hyun realises Hweol is not a
+                    True Immortal. The Seo Hweols extract the Axes they had planted in Seo Eun-hyun’s body. Eun-hyun
+                    detects something Seo Hweol was forced to leave behind in his upper Dantain. Seo Li posses Eun-hyun
+                    and they manifest the Three Great Ultimates. Hweol begins sacrificing personalities to brainwash
+                    Eun-hyun. On Eun-hyun’s question, he says he is saving them for someone else, hence not using
+                    several on Eun-hyun. Hong Fan appears to assist the duo on Seo Li’s orders. Eun-hyun begins reciting
+                    the names of True Immortals to an immobilised Hweol, who is severely injured by this. Under torture,
+                    Hweol tells Eun-hyun about the woman inside his canvas. While Eun-hyun is distracted, the Karmic
+                    Fire, which had been sealed by the Clear Scale Armour bursts forth and burns them. Eun-hyun is
+                    afflicted by horrendous pain from the judgement of the flames. Seo Li is unaffected as he is a
+                    separate entity with no significant sins. He quickly reseals the Flame. Eun-hyun decides to accept
+                    this pain, the fire that will follow him through his regressions. In front of him, he sees the
+                    illusion left by the Nether Devil True Lord, Yu Hao Te.</p>
+                <p>Yu Hao Te invites Eun-hyun for a candid chat. Eun-hyun asks him why He doesn’t revive, to which He
+                    says eternal death is a blessing. This resonates deeply with Eun-hyun. He also says He was erased by
+                    ‘them’ and refuses to elaborate. On His request, Eun-hyun narrates incidents from his life. Yu Hao
+                    Te comforts Eun-hyun over his perceived uselessness. Eun-hyun bids him farewell and gives him two
+                    gifts: the Soul-Bearing Flower and ownership over a piece of the Clear Scale Armour.</p>
+                <p>Eun-hyun returns to the real world. Seo Hweol continues talking about the [woman], and manages to hit
+                    Eun-hyun with a wave of brainwashing, slowing him down. However, he cannot reconnect with his
+                    network of Tainted Soul Filling the Heavens. He immediately runs to the exit of the Scroll.</p>
+                <p>Eun-hyun, meanwhile, has managed to decode the information packet left by Hweol thanks to the
+                    brainwashing wave. He has procured the formula for Great Mountain Splitting Emperor. He gets on Hong
+                    Fan and has Seo Li posses him, before chasing Seo Hweol. He uses it on Hweol, who manages to
+                    neutralise it by sacrificing personas. Hweol attempts to manipulate Hong Fan but fails. Hweol barely
+                    manages to exit the Scroll, before being killed in an ambush by the Mad Lord.</p>
+                <p>Mad Lord reverts to Jo Yeon. He sees Eun-hyun/Seo Li emerge from the pool and chases him off.
+                    Eun-hyun realises Jo Yeon has regained his sanity and sends a warning about Hweol via general Seo.
+                    While they are talking, Min-hee awakens as the Ghost Guiding Holy Mother.</p>
+                <p>Seo Li begins panicking. Eun-hyun attacks him for no apparent reason. During the fight, Eun-hyun asks
+                    Seo Li why he doesn’t use martial arts. The latter barely avoids a stike from the imperceptible
+                    Formless Sword. Eun-hyuh tells Seo Li he has everything required within him, the way Kim Young-hoon
+                    pushed him to reach Entering Heavens. He agrees to help Kang Min-hee. The sudden about-turn confuses
+                    Seo Li. They ask for Jo Yeon’s assistance in this task.</p>
+                <p>Seo Li follows Eun-hyun into Kang Min-hee. The latter carves a path for Seo Li with his sword, and
+                    stays to rescue the disciples on the Nether Crossing Ship. Seo Li follows the sword slash to
+                    Min-hee’s true body. He tries to get her to wake up but falters as Min-hee sees him as a clone. He
+                    is unable to move due to the effect the Holy Mother has on ghost path methods. He forcibly rips out
+                    his techniques and transformation. He manages to approach Min-hee, but nearly disintegrates. Seo
+                    Eun-hyun catches up. He is kept warm by Karmic Fire. Eun-hyun guides Seo Li to Entering Heavens,
+                    Fallen Flowers Cannot Return to Branches. Eun-hyun draws his Formless Sword, now re-named to
+                    All-Heavens Sword. Seo Li uses all his power, burning his life to convey his heart to Kang Min-hee.
+                </p>
+                <p>In the aftermath, Eun-hyun and Seo Li lay dying. Only Seo Li’s head is intact. They have realised Seo
+                    Li will not regress. He transfers all of his knowledge and the Wealth Axis to Eun-hyun. Seo Li
+                    enters eternal rest, and Eun-hyun begins his regression soon after.</p>
+            </div>
+
+            <div class="info-card">
+                <div class="info-line"><span class="info-label">Martial Realm:</span> Seated Detachment, Entering Hope
+                    (Seo Eun-hyun), Entering Heavens Beyond the Path (Seo Li)</div>
+                <div class="info-line"><span class="info-label">Cultivation Realm:</span> Four-Axis [Earth(Seo Eun-hyun)
+                    + Heaven(Seo Li)]</div>
+            </div>
+        </section>
+
+        <section id="timeline" class="cycle-section">
+            <h2 class="cycle-title">Timeline</h2>
+            <div class="cycle-content">
+                <div class="img-container">
+                    <img src="../../assets/images/timeline_18th_cycle.png" alt="Timeline 18th Cycle"
+                        class="img-display">
+                    <span class="img-caption">Timeline: 18th Cycle</span>
+                </div>
+            </div>
+        </section>
+
+        <div class="nav-buttons">
+            <a href="mortal_realm_08.html" class="nav-btn">
+                <ion-icon name="arrow-back-outline"></ion-icon> Previous Arc: Zhengli (17th)
+            </a>
+            <a href="mortal_realm_10.html" class="nav-btn">
+                Next Arc: Cult (19th Cycle) <ion-icon name="arrow-forward-outline"></ion-icon>
+            </a>
+        </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div class="modal-overlay">
+        <div class="login-modal">
+            <div class="modal-header">
+                <button class="modal-close"><ion-icon name="close-outline"></ion-icon></button>
+                <h2 class="modal-title">Welcome Back</h2>
+                <p class="modal-subtitle">Log in to the RToC Wiki Community</p>
+            </div>
+
+            <div class="social-login">
+                <button class="social-btn discord">
+                    <ion-icon name="logo-discord"></ion-icon>
+                    Continue with Discord
+                </button>
+                <button class="social-btn google">
+                    <ion-icon name="logo-google"></ion-icon>
+                    Continue with Google
+                </button>
+            </div>
+
+            <div class="divider">or</div>
+
+            <div class="auth-form">
+                <div class="form-group">
+                    <input type="email" placeholder="Email Address">
+                </div>
+                <div class="form-group">
+                    <input type="password" placeholder="Password">
+                </div>
+                <button class="auth-submit">Log In</button>
+            </div>
+
+            <div class="auth-footer">
+                Don't have an account? <span class="auth-link">Create Account</span>
+            </div>
+        </div>
+    </div>
+
+    <script src="../../scripts/editor.js"></script>
+    <script src="../../scripts/main.js"></script>
+</body>
+
+</html>
