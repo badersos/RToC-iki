@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#0a0a0f">
+    <meta name="theme-color" content="#3a0000">
     <title>Blood Yin Realm | RToC Wiki</title>
     <link rel="icon" type="image/jpeg" href="../../assets/images/seo_eun_hyun_cover.jpg">
     <link rel="stylesheet" href="../../styles/main.css">
@@ -14,6 +14,102 @@
         href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap"
         rel="stylesheet">
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <style>
+        .hero {
+            background: linear-gradient(135deg, #000000 0%, #8b0000 100%);
+        }
+
+        .infobox {
+            background: rgba(20, 0, 0, 0.6);
+            border: 1px solid rgba(139, 0, 0, 0.3);
+            border-radius: 12px;
+            padding: 1.5rem;
+            float: right;
+            width: 300px;
+            margin-left: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .infobox-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 1rem;
+            color: #ff4d4d;
+            border-bottom: 1px solid rgba(255, 77, 77, 0.3);
+            padding-bottom: 0.5rem;
+        }
+
+        .infobox-image {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            background: #1a0505;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 200px;
+            color: #666;
+        }
+
+        .infobox-section {
+            margin-bottom: 1rem;
+        }
+
+        .infobox-header {
+            background: rgba(139, 0, 0, 0.4);
+            padding: 0.5rem;
+            border-radius: 4px;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #ffcccc;
+            font-size: 0.9rem;
+        }
+
+        .infobox-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .infobox-label {
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .infobox-value {
+            text-align: right;
+            color: var(--text-primary);
+        }
+
+        .quote {
+            font-style: italic;
+            color: var(--text-secondary);
+            border-left: 3px solid #8b0000;
+            padding-left: 1rem;
+            margin: 1rem 0;
+        }
+
+        .toc {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            display: inline-block;
+            min-width: 250px;
+        }
+
+        .toc h3 {
+            margin-top: 0;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 0.5rem;
+        }
+    </style>
 </head>
 
 <body>
@@ -33,7 +129,7 @@
         </div>
     </nav>
 
-    <header class="hero" style="min-height: 40vh;">
+    <header class="hero" style="min-height: 50vh;">
         <div class="hero-content">
             <h1 class="hero-title">Blood Yin Realm</h1>
             <p class="hero-subtitle">혈음 (血陰)</p>
@@ -42,8 +138,132 @@
 
     <main class="section">
         <div class="container">
-            <p>Content for the Blood Yin Realm will be added here.</p>
-            <p><a href="../realms.html" style="color: var(--accent-primary);">← Back to Realms</a></p>
+
+            <div class="infobox">
+                <div class="infobox-title">Blood Yin</div>
+                <div class="infobox-image">
+                    No Image Available
+                </div>
+
+                <div class="infobox-section">
+                    <div class="infobox-header">Personal Information</div>
+                    <div class="infobox-row">
+                        <span class="infobox-label">Race</span>
+                        <span class="infobox-value">Unknown</span>
+                    </div>
+                    <div class="infobox-row">
+                        <span class="infobox-label">Age</span>
+                        <span class="infobox-value">Unknown</span>
+                    </div>
+                    <div class="infobox-row">
+                        <span class="infobox-label">Gender</span>
+                        <span class="infobox-value">Unknown</span>
+                    </div>
+                </div>
+
+                <div class="infobox-section">
+                    <div class="infobox-header">Relationships</div>
+                    <div class="infobox-row">
+                        <span class="infobox-label">Relatives</span>
+                        <span class="infobox-value">Yu Hao Te (original being)</span>
+                    </div>
+                    <div class="infobox-row">
+                        <span class="infobox-label">Enemies</span>
+                        <span class="infobox-value">Seo Eun-hyun</span>
+                    </div>
+                </div>
+
+                <div class="infobox-section">
+                    <div class="infobox-header">Prowess</div>
+                    <div class="infobox-row">
+                        <span class="infobox-label">Dao</span>
+                        <span class="infobox-value">Vice</span>
+                    </div>
+                    <div class="infobox-row">
+                        <span class="infobox-label">Peak Realm</span>
+                        <span class="infobox-value">Great Net Immortal (大羅)</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="quote">
+                "I have aided the workings of the Imperial Venerable...with my own hands. With that...I have no
+                regrets..."
+                <br>—Blood Yin
+            </div>
+
+            <p>Blood Yin was the leftover of the Nether Devil True Lord, Yu Hao Te, after the latter perished following
+                a battle against [Something]. They aimed to return to the position Yu Hao Te held in the Underworld,
+                through the Seat of Vice They held.</p>
+
+            <p>Blood Yin self-destructed after a battle with Seo Eun-hyun, pushing the later into his True Immortal
+                advancement, and Themselves gaining rest.</p>
+
+            <div class="toc">
+                <h3>Contents</h3>
+                <ul>
+                    <li><a href="#history">1 History</a>
+                        <ul>
+                            <li><a href="#history-split">1.1 The Blood Yin and True Devil Realm</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#esteemed-ones">2 Esteemed Ones</a></li>
+                    <li><a href="#trivia">3 Trivia</a></li>
+                    <li><a href="#references">4 References</a></li>
+                </ul>
+            </div>
+
+            <section id="history" style="clear: both; margin-top: 3rem;">
+                <h2>History</h2>
+                <div class="title-underline"></div>
+
+                <h3 id="history-split">The Blood Yin and True Devil Realm</h3>
+                <p>In the distant past, when the True Devil Realm was whole, the Devil Realm was divided into two
+                    factions: the Demonic Devils and the Heavenly Fiends. Among them, the Heavenly Fiends would consume
+                    Demonic Devils as resources through their peculiar devilish arts. They were especially known for
+                    techniques that eroded the minds of Demonic Devils, corrupting and turning them into eternal slaves
+                    of the Heavenly Fiends, which was popular among the Heavenly Fiends at that time.</p>
+
+                <p>The Yuchok Tribe was once enslaved by the Heavenly Fiends, but one of their ancestors countered the
+                    mind erosion of the Heavenly Fiends by parasitizing the Heavenly Fiends' mind in reverse with clear
+                    self-awareness and personal standpoint, battling their mental power with a technique that became the
+                    origin of Mysterious Bizarre Gu.[1]</p>
+            </section>
+
+            <section id="esteemed-ones">
+                <h2>Esteemed Ones</h2>
+                <div class="title-underline"></div>
+                <p>Blood Yin has seven known esteemed ones, called Seven Esteemed Ones Of An Era (七代尊者)[2]:</p>
+                <ul>
+                    <li>Esteemed One Swae Ryeong (碎玲).</li>
+                    <li>Esteemed One Gyeok Hal (擊轄).</li>
+                    <li>Esteemed One Wi On (僞穩).</li>
+                    <li>Esteemed One Yuk Nyeong (毓濘).</li>
+                    <li>Esteemed One Gwi Ryuk (壞陸).</li>
+                    <li>Esteemed One Hill Gi (犵技).</li>
+                    <li>Esteemed One Gyu Cheon (圭踐).</li>
+                </ul>
+            </section>
+
+            <section id="trivia">
+                <h2>Trivia</h2>
+                <div class="title-underline"></div>
+                <ul>
+                    <li>Blood Yin Realm currently does not have a Sacred Master[3]</li>
+                </ul>
+            </section>
+
+            <section id="references">
+                <h2>References</h2>
+                <div class="title-underline"></div>
+                <ul>
+                    <li>[1] Now, the worlds have split into the Blood Yin Realm where the Heavenly Fiends reside and our
+                        True Devil Realm where we Demonic Devils live... - Chapter 446</li>
+                    <li>[2] Seven Esteemed Ones Of An Era</li>
+                    <li>[3] Q&A 5 - Q: You’ve said that every Middle Realm had a Sacred Vessel stage cultivator... A:
+                        Blood Yin Realm does not have a Sacred Vessel stage cultivator.</li>
+                </ul>
+            </section>
         </div>
     </main>
 
