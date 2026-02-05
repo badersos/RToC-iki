@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#4f46e5">
+    <title>Eve of the End (998th Cycle) | RToC Wiki</title>
+    <link rel="icon" type="image/jpeg" href="../../assets/images/seo_eun_hyun_cover.jpg">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap"
+        rel="stylesheet">
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <style>
+        .cycle-article {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #020617 0%, #1e1b4b 100%);
+            min-height: 40vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 4rem 2rem;
+            position: relative;
+            margin-bottom: 3rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .hero-title {
+            font-family: 'Cinzel', serif;
+            font-size: 3.5rem;
+            color: #fff;
+            text-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+            margin-bottom: 0.5rem;
+            line-height: 1.2;
+        }
+
+        .hero-subtitle {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.8);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+        }
+
+        .hero-desc {
+            margin-top: 1.5rem;
+            font-size: 1.1rem;
+            color: #94a3b8;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            font-style: italic;
+        }
+
+        /* Content Styling */
+        .toc-container {
+            background: rgba(20, 20, 25, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 3rem;
+            display: inline-block;
+            min-width: 250px;
+        }
+
+        .toc-title {
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #fff;
+            text-align: center;
+        }
+
+        .toc-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .toc-list li {
+            margin-bottom: 0.5rem;
+        }
+
+        .toc-list a {
+            color: #818cf8;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.2s;
+        }
+
+        .toc-list a:hover {
+            color: #fff;
+            text-decoration: underline;
+        }
+
+        .toc-sublist {
+            padding-left: 1.5rem;
+            margin-top: 0.5rem;
+            list-style: none;
+        }
+
+        .cycle-section {
+            margin-bottom: 4rem;
+            scroll-margin-top: 100px;
+        }
+
+        .cycle-subtitle {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.8rem;
+            color: #cbd5e1;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid rgba(129, 140, 248, 0.3);
+            display: inline-block;
+            padding-bottom: 0.5rem;
+        }
+
+        .cycle-content {
+            line-height: 1.8;
+            color: #e2e8f0;
+            margin-bottom: 1.5rem;
+            text-align: justify;
+        }
+
+        .info-card {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-top: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .info-line {
+            margin-bottom: 0.5rem;
+        }
+
+        .info-label {
+            font-weight: 600;
+            color: #38bdf8;
+            margin-right: 0.5rem;
+        }
+
+        blockquote {
+            background: rgba(129, 140, 248, 0.05);
+            border-left: 3px solid #818cf8;
+            margin: 1.5rem 0;
+            padding: 1rem 1.5rem;
+            color: #e0e7ff;
+            font-style: italic;
+        }
+
+        /* Navigation */
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 2rem;
+            background: rgba(129, 140, 248, 0.1);
+            border-radius: 8px;
+            color: #818cf8;
+            transition: all 0.2s;
+            text-decoration: none;
+            font-weight: 600;
+            border: 1px solid rgba(129, 140, 248, 0.2);
+        }
+
+        .nav-btn:hover {
+            background: rgba(129, 140, 248, 0.2);
+            transform: translateY(-2px);
+            color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="nav">
+        <div class="nav-container">
+            <a href="../../index.html" class="nav-logo">
+                <img src="../../assets/logo_character.png" alt="RToC" class="nav-logo-img"
+                    style="width:36px; height:36px; border-radius:8px; object-fit:cover;">
+                RToC Wiki
+            </a>
+            <ul class="nav-links">
+                <li><a href="../../index.html" class="nav-link">Home</a></li>
+                <li><a href="../characters.html" class="nav-link">Characters</a></li>
+                <li><a href="../concepts.html" class="nav-link">Concepts</a></li>
+                <li><a href="../plot.html" class="nav-link"
+                        style="color: var(--text-primary); background: rgba(139, 92, 246, 0.1);">Plot</a></li>
+                <li><a href="../cultivation.html" class="nav-link">Cultivation</a></li>
+                <li><a href="../martial_arts.html" class="nav-link">Martial Arts</a></li>
+                <li><a href="../locations.html" class="nav-link">Locations</a></li>
+            </ul>
+            <div class="nav-search">
+                <ion-icon name="search-outline" class="nav-search-icon"></ion-icon>
+                <input type="text" placeholder="Search the wiki...">
+            </div>
+            <button class="login-btn">Log In</button>
+        </div>
+    </nav>
+
+    <!-- Hero Header -->
+    <header class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">Eve of the End</h1>
+            <p class="hero-subtitle">998th Cycle</p>
+            <p class="hero-desc">
+                Chapter 472 - Chapter 498<br>
+                Finally free of the death loop, Seo Eun-hyun must find a way to help Jeon Myeong-hoon and Kang Min-hee.
+            </p>
+        </div>
+    </header>
+
+    <div class="cycle-article">
+        <div class="toc-container">
+            <div class="toc-title">Contents</div>
+            <ul class="toc-list">
+                <li><a href="#her">1 Her</a></li>
+                <li><a href="#sacred-sea">2 Sacred Sea</a></li>
+                <li><a href="#bound-god">3 Bound God</a></li>
+                <li><a href="#empty-one">4 Empty One</a></li>
+                <li><a href="#esteemed-one">5 Esteemed One's Path</a></li>
+                <li><a href="#eve-of-end">6 Eve of the End</a></li>
+                <li><a href="#seo-hweol">7 Seo Hweol's Main Body</a></li>
+                <li><a href="#bugs">8 Bugs</a></li>
+                <li><a href="#stats">9 Stats</a></li>
+            </ul>
+        </div>
+
+        <section id="her" class="cycle-section">
+            <h2 class="cycle-subtitle">Her</h2>
+            <div class="cycle-content">
+                <p>Seo Eun-hyun revels in freedom from the death loop. He places his comrades onto his true body (a
+                    planet covered with swords) and forms an incarnation to talk to them. Kim Yeon is now mute due to
+                    the actions of the mysterious bird. Seo Ran is suffering from headaches and memories of a certain
+                    woman. Seo Eun-hyun tells them he intends to save Kang Min-hee. Suddenly, liquefied death formed due
+                    to his many deaths flows out of Seo Eun-hyun’s body, and his soul begins leaving for the Underworld.
+                    On Hong Fan’s advice, Seo Ran uses the Nether Crossing Ship, which summons his consciousness into
+                    the inner subspace of the Nether Ghost Realm's Sacred Master Hall. The Sacred Master of the Nether
+                    Ghost Realm, Yu Oh, greets them and calls Seo Eun-hyun a Heavenly King Designate. Seo Ran’s
+                    consciousness is growing chaotic as the Immortal Art used by Gwak Am seems slightly weaker. Yu Oh
+                    remakes the Art, which leads to Seo Ran recognising Yu Oh as immensely similar to his birth mother.
+                    Yu Oh reveals her second face, saying it is possible for her other ‘identity’, formed by her
+                    cultivation technique, to have children. Yu Oh implies Seo Eun-hyun and the other Enders are the
+                    Seven Brilliances Heavenly Kings. Yu Oh tells Seo Eun-hyun a story of the Heavenly Kings; of falling
+                    into a 'strange world', 'falling in love', 'inevitably losing that loved one', and 'through them
+                    realizing one's own fate. She begins the tale of a Monster called Obsidian.</p>
+
+                <p>Obsidian was a beast that fell into this world. It lived without a Heart. At some point it realised
+                    it had no soul, and decided to find that missing part. It rose to the pinnacle of Immortal
+                    Cultivation by devouring all things. At the pinnacle, it realised it still had no heart. It
+                    abandoned it’s Seat and used the authority it had received upon entering this world- Reincarnation.
+                    During reincarnation, it set restrictions on itself, making it such that all of its lives were spent
+                    in misfortune. For 777 lifetimes, Obsidian walked on its hands chanting the Flawless Mantra. 777
+                    lives later, it was overwhelmingly powerful, yet it felt it still had no heart. Obsidian went to the
+                    Gods of the Wheel and the Axis for advice. The God of the Wheel to commit suicide and rest within
+                    their domain. The God of the Axis told Obsidian to bring them the most precious thing in the Three
+                    Thousand Great Thousand Worlds. After many years Obsidian determined its body and authority was the
+                    most precious thing and began carving it off. As it had finished, it was offered milk porridge by a
+                    girl- and for the first time it felt taste. He followed the girl, blessing her. After spending much
+                    time with the girl, Obsidian realised the most precious thing did not exist. He regenerated his
+                    lower half and consummated his relationship with the girl, whom he had fallen in love with. Obsidian
+                    left to gather the fragments of his body to make his wife a god, but found her dead on his return.
+                    He wept bitterly, realising the missing part of his soul was desire. He wished to return to his
+                    home, the land of undyings, where his wife could not have died. He activated an Immortal Art to
+                    swallow all Phenomenon and sought out an “ominous place”, felled its gatekeeper, and went beyond.
+                </p>
+
+                <p>Yu Oh ends the story and compares it to the four conditions she mentioned before. Seo Eun-hyun asks
+                    if all the Heavenly Rejected are known as Heavenly Kings. Yu Oh denies such and says they must go
+                    through the four points of development and know their fate, and also reach the pinnacle of True
+                    Immortality. Those Heavenly Rejected bearing such a title can be on the level of Heavenly
+                    Venerables. Suddenly, Seo Eun-hyun realises he has felt no [shock] upon learning of such
+                    individuals. Yu Oh says the wisdom of these names is kept locked by the owner. Seo Eun-hyun begins
+                    thinking out loud, speculating their is something ominous in the Head Realm, but Yu Oh stops him
+                    from vocalising it. She tells Seo Eun-hyun his friends are calling for him and begins sending him
+                    out of her sanctum. She gives him a hint to dispersing the death energy in his soul.</p>
+
+                <p>Seo Eun-hyun ponders on all the information received. He tells Hong Fan the formula Yu Oh gave him-
+                    Taiji and Three Ultimates. Seo Eun-hyun inserts the Yin and Yang of his Heaven and Earth cultivation
+                    (colourless), and the black of his Void Shattering. This absorbs the death energy temporarily,
+                    before dying out. As the Death Three Great Ultimates rotate, Seo Eun-hyun sees into the Flower Field
+                    through a newly acquired sense he realised through dying and seeing the light of birth. The old man
+                    gives him an annihilation flower and disappears.</p>
+            </div>
+        </section>
+
+        <section id="sacred-sea" class="cycle-section">
+            <h2 class="cycle-subtitle">Sacred Sea</h2>
+            <div class="cycle-content">
+                <p>Seo Eun-hyun worries about the sudden gift. He turns to his comrades and tells them about Enders and
+                    the condition of “gifts” from True Immortals. He tells them to ascend, leaving Seo Ran and Hong Fan
+                    with him, claiming they are more of hindrances due to his current cultivation level. As they leave,
+                    Kim Young-hoon tells Seo Eun-hyun to look at his intent. Seo Eun-hyun does so and realises ripping
+                    death from his soul causes his intent to rapidly change into attraction force, making him
+                    emotionless.</p>
+
+                <p>Seo Eun-hyun arrives at Peaceful Cloud Continent to ask Ham Jin for the jade. Ham Jin has been
+                    leading a life of debauchery as the single most powerful cultivator on the continent. Displeased,
+                    Seo Eun-hyun inflicts wisdom onto him, and forbids him from appearing in front of Seo Eun-hyun ever
+                    again.</p>
+
+                <p>Seo Eun-hyun arrives on a star and muses about the creation of this path. The star tells him the path
+                    was made on the Lofty Dragon’s instructions. It turns out to be a True Person of the Human Race,
+                    Lofty Dragon Care Chief Priest, Jinlu Gok. Jinlu Gok states he can feel the two required Immortal
+                    Arts, Purple Soul Filling the Heavens and Salt Sea Returning Dew Jade, for the Path to activate from
+                    Seo Eun-hyun. Seo Eun-hyun recognises him as the one who left a diary in Lofty Dragon’s scroll.</p>
+
+                <p>Jinlu Gok offers to help Seo Eun-hyun with his unstable mental state. He tells Seo Eun-hyun those
+                    with Manifestations have their intent turn into attraction force even more rapidly then those
+                    without, as he himself experienced, being Third Manifestation. Seo Eun-hyun asks him if there is a
+                    way to reverse this. Jinlu Gok asks why Seo Eun-hyun wished to do so. He wonders why he wants to
+                    become stronger, why he wants to protect his comrades, or return to his homeland, prompted by a
+                    spell cast by Jinlu Gok. The [blessing] asks Seo Eun-hyun what is the point of life. Realising there
+                    is no point to emotions for him now, he decides to die- but to die he must sever regression, his
+                    original goal. Laughing crazily, Seo Eun-hyun reabsorbs the death energy he cast out. He uses the
+                    Phenomenon Extinguishing Mantra to compress the death energy, and then spreads it out. He is once
+                    again harassed by Sword Spear Heavenly Lord, who bites down on his shoulder, leaving Their mark.
+                    Jinlu Gok is miffed by Seo Eun-hyun’s connections to multiple True Immortals, and chases him away.
+                    At Seo Eun-hyun’s last question, he tells him the Path of Stars was made to exit the Sun and Moon
+                    Heavenly Domain, but was blocked off by Yang Su-jin.</p>
+
+                <p>Several days later, Seo Eun-hyun arrives at the Sacred Lightning Sea. He enters and finds himself in
+                    world of black clouds and golden lightning, where he uses Extinguishing Divine Tribulating Heavens.
+                    He is struck by a bolt of prismatic lightning and faints. Upon awakening, he realises he has
+                    inadvertently possessed Jeon Myeong-hoon. Due to being in the Lightning Sacred Sea and possesses
+                    Extinguishing Divine Tribulating Heavens, Seo Eun-hyun can now freely possess any disciple of the
+                    Golden Divine Heavenly Thunder Sect. He goes to visit Baek Woon and apologises for his actions. She
+                    asks him to let her strike him once. After the strike, she recognises him and lets him be. Yeon Wei
+                    sees Seo Eun-hyun in Jeon Myeong-hoon’s body and asks for a private meeting.</p>
+
+                <p>Yeon Wei has mistaken him for a True Immortal and begs him to protect the Golden Divine Heavenly
+                    Thunder Sect. Seo Eun-hyun tells her he is not a True Immortal, but as he aims to become one, he
+                    will protect the sect. As he prepares to return to the Lightning Sacred Sea, he communicates with
+                    Jeon Myeong-hoon, who so far was unable to respond within his body. Jeon Myeong-hoon says it is
+                    impossible for anyone to treat him as “the human Seo Eun-hyun”, because he takes too much
+                    responsibility upon himself. Because of this, he no longer cares about the opinions of others. Jeon
+                    Myeong-hoon asks Seo Eun-hyun to trust his comrades a little more. Seo Eun-hyun’s consciousness
+                    returns to the Lightning Sacred Sea.</p>
+
+                <p>A massive hummingbird appears in front of him and leads him to a pagoda. She transforms into a human
+                    girl with platinum blonde hair. The girl introduces herself as the attendant concubine and pet of
+                    the Golden Divine, Immortal Beast Golden Shaking Bird. She calls him Young Master and tells him he
+                    must pass through the Lightning Sacred Sea to procure the [Symbols of the Five Middle Realms]. She
+                    also says it is impossible to shift the living beings of the Sun and Moon Heavenly Domain elsewhere
+                    as only those who have mastered the Red Lighting Heavenly Tribulation or Extinguishing Divine
+                    Tribulating Heavens to pass through. She also cannot open the treasure vault as the only way in is
+                    to pass the trials. She shoves him into a pond which is the gateway to the Tower.</p>
+
+                <p>Seo Eun-hyun finds himself in a tower. The floors up to the ninety-fifth floor have already been
+                    cleared by the expedition team. Here, Seo Eun-hyun faces the Esteemed Ones of the Middle REalms and
+                    offers his greetings. A Tall Tree Race Esteemed One is irked by his presence as he ‘molested’ Baek
+                    Woon. The Bright Cold Realm Esteemed Ones convince the others to fight as well. The Nether Ghost
+                    Realm Esteemed Ones have, meanwhile, fled before Seo Eun-hyun’s appearance. Jang Ik says he will
+                    fight Seo Eun-hyun after a nap, and tells the others to do as they see fit.</p>
+            </div>
+        </section>
+
+        <section id="bound-god" class="cycle-section">
+            <h2 class="cycle-subtitle">Bound God</h2>
+            <div class="cycle-content">
+                <p>A total of twenty Esteemed Ones surround Seo Eun-hyun. He fights all twenty on equal terms, tossing
+                    them around. With only Five Esteemed Ones remaining, the Tall Tree Race, Slaughtering Heaven
+                    Esteemed One, Geuk Gwang summons the Sword Spear Heavenly Lord. It looks at Seo Eun-hyun and once
+                    again voices Its desire for him. It then goes on say it wished to break everything he has. Seo
+                    Eun-hyun firmly says this is not possible as everything is dear to him. The figure calls Seo
+                    Eun-hyun arrogant, yet claims to wish to see his sword surpass Its. Seo Eun-hyun realises It has
+                    given a divine power as a gift and decisively breaks it, much to Guek Gwang’s despair. The Fight
+                    continues. Seo Eun-hyun gives his respect to the Land and Will Dual Cultivator Esteemed One of the
+                    Horned Ox Race, Ham Rak. Ham Rak has reached Third Manifestation. During their conversation Seo
+                    Eun-hyun mentions Three Flowers Wuji despite never having used the term before. As the fight comes
+                    to an end, Seo Eun-hyun nearly dies from Opening Heaven Esteemed One Wol-jin’s bloodline technique.
+                    However, the strike exhausts Wol-jin, the only one still on his feet.</p>
+
+                <p>The battle ends with Seo Eun-hyun’s victory. The other Esteemed Ones give respect to Seo Eun-hyun,
+                    also because he can produce Heaven and Earth Spiritual Energy despite having only one star. Seo
+                    Eun-hyun tells the Esteemed Ones about Golden Shaking Bird, and asks leave to fight Jang Ik. He
+                    knocks on the barrier Jang Ik made when his head is suddenly cut off.</p>
+
+                <p>The master of the 99th floor, a large Thunder Bee, makes off with Seo Eun-hyun’s head. He sees Jang
+                    Ik fighting off hundreds of Thunder Bees, and his head is carried into the hive. As the Thunder Bee,
+                    who claims to be Golden Shaking Bird’s daughter, sets him down, Seo Eun-hyun finds his consciousness
+                    pulled into another space. Gyu Wol-jin tells Seo Eun-hyun Golden Shaking Bird is a malicious
+                    creature and to beware. Jang Ik and Seo Eun-hyun embed their own Manifestations within each other
+                    and begin pulling the latetr down when Golden Shaking Bird interferes. She takes Seo Eun-hyun to the
+                    Great Desolate Path, which was Yang Su-jin’s emergency escape and the control centre of the Tower of
+                    Trials. Golden Shaking Bird tells Seo Eun-hyun she is the collective consciousness of the Thunder
+                    Bird Golden Shaking Sect, which followed Yang Su-jin faithfully only to be annihilated by his hand.
+                    She was bound to the Tower of Trials by Yang Su-jin's death, ground down until she dies. She plans
+                    to force the position of Tower Master onto her master’s successor and find his original world,
+                    becoming his true wife. Seo Eun-hyun suddenly starts yelling about his shoulder. Golden Shaking Bird
+                    is suddenly distracted and Seo Eun-hyun unleashes Sumeru.</p>
+
+                <p>Down in the 98th floor, Baek Woon summons herself from the Sword Scar on Seo Eun-hyun’s shoulder, and
+                    breaks into the 100th floor, where Seo Eun-hyun’s use of Sumeru has failed. Baek Woon prays to the
+                    Seventh Seat of the Radiance Eight Immortals, Great Sea Heavenly Lord. Their power freezes the Tower
+                    of Trials. Golden Shaking Bird hides within Seo Eun-hyun’s Extinguishing Divine Tribulating Heavens,
+                    and when Baek Woon enters the 101st floor, attempts to summon Jeon Myeong-hoon through the sword
+                    scar. Overjoyed, Golden Shaking Bird gains full control over the Lighting Sacred Sea and expels all
+                    the Esteemed Ones along with Baek Woon.</p>
+            </div>
+        </section>
+
+        <section id="empty-one" class="cycle-section">
+            <h2 class="cycle-subtitle">Empty One</h2>
+            <div class="cycle-content">
+                <p>Baek Woon states there is now no point in invading the Lighting Sacred Sea, and they must find a way
+                    to survive The End. She says they will construct a [space] where only Esteemed Ones and above can
+                    survive. Seo Eun-hyun asks if there is a way lower lifeforms can survive, but Baek Woon says it is
+                    not possible. The other Esteemed Ones tell Seo Eun-hyun they must hurry back as they cannot use the
+                    Path of the Stars, considering Yin Ghost Esteemed One was suddenly possessed and had to be killed to
+                    prevent them from destroying the Path of Stars. Seo Eun-hyun uses his Star Shattering cultivation to
+                    peek into Jang Ik’s battle with the Yin Ghost Esteemed One. He sees Jang Ik bitterly fighting
+                    against the Transformation form of the Yin Ghost Esteemed One. The Yin Ghost Esteemed One challenges
+                    Jang Ik to approach and kill them, whilst they lament the existence of Reincarnation. The Yin Ghost
+                    Esteemed One swallows the key to the Path of Stars and dies over the teleportation formation. As Seo
+                    Eun-hyun attempts to release the sense of the Earth Tribe, the Yin Ghost Esteemed One’s body
+                    vanishes, leaving a form incredibly similar to Hyeon Gwi of the Black Scaled Fish Commanding Sect.
+                    Hyeon Gwi feels like a complete Void to Seo Eun-hyun’s senses. Seo Eun-hyun realises this being can
+                    kill him and joyfully asks for death.</p>
+
+                <blockquote>
+                    "You, you can kill me, can't you!? Right!? Go on, kill me! I'm telling you to kill me right here and
+                    now!"<br>
+                    —Seo Eun-hyun
+                </blockquote>
+
+                <p>Hyeon Gwi takes on the appearance of a young girl clad in a martial arts robe and shows Seo Eun-hyun
+                    the ultimate of Martial Arts. Through this, Seo Eun-hyun realises the fragment of Martial Extreme is
+                    nothingness, and martial arts are meaningless. Because of this, he finds himself unable to use
+                    Martial Arts. Seo Eun-hyun gives the Esteemed Ones the key to the Path of the Stars, and asks for
+                    some time alone. Seo Eun-hyun asks Star Seeking Esteemed One Yo Un to look after Hong Yeon and Su
+                    In. The Esteemed Ones comfort Seo Eun-hyun and leave him be. Seo Eun-hyun calls Seo Hweol out of his
+                    shadow. Seo Hweol is now inhabiting Hyeon Eum’s body, and using the multiple information stars
+                    comprising his body to subtly influence the Esteemed Ones. Seo Hweol says he does not have any
+                    negative intentions towards Seo Eun-hyun, as Seo Eun-hyun stands like a shield in front of him,
+                    confusing Seo Eun-hyun. Seo Hweol offers to help Seo Eun-hyun with two of his comrades, Jeon
+                    Myeong-hoon and Kang Min-hee. He only needs Seo Eun-hyun to go past the 108th Floor of the Tower of
+                    Trials. Reluctantly, Seo Eun-hyun agrees.</p>
+
+                <p>Seo Hweol begins brainwashing all the Thunder Beasts in the Tower of Trials, with the help of Seo
+                    Eun-hyun. Seo Eun-hyun is forced to call for Zhengli in order to distract Golden Shaking Bird.
+                    Zhengli makes a prophecy for Heavenly Punishment’s descent in Jeon Myeong-hoon and leaves.</p>
+            </div>
+        </section>
+
+        <section id="esteemed-one" class="cycle-section">
+            <h2 class="cycle-subtitle">Esteemed One's Path</h2>
+            <div class="cycle-content">
+                <p>Seo Eun-hyun flees Golden Shaking Bird’s rage through the Path of Stars. Seo Hweol tells Seo Eun-hyun
+                    it will ten thousand years to rescue Jeon Myeong-hoon, and Seo Eun-hyun reluctantly decides to wait.
+                    At Peaceful Cloud Realm, Seo Eun-hyun attempts to reenter the Bright Cold Realm through his subheart
+                    sword, but Kim Young-hoon stops him as a challenge. Kim Young-hoon has also reached Void Shattering.
+                    Pulling into the Bright Cold Realm, Seo Eun-hyun surrenders as he is still shaken after meeting the
+                    Martial God. Kim Young-hoon brings drinks and snacks for them instead. They have a mock battle for
+                    the last piece of the snack, through which Seo Eun-hyun displays his enlightenment from the Martial
+                    God.</p>
+
+                <p>Ten years later, Seo Hweol tells Seo Eun-hyun Kang Min-hee has begun her Sacred Vessel advancement,
+                    and as a result, her main personality has reverted to that of a child. Seo Eun-hyun takes Seo Ran,
+                    Hong Fan and sends one of his incarnations along on the Nether Crossing Ship to Mengyun Star, where
+                    Kang Min-hee is. Kang Min-hee is using the Flawless Mantra as her core, and Seo Eun-hyun gives it to
+                    Hong Fan to decipher. Seo Eun-hyun takes care of the child Kang Min-hee for ten years before she
+                    sets out to complete her Sacred Vessel advancement, accompanied by Seo Ran and Hong Fan. Seo
+                    Eun-hyun continues his own cultivation until he is told Hon Won has been killed by Yeon Wei. She
+                    tells Seo Eun-hyun she revealed how Yeon Jin was a descendant of hers and Hon Won’s child, proving
+                    to him ‘Cheon Ra’ never existed. Hon Won, horrified, committed suicide on Yeon Wei’s weapon. Now
+                    enraged, she asks Seo Eun-hyun what he has done with Jeon Myeong-hoon, such that the record of
+                    disciples at Shattered Heaven Peak reads 'fate status of being tortured until his personality
+                    collapses’, and whether Seo Eun-hyun has used Jeon Myeong-hoon for a pill.</p>
+
+                <p>Using Hon Won’s death to desecrate fate, the Great Mountain Supreme Deity escapes from their
+                    imprisonment.</p>
+            </div>
+        </section>
+
+        <section id="eve-of-end" class="cycle-section">
+            <h2 class="cycle-subtitle">Eve of the End</h2>
+            <div class="cycle-content">
+                <p>Seo Eun-hyun exits Yeon Wei’s cell covered in bruises. He suddenly finds himself summoned to the
+                    White Jade Pavilion, where Baek Woon tells them the forces of Light and the Mountain God are locked
+                    in battle. During their conversation, the Great Mountain Supreme Diety shakes of the forces of
+                    Light, and Baek Woon announces the Sun and Moon Heavenly Domain must prepare for destruction. Seo
+                    Eun-hyun pulls all of his comrades into the White Jade Pavilion, accidentally leaving Hong Fan
+                    behind. As they wait for annihilation, Ja Eum, Sacred Master of the True Devil Realm, badmouths
+                    Blood Yin. As all of them await death, nothing happens. Confused, the forces of the Sun and Moon
+                    Heavenly Domain return to their places.</p>
+
+                <p>The Great Mountain Supreme Deity goes to Horse Ear Heavenly Domain and demands the Heavenly
+                    Punishment Supreme Deity work with them. On the latter’s refusal, Great Mountain consumes the entire
+                    Horse Ear Heavenly Domain, including Heavenly Punishment. They declare the beginning of their
+                    Supreme Deity hunt.</p>
+
+                <p>Baek Woon informs the Esteemed Ones of the Mountain God’s escape and plan to kill the owners of the
+                    Heavenly Domains. The Blood Yin Realm begins it’s offensive against the True Devil Realm. Seo
+                    Eun-hyun has his own problems with Them, as the part of Their prophecy stating he will face death at
+                    Blood Yin’s hands has yet to be realised. Baek Woon returns Seo Eun-hyun to the Astral Realm. On his
+                    return, Hong Fan informs Seo Eun-hyun he has succeeded in deciphering the Flawless Mantra. Seo
+                    Eun-hyun begins practicing a simplified version of it. The darkness at the core of the Flawless
+                    Mantra attempts to draw Seo Eun-hyun in, but he resists through the Phenomenon Extinguishing Mantra.
+                    As a result, Seo Eun-hyun spends several years in a trance, cultivating the Flawless Mantra while
+                    reciting the Phenomenon Extinguishing Mantra. Eight thousand years later, he briefly awakens and
+                    forms a [Wheel] using the two mantras.</p>
+
+                <p>During his brief awakening, Hong Fan, with the help of the others, briefly awakens Seo Eun-hyun. Seo
+                    Eun-hyun notices Kim Young-hoon, Oh Hyun-seok, and Kim Yeon have all reached the level of Star
+                    Shattering. Kang Min-hee is being assisted in her advancement by Seo Ran, Seo Hweol, and a split
+                    soul of Blood Yin. Hong Fan pleads Seo Eun-hyun to stop cultivating the Flawless Mantra, but Seo
+                    Eun-hyun says he will stake his life for those precious to him and continues.</p>
+
+                <p>‘Seo Eun-hyun’ becomes a small being, steadily progressing from a microorganism to a multicellular
+                    organism to the one who connects all of the creatures living on a strange planet made of glass.
+                    Rivers of black water and flames of intense pain are found all over this planet. At some point, Seo
+                    Eun-hyun is worshipped by the denizens of the planet, who call themselves Candle Dragons. As the
+                    Candle Dragons cultivate, an ascender at the Earth Axis stage leaves, causing Seo Eun-hyun to
+                    realise himself, connecting all seven of the Stars that make up his body as an Esteemed One. His
+                    memories swiftly replay as he advances into the Sacred Vessel stage. He discovers a memory absent
+                    from the Canvas of Myriad Forms and Connections, back when they were first brought into this world,
+                    and witnesses the symbol of [Black Snake Biting its Tail]. Seo Eun-hyun hurriedly pushes past that
+                    moment, completing his recollection of his life. He completes his Sacred Vessel advancement
+                    successfully.</p>
+
+                <p>Seo Eun-hyun is momentarily puzzled by an unheard of race rising from him. Kang Min-hee has become
+                    more like a monster, losing herself as her advancement progresses. Taking Seo Ran, Seo Eun-hyun
+                    pulls out Seo Hweol’s configuration from the former. Seo Hweol is now dressed in dark red, having
+                    consumed Blood Yin’s clone. Seo Hweol has prevented the True Immortal that left a scar on Seo
+                    Eun-hyun from pulling him into the Heavenly King Heavenly Domain. He also tells Seo Eun-hyun his
+                    comrades are in the refugee space as they leave for the Lightning Sacred Sea.</p>
+
+                <p>While on the Path of Stars, Seo Eun-hyun stops to ask Jinlu Gok about the emergence of Candle
+                    Dragons. Jinlu Gok says while giving rise to living beings during the Sacred Vessel advancement is
+                    not unheard of, only those species one is related to can arise. They examine Seo Eun-hyun’s Immortal
+                    Beast Blood, which Seo Eun-hyun realises the regression has warped.</p>
+
+                <p>Seo Eun-hyun and Seo Hweol arrive at the Lighting Sacred Sea, to find it covered in flames. Seo
+                    Eun-hyun enters the Tower of Trials carrying Seo Ran with him.</p>
+
+                <p>Outside, Seo Hweol, who has procured In and Yeon, and successfully brainwashed all Esteemed Ones of
+                    Blood Yin, Ja Eum, Hyeon Eum, and all beings across the Astral Realm begins his plan.</p>
+            </div>
+        </section>
+
+        <section id="seo-hweol" class="cycle-section">
+            <h2 class="cycle-subtitle">Seo Hweol's Main Body</h2>
+            <div class="cycle-content">
+                <p>Inside the Tower of Trials, Seo Eun-hyun finds the Thunder Beasts offering supplication to something.
+                    He realises the Owner of Heavenly Punishment has eroded the Tower of Trials. Seo Eun-hyun breaks
+                    through towards the 108th floor. On the 106th Floor, written in English, Seo Eun-hyun finds
+                    instructions on how to kill Golden Shaking Bird. On the 107th Floor, Golden Shaking Bird flees the
+                    room the moment Seo Eun-hyun opens the door. Seo Eun-hyun finds Jeon Myeong-hoon possessed by a
+                    being he believes is a True Immortal. Seo Eun-hyun picks up Jeon Myeong-hoon’s body and proceeds
+                    through the Poppy Fragrance Labyrinth which leads to the Treasure Vault. Seo Eun-hyun collects the
+                    names of Middle Realms and discovers he cannot go back. The being possessing Jeon Myeong-hoon says
+                    Seo Eun-hyun can only go forward now. Seo Eun-hyun enters the 108th Floor, finding himself in the
+                    basement of Yuan Li’s Black Castle. Seo Hweol, sensing this, activates Tainted Soul Filling the
+                    Heavens.</p>
+
+                <p>Seo Hweol confronts Blood Yin. Blood Yin declares Themselves Yu Hao Te, and uses the powers of the
+                    Seat of Vice to judge Seo Hweol. Seo Hweol mocks Blood Yin for using Their entire power to destroy a
+                    bug such as himself. He further taunts Them, playing on Their ignorance in relation to Seo Hweol,
+                    who was brought out from Themselves. He releases a fragment of Ja Eum’s will, who calls him a
+                    madman. Seo Hweol reveals the figure of Yu Hao Te under the Melia Tree, inside Lofty Dragon’s
+                    Scroll. Blood Yin goes insane from this, and Hweol takes advantage of Ja Eum suppressing Blood Yin
+                    to use Tainted Soul Filling the Heavens. He then uses Blood Yin’s weight-class to brainwash the
+                    entire Sun and Moon Heavenly Domain. He then has all attraction force of the Heavenly Domain
+                    converge on the Head Realm.</p>
+
+                <p>Inside the Head Realm, Seo Eun-hyun realises Seo Hweol is about to brainwash the Head Realm. Next to
+                    him, Seo Ran screams in agony as his Heavenly Circle appears behind his head. Meanwhile, Four Axes
+                    appear around Seo Hweol, and he begins Heaven and Earth Unity. The being possessing Jeon Myeong-hoon
+                    recommends Seo Eun-hyun kill himself as they are inside ‘its jaws’. The being states they can read
+                    thoughts as they are connected to ‘electricity’. Seo Eun-hyun implores them to cure Seo Ran, but the
+                    being says they cannot use such ‘ancient’ Immortal Arts, to Seo Eun-hyun’s confusion. Jeon
+                    Myeong-hoon’s body scatters into the wind after an ominous warning about Light.</p>
+
+                <p>The brainwashing waves from Seo Hweol accelerate after exiting the Serving Command Palace and travel
+                    the entire Head Realm. Seo Eun-hyun attempts to use attraction force, but his instincts repeatedly
+                    force him to cancel the spells. On forcing himself to use them, his consciousness leaves his control
+                    and views the history of an Esteemed One of the Blood Yin Realm breaking the shrine at Ascension
+                    Path, before going insane after viewing [something]. Seo Eun-hyun proceeds with his eyes closed.</p>
+
+                <p>Seo Eun-hyun catches up to the brainwashing wave near the Sea Dragon Palace, breaking it before the
+                    waves pass through. He then uses the [Wheel] he procured to force the brainwashing waves to return
+                    to Seo Hweol’s origin, following the words from an unspecified being. The waves immediately pass
+                    through Seo Ran, and the Head Realm turns white. Seo Ran is revealed to be Seo Hweol’s main body.
+                    Seo Eun-hyun finds himself unable to stop Seo Hweol’s plan, as he cannot kill Seo Ran. As the End
+                    begins, Seo Eun-hyun closes his eyes, but an old man holding a flower basket turns him into the
+                    Annihilation Flower.</p>
+            </div>
+        </section>
+
+        <section id="bugs" class="cycle-section">
+            <h2 class="cycle-subtitle">Bugs</h2>
+            <div class="cycle-content">
+                <p>Watching the process end as a flower, Seo Eun-hyun realises Seo Hweol was attempting to ‘awaken’ the
+                    Head Realm. The old man says the bug has come face-to-face with something. Suddenly a ‘resplendent
+                    radiance’ comes from the South.</p>
+
+                <p>Seo Eun-hyun finds himself relaxed. He recalls Seo Hweol to be a ‘blue worm’ used in alchemy.
+                    However, the Canvas of Myriad Forms and Connections pains him. The old man holding a flower basket
+                    shouts to ‘remember’, which makes Seo Eun-hyun recall Seo Hweol and realise he was ‘erased’ from
+                    history. He also recalls the old man is the Sal Tree Heavenly Venerable. They are joined by the
+                    Great Mountain Supreme Deity, the Liberation Supreme Deity, South Polar Ritual Compass Yeong Seung
+                    and the [Oldest One].</p>
+
+                <p>Hong Fan, who had left the formation led by Baek Woon, enters the Head Realm through a hole made by
+                    the Annihilation Flower. He accidentally steps on a blue worm and gently scolds it for poking its
+                    head outside. Seo Eun-hyun, reduced to a single flower petal, has meanwhile been forbidden from
+                    dying by the [Oldest One]. He spends years floating in the Astral Realm, successfully advances to
+                    Sacred Vessel of the Earth Path, and begins experimenting with his death energy.</p>
+
+                <p>Two hundred thousand years later, the Martial God meets Seo Eun-hyun in the form of Hyeon Gwi. She
+                    asks Seo Eun-hyun to display the enlightenment he has gained as he floated around. She also says
+                    Underworld always returns from the Audience Chamber. Seo Eun-hyun displays the Thirty Fourth move of
+                    Severing Mountain Swordsmanship, Kunlun, which Hyeon Gwi compliments before slicing her own neck.
+                    Through this move, Seo Eun-hyun begins falling into the Underworld, towards the [Oldest One]. This
+                    is his nine hundredth ninety ninth return.</p>
+            </div>
+        </section>
+
+        <section id="stats" class="cycle-section">
+            <div class="info-card">
+                <div class="info-line"><span class="info-label">Martial Realm:</span> Second Step Before The Throne/Void
+                    Shattering</div>
+                <div class="info-line"><span class="info-label">Cultivation Realm:</span> Heaven and Earth Sacred Vessel
+                </div>
+            </div>
+        </section>
+
+        <div class="nav-buttons">
+            <a href="22nd_cycle_998th_cycle.html" class="nav-btn">
+                <ion-icon name="arrow-back-outline"></ion-icon> Previous Arc: Divine Descent (22nd-998th)
+            </a>
+            <!-- Placeholder link to next arc -->
+            <a href="999th_cycle.html" class="nav-btn">
+                Next Arc: God of Cedarwood (999th Cycle) <ion-icon name="arrow-forward-outline"></ion-icon>
+            </a>
+        </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div class="modal-overlay">
+        <div class="login-modal">
+            <div class="modal-header">
+                <button class="modal-close"><ion-icon name="close-outline"></ion-icon></button>
+                <h2 class="modal-title">Welcome Back</h2>
+                <p class="modal-subtitle">Log in to the RToC Wiki Community</p>
+            </div>
+
+            <div class="social-login">
+                <button class="social-btn discord">
+                    <ion-icon name="logo-discord"></ion-icon>
+                    Continue with Discord
+                </button>
+                <button class="social-btn google">
+                    <ion-icon name="logo-google"></ion-icon>
+                    Continue with Google
+                </button>
+            </div>
+
+            <div class="divider">or</div>
+
+            <div class="auth-form">
+                <div class="form-group">
+                    <input type="email" placeholder="Email Address">
+                </div>
+                <div class="form-group">
+                    <input type="password" placeholder="Password">
+                </div>
+                <button class="auth-submit">Log In</button>
+            </div>
+
+            <div class="auth-footer">
+                Don't have an account? <span class="auth-link">Create Account</span>
+            </div>
+        </div>
+    </div>
+
+    <script src="../../scripts/editor.js"></script>
+    <script src="../../scripts/main.js"></script>
+</body>
+
+</html>
