@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#0f766e">
+    <meta name="theme-color" content="#0d9488">
     <title>Heavens Beyond the Path (7th-9th) | RToC Wiki</title>
     <link rel="icon" type="image/jpeg" href="../../assets/images/seo_eun_hyun_cover.jpg">
     <link rel="stylesheet" href="../../styles/main.css">
@@ -12,7 +12,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&family=JetBrains+Mono:wght@400&display=swap"
         rel="stylesheet">
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
@@ -25,7 +25,7 @@
 
         /* Hero Section */
         .hero {
-            background: linear-gradient(135deg, #0f766e 0%, #000000 100%);
+            background: linear-gradient(135deg, #0d9488 0%, #000000 100%);
             min-height: 40vh;
             display: flex;
             align-items: center;
@@ -132,8 +132,7 @@
             align-items: center;
         }
 
-        .img-display,
-        .timeline-img {
+        .img-display {
             max-width: 100%;
             height: auto;
             border-radius: 8px;
@@ -142,16 +141,10 @@
             margin-bottom: 0.5rem;
         }
 
-        .timeline-container {
-            margin-top: 2rem;
-            background: transparent;
-            text-align: center;
-        }
-
-        .timeline-container h4 {
-            color: #2dd4bf;
-            margin-bottom: 1rem;
-            font-size: 1.2rem;
+        .img-caption {
+            color: #94a3b8;
+            font-size: 0.9rem;
+            font-style: italic;
         }
 
         .info-card {
@@ -163,25 +156,21 @@
             margin-bottom: 1.5rem;
         }
 
-        .info-line {
-            margin-bottom: 0.5rem;
-        }
-
         .info-label {
             font-weight: 600;
             color: #2dd4bf;
         }
 
-        /* Messages Styling */
+        /* Standardized Messages Box */
         .messages-box {
-            background: rgba(0, 0, 0, 0.4);
+            background: rgba(0, 0, 0, 0.6);
             border: 1px solid rgba(251, 191, 36, 0.3);
-            padding: 1.5rem;
-            border-radius: 8px;
+            padding: 2rem;
+            border-radius: 12px;
             font-family: 'JetBrains Mono', monospace;
             color: #fbbf24;
             margin-top: 2rem;
-            box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
         }
 
         .message-item {
@@ -309,9 +298,9 @@
                 <div class="info-line"><span class="info-label">Martial Realm:</span> Ultimate Pinnacle</div>
                 <div class="info-line"><span class="info-label">Cultivation Realm:</span> Qi Refining 14th Star</div>
             </div>
-            <div class="timeline-container">
-                <h4 style="color:#2dd4bf; margin-bottom:0.5rem;">Timeline: 7th Cycle</h4>
-                <img src="../../assets/images/timeline_7th_cycle.png" alt="Timeline 7th Cycle" class="timeline-img">
+            <div class="img-container">
+                <img src="../../assets/images/timeline_7th_cycle.png" alt="Timeline 7th Cycle" class="img-display">
+                <span class="img-caption">Timeline: 7th Cycle</span>
             </div>
         </section>
 
@@ -392,9 +381,9 @@
                 </div>
                 <div class="info-line"><span class="info-label">Cultivation Realm:</span> Qi Refining 14th star</div>
             </div>
-            <div class="timeline-container">
-                <h4 style="color:#2dd4bf; margin-bottom:0.5rem;">Timeline: 8th Cycle</h4>
-                <img src="../../assets/images/timeline_8th_cycle.png" alt="Timeline 8th Cycle" class="timeline-img">
+            <div class="img-container">
+                <img src="../../assets/images/timeline_8th_cycle.png" alt="Timeline 8th Cycle" class="img-display">
+                <span class="img-caption">Timeline: 8th Cycle</span>
             </div>
         </section>
 
@@ -470,9 +459,9 @@
                 <div class="info-line"><span class="info-label">Cultivation Realm:</span> Qi Building Second
                     Constellation</div>
             </div>
-            <div class="timeline-container">
-                <h4 style="color:#2dd4bf; margin-bottom:0.5rem;">Timeline: 9th Cycle</h4>
-                <img src="../../assets/images/timeline_9th_cycle.png" alt="Timeline 9th Cycle" class="timeline-img">
+            <div class="img-container">
+                <img src="../../assets/images/timeline_9th_cycle.png" alt="Timeline 9th Cycle" class="img-display">
+                <span class="img-caption">Timeline: 9th Cycle</span>
             </div>
         </section>
 
