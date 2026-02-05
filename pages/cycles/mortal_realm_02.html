@@ -167,6 +167,32 @@
         .message-item:last-child {
             border-bottom: none;
         }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            color: var(--text-primary);
+            transition: all 0.2s;
+            text-decoration: none;
+        }
+
+        .nav-btn:hover {
+            background: var(--accent-primary);
+            color: white;
+            text-decoration: none;
+        }
     </style>
 </head>
 
@@ -457,6 +483,15 @@
                 </div>
             </div>
         </section>
+
+        <div class="nav-buttons">
+            <a href="mortal_realm_01.html" class="nav-btn">
+                <ion-icon name="arrow-back-outline"></ion-icon> Previous Arc: 0th - 6th Regression
+            </a>
+            <a href="mortal_realm_03.html" class="nav-btn">
+                Next Arc: 10th - 12th Regression <ion-icon name="arrow-forward-outline"></ion-icon>
+            </a>
+        </div>
 
     </div>
 

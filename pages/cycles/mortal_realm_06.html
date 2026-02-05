@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0a0a0f">
+    <title>Betrayal | RToC Wiki</title>
+    <link rel="icon" type="image/jpeg" href="../../assets/images/seo_eun_hyun_cover.jpg">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap"
+        rel="stylesheet">
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <style>
+        .cycle-article {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        .wiki-header {
+            margin-bottom: 3rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 2rem;
+        }
+
+        .wiki-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2.5rem;
+            background: linear-gradient(135deg, #fff, #a5b4fc);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .wiki-subtitle {
+            font-size: 1.1rem;
+            color: #8B5CF6;
+            margin-bottom: 1.5rem;
+        }
+
+        .intro-box {
+            background: rgba(30, 30, 40, 0.5);
+            border-left: 4px solid #8B5CF6;
+            padding: 1.5rem;
+            font-style: italic;
+            color: #ccc;
+            margin-bottom: 2rem;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .toc-container {
+            background: rgba(20, 20, 25, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 3rem;
+            display: inline-block;
+            min-width: 250px;
+        }
+
+        .toc-title {
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #fff;
+            text-align: center;
+        }
+
+        .toc-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .toc-list li {
+            margin-bottom: 0.5rem;
+        }
+
+        .toc-list a {
+            color: #8B5CF6;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.2s;
+        }
+
+        .toc-list a:hover {
+            color: #fff;
+            text-decoration: underline;
+        }
+
+        .cycle-section {
+            margin-bottom: 4rem;
+            scroll-margin-top: 100px;
+        }
+
+        .cycle-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.8rem;
+            color: #fff;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid rgba(139, 92, 246, 0.3);
+            display: inline-block;
+            padding-bottom: 0.3rem;
+        }
+
+        .section-subtitle {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.4rem;
+            color: #a5b4fc;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .cycle-content {
+            line-height: 1.8;
+            color: #e2e8f0;
+            margin-bottom: 1.5rem;
+            text-align: justify;
+        }
+
+        .info-card {
+            background: rgba(139, 92, 246, 0.05);
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+        }
+
+        .info-line {
+            margin-bottom: 0.3rem;
+        }
+
+        .info-label {
+            font-weight: 600;
+            color: #a5b4fc;
+        }
+
+        .timeline-container {
+            margin-top: 1rem;
+            background: #fff;
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .timeline-img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .art-image-container {
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        .art-image {
+            max-width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+            max-height: 500px;
+        }
+
+        .image-caption {
+            margin-top: 0.5rem;
+            font-style: italic;
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="nav">
+        <div class="nav-container">
+            <a href="../../index.html" class="nav-logo">
+                <img src="../../assets/logo_character.png" alt="RToC" class="nav-logo-img"
+                    style="width:36px; height:36px; border-radius:8px; object-fit:cover;">
+                RToC Wiki
+            </a>
+            <ul class="nav-links">
+                <li><a href="../../index.html" class="nav-link">Home</a></li>
+                <li><a href="../characters.html" class="nav-link">Characters</a></li>
+                <li><a href="../concepts.html" class="nav-link">Concepts</a></li>
+                <li><a href="../plot.html" class="nav-link"
+                        style="color: var(--text-primary); background: rgba(139, 92, 246, 0.1);">Plot</a></li>
+                <li><a href="../cultivation.html" class="nav-link">Cultivation</a></li>
+                <li><a href="../martial_arts.html" class="nav-link">Martial Arts</a></li>
+                <li><a href="../locations.html" class="nav-link">Locations</a></li>
+            </ul>
+            <div class="nav-search">
+                <ion-icon name="search-outline" class="nav-search-icon"></ion-icon>
+                <input type="text" placeholder="Search the wiki...">
+            </div>
+            <button class="login-btn">Log In</button>
+        </div>
+    </nav>
+
+    <div class="cycle-article">
+        <header class="wiki-header">
+            <h1 class="wiki-title">Betrayal</h1>
+            <h2 class="wiki-subtitle">15th Regression</h2>
+            <div class="intro-box">
+                Seo Eun-hyun decides to investigate the whereabouts of Oh Hye-seo, whom he had not heard any news about.
+                He joins Seo Hweol to complete his goal.
+            </div>
+            <div class="toc-container">
+                <div class="toc-title">Contents</div>
+                <ul class="toc-list">
+                    <li><a href="#tribe">1 Tribe of the Earth</a></li>
+                    <li><a href="#name">2 The One with a Name</a></li>
+                    <li><a href="#betrayal">3 Betrayal</a></li>
+                    <li><a href="#shattered">4 Shattered Heart</a></li>
+                    <li><a href="#flash">5 Lighting Flash</a></li>
+                    <li><a href="#clown">6 The Clown and the Performance</a></li>
+                    <li><a href="#after">7 After the Performance</a></li>
+                    <li><a href="#timeline">8 Timeline</a></li>
+                </ul>
+            </div>
+        </header>
+
+        <!-- Tribe of the Earth -->
+        <section id="tribe" class="cycle-section">
+            <h2 class="cycle-title">Tribe of the Earth</h2>
+            <div class="cycle-content">
+                <p>As Eun-hyun completes his regression, he fights off extreme dizziness. At the same time, his
+                    consciousness expands to Nascent Soul size. When asked to chooses which faction he shall follow,
+                    Eun-hyun bows to the Head Realm’s Sea Dragon King, Seo Hweol. He avoids contact with Kim Yeon to
+                    prevent Hweol from using her, but plants a Mysterious Bizarre Gu within her. The True Dragon
+                    Alliance members flee when the Mad Lord throws his fit.</p>
+
+                <p>During the flight, Eun-hyun sets his goals for this life: find out what happened to Oh Hye-seo,
+                    infiltrate the Dragon Race to investigate Hyeon Eum, and steal the Heavenly Lighting Banner.
+                    Meanwhile, he forms an Inner Core. Hweol, now suspicious at the appearance of what he perceives as a
+                    Demon Core, gives Eun-hyun Summoning Wind, True Blood Transformation, and tells him he expects his
+                    consciousness to form the shape of a dragon’s in four days. Eun-hyun instead uses Summoning Wind,
+                    Dragon Transformation, the milder variant, through Yuan Yu to fool the Earth Tribe members.</p>
+
+                <p>A few days later, they arrive at the territory of the True Dragon Alliance. While looking at it,
+                    Eun-hyun realises it is a corpse. Gyu Ryeon, the Yellow Race Dragon on whose back they were seated,
+                    tells Eun-hyun the Alliance is established on the back of their Entering Nirvana ancestor, killed
+                    while defending the Bright Cold Realm from the forces of Blood Yin. They enter the Serving Command
+                    Ark, headquarters of the True Dragon Alliance, and a broken Immortal Treasure. Eun-hyun is shocked
+                    by the scale of space-compression within the Serving Command Ark, which holds mountain ranges and a
+                    sky. The demon beasts register themselves, while Eun-hyun receives an identity plate made of a scale
+                    from Seo Hweol. During this time, Eun-hyun has not seen Hye-seo once. He wonders why Hweol has no
+                    identity plate for her. The Sea Dragon Race heads to the Cloud Heart Lake and begins to set up their
+                    palace. While the rest of the tribe does battle, Eun-hyun asks Hweol about the Immortal Beast Blood
+                    Fusion, which Hweol promised to recommend him for. Hweol tells him it is a competition held within
+                    the Earth Tribe for drops of true blood. Eun-hyun can participate with Hweol’s recommendation. Hweol
+                    goes to the Serving Command Ark for administrative work and leaves Eun-hyun outside. Eun-hyun uses
+                    this opportunity to explore the marketplace. He learns methods of Demon beasts are ‘carved’ on their
+                    bodies and sold. Demon beast methods are often created by ‘instinct’, and each demon beast has their
+                    own method they use. He also purchases the Vast Cold Formula, a basic demon art. He then goes back
+                    to the Ark to wait for Hweol. When Hweol exits, he pats Eun-hyun’s shoulder and his suspicion
+                    suddenly skyrockets for no apparent reason.</p>
+
+                <p>During their return journey, Hweol tells Eun-hyun about the Naming Project, aimed at giving all Earth
+                    Tribe members a name to allow the True Dragon Alliance to guess at fate. Hweol is thinking of
+                    sending Eun-hyun for management.</p>
+
+                <p>At Cloud Heart Lake, while Eun-hyun wonders about his course of action, he realises the identity
+                    plate Seo Hweol made for him allows Hweol to monitor his location. He extends his consciousness and
+                    realises his room has circuits placed to monitor him. He carefully controls the circuits, changing
+                    the viewed image to one of him sleeping. He begins reabsorbing his cultivation from the Colourless
+                    Glass Swords and Canvas of Myriad Forms and Connections. He merges the artifact spirits, which will
+                    allow him to regain his Nascent Soul Cultivation within ten years.</p>
+
+                <p>The next day, Hweol tells Eun-hyun the Immortal Beast Blood Fusion is in six months. Eun-hyun decides
+                    to participate, as the next is after a hundred years. During the conversation, he decides to ask
+                    Hweol about Oh Hye-seo, but realises he is being brainwashed by what he previously thought as a mind
+                    clearing spell. He asks about Hye-seo anyway, to which Hweol says she requires seclusion in order to
+                    digest his true blood. Eun-hyun knows from Yuan Li there is no need to stabilise and knows Hweol is
+                    spouting nonsense. Hweol tells him to talk to Elder Jeon Rul when preparing for rituals. Once he
+                    returns to his room, Eun-hyun begins spreading the Mad Lord’s circuits within the Palace.</p>
+
+                <p>Six months later, Eun-hyun has reached peak Qi Building. He still hasn’t found Oh Hye-seo. As he
+                    prepares to leave for the Blood Fusion, the Sea Dragons mutter at him. During the journey, Hweol
+                    tells Eun-hyun to pay the mutterings no mind. Eun-hyun, however, is aware the mutterings must have
+                    started from Hweol himself. They head to the lowest floor of the Ark, the Emptiness Floor. The
+                    Emptiness Floor appears to be a cold, dark,and vast desert, where even breathing scatters spiritual
+                    energy. Gyu Ryeon, administrator of the floor, tells them about the competition. While she speaks,
+                    Eun-hyun realizes a Four-Axis stage has awoken the ‘power of life’. Eun-hyun is not too worried as
+                    he has worn Yuan Yu. Gyu Ryeon dispels the ‘desert’ spell, plunging all participants into
+                    nothingness. Within the nothingness, and free from Hweol’s gaze, Eun-hyun starts cultivating the
+                    Azure Spirit Starlight Quintessence Great Method, expecting the contest will last no longer than
+                    four months. As the number of competitors drop, the coldness intensifies. However, when the number
+                    drops to a hundred, Eun-hyun remains in the darkness.</p>
+
+                <p>Another year passes. Eun-hyun decides to cultivate the Vast Cold Formula alongside the Great Method.
+                    Ten years on, Eun-hyun undergoes another transformation from the merging of two methods, and his
+                    consciousness morphs into a human shape. As he closes his eyes, expecting to die, [Someone] summons
+                    him.</p>
+
+                <p>Eun-hyun finds a campfire in front of him in a place with no “light”. [Someone] tells him they
+                    converted ten years into ten seconds of conversation. As Eun-hyun attempts to look at the being, his
+                    body attempts to ‘liberate’ itself from its framework. The [Someone] introduces themselves as Bong
+                    Myeong, Owner of Liberation, and creator of the Serving Command Arc. He says he will ask three
+                    questions and leave. Eun-hyun barely manages to pull himself together. He first asks Eun-hyun about
+                    his fate, to which he gives no reply. He asks if Eun-hyun knows where the being who brought him is
+                    located, which Eun-hyun does not understand. He then asks Eun-hyun if he has ever come across
+                    Supreme Deities or Heavenly Sovereigns. Eun-hyun begins screaming as he seems to recall something
+                    from the village he had saved with Hyang-hwa. Somehow, Bong Myeong manages to gather that he has met
+                    Deities or Sovereigns twice. He then allows Eun-hyun to ask in the remaining time. Eun-hyun asks why
+                    instead of ten seconds, did he not extend it to ten days, to which Bong Myeong replies he is but a
+                    fragment, so the distortion must be small. Eun-hyun then asks him what Enders are, to which Myeong
+                    says only Enders know. He asks if Yang Su-jin was also an Ender, which Bong Myeong confirms, saying
+                    he was also weak at the beginning of his story. When Eun-hyun asks what a ‘story' is, Myeong replies
+                    with “fate”‘. When Eun-hyun tries to ask if Myeong is the entity pursuing them, Myeong removes his
+                    mouth, telling him to school even his thoughts, as his method of communication is not as safe as
+                    that of an Ender’s. He also tells Eun-hyun to be careful of [Light], as it is a minion of [that
+                    thing]. When Eun-hyun asks him why Myeong is helping him, he says “Enders create miracles”. He also
+                    tells Eun-hyun True Immortals can only bestow “misfortune” on Enders, and it is not impossible to
+                    learn of an Enders abilities. He then sends Eun-hyun back.</p>
+
+                <p>Back in his time, Eun-hyun realises he has forgotten about [that entity] he just met. While ten years
+                    of the Great Method flow in his veins, only four months worth of the Canvas’s power has been
+                    depleted. As he receives the blood of the Immortal Black Dragon, he decides to steal the Heavenly
+                    Lightning Banner and throw it into Seo Hweol’s and Hyeon Eum’s throat.</p>
+
+                <p>During the return trip, Hweol promises to give Eun-hyun Summoning Wind, Sacred Blood Transformation
+                    and help him assimilate the true blood. His plans are disrupted when they arrive at the Sea Dragon
+                    Palace and learn the entire treasury has been emptied by thieves. This event had been engineered by
+                    Seo Eun-hyun. Seo Hweol uses this incident as a pretext to sort out the affairs of the Sea Dragon
+                    Tribe to his liking. Meanwhile, Eun-hyun writes a letter to Gyu Ryeon, asking for her assistance in
+                    the assimilation of the true blood, with the promise of meeting with Seo Hweol. Gyu Ryeon, smitten
+                    with Hweol, arrives in two days. Hweol attempts to have them assimilate the true blood within the
+                    Sea Dragon Palace, but Gyu Ryeon says she has to put down a rebellion within her territory. Hweol
+                    sends a few Nascent Soul level cultivators to assist her. In Gyu Ryeon’s territory, Eun-hyun offers
+                    to assist the Nascent Soul cultivators, taking away their pretext of observing him. As they are
+                    leaving, she informs them a Heart Tribe member has appeared. Eun-hyun attempts to warn the other
+                    warriors about the fearsome Heart Tribe but is ignored. The Sea Dragons expect this to be a quick
+                    fight. As Eun-hyun wanders the farm, he senses an individual at Treading Heavens. He excitedly
+                    rushes towards what appears as a crimson river, but is stopped by a second Heart Tribe member, a
+                    cute goat. Their fight is interrupted by the river, who has put the Sea Dragons in a fatal sleep.
+                    The river says they will answer one question as a mark of gratitude if Eun-hyun lets them go.
+                    Eun-hyun asks them about the Heart Tribe Method, to which they say the Heart Tribe Method doesn’t
+                    exist!</p>
+
+                <p>As an answer to Eun-hyun’s questions, the river tells him Heart Tribe refers to anyone who has
+                    integrated their internal and external heart essence. Their own manifestation is that of “deep
+                    sleep”. As they talk, they watch the goat, Baek Nyeong, fight the overseer of the plantation.
+                    However, before the fight ends, the Sea Dragons’ sleeping bodies explode to release a consciousness
+                    projection of Seo Hweol emerges. The projection was intended to retrieve Eun-hyun, but it kidnaps
+                    Baek Nyeong instead. The crimson river also flees soon after. Eun-hyun goes to the overseer, a boar
+                    called Hong Guk, and tells him to contact Gyu Ryeon about their failure.</p>
+
+                <p>Eun-hyun begins the assimilation of the true blood with Gyu Ryeon’s assistance. As the refinement
+                    begins, Eun-hyun is confronted by the remnant will of the Immortal Black Dragon, who demands to know
+                    why Eun-hyun has two thousand years of history despite having an age less than half a century. The
+                    Dragon examines Eun-hyun’s history, down to the genetic level. The Dragon tells Eun-hyun he cannot
+                    view his history as ―――― has blocked it. He tells Eun-hyun it is impossible for those with more than
+                    a thousand years of history to participate in the Immortal Beast Blood Fusion, as a vessel with
+                    “History” is already full. Out of curiosity, He pours his power into Eun-hyun anyway.</p>
+            </div>
+        </section>
+
+        <!-- The One with a Name -->
+        <section id="name" class="cycle-section">
+            <h2 class="cycle-title">The One with a Name</h2>
+            <div class="cycle-content">
+                <p>Eun-hyun awakens within a formation erected by Gyu Ryeon. As he guides the Taiyin, he sprouts black
+                    deer horn, claws, jagged teeth and scales. As Eun-hyun roars like a dragon, Gyu Ryeon stomps on his
+                    skull. Back with the Dragon, Eun-hyun asks about Hyeon Eum, His descendant. As an answer, He
+                    casually mentions the leftover of True Immortal Yu Hao Te. Hearing the name of a True Immortal,
+                    Eun-hyun’s consciousness fades as he desperately erases the name.</p>
+
+                <p>As Eun-hyun awakens. He discovers he has broken through to Core Formation while unconscious. As he
+                    prepares to leave for the Sea Dragon Palace, Gyu Ryeon hands him a letter to be delivered to Ho Yeol
+                    of the Azure Peng Race. Eun-hyun uses this opportunity to make connections with others within the
+                    Earth Tribe, returning to the Palace after two months. When he returns to the Palace, Eun-hyun is
+                    shocked to discover Baek Nyeong is the overseer of Seo Hweol’s slave tribes. He goes to meet Seo
+                    Hweol, who re-introduces him to Nyeong. Eun-hyun is certain Seo Hweol is aware he is also of the
+                    Heart Tribe, but says nothing.</p>
+
+                <p>Both Eun-hyun and Hweol go for the discussion on the Earth Tribe Naming Project. The meeting devolves
+                    into chaos before Hweol takes charge, effectively becoming the moderator. Hweol guides the meeting
+                    towards support of the scheme. Back at the Palace, Eun-hyun asks Hweol why he has pushed so hard for
+                    the naming project. Hweol tells Eun-hyun how the ‘name’ of the Bright Cold Realm used to be ‘Vast
+                    Cold’. After the dragon ancestor of the Vast Cold Realm died, the realm was renamed to include
+                    [light]. This gave the realm unparalleled luck and catapulted it to one of the strongest Middle
+                    Realms. Eun-hyun thanks him and leaves as Hweol is holding a meeting. Eavesdropping on the meeting,
+                    he learns Hweol is looking for lovers with In and Yeon in their names. Eun-hyun feels he is looking
+                    for Hong Yeon and Su In of the True Devil Realm.</p>
+
+                <p>Meanwhile, Eun-hyun decides to name the baby centipede he picked up on Ascension Path. He goes to the
+                    Serving Command Ark. The centipede is named Hong Fan. Oddly enough, Eun-hyun finds this name
+                    familiar. He visits the Centipede Tribe in hopes of awakening Hong Fan, and is given the Sacrificial
+                    Name Spirit Stele Great Method. Hong Fan awakens and enters Qi Refining.</p>
+            </div>
+        </section>
+
+        <!-- Betrayal -->
+        <section id="betrayal" class="cycle-section">
+            <h2 class="cycle-title">Betrayal</h2>
+            <div class="cycle-content">
+                <p>Seven years after his regression, Eun-hyun reaches the Nascent Soul stage. Seo Hweol and Gyu Ryeon
+                    congratulate him, with Hweol showing Ryeon ‘affection’. Hweol tells Eun-hyun he intends to tour the
+                    Middle Realms to build high quality Orthodox Four Axes. He bestows his blood to Eun-hyun to enable
+                    conversation between him and Ryeon. Eun-hyun quickly realises Hweol has left an imprint in the
+                    blood, and forces them to mix. He manages to destroy the imprint, nearly dying in the process. Seo
+                    Hweol’s suspicions sky-rocket.</p>
+
+                <p>Before Hweol departs, they go to the Immortal Demon Tower to watch a performance. After the
+                    performance, Eun-hyun goes to meet the half-spider zither player, Yu Hwa. She is also the ‘crimson
+                    river’ he met on Ryeon’s farm. They engage in a duel, during which Eun-hyun sees how she grasped her
+                    Manifestation. After the fight, Yu Hwa tells him she calls her manifestation Last Quarter. She also
+                    invites him to join the heart tribe. Eun-hyun decides to attempt to read Hweol’s past as the second
+                    performance begins. As Eun-hyun sneaks to the box where Ryeon and Hweol are sitting, he is surprised
+                    to see them arguing. Gyu Ryeon casts a pinkish spell and forcibly kisses Hweol. A metaphysical
+                    ‘something’ occurs, tipping Ryeon that there is a spy. Eun-hyun quickly returns to his original
+                    position.</p>
+
+                <p>After the end of the show, as they are leaving, Gyu Ryeon confronts Eun-hyun about his spying. She
+                    tells him she used the Vast Cold Beautiful Agreement, also known as the Vast Cold Oath, to bind Seo
+                    Hweol to herself. She is jealous as she has seen Hweol with Oh Hye-seo. Ryeon intends to advance to
+                    the Integration stage and forcibly control Hweol. Eun-hyun also supports this.</p>
+
+                <p>Seo Hweol leaves for his Axes Foundation. Eun-hyun is assigned the title of Great Leader of Many.
+                    Three days later, he meets with Yu Hwa, who wishes to rescue Baek Nyeong. Baek Nyeong scorns Yu Hwa,
+                    professing loyalty to Hweol. He shocks both her and Eun-hyun when he describes Hweol’s heart essence
+                    as an “idyllic peach garden”, instead of the rotting miasma. In a fit of rage, Yu Hwa engages Nyeong
+                    in a duel. As the Elders of the Sea Dragon Race approach, she tells Eun-hyun to flee as she intends
+                    to release her third Manifestation. Eun-hyun insists on staying. She shows her Last Quarter, Final
+                    Moon. Eun-hyun realises this is infinitely similar to true Heavenly Tribulation. Under her move, he
+                    loses consciousness. When he awakens, Yu Hwa tells she must escape. She also tells him a strike from
+                    a Heart Tribe Member at Third Manifestation overlays an extra Heavenly Tribulation for the next
+                    advancement only. Eun-hyun teaches her the Record of Transcending Cultivation and Exhausting Martial
+                    Arts, allowing her to escape unnoticed. He then feigns unconsciousness.</p>
+
+                <p>During the interrogation of the survivors, the Sea Dragon Elders wildly distort Yu Hwa’s appearance.
+                    Eun-hun also offers to work under Gyu Ryeon, as the Sea Dragon Palace has been destroyed. As her
+                    attendant, he also serves as a liaison between Seo Hweol and Ryeon. He plans to besmirch Hweol’s
+                    name before having him forced to marry Ryeon in order to preserve his honour.</p>
+
+                <p>Three years later, Cheon Ryang, a canine demon beast, brings Hong Guk, overseer of Gyu Ryeon’s farm.
+                    Hong Guk says the technique Hweol used to embed his consciousness into the Nascent Soul dragons is a
+                    technique of Blood Yin, proving he has ties to that realm. The technique leaves an imprint on the
+                    earth, so revisiting the farm may provide evidence. As Gyu Ryeon is scheduled for seclusion on the
+                    last floor, they decide to go there the following day.</p>
+
+                <p>After they leave, Yu Hwa and Baek Nyeong appear. She tells him she has undone most of Baek Nyeong’s
+                    brainwashing, but he wishes to kill Hong Guk. Eun-hyun promises to let Nyeong meet the boar alone
+                    once this episode is over. When Yu Hwa asks him if this means they can kill him tomorrow, and tells
+                    Eun-hyun the Seo Hweol opposition faction is stealing Gyu Ryeon’s farm, he is horrified. He rushes
+                    to the site, along with Baek Nyeong and Yu Hwa. Upon his arrival, Cheon Ryang tells him they are
+                    taking the land to the Supreme Tiger Race for investigation. Eun-hyun tries to get them to hurry,
+                    but Gyu Ryeon opens a spatial rift and sees them. Eun-hyun screams at the rest to run, as Ryeon is
+                    now a Quasi-Demon King.</p>
+
+                <p>Eun-hyun swiftly converts the land into a flying artifact. Gyu Ryeon begins chasing them in her true
+                    form. The landmass transforms into General Seo’s head, and Eun-hyun pilots the head to avoid Gyu
+                    Ryeon’s rays, but she catches up anyway. She tells Eun-hyun she will trust him once more and demands
+                    an explanation from him. Just as Eun-hyun is about to tell her everything about Seo Hweol, the
+                    dragon himself walks in.</p>
+
+                <p>Hweol tells them he never left the Bright Cold Realm, and stabs Gyu Ryeon in her heart. He tells
+                    Eun-hyun he has visited the Head Realm and was surprised to see all his preparations destroyed. He
+                    stomps on Gyu Ryeon’s neck, revealing he had already condensed the Five Blessings True Orthodox Axis
+                    in the Sea Dragon Palace, the Serving Command Palace, the black castle, and the Ascension Path. He
+                    also implies Eun-hyun is the leftover of a True Immortal. Hong Guk reveals himself to be loyal to
+                    Seo Hweol. Hweol tortures Eun-hyun, attempting to pry information from him. Gyu Ryeon tells Hweol
+                    she loved him, to which he replies it was nothing but the desire to mate. He says emotion is simply
+                    the body-language. Eun-hyun refutes this. Hweol replies, saying the world is merely a “play” under
+                    fate. Gyu Ryeon pulls the entire cotton field into the Serving Command Ark. Hweol uses this
+                    opportunity to further injure Gyu Ryeon. He also pulls out Yu Hwa and kills all the other demon
+                    beasts. He tells Gyu Ryeon the Vast Cold Oath is ‘incomplete’, and shatters her Demon Core. Gyu
+                    Ryeon desperately tears open and rift, and Eun-hyun and Yu Hwa are dragged in with her.</p>
+
+                <p>After they have left, Seo Hweol uses a parasite to take control of Hong Guk, instructing him to give
+                    the Human Race an excuse to attack the True Devil Realm. Baek Nyeong submits to Hweol once again.
+                </p>
+
+                <p>Eun-hyun regains consciousness in an unnamed Lower Realm. He rushes to Gyu Ryeon’s head, only to find
+                    her mind broken and on the verge of death. As she dies, she leaves a leftover, swearing to kill Seo
+                    Hweol.</p>
+            </div>
+        </section>
+
+        <!-- Shattered Heart -->
+        <section id="shattered" class="cycle-section">
+            <h2 class="cycle-title">Shattered Heart</h2>
+            <div class="cycle-content">
+                <p>Eun-hyun prepares a cave for the leftover and Yu Hwa. The leftover cannot cultivate. She tells
+                    Eun-hyun to call her Gyu Baek. Several days later, they discover they are in the Astral Realm,
+                    giving Eun-hyun hope of returning home, to Earth. Gyu Baek is upset to discover Eun-hyun is of the
+                    Heart Tribe. Yu Hwa says she can call for the Heaven-Collapsing Esteemed One, Jang Ik. Eun-hyun
+                    recommends learning the Heart Tribe method to Gyu Ryeon, with the desire of “revenge on Seo Hweol”.
+                </p>
+
+                <p>Jang Ik arrives a few days later. He listens to the past events. He decides to help Yu Hwa and
+                    Eun-hyun, but not Gyu Baek, as she has yet to solidify her identity. He offers them three types of
+                    help. First, use a strike to create a spatial rift connected to the Bright Cold Realm. Second, stay
+                    to train them, allowing them to ascend on their own. Third, contact the Highest Council of the Heart
+                    Tribe and send a rescue signal. Eun-hyun chooses the second, as he may be able to persuade Baek to
+                    join them.</p>
+
+                <p>Before their training, Jang Ik tells Eun-hyun he believes everyone has the potential to learn
+                    Manifestation. He tells him he will understand after a spar. Jang Ik thrashes both of them. After
+                    the spar, Eun-hyun realises anyone who has experienced weakness, fighting against the much stronger
+                    can learn Manifestation. Gyu Baek realises she was just a weakling caught in love. She swears to
+                    properly confirm Seo Hweol’s feelings. Eun-hyun begins teaching her Martial Arts for this, starting
+                    with the Dragon Form Soaring Claw.</p>
+
+                <p>Seventy years later, Gyu Baek is on the verge of stepping into the first stage of Manifestation. Jang
+                    Ik is disappointed, as it depends much too much on the Vast Cold Oath. Right before their ascension,
+                    Eun-hyun asks Jang Ik why the Esteemed Ones are in the Astral Realm. Jang Ik says Yang Su-jin had
+                    stolen something of great importance from all of the Middle Realms, and all the Esteemed Ones are
+                    attempting to retrieve it. They ascend back to the Bright Cold Realm under the watch of Jang Ik.</p>
+            </div>
+        </section>
+
+        <!-- Lighting Flash -->
+        <section id="flash" class="cycle-section">
+            <h2 class="cycle-title">Lighting Flash</h2>
+            <div class="cycle-content">
+                <p>Upon ascension, they immediately run. Yu Hwa and Gyu Baek leave for the True Dragon alliance, to
+                    track Baek Nyeon and Seo Hweol, while Eun-hyun heads to Thunder Spirit Island, base of the Golden
+                    Divine Heavenly Thunder Sect. He intends to steal the Heavenly Lighting Banner. He uses the
+                    Mysterious Bizarre Gu to control Jeon Myeong-hoon into bringing him the Banner. While possesing him,
+                    Eun-hyun learns Myeong-hoon was forced to break off his engagement to Jin So-hae, as the daughter of
+                    an Integration Stage cultivator wished to marry him. Eun-hyun puppets Myeong-hoon into telling Jin
+                    So-hae he is running away, without her if necessary, and then hides him. A week later, he distracts
+                    the Elders with Yuan Yu, and uses Myeong-hoon to bring him the Banner. He is surprised to see the
+                    Banner exhibits intent. When Myeong-hoon arrives with the Banner, Eun-hyun is surprised to see he
+                    cannot see it, as the Banner is lightning itself. While Eun-hyun attempts to leave with both Yuan Yu
+                    and Myeong-hoon, Jin Byuk-ho appears, and summons the Heavenly Lighting Banner to himself.</p>
+
+                <p>Byuk-ho and Eun-hyun begin to fight. During the battle, Eun-hyun hears the Banner asking to be saved,
+                    telling him he can grasp her if he thinks of her name- Zhengli. Eun-hyun tells Byuk-ho ascending
+                    with the Banner brings calamity, distracting him by using Hweol’s name. He snatches the Banner and
+                    runs. The Banner requests him to call out her name. When Eun-hyun does so, the Banner’s original
+                    owner descends as an ‘eye’. All those who practice the lighting path say “Return to thee,” and
+                    dissolve into lightinng, The Banner, Zhengli, Essence of the Great Heavenly Punishment, returns to
+                    her owner. The entire Golden Divine Heavenly Thuunder Sect is destroyed, with Jeon Myeong-hoon as
+                    the only survivor.</p>
+            </div>
+        </section>
+
+        <!-- The Clown and the Performance -->
+        <section id="clown" class="cycle-section">
+            <h2 class="cycle-title">The Clown and the Performance</h2>
+            <div class="cycle-content">
+                <p>Eun-hyun’s body has started to convert itself to blue lightning, and he has only a hundred days to
+                    live. He decides to see how Gyu Baek’s marriage to Seo Hweol ends as his final act. Meanwhile, Yu
+                    Hwa and Gyu Ryeon find employment as a musician and a dancer respectively. Gyu Baek tells Yu Hwa she
+                    has no idea how she feels about Hweol. Gyu Baek tells Yu Hwa she will procure some Core Formation
+                    level resources from Hong Fan, Eun-hyun’s pet centipede. When she arrives at the centipede’s home,
+                    she is surprised to see he has already reached Core Formation, with the help of the Immortal Demon
+                    Bamboo. When Gyu Baek asks why he hasn’t escaped, Hong Fan tells her his fate is to assist Eun-hyun.
+                </p>
+
+                <p>Two months later, Eun-hyun arrives with a puppet of the Mad Lord. Kim Yeon, who is also with him now,
+                    has regressed to the state of a mute child. He tells Hong Fan about his experiences. At the same
+                    time, he is receiving knowledge from his lightning body. While scouting the Serving Command Ark for
+                    making a suitable trap for Hweol, Eun-hyun stumbles across the location Oh Hye-seo’s hiding place.
+                    Disguising himself as a Black Dragon, Eun-hyun infiltrates the Ark, and proceeds to enter Hye-seo’s
+                    manor. He realises there are only jiangshi in the manor, other than her. After talking to him,
+                    Hye-seo suddenly recognises him despite the disguise. She says it comes from her ability, and Seo
+                    Hweol is the best opponent for her. She tells Eun-hyun he is hard to read as he appears to be
+                    covered by mist. As he leaves, Hye-seo uses an ability of the Lustrous Glaze Peacock to make the
+                    jiangshi forget about Eun-hyun’s visit.</p>
+
+                <p>The Mad Lord begins his attack. Eun-hyun has been feeling a strange disharmony since meeting Hye-seo.
+                    Hweol evacuates to the Serving Command Ark. The group he is with feel the presence of a Heavenly
+                    Fiend of Blood Yin, and rush to attack. Hweol tells them to go ahead. He has been bound by Eun-hyun.
+                    Eun-hyun is suspicious as to why Hweol sent away the other demon beats. He uses the 60,000 times
+                    poison provided by Hong Fan to curse Hweol through his true blood. Despite the pain, Hweol’s
+                    expression does not change. Eun-hyun sends their coordinates to the Mad Lord. The Mad Lord forces
+                    himself into the Serving Command Ark. All of a sudden, Hweol seems “not in pain”, and reveals the
+                    soul of Baek Nyeong, pushing the Wonderfully Mysterious Fortress away. In reply, Eun-hyun pulls out
+                    Gyu Baek from a Peach Garden Painting, and calls to Yu Hwa.</p>
+
+                <p>As Yu Hwa puts Hweol to sleep, Gyu Baek reveals her Entering Heavens; Auspicious Exchange of
+                    Emotional Expression. Suddenly, Yuan Yu strikes through Gyu Baek’s chest; it has been taken over by
+                    Oh Hye-seo, who was always on the side of Seo Hweol, and who had actually struck Eun-hyun with the
+                    Lustrous Glaze Peacock's light when he was on his way to meet Hye-seo, messing up his memories of
+                    the event. Oh Hye-seo reveals the reason why Hweol patted Eun-hyun’s shoulder so often was to see
+                    the memories of the Blood Body, which he had helped develop.</p>
+            </div>
+        </section>
+
+        <!-- After the Performance -->
+        <section id="after" class="cycle-section">
+            <h2 class="cycle-title">After the Performance</h2>
+            <div class="cycle-content">
+                <p>Eun-hyun attempts to chant “Return to thee” to take Hweol with him, but is stopped, as Hweol uses one
+                    of the Axes (Love of Virtue) to seal his speech. Seo Hweol tells Eun-hyun he is a confusing
+                    creature. He guesses Eun-hyun is a fallen True Immortal from Yang Su-jin’s time.</p>
+
+                <p>When Hweol calls all this “a joke”, Gyu Baek gets up and challenges him. Hweol puts her down again.
+                    Eun-hyun barely manages to move, lipsing none of it was a joke. This causes a gleam in Hweol’s heart
+                    essence. A projection of Kim Yeon, called by the love within Gyu Baek’s heart, appears, activating
+                    the Vast Cold Oath. From observing the threads cast by the Oath, Hye-seo’s eyes bleed and she is
+                    forced to abandon Yuan Yu. Hweol asks Kim Yeon how she can wield Vast Cold’s power. Mad Lord regains
+                    his senses and hurries to their location. Gyu Baek tells Hweol to kiss her sincerely once to unravel
+                    the Oath. Seo Hweol releases his Four-Axis Canopy, taking Gyu Baek inside and revealing his
+                    sincerety. As Eun-hyun is at the brink of death from dispersal, he realises he still lives as the
+                    Black Dragon Blood refuses to let go of him, its prey. Jo Yeon arrives and assist Yu Hwa and
+                    Eun-hyun in destroying the Canopy. Within the Canopy, he finds an unsmiling Seo Hweol and a shocked
+                    Gyu Baek. Hweol tries to get Gyu Baek to break the Oath. Eun-hyun tells her he will take on her
+                    role. Gyu Baek stops providing her heart with Qi and dies. Eun-hyun begins using his body of
+                    Lightning (Heavenly Tribulation) to mimic the strike of the Third Manifestation and begins his
+                    assault. Kim Yeon activates Yeon’s Play, sending the power over to Eun-hyun. Eun-hyun merges the
+                    Play with his Canvas of Myriad Forms and Connections, drawing out the power of various Heart Tribe
+                    members he has met over the years. The power of the Black Dragon is jettisoned from his body, making
+                    room for his own Immortal Beast seed. He delivers a final strike to Hweol. Hweol runs away, with the
+                    Tribulation still impacting him. Yu Hwa conveys Jang Ik’s words about the heart being undeniable.
+                    Eun-hyun disperses into fragments of lightning and dies.</p>
+            </div>
+
+            <div class="info-card">
+                <div class="info-line"><span class="info-label">Martial Realm:</span> Treading Heavens Beyond the Path
+                </div>
+                <div class="info-line"><span class="info-label">Cultivation Realm:</span> Nascent Soul (Heaven/Earth
+                    Dual Cultivation)</div>
+            </div>
+        </section>
+
+        <!-- Timeline -->
+        <section id="timeline" class="cycle-section">
+            <div class="timeline-container">
+                <h4 style="color:#333; margin-bottom:0.5rem;">Timeline: 15th Cycle</h4>
+                <img src="../../assets/images/timeline_15th_cycle.png" alt="Timeline 15th Cycle" class="timeline-img">
+            </div>
+        </section>
+
+    </div>
+
+    <!-- Login Modal -->
+    <div class="modal-overlay">
+        <div class="login-modal">
+            <div class="modal-header">
+                <button class="modal-close"><ion-icon name="close-outline"></ion-icon></button>
+                <h2 class="modal-title">Welcome Back</h2>
+                <p class="modal-subtitle">Log in to the RToC Wiki Community</p>
+            </div>
+
+            <div class="social-login">
+                <button class="social-btn discord">
+                    <ion-icon name="logo-discord"></ion-icon>
+                    Continue with Discord
+                </button>
+                <button class="social-btn google">
+                    <ion-icon name="logo-google"></ion-icon>
+                    Continue with Google
+                </button>
+            </div>
+
+            <div class="divider">or</div>
+
+            <div class="auth-form">
+                <div class="form-group">
+                    <input type="email" placeholder="Email Address">
+                </div>
+                <div class="form-group">
+                    <input type="password" placeholder="Password">
+                </div>
+                <button class="auth-submit">Log In</button>
+            </div>
+
+            <div class="auth-footer">
+                Don't have an account? <span class="auth-link">Create Account</span>
+            </div>
+        </div>
+    </div>
+
+    <script src="../../scripts/editor.js"></script>
+    <script src="../../scripts/main.js"></script>
+</body>
+
+</html>

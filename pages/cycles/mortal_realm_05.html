@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0a0a0f">
+    <title>Painting a Canvas | RToC Wiki</title>
+    <link rel="icon" type="image/jpeg" href="../../assets/images/seo_eun_hyun_cover.jpg">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap"
+        rel="stylesheet">
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <style>
+        .cycle-article {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        .wiki-header {
+            margin-bottom: 3rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 2rem;
+        }
+
+        .wiki-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2.5rem;
+            background: linear-gradient(135deg, #fff, #a5b4fc);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .wiki-subtitle {
+            font-size: 1.1rem;
+            color: #8B5CF6;
+            margin-bottom: 1.5rem;
+        }
+
+        .intro-box {
+            background: rgba(30, 30, 40, 0.5);
+            border-left: 4px solid #8B5CF6;
+            padding: 1.5rem;
+            font-style: italic;
+            color: #ccc;
+            margin-bottom: 2rem;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .toc-container {
+            background: rgba(20, 20, 25, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 3rem;
+            display: inline-block;
+            min-width: 250px;
+        }
+
+        .toc-title {
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #fff;
+            text-align: center;
+        }
+
+        .toc-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .toc-list li {
+            margin-bottom: 0.5rem;
+        }
+
+        .toc-list a {
+            color: #8B5CF6;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.2s;
+        }
+
+        .toc-list a:hover {
+            color: #fff;
+            text-decoration: underline;
+        }
+
+        .cycle-section {
+            margin-bottom: 4rem;
+            scroll-margin-top: 100px;
+        }
+
+        .cycle-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.8rem;
+            color: #fff;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid rgba(139, 92, 246, 0.3);
+            display: inline-block;
+            padding-bottom: 0.3rem;
+        }
+
+        .section-subtitle {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.4rem;
+            color: #a5b4fc;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .cycle-content {
+            line-height: 1.8;
+            color: #e2e8f0;
+            margin-bottom: 1.5rem;
+            text-align: justify;
+        }
+
+        .info-card {
+            background: rgba(139, 92, 246, 0.05);
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+        }
+
+        .info-line {
+            margin-bottom: 0.3rem;
+        }
+
+        .info-label {
+            font-weight: 600;
+            color: #a5b4fc;
+        }
+
+        .timeline-container {
+            margin-top: 1rem;
+            background: #fff;
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .timeline-img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .art-image-container {
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        .art-image {
+            max-width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+            max-height: 500px;
+        }
+
+        .image-caption {
+            margin-top: 0.5rem;
+            font-style: italic;
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
+
+        .quote-box {
+            background: rgba(0, 0, 0, 0.2);
+            border-left: 3px solid #fbbf24;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            font-style: italic;
+            color: #f1f5f9;
+        }
+
+        .quote-author {
+            display: block;
+            margin-top: 0.5rem;
+            font-weight: 600;
+            font-style: normal;
+            text-align: right;
+            color: #fbbf24;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="nav">
+        <div class="nav-container">
+            <a href="../../index.html" class="nav-logo">
+                <img src="../../assets/logo_character.png" alt="RToC" class="nav-logo-img"
+                    style="width:36px; height:36px; border-radius:8px; object-fit:cover;">
+                RToC Wiki
+            </a>
+            <ul class="nav-links">
+                <li><a href="../../index.html" class="nav-link">Home</a></li>
+                <li><a href="../characters.html" class="nav-link">Characters</a></li>
+                <li><a href="../concepts.html" class="nav-link">Concepts</a></li>
+                <li><a href="../plot.html" class="nav-link"
+                        style="color: var(--text-primary); background: rgba(139, 92, 246, 0.1);">Plot</a></li>
+                <li><a href="../cultivation.html" class="nav-link">Cultivation</a></li>
+                <li><a href="../martial_arts.html" class="nav-link">Martial Arts</a></li>
+                <li><a href="../locations.html" class="nav-link">Locations</a></li>
+            </ul>
+            <div class="nav-search">
+                <ion-icon name="search-outline" class="nav-search-icon"></ion-icon>
+                <input type="text" placeholder="Search the wiki...">
+            </div>
+            <button class="login-btn">Log In</button>
+        </div>
+    </nav>
+
+    <div class="cycle-article">
+        <header class="wiki-header">
+            <h1 class="wiki-title">Painting a Canvas</h1>
+            <h2 class="wiki-subtitle">14th Regression</h2>
+            <div class="intro-box">
+                Eun-hyun joins the Azure Heaven Creation Sect. He has started losing memories rapidly due to the trials
+                on his soul.
+            </div>
+            <div class="toc-container">
+                <div class="toc-title">Contents</div>
+                <ul class="toc-list">
+                    <li><a href="#creation">1 Azure Heaven Creation Sect</a></li>
+                    <li><a href="#grace1">2 Master's Grace</a></li>
+                    <li><a href="#changes">3 Drastic Changes</a></li>
+                    <li><a href="#lost">4 Those That are Lost</a></li>
+                    <li><a href="#hell">5 Even if This Place is Hell</a></li>
+                    <li><a href="#grace2">6 Master's Grace (End)</a></li>
+                    <li><a href="#timeline">7 Timeline</a></li>
+                    <li><a href="#lastwords">8 Azure Tiger Saint's Last Words</a></li>
+                </ul>
+            </div>
+        </header>
+
+        <!-- Azure Heaven Creation Sect -->
+        <section id="creation" class="cycle-section">
+            <h2 class="cycle-title">Azure Heaven Creation Sect</h2>
+            <div class="cycle-content">
+                <p>Right after coming to his senses. Eun-hyun goes to Kim Yeon and tells her he likes her. He tells the
+                    Mad Lord he intends to become stronger so as to let Kim Yeon puppet a powerful General Seo. The Mad
+                    Lord agrees to wait for him. Eun-hyun then goes to the Azure Tiger Saint and asks to be admitted to
+                    his sect. The Saint accepts.</p>
+
+                <p>Same as last cycle, the Mad Lord throws a fit, killing the Four-Axis wood-man. The Azure Tiger Saint
+                    protects Eun-hyun and approves his resolve to protect his comrades. Eun-hyun attempts to warn Sir
+                    Byuk-ho about the Heavenly Lightning Banner, but Sir Byuk-ho strikes him with lightning. They then
+                    go to register themselves at Kunlun Castle. They meet Hyeo Ryeong, ancestor of the Black Ghost
+                    Valley, who guides the Human Race to Temporal Fate Island. Hyeo Ryeong tells them about the Tribes
+                    in the Bright Cold Realm. The ascenders are stunned to see the island is the size of the
+                    Heaven-Treading Desert. After registering themselves, the Azure Heaven Creation Sect, Black Ghost
+                    Valley, and Golden Divine Heavenly Thunder Sect separate and head to separate floating islands. The
+                    Azure Heaven Creation Sect defeats the major sects of Azure Cold Island and establishes themselves
+                    in the spot with most spiritual energy. During the battle, Eun-hyun obtains a storage scroll from an
+                    early Nascent Soul enemy.</p>
+
+                <p>Six months later, Eun-hyun and Oh Hyun-seok meet again. While talking to him, Eun-hyun realises he
+                    remembers very little of the past. Little bits of information resurface in his mind. The Azure Tiger
+                    Saint, Cheongmun Sunwoo arrives. He says he will take them both as direct disciples and says they
+                    are about to do full-day sparring. During the spar, Eun-hyun realises Sunwoo has reached Three
+                    Flowers Gather at the Summit. Sunwoo continues to pummel the two for the day, healing them at the
+                    same time.</p>
+
+                <p>When Eun-hyun gains consciousness, the Azure Tiger Saint gives him the scroll for Starlight
+                    Protecting Void Body. He tells Eun-hyun this is usually learnt after mastering the Five Elements
+                    Enduring Origin Scripture, while Hyun-seok is directly learning the Azure Spirit Striking Origin
+                    Technique. Eun-hyun decides to learn the Enduring Origin Scripture before the Void Body. He goes to
+                    the library and is stunned to discover a senior brother using the entire library for weight-lifting.
+                    The librarian tells him he can take the Enduring Origin Scripture, but for other texts, he must
+                    ‘wrestle’ with the librarian. Eun-hyun takes the scripture and goes to the Training Hall. He is
+                    stunned by the extreme method, which include being burned on a stake, swimming in lava, and being
+                    attacked by metal fish. He tries to escape, but is captured and tied to a stake before being set
+                    aflame. While burning at the stake, Eun-hyun realises he was afraid of pain since he hadn’t felt any
+                    when he was a puppet. What he truly fears is dying without accomplishing anything. He decides to
+                    train with his life on the line.</p>
+
+                <p>Soon, rumours of a newbie who trains in all five Training Halls spread in the Sect. While training in
+                    the Water Hall, Eun-hyun studies a technique he got from the storage scroll. He realises the
+                    technique, Three Spirits Technique, is highly compatible with the Devil Legion Terracotta Scroll.
+                    Terracotta Scroll creates an Artifact Spirit for the dharma treasure, while Three Spirits creates
+                    ‘avatars’ to enable resurrection. He decides to merge the techniques into the Three Thousand
+                    Colourless Glass Swords to store cultivation through regressions. He has, meanwhile named the Blood
+                    Body Yuan Yu, and is taking care of the centipede he picked up. He also worries about merging the
+                    power of the Formless Sword so that it is undetectable.</p>
+            </div>
+        </section>
+
+        <!-- Master's Grace -->
+        <section id="grace1" class="cycle-section">
+            <h2 class="cycle-title">Master's Grace</h2>
+            <div class="cycle-content">
+                <p>A year after entering the sect, Hyun-seok comes to Eun-hyun and tells him they are to train together
+                    after Qi Building. Sunwoo calls them and says he will watch over their advancement to Qi Building.
+                    Eun-hyun uses this opportunity to ‘carve’ the Gang Sphere of Ultimate Pinnacle into his body using
+                    the Mad Lord’s circuits. The Formless Sword then manifests as the circuits inlaid within his body.
+                    Before Eun-hyun can complete his advancement, blue lightning strikes Hyun-seok, which he ‘punches’
+                    apart. Eun-hyun follows him, breaking his own tribulation with a Nascent Soul strike. Sunwoo is
+                    delighted and proceeds to pummel them. After both of them faint, Sunwoo drags them to a training
+                    field, the Five Elements Supreme Response. The field can shift between state of elements. In five
+                    years, Eun-hyun reaches Core Formation. In ten years. Hyun-seok reverse engineers the Supreme
+                    Response and reaches Core Formation. Hyun-seok is worried about Eun-hyun, who has suddenly become
+                    cold. He decides to get strong enough to give Eun-hyun a decent fight, so as to elicit emotions from
+                    him. He has also mastered the First Wing of Azure Spirit Starlight.</p>
+
+                <p>Once Eun-hyun and Hyun-seok have grown strong enough, Sunwoo gives the two a choice between two
+                    missions. Either keep surveillance on the Mad Lord, or capture a devil from the True Devil Realm.
+                    Eun-hyun takes the Mad Lord mission as Kim Yeon is there. Hyun-seok and a few others accompany him.
+                </p>
+
+                <p>Five years after the surveillance begins, Hyun-seok breaks through to Three Flowers and finally
+                    manages to defeat Eun-hyun. Eun-hyun confesses to having dementia, and says he has forgotten
+                    everything from the past. Hyun-seok promises to help Eun-hyun regain his memories. He later tells
+                    Eun-hyun on reaching Nascent Soul, he saw a swift review of his life. Eun-hyun ponders on this while
+                    succeeding in contacting Kim Yeon within the Fortress. He tells her to come outside the Fortress.
+                    Hyun-seok accompanies him. However, the Mad Lord sees Kim Yeon’s happy intent and follows her. He is
+                    ecstatic to see Eun-hyun, who he thinks has come to fulfill his “promise”. Eun-hyun reveals True
+                    Origin General Seo, a puppet based on his last life’s body. He then reveals the spear arts he had
+                    decoded from the Twin Immortal’s Dance. Mad Lord regains his sanity and tell Eun-hyun to run.
+                    Eun-hyun takes Kim Yeon with him, promising to finish Yeon’s Play. He escapes from the relapsing Mad
+                    Lord with the disciple of the Azure Heaven Creation Sect.</p>
+            </div>
+        </section>
+
+        <!-- Drastic Changes -->
+        <section id="changes" class="cycle-section">
+            <h2 class="cycle-title">Drastic Changes</h2>
+            <div class="cycle-content">
+                <p>After Kim Yeon is investigated, Sunwoo tells Eun-hyun and Hyun-seok that Yeon may have to go to
+                    either the Black Ghost Valley or Golden Divine Heavenly Thunder Sect. She can only stay with the
+                    Sect for fifty more years. Sunwoo also tells them the devil attempted to summon a Star Shattering
+                    Heavenly Fiend from the Blood Yin realm. The Human Grand Alliance plans to invade the True Devil
+                    Realm. Kim Yeon, Oh Hyun-seok and Seo Eun-hyun are to go support them. Eun-hyun feels uneasy, as the
+                    purpose of the invasion is to establish “pill farms” of devils.</p>
+
+                <p>During the journey to the entrance to the True Devil Realm, Kim Yeon tells Eun-hyun about himself.
+                    They soon arrive at the entrance. Hyeon Woon, Chief Advisor of the expedition force, gives them the
+                    Vast Cold Jade, required for changing the spiritual energy of the True Devil Realm to that of Bright
+                    Cold, and tells them to wait while they prepare to break the barrier. Eun-hyun then befriends Yeon
+                    Jin, a disciple of the Golden Divine Heavenly Thunder Sect. A month later, Eun-hyun attempts the
+                    advancement to Nascent Soul. However, the memories he has lost flash by too quickly for him to see.
+                    His distress gives rise to a Heart Demon, so he bursts his head. Hyeon Woon punishes him for
+                    attempting an advancement without informing his superiors. Meanwhile, Eun-hyun works on the
+                    combination of the Spirits Technique and Terracotta scroll, using the formers ability of recording
+                    artifacts spirits to store his memories.</p>
+
+                <p>The invasion soon begins. Eun-hyun follows Yeon Jin as his 10-man commander. In the first battle, he
+                    successfully defeats a Nascent Soul devil and captures it. As a result, his punishment is lifted and
+                    he is made a 100-man Commander. However, he also has doubts over his actions.</p>
+
+                <p>After his promotion to 1000-man commander, Eun-hyun remains shocked by the actions of the Human Race.
+                    He is awarded the position of provincial governor of the eighth occupied territory. Yeon Jin
+                    declares his intent to follow him. Eun-hyun tells Gyeon Shin, the Nascent Soul devil he had
+                    captured, about his assignment and promises to release him then. The eight territory also has a Void
+                    Spirit Pond, which can be eventually developed into a Flying Immortal Platform. While visiting the
+                    Pond, Eun-hyun meets two devil children, Su In and Hong Yeon, who regularly play there. He has Gyeon
+                    Shin send them away, who praises Eun-hyun for not harming the kids. Eun-hyun has mixed feelings
+                    about Shin’s praise.</p>
+
+                <div class="art-image-container">
+                    <img src="../../assets/images/su_in_hong_yeon.png" alt="Su In and Hong Yeon" class="art-image">
+                    <div class="image-caption">Su In and Hong Yeon</div>
+                </div>
+
+                <p>Eighteen years later, Eun-hyun witnesses the engagement of In and Yeon. Gyeon Shin has also remained
+                    behind, as he required a beast to parasitise to travel safely. A messenger from the Human Race
+                    arrives and tells Eun-hyun about the annihilation of the Golden Divine Heavenly Thunder Sect, and
+                    the injuries the Integration Cultivators suffered. This means the Integration Cultivators of the
+                    True Devil Realm are free to act.</p>
+            </div>
+        </section>
+
+        <!-- Those That are Lost -->
+        <section id="lost" class="cycle-section">
+            <h2 class="cycle-title">Those That are Lost</h2>
+            <div class="cycle-content">
+                <p>While Eun-hyun ponders this situation, Yeon Jin comes out and studies the celestial energy, Eun-hyun
+                    realises someone is possessing him. That person is his ancestor, Yeon Wei, who crammed their living
+                    soul into Yeon Jin. She had ascended to Bright Cold, betrayed the Golden Divine Heavenly Thunder
+                    Sect, and was nearly killed by Jin Byuk-ho. She tells him both she and Jin have only twenty years to
+                    live. Yeon Jin packs and leaves with some puppets to meet Jeon Myeong-hoon, sole survivor of the
+                    Sect. A messenger from the Human Alliance arrives and tells Eun-hyun they intend to abandon all
+                    territories beyond the fourth. They will set up the Realm Annihilation Heavenly Void Formation,
+                    turning their lands into wastelands, severely weakening the True Devil Realm. They will also convert
+                    all the devils on the occupied lands into pills.</p>
+
+                <p>Eun-hyun refuses to do so. He proceeds with the evacuation orders. He nominates Gyeon Shin as the
+                    leader of the tribes. However, before the evacuating tribes can leave, Wi Ryeong-seon, an
+                    integration stage cultivator creates a massive barrier, trapping them inside. He reveals all the
+                    messengers of the Human Race are his avatars.</p>
+
+                <p>An inspector is to arrive in seven days. Eun-hyun decides to use those seven days to record his
+                    entire life. While he records, he comes across the memory of “being brought into this world” before
+                    forgetting it.</p>
+
+                <p>Eun-hyun manages to record his entire life until his birth. He realises then the Nascent Soul takes
+                    the form of a baby, as ‘birth’ is the purest era. He realises he had lost his most important
+                    memories-those of being absolutely unconditionally loved. He names his technique as the Canvas of
+                    Myriad Forms and Connections. He then successfully advances to Nascent Soul. As he prepares to break
+                    the barrier with his new strength, Jeon Myeong-hoon appears, with the head of the inspector.</p>
+            </div>
+        </section>
+
+        <!-- Even if This Place is Hell -->
+        <section id="hell" class="cycle-section">
+            <h2 class="cycle-title">Even if This Place is Hell</h2>
+            <div class="cycle-content">
+                <p>Myeong-hoon is extremely unstable. He says he is chasing after Yeon Jin, one of the last surviving
+                    disciples of the Golden Divine Heavenly Thunder Sect. Eun-hyun tells him he just missed Yeon Jin.
+                    This drives Myeong-hoon into a fit, as he begins attacking Eun-hyun. During the battle, Eun-hyun
+                    realises Qi is intent and also why there are three tribes. The vision of the Earth Tribe merges into
+                    that of the Heart Tribe. As Myeon-hoon regains his senses, he tells Eun-hyun to kill him. He tells
+                    Eun-hyun all those connected to the Golden Divine Heavenly Thunder Sect are fated to die in twenty
+                    years. Eun-hyun tells Myeong-hoon he can contact Yeon Jin using his puppets. Myeong-hoon faints from
+                    exhaustion.</p>
+
+                <p>Eun-hyun goes to the fleeing devils stuck in the barrier. Gyeon Shin expresses his respect for
+                    Eun-hyun and gives him the Mysterious Bizarre Gu. Eun-hyun tells Shin they may have to wait for a
+                    while as a calamity will soon envelop the area. He also receives news of Yeon Jin’s death and
+                    decides to conceal it from Myeong-hoon.</p>
+
+                <p>Cultivators from the Human Alliance arrive to arrest the both of them. Hyeon Shin lets slip Jeon
+                    Myeong-hoon is the last survivor of the Golden Divine Heavenly Thunder Sect. Myeong-hoon goes
+                    insane. Shin temporarily allies with Eun-hyun to restrict him, and dies to Myeong-hoon. Black Dragon
+                    King, Hyeon Eum uses the death of Hyeon Shin to enter the True Devil Realm. He kills the point of
+                    contact at the entrance to the Bright Cold Realm and summons an Esteemed One of Blood Yin.</p>
+
+                <div class="art-image-container">
+                    <img src="../../assets/images/sea_of_righteousness.png"
+                        alt="Sea of Righteousness and Mountain of Grace" class="art-image">
+                    <div class="image-caption">Sea of Righteousness and Mountain of Grace</div>
+                </div>
+
+                <p>Eun-hyun wakes up after his battle with Myeong-hoon. Gyeon Shin tells him the Void Spirit Ponds were
+                    in fact left by the Esteemed Ones of the Blood Yin Realm. Since Eun-hyun did not overly exploit his
+                    territory, the Esteemed Ones were unable to connect. The Human Race arrives at Eun-hyun’s territory
+                    to escape the Left Foot and Left Hand of the Esteemed One. Kim Yeon has suffered a massive
+                    consciousness restricting method during the escape. While awaiting the arrival of the Esteemed One,
+                    Hyun-seok reaches Five Energies Converging to the Origin. Hyun-seok takes three days to complete his
+                    transformation. To Eun-hyun, he feels more like a demon beast.</p>
+            </div>
+        </section>
+
+        <!-- Master's Grace (End) -->
+        <section id="grace2" class="cycle-section">
+            <h2 class="cycle-title">Master's Grace</h2>
+            <div class="cycle-content">
+                <p>Soon, the Left Hand of the Blood Yin Esteemed One arrives. During the fight, the Hand unleashes an
+                    attack that causes Heart Demons within the target to awaken and controls them. Eun-hyun escapes its
+                    control and is forced to fight the other cultivators. During the fight, Eun-hyun realises he has
+                    leached off others his entire life. He creates the twenty-fifth move of Severing Mountain
+                    Swordsmanship, Sea of Righteousness and Mountain of Grace, based on Jang Ik’s single strike, and
+                    breaks the Esteemed One’s control. Meanwhile, the Mad Lord arrives, in response to a letter sent by
+                    Eun-hyun. Myeong-hoon breaks his seal and joins the battle. The Human Alliance uses this as an
+                    opportunity to flee.</p>
+
+                <p>Eun-hyun goes to the Void Spirit Pond, where the devil tribes are hiding. He is stricken to see they
+                    also succumbed to the Esteemed One’s attack, and attacked each other. Gyeon Shin, Hong Yeon and Su
+                    In are all on the brink of death. As a last request, he blesses In and Yeon’s marriage before they
+                    die. Eun-hyun then uses the Sea of Righteousness and Mountain of Grace to break Kim Yeon’s
+                    restraints. Within Kim Yeon’s heart essence, Eun-hyun sees himself as a “glorified someone”. As he
+                    delves deeper he sees the memory of a “giant jade something” right before their transmigration. He
+                    forgets about this as well.</p>
+
+                <p>Kim Yeon recovers. She carries the now weakened Eun-hyun outside. They activate Yeon’s Play. The
+                    completed form of Yeon’s Play reveals itself; a golden tree with pink ribbons. Kim Yeon takes
+                    control of the Wonderfully Mysterious Fortress. Myeong-hoon has been reduced to his Golden Core once
+                    more. As they go towards the Bright Cold Realm, they realise the Black Dragon King Hyeon Eum is
+                    chasing them. They hurry to the first occupied territory, where they realise the portal has been
+                    closed. Meanwhile, they continue to flee from the Black Dragon King. Hyeon Eum eventually catches
+                    up. He says an Entering Nirvana cultivator is hiding in the Fortress and demands to see them. He
+                    then realises it was an ‘inherent’ property of the fortress. He then begins his attack and calls
+                    forth the Esteemed One’s Left Foot. Hyeon Eum opens his Integrated Dao Domain.</p>
+
+                <p>The Wonderfully Mysterious Fortress manages to hold Hyeon Eum off for a short while. As Hyeon Eum is
+                    about to release a fatal strike, the Azure Tiger Saint arrives and blocks his strike. He releases
+                    the Tenth Wing of Azure Heavenly Shatter, burning his life for his disciples. During the battle,
+                    Hyeon Eum merges with the Left Foot of the Esteemed One, and begins to use the power of “Vice”.
+                    Cheongmun Sunwoo punches the Fortress towards the gate, while sacrificing himself to defend his
+                    disciples. Eun-hyun manages to connect to Sunwoo, who tells him he has committed to sacrificing his
+                    life, and gives him his last words. He then self-destructs. The Fortress manages to return to the
+                    Bright Cold Realm. The Esteemed One, now possessing Sunwoo’s hand, attempts to get them to open the
+                    gate once more. Eun-hyun conveys Sunwoo’s last word to Hyun-seok. The Black Dragon King uses the
+                    power of Vice to suppress all the cultivators. Eun-hyun creates the twenty-sixth move, One
+                    Annihilation to the Near Shore. As Eun-hyun dies, Hyun-seok listens to Sunwoo’s last words. After
+                    Eun-hyun's death, the Canvas briefly manifests, consoling Hyun-seok and Kim Yeon.</p>
+            </div>
+
+            <div class="info-card">
+                <div class="info-line"><span class="info-label">Martial Realm:</span> Treading Heavens Beyond the Path
+                </div>
+                <div class="info-line"><span class="info-label">Cultivation Realm:</span> Nascent Soul</div>
+            </div>
+        </section>
+
+        <!-- Timeline -->
+        <section id="timeline" class="cycle-section">
+            <div class="timeline-container">
+                <h4 style="color:#333; margin-bottom:0.5rem;">Timeline: 14th Cycle</h4>
+                <img src="../../assets/images/timeline_14th_cycle.png" alt="Timeline 14th Cycle" class="timeline-img">
+            </div>
+        </section>
+
+        <!-- Last Words -->
+        <section id="lastwords" class="cycle-section">
+            <h2 class="cycle-title">Azure Tiger Saint's Last Words</h2>
+            <div class="quote-box">
+                <p>People, from birth to growth, receive immeasurable grace that cannot be expressed in words. The
+                    reason I have upheld righteousness and maintained my version of goodness is because it is the duty
+                    and responsibility of everyone who has received grace throughout their life. No, it is not a duty
+                    but a privilege.</p>
+                <p>To act with righteousness, dreaming the impossible dream.</p>
+                <p>To act with righteousness, overcoming endless trials,</p>
+                <p>To endure unbearable pain for the sake of righteousness,</p>
+                <p>To die for the noble ideal that righteousness defines.</p>
+                <p>Gazing upon righteousness, knowing how to mend our wrongs….</p>
+                <p>...To love each other with purity and goodwill.</p>
+                <p>To have pride in impossible dreams…</p>
+                <p>Believing thus, reaching the stars.</p>
+                <span class="quote-author">—Cheongmun Sunwoo, to Seo Eun-hyun, Oh Hyun-seok</span>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- Login Modal -->
+    <div class="modal-overlay">
+        <div class="login-modal">
+            <div class="modal-header">
+                <button class="modal-close"><ion-icon name="close-outline"></ion-icon></button>
+                <h2 class="modal-title">Welcome Back</h2>
+                <p class="modal-subtitle">Log in to the RToC Wiki Community</p>
+            </div>
+
+            <div class="social-login">
+                <button class="social-btn discord">
+                    <ion-icon name="logo-discord"></ion-icon>
+                    Continue with Discord
+                </button>
+                <button class="social-btn google">
+                    <ion-icon name="logo-google"></ion-icon>
+                    Continue with Google
+                </button>
+            </div>
+
+            <div class="divider">or</div>
+
+            <div class="auth-form">
+                <div class="form-group">
+                    <input type="email" placeholder="Email Address">
+                </div>
+                <div class="form-group">
+                    <input type="password" placeholder="Password">
+                </div>
+                <button class="auth-submit">Log In</button>
+            </div>
+
+            <div class="auth-footer">
+                Don't have an account? <span class="auth-link">Create Account</span>
+            </div>
+        </div>
+    </div>
+
+    <script src="../../scripts/editor.js"></script>
+    <script src="../../scripts/main.js"></script>
+</body>
+
+</html>
