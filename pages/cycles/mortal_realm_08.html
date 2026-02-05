@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#FFD700">
+    <title>Zhengli (17th Cycle) | RToC Wiki</title>
+    <link rel="icon" type="image/jpeg" href="../../assets/images/seo_eun_hyun_cover.jpg">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap"
+        rel="stylesheet">
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <style>
+        .cycle-article {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #FFD700 0%, #000000 100%);
+            min-height: 40vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 4rem 2rem;
+            position: relative;
+            margin-bottom: 3rem;
+        }
+
+        .hero-content {
+            z-index: 2;
+        }
+
+        .hero-title {
+            font-family: 'Cinzel', serif;
+            font-size: 3.5rem;
+            color: #fff;
+            text-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+            margin-bottom: 0.5rem;
+        }
+
+        .hero-subtitle {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.5rem;
+            color: rgba(255, 255, 255, 0.9);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .hero-desc {
+            margin-top: 1.5rem;
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.8);
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            font-style: italic;
+        }
+
+        /* Content Styling */
+        .toc-container {
+            background: rgba(20, 20, 25, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 3rem;
+            display: inline-block;
+            min-width: 250px;
+        }
+
+        .toc-title {
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #fff;
+            text-align: center;
+        }
+
+        .toc-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .toc-list li {
+            margin-bottom: 0.5rem;
+        }
+
+        .toc-list a {
+            color: #FFD700;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.2s;
+        }
+
+        .toc-list a:hover {
+            color: #fff;
+            text-decoration: underline;
+        }
+
+        .cycle-section {
+            margin-bottom: 4rem;
+            scroll-margin-top: 100px;
+        }
+
+        .cycle-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2rem;
+            color: #FFD700;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid rgba(255, 215, 0, 0.3);
+            display: inline-block;
+            padding-bottom: 0.5rem;
+        }
+
+        .cycle-content {
+            line-height: 1.8;
+            color: #e2e8f0;
+            margin-bottom: 1.5rem;
+            text-align: justify;
+        }
+
+        /* Image Styling */
+        .img-container {
+            display: flex;
+            justify-content: center;
+            margin: 2rem 0;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .img-display {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            margin-bottom: 0.5rem;
+        }
+
+        .img-caption {
+            color: #94a3b8;
+            font-size: 0.9rem;
+            font-style: italic;
+        }
+
+        /* Navigation */
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 2rem;
+            background: rgba(255, 215, 0, 0.1);
+            border-radius: 8px;
+            color: #FFD700;
+            transition: all 0.2s;
+            text-decoration: none;
+            font-weight: 600;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+        }
+
+        .nav-btn:hover {
+            background: rgba(255, 215, 0, 0.2);
+            transform: translateY(-2px);
+            color: #fff;
+        }
+
+        .info-card {
+            background: rgba(255, 215, 0, 0.05);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-top: 2rem;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="nav">
+        <div class="nav-container">
+            <a href="../../index.html" class="nav-logo">
+                <img src="../../assets/logo_character.png" alt="RToC" class="nav-logo-img"
+                    style="width:36px; height:36px; border-radius:8px; object-fit:cover;">
+                RToC Wiki
+            </a>
+            <ul class="nav-links">
+                <li><a href="../../index.html" class="nav-link">Home</a></li>
+                <li><a href="../characters.html" class="nav-link">Characters</a></li>
+                <li><a href="../concepts.html" class="nav-link">Concepts</a></li>
+                <li><a href="../plot.html" class="nav-link"
+                        style="color: var(--text-primary); background: rgba(139, 92, 246, 0.1);">Plot</a></li>
+                <li><a href="../cultivation.html" class="nav-link">Cultivation</a></li>
+                <li><a href="../martial_arts.html" class="nav-link">Martial Arts</a></li>
+                <li><a href="../locations.html" class="nav-link">Locations</a></li>
+            </ul>
+            <div class="nav-search">
+                <ion-icon name="search-outline" class="nav-search-icon"></ion-icon>
+                <input type="text" placeholder="Search the wiki...">
+            </div>
+            <button class="login-btn">Log In</button>
+        </div>
+    </nav>
+
+    <!-- Hero Header -->
+    <header class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">Zhengli</h1>
+            <p class="hero-subtitle">17th Cycle</p>
+            <p class="hero-desc">
+                Seo Eun-hyun realises he has no memories of the 16th cycle. He decides to save the Golden Divine Thunder
+                Sect by sealing the Heavenly Lightning Banner in the Head Realm.
+            </p>
+            <div style="font-size: 0.9rem; color: #aaa; margin-top: 1rem;">Chapter 222 - Chapter 280</div>
+        </div>
+    </header>
+
+    <div class="cycle-article">
+        <div class="toc-container">
+            <div class="toc-title">Contents</div>
+            <ul class="toc-list">
+                <li><a href="#sect">1 Golden Divine Thunder Sect</a></li>
+                <li><a href="#human">2 What is a Human</a></li>
+                <li><a href="#facets">3 Multi Faceted</a></li>
+                <li><a href="#tribulation">4 Heavenly Tribulation</a></li>
+                <li><a href="#heavens">5 Tribulating Heavens</a></li>
+                <li><a href="#pillar">6 Pillar</a></li>
+                <li><a href="#saw">7 I saw</a></li>
+                <li><a href="#timeline">8 Timeline</a></li>
+                <li><a href="#messages">9 Messages encountered</a></li>
+            </ul>
+        </div>
+
+        <section id="sect" class="cycle-section">
+            <h2 class="cycle-title">Golden Divine Thunder Sect</h2>
+            <div class="cycle-content">
+                <p>When Eun-hyun regains consciousness, he feels the 16th regression is missing from his memories, and
+                    he
+                    has directly skipped to the 17th regression. The curse of lightning still follows him. Both Jin
+                    Byuk-ho, who mistakes the curse for the Lighting Sacred Body, and Heo Gwak, who can sense the death
+                    within Eun-hyun’s soul, attempt to recruit him into their sects. When Eun-hyun chooses the Golden
+                    Divine Heavenly Thunder Sect, Heo Gwak gives him a manual containing the Six Extremes Yin Lightning
+                    Body
+                    in the shape of a skull. During the Mad Lord’s usual rampage, Eun-hyun implants a Mysteriously
+                    Bizarre Gu
+                    in Kim Yeon.</p>
+
+                <p>While the sect captures the Thunder Cloud Peak, two elders tell Eun-hyun he must dual-cultivate for
+                    lightning methods. Eun-hyun is reluctant to do so as it would mean forming a bond with someone
+                    [fated to
+                    die]. Also, he still has Kim Yeon. He insists on waiting until he has completed the Seven Star
+                    Ritual.
+                    The elders wake Jeon Myeong-hoon up, who has been unconscious the entire time, and inject knowledge
+                    within his mind. Myeong-hoon believes he has transmigrated to the world of “Thunder Daoist”, a
+                    webnovel
+                    he reads, and his arrogant attitude leads the elders into putting him back to sleep and into
+                    etiquette
+                    class.</p>
+
+                <p>Meanwhile, Jin Byuk-ho is battling with Yeon Wei, formerly known as Jin Wei. Yeon Wei manages to push
+                    back Jin Byuk-ho, until he undoes one of the seals of the Heavenly Lighting Banner, and launches an
+                    attack to kill her. Yeon Wei tells Jin Byuk-ho about the Five Blessings Axes, and then flees in soul
+                    form. Jin Byuk-ho sends an expedition to Nether Ghost to find more about the Axes, and begins an
+                    investigation into Yeon Wei’s whereabouts.</p>
+
+                <p>Eun-hyun is assigned Jin Hwi as his master. Jin Hwi tells Eun-hyun his Lighting Sacred Body is
+                    “lightning itself”, and allows Eun-hyun to cultivate all the methods of the sect on his request.
+                    Eun-hyun
+                    takes this opportunity to reach Earth Nascent Soul and Heaven Qi Refining 6th Star. He also absorbs
+                    some
+                    of the lightning from the Heavenly Tribulation. The Administrator of all Human Race Islands, Wi
+                    Ryeong-seon senses the Tribulation and attempts to track the advancer down. Eun-hyun uses the
+                    Record,
+                    and hides within a market. He encounters a man selling surplus demon beast techniques from the Black
+                    Scaled Fish Commanding Sect. He tells Eun-hyun serpent techniques are effective for centipedes,
+                    leading
+                    Eun-hyun to buy two methods for Hong Fan.</p>
+
+                <p>Eun-hyun buries pieces of his Nascent Soul around Thunder Cloud Peak, and seals his demon
+                    cultivation. The entire sect is shocked when Eun-hyun reveals he has reached Qi refining 6th Star.
+                    Before the Seven Star Ritual, Jin Hwi tells Eun-hyun his dual cultivation partner will be the
+                    infamous
+                    Grand Elder Hong, who coerced them to assign Eun-hyun to her. During the Seven Star Ritual, Eun-hyun
+                    uses the lightning stored from the Tribulation to break through the Heavenly Rejection and complete
+                    the
+                    ritual, to Jin Hwi dumbfoundment. The day after the ritual, Elder Hong Su-ryeon comes to Eun-hyun’s
+                    cave
+                    residence. He realises she is at Five Energies Converging to the Origin. After a quick spar, Hong
+                    Su-ryeon
+                    assures Eun-hyun she will not experiment on him as his body– the Lighting Sacred Body– was her end
+                    goal.
+                    She aimed to artificially create the Lighting Sacred Body through transformation, similar to that of
+                    Five Energies. She tells Eun-hyun she believes the concept of ‘talent’ does not exist. She then
+                    displays
+                    a formation she adopted after viewing Cheongmn Ryeong’s techniques. Eun-hyun precisely follows the
+                    changes, leading Su-ryeong to doubt his age. She displays her "Extinguishing Lightning Inner
+                    Heavenly
+                    Temple", unification of her sword and cultivation, destroying a mountain peak with the energy of Qi
+                    Building. Since mastering the basics can unleash huge amounts of power, she believes Talent must not
+                    exist. In other words, TALENT IS FATE.</p>
+
+                <p>Eun-hyun learns more from Hong Su-ryeon than Jin Hwi, reaching Heaven Tribe Nascent Soul (which he
+                    has kept secret). Hong Fan has reached Qi Refining 7th Star. Jeon Myeong-hoon has been released from
+                    etiquette lessons. During his presentation to the sect, Jin Byuk-ho tells him it should take him an
+                    hour
+                    or so, to Myeong-hoon’s shock. However, Myeong-hoon is unable to understand the written content, as
+                    he
+                    is ignorant about basic concepts of the cultivation world. It takes him another three months to
+                    reach Qi
+                    Gathering. Eun-hyun has made his advancement to Nascent Soul public. Jin Byuk-ho gives Jin Jin-chan
+                    permission to use any means to increase Myeong-hoon’s level. As a result, Myeong-hoon is treated to
+                    lightning torture. It takes him a year and a half to reach Qi Refining 6th Star. Eun-hyun has
+                    meanwhile
+                    been attempting to master all the methods of the Sect. Before his Seven Stars Ritual, Myeong-hoon
+                    encounters Hong Fan, who is at Qi Building, and feels respect for his unknown master.</p>
+
+                <p>Once Jeon Myeong-hoon is faced with Heavenly Rejection, Jin So-hae brings Hong Fan to him. Hong Fan
+                    begins instructing Myeong-hoon in Understanding Before Breakthrough, which he has learnt from his
+                    master. Jeon Myeong-hoon remains unable to break through his Heavenly Rejection for ten years. For
+                    these
+                    ten years, only Jin So-hae, Hong Fan, and a few others remain by his side. Meanwhile, Eun-hyun has
+                    cultivated all methods of the sect up to at least three stars. Hong Su-ryeon tells him the elders
+                    believe all the methods combine into one technique.</p>
+
+                <p>Jin Jin-chan goes to Myeong-hoon and tells him Myeong-hoon is to be refined into a pill. Myeong-hoon
+                    is tossed into prison to await the pill refiner. So-hae rescues him and takes to a flying artifact
+                    piloted by Hong Fan, who has reached Core Formation. Myeong-hoon promises himself he will only look
+                    at
+                    So-hae from now on. Eun-hyun lands next to So-hae and tells her to activate the grand formation.</p>
+
+                <p>As Myeong-hoon and Hong Fan attempt to escape, they are chased by the elders of the sect. Myeong-hoon
+                    begins absorbing the lightning cast by the elders and absorbs it into his dantian. He also begins
+                    releasing red lightning. As they reach the Southern end of the gate, they are confronted by Jin
+                    Jin-chan.
+                    Jin-chan collects the lightning cast by Myeong-hoon, shapes it into a pillar, and plants it into the
+                    Dragon Vein chasing Myeong-hoon. He orders Hong Fan to return to the sect. He apologises to
+                    Myeong-hoon
+                    and tells him about the sect’s plan to turn the entire island into an altar for the Seven Stars
+                    Ritual.
+                    As Myeong-hoon prepares to break through, Eun-hyun reaches mid-Nascent Soul. He has succeeded in
+                    combining all the techniques of the sect, yielding a Universal Declaration of Human Rights modified
+                    for
+                    this universe. As he chants the Declaration, a remnant of Yang Su-jin appears.</p>
+            </div>
+        </section>
+
+        <section id="human" class="cycle-section">
+            <h2 class="cycle-title">What is a Human</h2>
+            <div class="cycle-content">
+                <p>Yang Su-jin tells Eun-hyun this is a space specially crafted by the Heavenly Venerable of
+                    Netherworld, allowing him to pass on his thoughts. During their conversation, Eun-hyun learns about
+                    Governing Immortals, and the entity called [The Emperor]. He tells Eun-hyun both of them have vile
+                    fates. He says he created the technique Eun-hyun just learnt, the <strong>Extinguishing Divine
+                        Tribulating
+                        Heavens Technique</strong> to exchange his fate for a better one. The Golden Divine Thunder Sect
+                    was
+                    just a sacrificial offering. He tells Eun-hyun everybody is ‘non-human’, slaves to fate, except for
+                    the
+                    Enders. The Heart Tribe can only exist in the presence of Enders. As Yang Su-jin’s remnant fades, he
+                    tells Eun-hyun to declare the Enders are the true humans. Eun-hyun returns to his body and faints
+                    from
+                    the remnant pressure of Netherworld.</p>
+
+                <p>The next morning, Jin Byuk-ho confirms Eun-hyun has lost the lightning path. This means Eun-hyun has
+                    also lost the lightning curse. He has also lost his spiritual roots. When Byuk-ho leaves, Eun-hyun
+                    regains his spiritual roots through the Five Elements transformation. He has Hong Fan bring him Yeon
+                    Jin,
+                    and Yeon Wei within him, to ask how to use the Extinguishing Divine Tribulating Heavens Technique.
+                    Yeon
+                    Wei tells him it is a technique to oppose the heavens. To achieve greatness in it, one must be
+                    expelled
+                    from the sect using the Ancestral Command. When Eun-hyun asks how he can seal the Banner in the Head
+                    Realm, Yeon Wei tells him to advance to Heavenly Being, and he will naturally be able to descend to
+                    the
+                    Head Realm.</p>
+
+                <p>Jeon Myeong-hoon asks So-hae to be dual-cultivation partners. So-hae allows it. Within a month, he
+                    reaches the 13th Star of Qi Refining. Myeong-hoon tells Hong Fan he intends to pay his respects to
+                    Hong
+                    Fan’s master once he advances to Qi Building. During his advancement, he absorbs the Heavenly
+                    Tribulation. As he finishes his advancement, he looks up to see a veritable waterfall of Tribulation
+                    striking a nearby mountain peak– Eun-hyun has advanced from mid-Nascent Soul to Grand Perfection,
+                    skipping the late stage. Seo Eun-hyun is declared the next-next Sect Leader and is renamed to Jin
+                    Eun-hyun. The next day, Hong Fan brings Eun-hyun to his master, Eun-hyun. Myeong-hoon swallows his
+                    pride
+                    and accepts his laziness. He strives to overtake Eun-hyun as soon as possible.</p>
+
+                <p>A month later, the sect hosts a grand ceremony for Jin Eun-hyun. During the ceremony, Hon Wei,
+                    daughter of Grand Cultivator Hon Won, gatecrashes the party and demands Eun-hyun’s hand in marriage.
+                    She
+                    leaves a humongous amount of spirit stones and leaves after Eun-hyun rejects her. Her intent was,
+                    however, not one of love, but that of a crafty old fox. After the celebration, the sect compares
+                    notes
+                    on Hon Wei, who has only reached mid-Heavenly Being in 3,120 years old. Hong Su-ryeong refuses to
+                    give
+                    up Eun-hyun.</p>
+
+                <p>After the meeting, Eun-hyun tells Jin Byuk-ho he ascended with the help of the Golden Deity, who also
+                    gave him the Lighting Sacred Body, and a warning about the Heavenly Lighting Banner. He tells Jin
+                    Byuk-ho the banner must be sealed in the Head Realm. Jin Byuk-ho tells him it is not feasible as
+                    more
+                    than half of the sect depends on the Wall Force Constitution, given to those born with the surname
+                    Jin.
+                    The Wall Force Constitution can only be bestowed by the Heavenly Lighting Banner. Sealing the Banner
+                    would mean the sect would lose half of its strength. Those who ascend are given white belts to allow
+                    the
+                    usage of their constitution. These belts can only be made by the Ascentral Command, which can only
+                    be
+                    used once every hundred years. The only other way is for Myeong-hoon to grow powerful enough.
+                    Eun-hyun
+                    decides to train Myeong-hoon, who has already condensed six spiritual stars.</p>
+
+                <p>Before that, he goes to visit Hong Su-ryeon, and spends the night with her. During the night, she
+                    tells Eun-hyun about the seed of madness for Heavenly Being. The next day, Eun-hyun begins
+                    Myeong-hoon’s
+                    training, beating him while teaching him the intricacies of the Lighting Path method. During his
+                    training, Eun-hyun notices ‘anger’ speeds up Myeong-hoon’s improvement. However, he cannot reach the
+                    next layer of the Seven Lightning Quaking Scripture despite having the prerequisite cultivation
+                    realm.
+                    Eun-hyun feels Myeong-hoon’s anger is changing the method to a different one. Eun-hyun has paused
+                    cultivation as Yang Su-jin’s word still haunt him. This even leads to a Heart Demon. Lost in
+                    thought, he
+                    is summoned by Kim Yeon into her dream. Within the dream, Eun-hyun promises to teach her martial
+                    arts.
+                </p>
+            </div>
+        </section>
+
+        <section id="facets" class="cycle-section">
+            <h2 class="cycle-title">Multi Faceted</h2>
+            <div class="cycle-content">
+                <p>A year passes. Jin Eun-hyun has been receiving a monthly dowry fund from Hon Wei. During one of the
+                    deliveries, Eun-hyun notices Hon Wei laying a foundation to suppress herself. He uses a Gu to spy on
+                    her
+                    and discovers she intends to have him dishonour her and be forced to take her as his wife. During
+                    one of
+                    his spars with Myeong-hoon, he is scratched. Myeong-hoon tells him he has learnt from Hong Fan.
+                    Eun-hyun
+                    realises he has learnt from these so-called non-humans, and is freed of the Heart Demon. This also
+                    brings him one step closer to the next realm of Martial Arts. Eun-hyun begins teaching Hong Fan
+                    martial
+                    arts as well. When Hon Wei launches her plan, Eun-hyun foils it. Hon Wei tells him she needs to win
+                    the
+                    ‘love’ of the Golden Divine Thunder Sect to bag the position of vice-palace master, as her father’s
+                    dead
+                    lover was from the sect. They make a deal instead.</p>
+
+                <p>A decade passes. Kim Yeon has reached early first-rate. Jeon Myeong-hoon is at Core Formation, guided
+                    by the voice of lightning. He still emits only red lightning. Hong Fan is set to advance to Nascent
+                    Soul.
+                    During his advancement, a pillar of light strikes down at him. He dances within, similar to an
+                    Imugi. He
+                    transforms into an old man with a long beard. After the advancement is complete, Eun-hyun realises
+                    Myeong-hoon has vanished. Myeong-hoon is being seduced by the Heavenly Lighting Banner, Zhengli,
+                    into
+                    releasing her and saying her name. Eun-hyun arrives in time and seals her name using a curse spell.
+                    When
+                    the two leave the hall, Zhengli uses something she ‘received’ for Myeong-hoon to break one layer of
+                    her
+                    seal.</p>
+
+                <p>Eun-hyun creates a second Nascent Soul for Yuan Yu. He and Hon Wei refine their deal from years ago,
+                    adding a condition that (Jin Eun-hyun) + (Lighting Banner) + (three disciples) = GDTH. [1] He gets
+                    Hong
+                    Su-ryeon to agree to his proposal, as she can see his intent. She extracts a promise from Eun-hyun
+                    to
+                    not kill any pursuers.</p>
+
+                <p>Zhengli has steadily been stoking Myeong-hoon’s sense of inferiority while Eun-hyun stokes his anger.
+                    Eun-hyun has also been frantically training to advance his Heart Tribe cultivation. As he swings the
+                    club-turned-sword, he realises the heart of his martial arts is Sincerity.</p>
+            </div>
+        </section>
+
+        <section id="tribulation" class="cycle-section">
+            <h2 class="cycle-title">Heavenly Tribulation</h2>
+            <div class="cycle-content">
+                <p>Twenty years later, Jeon Myeong-hoon has succeeded in evolving the Red Lightning Quaking Scripture
+                    into the Owner of Heavenly Punishment’s Red Lightning Heavenly Tribulation Method through Zhengli’s
+                    guidance. He is ready to advance to Nascent Soul. During his advancement, Eun-hyun senses a thread
+                    of
+                    intent from the Heavenly Lighting Banner. He confronts Zhengli. She manipulates his thoughts to
+                    produce
+                    lust, so Eun-hyun rips off his testicles and the part of his soul governing lust. As Myeong-hoon
+                    reaches
+                    Nascent Soul, Eun-hyun sees Zhengli break yet another one of her chains. She uses her regained
+                    authority
+                    to incite the elder of the sect to attack Eun-hyun out of lust and rage. Eun-hyun curses them and
+                    runs.
+                    Before he escapes, he has a bitter fight with Jeon Myeong-hoon, where Myeong-hoon momentarily
+                    manages to
+                    seize the Banner. In response, Eun-hyun pulls out his Three Thousand Colourless Glass Swords,
+                    planting a
+                    curse banner within his Nascent Soul. Zhengli is flustered as Myeong-hoon had begun escaping her
+                    control. When Eun-hyun tells her he intends to seal her within the Head Realm, she begs him to
+                    reconsider, calling it a terrifying place.</p>
+
+                <p>Jin Eun-hyun meets Hon Wei. She contacts her father, Hon Won. Yuan Yu, Hong Su-ryeong and Yeon Jin
+                    are presented as disciples of the new sect. Hon Won recognises Yeon Wei within Yeon Jin, and flies
+                    into
+                    a rage, recognising her as the monster that devoured his beloved. Hon Wei attacks Eun-hyun using the
+                    Great Mountain Splitting Emperor technique of the Penglai Palace, revealing she is a Heaven and
+                    Earth
+                    Dual Cultivator. Eun-hyun manages to incapacitate her and flees to the Void Spirit Pond in the True
+                    Devil Realm.</p>
+
+                <p>Jin Byuk-ho communicates with the elders. He visits Jeon Myeong-hoon and is stunned to discover him
+                    in a cold rage, preparing to challenge mid-Nascent Soul. He decides to create a pursuit team, with
+                    Myeong-hoon at the head.</p>
+
+                <p>Eun-hyun breaks into the True Devil Realm with Hong Fan’s help. He meets up Yeon Wei and asks her how
+                    Hon Won recognised her. Yeon Wei says Hon Won has suddenly gained a “supervisory eye” within five
+                    hundred years. Eun-hyun also asks her why he still hasn’t risen to Heavenly Being. Yeon Wei tells
+                    him
+                    his madness must be too big, and thus he requires exorbitant amounts of spiritual energy to advance.
+                    It
+                    would take Eun-hyun at least 600 years to gather the required energy. He asks Yeon Wei to possess
+                    Yuan
+                    Yu and take him down to the Head Realm. It will take at least 10 before they can proceed.</p>
+
+                <p>Five years later, the Human Alliance has tracked Seo Eun-hyun down. Jeon Myeong-hoon has reached
+                    Grand Perfection of Nascent Soul. By proving himself as the strongest among the group, Jeon
+                    Myeong-hoon
+                    takes on the role of the leader of the Seo Eun-hyun Punitive Force. When the force arrives in True
+                    Devil, a 1000-man team joins them. They say they have been ordered to leave Seo Eun-hyun for another
+                    five years by the Black Scales Fish Commanding Sect. They arrive at a mountain crawling with General
+                    Seos. Wei Li, a loose Four-Axis cultivator, stays to fight the puppets off. The remaining force
+                    enters
+                    an area filled with poisoned spiritual energy, and are forced to leave behind all Nascent Soul
+                    cultivators except Myeong-hoon. Hon Ryang, Hon Cheon, and Jeon Myeong-hoon lead the remaining
+                    forces,
+                    but are thrown into a formation and separated. Hon Ryang is overpowered by Hong Fan. Hon Cheon and
+                    Myeong-hoon meet up within the formation. Myeong-hoon listens to the “voice of lightning” and finds
+                    Eun-hyun.</p>
+
+                <p>Hon Cheon and Myeong-hoon engage Eun-hyun in battle. Hon Cheon strikes with the Great Mountain
+                    Splitting Emperor Technique, which only severely injures Eun-hyun. Myeong-hoon lures Eun-hyun to
+                    come
+                    closer and begins his advancement to Heavenly Being, striking Eun-hyun with Heavenly Tribulation.
+                    Myeong-hoon pulls out a white belt, using it to summon the Heavenly Lighting Banner. He defeats
+                    Eun-hyun
+                    with a single attack. Myeong-hoon tells Eun-hyun to explain once he wakes up. Eun-hyun says mum as
+                    the
+                    matter involves True Immortals. Myeong-hoon uses the Ancestral Command to expel Eun-hyun, which also
+                    change the nature of the energy of the the Extinguishing Divine Tribulating Heavens Technique. He is
+                    sealed in a jade orb. Hong Fan also surrenders. Yeon Wei escapes.</p>
+
+                <p>Myeong-hoon returns to the sect as a hero. He is declared the next-next sect leader and renamed Jin
+                    Myeong-hoon. He asks for Jin So-hae’s permission for their second wedding and promises to never
+                    betray
+                    the sect, his family. The Penglai has taken control of Eun-hyun’s formation and General Seo.
+                    Myeong-hoon
+                    enters seclusion for eight years to stabilise his realm. When he exits, he notices everyone using
+                    flag
+                    shaped artifacts and treasures. So-hae tells him even the elder’s belts are being replaced with
+                    flags.
+                    On the day of the award ceremony, happenstance leads to Jin Byuk-ho saying Zhengli’s name.</p>
+            </div>
+        </section>
+
+        <section id="heavens" class="cycle-section">
+            <h2 class="cycle-title">Tribulating Heavens</h2>
+            <div class="cycle-content">
+                <div class="img-container">
+                    <img src="../../assets/images/tribulating_heavens.png" alt="Tribulating Heavens"
+                        class="img-display">
+                    <span class="img-caption">Tribulating Heavens</span>
+                </div>
+                <p>Hong Su-ryeon releases Eun-hyun and asks for a final duel. She tells him she wishes to die, not by
+                    the will of the heavens, but by the crossing of the swords. She says she will entrust her form of
+                    death
+                    to Eun-hyun, not the heavens. After their duel, Hong Su-ryeon tells Eun-hyun it was wonderful, which
+                    also meant she loved him in Korean. Eun-hyun too confesses his love after her death. He returns her
+                    body
+                    to the earth with the White Orchid Blessing. Through her words, he realises that according to
+                    Su-jin’s
+                    Non-Human Theory, Enders are the worst non-humans. He then activates Extinguishing Divine
+                    Tribulating
+                    Heavens.</p>
+
+                <p>A projection of the Owner of Heavenly Punishment’s eye appears to the sky. Myeong-hoon attempts to
+                    push the Heavenly Lighting Banner out of the dimension following the advice of the lightning. The
+                    entire
+                    sect attacks Myeong-hoon. Zhengli traumatises Myeong-hoon by replacing all of his memories with
+                    white-haired women. Myeong-hoon loses his fighting spirit and rushes to So-hae. The voice of
+                    lightning
+                    begins desperately chanting “Return to thee”, as Heavenly Punishment’s intent truly appears.
+                    Eun-hyun
+                    uses Extinguishing Divine Tribulating Heavens and offers himself as the sacrifice, blessing the sect
+                    while cursing himself. Heavenly Punishment is enraged. Zhengli call his name thrice, but Eun-hyun
+                    remains unaffected. The destruction of the Golden Divine Heavenly Thunder Sect has changed from
+                    instantaneous to gradual. As So-hae dies amidst the Tribulation, she tells Myeong-hoon to never
+                    betray
+                    his family. She leaves nothing but a fried hand. Heavenly Punishment prophecies Myeong-hoon will
+                    meet
+                    him again and closes their eye. As Myeong-hoon swears revenge, Eun-hyun emerges and tells him to
+                    worry
+                    about the survivors. Eun-hyun pours curses on Myeong-hoon until his rage cools. He says several of
+                    Core
+                    Formation and below have survived. He says they must descend to the Head Realm.</p>
+
+                <p>Myeong-hoon and Eun-hyun collect all the disciples they can. As they are travelling to the True Devil
+                    Realm, a bolt of Heavenly Tribulation falls on Eun-hyun, through Extinguishing Divine Tribulating
+                    Heavens. Eun-hyun quickly contacts Kim Yeon, who is at Three Flowers, and asks for a favour.
+                    Eun-hyun
+                    and Myeong-hoon quickly leave for True Devil.</p>
+
+                <p>The speed of the Heavenly Tribulation gradually picks up. As Eun-hyun continues dancing within the
+                    Tribulation, his Heart Tribe cultivation accumulates. All of the senses have been destroyed by the
+                    lightning. Myeong-hoon feels as if Eun-hyun has numerous mouths within the “world of lightning”. At
+                    the
+                    same time, his Immortal Beast Seed begins merging with the Formless Sword. They eventually find Yeon
+                    Jin/Wei, and the latter heals Eun-hyun, who is drawn out of his trance. The formation they had set
+                    has
+                    now gathered enough life force for Yeon Wei to possess Yuan Yu. As they descend and Eun-hyun slices
+                    apart another Tribulation, he feels the Formless Sword gain life. He has reached the next realm. On
+                    their way downwards, they brush against a Golden Peng, and the travel time is shortened to thirty
+                    seconds. They land on Shattered Heaven Peak. They have the remaining disciples of the Golden
+                    Heavenly
+                    Thunder Sect perform the Consoling Lighting Ritual to weaken the strength of the Tribulation. She
+                    creates a formation to help Eun-hyun withstand the Tribulation, and he includes both her and Jeon
+                    Myeong-hoon in the sacrifice. While she is explaining the formation to the two of them, Kim
+                    Young-hoon
+                    appears and offers a hand. Eun-hyun explains the situation to him, and Young-hoon insists on being
+                    part
+                    of the sacrificial offerings. As they cut down the Tribulation, Kim Young-hoon and Seo Eun-hyun
+                    exchange
+                    their names of the Third Manifestation–Shattering Heavens and Tribulating Heavens.</p>
+
+                <p>Two days later, the lightning has not stopped. Myeong-hoon has reached Grand Perfection of Heavenly
+                    Being through absorption of the power alone. Yeon Wei is forced to leave Yuan Yu’s body. On Hong
+                    Fan’s
+                    advice, Kim Young-hoon takes her place. To everyone’s confusion, the power Myeong-hoon is
+                    transferring
+                    to Eun-hyun suddenly increases. The characters for Red Lightning Heavenly Tribulation, Extinguishing
+                    Divine Tribulating Heavens, and Golden Divine Heavenly Thunder appear over Myeong-hoon, Eun-hyun and
+                    Young-hoon respectively. The Consoling Lighting Ritual gains strength. Using the massive amounts of
+                    spiritual energy transferred from Myeong-hoon, Eun-hyun reaches the Heavenly Being stage.
+                    Simultaneously, he reaches Grand Perfection in both Heaven and Earth. He forms the Three Great
+                    Ultimates, which amplifies his power. Zhengli manipulates the Tribulation into moving towards the
+                    weaker
+                    disciples, but Yeon Wei blocks it. The lightning then focuses on Yeon Jin. Myeong-hoon saves Yeon
+                    Jin,
+                    while the remnant of Yang Su-jin on Shatter Heaven Peak pushes Eun-hyun into the plane of fate.
+                    Eun-hyun
+                    severs the ‘fate’ of the Tribulations. He falls into Young-hoon’s and Myeong-hoon’s arms and faints.
+                </p>
+
+                <p>Within his consciousness, Eun-hyun meets Yang Su-jin’s remnant. He tells this remnant he strongly
+                    disagrees with Yang Su-jin’s non-human theory, as Enders are also non-humans. This remnant agrees,
+                    saying the remnant left in the Netherworld was from before his confrontation with ■■. He tells
+                    Eun-hyun
+                    to not follow in his footsteps and vanishes.</p>
+            </div>
+        </section>
+
+        <section id="pillar" class="cycle-section">
+            <h2 class="cycle-title">Pillar</h2>
+            <div class="cycle-content">
+                <p>Upon awakening, Eun-hyun tells Young-hoon he has realised the latter has reached the First Step
+                    Before the Throne, and the one in front of him is merely an avatar. They immediately begin sparring.
+                    At
+                    some point in the spar, Eun-hyun realises he has begun to hear the voice Young-hoon could hear the
+                    entire time, albeit in a much weaker form. The spar ends with Kim Young-hoon admitting his loss.
+                    They
+                    return to where Jeon Myeong-hoon is and accompany him to Shattered Heaven Peak, where the Golden
+                    Divine
+                    Thunder Sect has re-established themselves. Jin Hae-min, descendant of Jin Jin-chan and a Core
+                    Formation
+                    cultivator, is the new Sect Leader. The sect holds a memorial for all those who have died. Towards
+                    the
+                    end of the service, Myeong-hoon announces his intent to avenge the sect against the Owner of
+                    Heavenly
+                    Punishment. While Eun-hyun and Myeong-hoon stand vigil at the graves, Myeong-hoon tells him anger is
+                    a
+                    cycle. He also says, "Life is… essentially anger". Eun-hyun merely tells Myeong-hoon to remember to
+                    lay
+                    Jin So-hae to rest in the Head Realm.</p>
+
+                <p>Eun-hyun meets with Young-hoon again. Young-hoon tells him the events that transpired in his absence.
+                </p>
+
+                <p>An alliance called the Pure Friends Alliance was formed under the Cheongmun Clan. The cultivators
+                    were also very interested in Young-hoon, a martial artist protected by a Core Formation fox. As a
+                    result
+                    of this and the fox’s thrashing, Young-hoon rose to Five Energies in five years. Core Formation
+                    Cheongmun Ryeong and Young-hoon became friends after a battle. Song Jin later made a request to the
+                    Alliance in order to enter the Astronomical Observatory of the Sea Dragon Tribe, and invited magic
+                    artifact artisans to repair the Nether Crossing Ship. One of these was Buk Hyang-hwa. On breaching
+                    the
+                    Observatory, Song Jin requested Cheongmun Ryeon to interpret the data. When Kim Young-hoon went to
+                    visit
+                    Ryeong after reaching Treading Heavens, he found a crazed Ryeong eating the interpreted data. Ryeong
+                    attacked Young-hoon and nearly killed him. The Alliance led several campaigns against Ryeong, and
+                    failed
+                    to cause any significant damage. The expeditions depended on the Buk Hyang Fleet, which used an ore
+                    obtained from the crazed Ryeong’s stomach. With the intention of saving his friend, Kim Young-hoon
+                    reached the next realm, which he has left unnamed. During the final battle, Cheongmun Ryeong regains
+                    consciousness and tells Young-hoon he had been struggling with an entity inside him to prevent it
+                    from
+                    breaking out. To figure out a way to save Cheongmun Ryeon, upgrade the Buk Hyang fleet, and find a
+                    way
+                    to deal with Seo Hweol, Song JIn, Seo Ran, Buk Hyang-hwa and Kim Young-hoon ascended to the Ancient
+                    Force Realm. After hearing this tale, Eun-hyun asks to be led to Cheongmun Ryeong. During the
+                    journey,
+                    Young-hoon tells Eun-hyun the ore induces madness, but Hyang-hwa seems to be immune. She believes
+                    this
+                    is due to the norigae, which confuses Eun-hyun.</p>
+
+                <p>Young-hoon and Eun-hyun enter the Astronomical Observatory. Inside, Eun-hyun sees the character for
+                    Mountain (山), Summit (頂上), Thirty-three (三十三). They enter the room where Ryeong is supposedly in a
+                    coma,
+                    and find a large pillar of salt with the words Audience Chamber (謁見室) written below it. Young-hoon
+                    tells
+                    him all those that come into contact with the pillar turn to salt. Intent still flows from the
+                    pillar in
+                    a way similar to those ‘returning’ to a higher being. Eun-hyun and Young-hoon part, and the former
+                    goes
+                    to Yanguo to read the data of the heavens. He goes to a noodle shop to interpret the data.</p>
+            </div>
+        </section>
+
+        <section id="saw" class="cycle-section">
+            <h2 class="cycle-title">I saw</h2>
+            <div class="cycle-content">
+                <p>Inside the noodle shop, he manages to interpret the data into the shape of an inverted cone that
+                    vanishes when he manifests it. He takes a look at his disciples and stops by to allow Hong Fan to
+                    break
+                    out of the jade bead. He is attacked by 500 Qi Building Cultivators who have arrived to check on the
+                    sudden disturbance and to bring Hong Fan to their overlord. Eun-hyun easily intimidates the
+                    cultivators
+                    and goes to meet their leader, the Jin Clan Head. The pet demon beast of the Clan Head is Hong Fan’s
+                    sister. He says he has no attachment to his family as his only will is to serve Seo Eun-hyun. He
+                    also
+                    suddenly loses his temper when he senses an insult to Eun-hyun.</p>
+
+                <p>While Jeon Myeong-hoon is receiving guests from all over the Head Realm, he receives worrying news
+                    about Eun-hyun and rushes over to the noodle shop, where Eun-hyun has begun turning into a salt
+                    pillar.
+                    Hong Fan wakes him up using formless poison. From the inverted triangle, he saw what the Owner of
+                    Salt
+                    Mountain left behind. This also pulled him into a dream that perfectly replicated circumstances in
+                    the
+                    Head Realm, such as the Jin Clan Head’s demon beast pet. He also learns a part of the formula Great
+                    Mountain Splitting Emperor technique.[2] Once Eun-hyun regains his senses, he tells Myeong-hoon the
+                    both
+                    of them, along with Hong Fan and Yeon Jin/Wei, must ascend immediately. They use a ship from the
+                    Buk-hyang fleet to ascend. While ascending, they see numerous vestiges that die when struck with a
+                    strike from Tribulating Heavens or Heavenly Tribulation. During the ascension, Myeong-hoon and
+                    Eun-hyun
+                    look downwards and promptly lose consciousness. They are awakened by Hong Fan. Eun-hyun remembers
+                    seeing
+                    something profoundly disgusting, while Myeong-hoon remembers something beautifully nostalgic. As
+                    they
+                    continue their journey, they are swallowed by a vestige. The interior of the vestige resembles a
+                    small
+                    world. They destroy the vestige and move on, ascending to the Bright Cold Realm. They are forced to
+                    confront Hon Won. Eun-hyun fights him for a while until Hon Won uses the Great Mountain Splitting
+                    Emperor Technique twice in a row, killing him.</p>
+            </div>
+        </section>
+
+        <section id="timeline" class="cycle-section">
+            <h2 class="cycle-title">Timeline</h2>
+            <div class="cycle-content">
+                <div class="img-container">
+                    <img src="../../assets/images/timeline_17th_cycle.png" alt="Timeline 17th Cycle"
+                        class="img-display">
+                    <span class="img-caption">Timeline: 17th Cycle</span>
+                </div>
+            </div>
+        </section>
+
+        <section id="messages" class="cycle-section">
+            <h2 class="cycle-title">Messages encountered in this Cycle</h2>
+            <div class="cycle-content">
+                <div class="info-card">
+                    <p><strong>Law Enforcer Hon Wei of Penglai Palace and the future Sect Leader Jin Eun-hyun of the
+                            Golden Divine Heavenly Thunder Sect agree to the following secret pact:</strong></p>
+                    <ul style="margin-top: 0.5rem;">
+                        <li>If the Golden Divine Heavenly Thunder Sect loses its legitimacy due to an unforeseen
+                            accident,
+                            the Law Enforcer of Penglai Palace will assist the successors of the Golden Divine Heavenly
+                            Thunder Sect in rebuilding it.</li>
+                        <li>During this process, the Law Enforcer of Penglai Palace will support the legitimacy of the
+                            newly
+                            rebuilt Golden Divine Heavenly Thunder Sect and unconditionally support the decisions of its
+                            leadership to prove its legitimacy.</li>
+                        <li>If the rebuilt Golden Divine Heavenly Thunder Sect successfully restores at least 20% of its
+                            original size in terms of legitimacy, the sect will appoint a representative from Penglai
+                            Palace
+                            as an honorary Grand Elder of the Golden Divine Heavenly Thunder Sect.</li>
+                        <li>The rebuilt Golden Divine Heavenly Thunder Sect promises a sisterhood alliance with Penglai
+                            Palace through the future appointed honorary Grand Elder.</li>
+                        <li>The rebuilt Golden Divine Heavenly Thunder Sect will establish a shrine to honor the
+                            ancestors
+                            of the old Golden Divine Heavenly Thunder Sect and allow members of sects allied with the
+                            Golden
+                            Divine Heavenly Thunder Sect to pay their respects.</li>
+                    </ul>
+                </div>
+                <div class="info-card" style="font-style: italic; border-left: 4px solid #FFD700;">
+                    <p>*Immortal Cultivation is essentially repentant enlightenment.<br>
+                        Like tiny grains of salt gathering to form the sea.<br>
+                        Build mountains through repentant enlightenment.<br>
+                        Building a mountain of salt is perhaps the fastest way to reach the heavens.</p>
+                    <p style="text-align: right; margin-top: 0.5rem;">— Partial formula of Great Mountain Splitting
+                        Emperor Technique.</p>
+                </div>
+            </div>
+        </section>
+
+        <div class="nav-buttons">
+            <a href="mortal_realm_07.html" class="nav-btn">
+                <ion-icon name="arrow-back-outline"></ion-icon> Previous Arc: Nine Categories (16th)
+            </a>
+            <a href="mortal_realm_09.html" class="nav-btn">
+                Next Arc: Seo Li (18th Cycle) <ion-icon name="arrow-forward-outline"></ion-icon>
+            </a>
+        </div>
+
+    </div>
+
+    <!-- Login Modal -->
+    <div class="modal-overlay">
+        <div class="login-modal">
+            <div class="modal-header">
+                <button class="modal-close"><ion-icon name="close-outline"></ion-icon></button>
+                <h2 class="modal-title">Welcome Back</h2>
+                <p class="modal-subtitle">Log in to the RToC Wiki Community</p>
+            </div>
+
+            <div class="social-login">
+                <button class="social-btn discord">
+                    <ion-icon name="logo-discord"></ion-icon>
+                    Continue with Discord
+                </button>
+                <button class="social-btn google">
+                    <ion-icon name="logo-google"></ion-icon>
+                    Continue with Google
+                </button>
+            </div>
+
+            <div class="divider">or</div>
+
+            <div class="auth-form">
+                <div class="form-group">
+                    <input type="email" placeholder="Email Address">
+                </div>
+                <div class="form-group">
+                    <input type="password" placeholder="Password">
+                </div>
+                <button class="auth-submit">Log In</button>
+            </div>
+
+            <div class="auth-footer">
+                Don't have an account? <span class="auth-link">Create Account</span>
+            </div>
+        </div>
+    </div>
+
+    <script src="../../scripts/editor.js"></script>
+    <script src="../../scripts/main.js"></script>
+</body>
+
+</html>

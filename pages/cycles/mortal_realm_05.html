@@ -4,15 +4,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#0a0a0f">
-    <title>Painting a Canvas | RToC Wiki</title>
+    <meta name="theme-color" content="#10b981">
+    <title>Painting a Canvas (14th Cycle) | RToC Wiki</title>
     <link rel="icon" type="image/jpeg" href="../../assets/images/seo_eun_hyun_cover.jpg">
     <link rel="stylesheet" href="../../styles/main.css">
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap"
         rel="stylesheet">
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
@@ -23,38 +23,46 @@
             padding: 2rem 1rem;
         }
 
-        .wiki-header {
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #10b981 0%, #000000 100%);
+            min-height: 40vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 4rem 2rem;
+            position: relative;
             margin-bottom: 3rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            padding-bottom: 2rem;
         }
 
-        .wiki-title {
-            font-family: 'Outfit', sans-serif;
-            font-size: 2.5rem;
-            background: linear-gradient(135deg, #fff, #a5b4fc);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
+        .hero-title {
+            font-family: 'Cinzel', serif;
+            font-size: 3.5rem;
+            color: #fff;
+            text-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
             margin-bottom: 0.5rem;
         }
 
-        .wiki-subtitle {
+        .hero-subtitle {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.5rem;
+            color: rgba(255, 255, 255, 0.9);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .hero-desc {
+            margin-top: 1.5rem;
             font-size: 1.1rem;
-            color: #8B5CF6;
-            margin-bottom: 1.5rem;
-        }
-
-        .intro-box {
-            background: rgba(30, 30, 40, 0.5);
-            border-left: 4px solid #8B5CF6;
-            padding: 1.5rem;
+            color: rgba(255, 255, 255, 0.8);
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
             font-style: italic;
-            color: #ccc;
-            margin-bottom: 2rem;
-            border-radius: 0 8px 8px 0;
         }
 
+        /* Content Styling */
         .toc-container {
             background: rgba(20, 20, 25, 0.6);
             border: 1px solid rgba(255, 255, 255, 0.1);
@@ -82,7 +90,7 @@
         }
 
         .toc-list a {
-            color: #8B5CF6;
+            color: #10b981;
             text-decoration: none;
             font-size: 0.95rem;
             transition: color 0.2s;
@@ -100,20 +108,12 @@
 
         .cycle-title {
             font-family: 'Outfit', sans-serif;
-            font-size: 1.8rem;
-            color: #fff;
-            margin-bottom: 1rem;
-            border-bottom: 2px solid rgba(139, 92, 246, 0.3);
+            font-size: 2rem;
+            color: #10b981;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid rgba(16, 185, 129, 0.3);
             display: inline-block;
-            padding-bottom: 0.3rem;
-        }
-
-        .section-subtitle {
-            font-family: 'Outfit', sans-serif;
-            font-size: 1.4rem;
-            color: #a5b4fc;
-            margin-top: 2rem;
-            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
         }
 
         .cycle-content {
@@ -123,56 +123,41 @@
             text-align: justify;
         }
 
-        .info-card {
-            background: rgba(139, 92, 246, 0.05);
-            border: 1px solid rgba(139, 92, 246, 0.2);
-            padding: 1rem;
-            border-radius: 8px;
-            margin-bottom: 1.5rem;
-            font-size: 0.9rem;
+        /* Image Styling */
+        .img-container {
+            display: flex;
+            justify-content: center;
+            margin: 2rem 0;
+            flex-direction: column;
+            align-items: center;
         }
 
-        .info-line {
-            margin-bottom: 0.3rem;
+        .img-display {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            margin-bottom: 0.5rem;
+        }
+
+        .img-caption {
+            color: #94a3b8;
+            font-size: 0.9rem;
+            font-style: italic;
+        }
+
+        .info-card {
+            background: rgba(16, 185, 129, 0.05);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-top: 2rem;
         }
 
         .info-label {
             font-weight: 600;
-            color: #a5b4fc;
-        }
-
-        .timeline-container {
-            margin-top: 1rem;
-            background: #fff;
-            padding: 1rem;
-            border-radius: 8px;
-            text-align: center;
-        }
-
-        .timeline-img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 4px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        }
-
-        .art-image-container {
-            margin: 2rem 0;
-            text-align: center;
-        }
-
-        .art-image {
-            max-width: 100%;
-            border-radius: 8px;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
-            max-height: 500px;
-        }
-
-        .image-caption {
-            margin-top: 0.5rem;
-            font-style: italic;
-            color: #94a3b8;
-            font-size: 0.9rem;
+            color: #10b981;
         }
 
         .quote-box {
@@ -191,6 +176,35 @@
             font-style: normal;
             text-align: right;
             color: #fbbf24;
+        }
+
+        /* Navigation */
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 2rem;
+            background: rgba(16, 185, 129, 0.1);
+            border-radius: 8px;
+            color: #10b981;
+            transition: all 0.2s;
+            text-decoration: none;
+            font-weight: 600;
+            border: 1px solid rgba(16, 185, 129, 0.2);
+        }
+
+        .nav-btn:hover {
+            background: rgba(16, 185, 129, 0.2);
+            transform: translateY(-2px);
+            color: #fff;
         }
     </style>
 </head>
@@ -221,30 +235,33 @@
         </div>
     </nav>
 
-    <div class="cycle-article">
-        <header class="wiki-header">
-            <h1 class="wiki-title">Painting a Canvas</h1>
-            <h2 class="wiki-subtitle">14th Regression</h2>
-            <div class="intro-box">
+    <!-- Hero Header -->
+    <header class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">Painting a Canvas</h1>
+            <p class="hero-subtitle">14th Regression</p>
+            <p class="hero-desc">
                 Eun-hyun joins the Azure Heaven Creation Sect. He has started losing memories rapidly due to the trials
                 on his soul.
-            </div>
-            <div class="toc-container">
-                <div class="toc-title">Contents</div>
-                <ul class="toc-list">
-                    <li><a href="#creation">1 Azure Heaven Creation Sect</a></li>
-                    <li><a href="#grace1">2 Master's Grace</a></li>
-                    <li><a href="#changes">3 Drastic Changes</a></li>
-                    <li><a href="#lost">4 Those That are Lost</a></li>
-                    <li><a href="#hell">5 Even if This Place is Hell</a></li>
-                    <li><a href="#grace2">6 Master's Grace (End)</a></li>
-                    <li><a href="#timeline">7 Timeline</a></li>
-                    <li><a href="#lastwords">8 Azure Tiger Saint's Last Words</a></li>
-                </ul>
-            </div>
-        </header>
+            </p>
+        </div>
+    </header>
 
-        <!-- Azure Heaven Creation Sect -->
+    <div class="cycle-article">
+        <div class="toc-container">
+            <div class="toc-title">Contents</div>
+            <ul class="toc-list">
+                <li><a href="#creation">1 Azure Heaven Creation Sect</a></li>
+                <li><a href="#grace1">2 Master's Grace</a></li>
+                <li><a href="#changes">3 Drastic Changes</a></li>
+                <li><a href="#lost">4 Those That are Lost</a></li>
+                <li><a href="#hell">5 Even if This Place is Hell</a></li>
+                <li><a href="#grace2">6 Master's Grace (End)</a></li>
+                <li><a href="#timeline">7 Timeline</a></li>
+                <li><a href="#lastwords">8 Azure Tiger Saint's Last Words</a></li>
+            </ul>
+        </div>
+
         <section id="creation" class="cycle-section">
             <h2 class="cycle-title">Azure Heaven Creation Sect</h2>
             <div class="cycle-content">
@@ -296,7 +313,6 @@
             </div>
         </section>
 
-        <!-- Master's Grace -->
         <section id="grace1" class="cycle-section">
             <h2 class="cycle-title">Master's Grace</h2>
             <div class="cycle-content">
@@ -332,7 +348,6 @@
             </div>
         </section>
 
-        <!-- Drastic Changes -->
         <section id="changes" class="cycle-section">
             <h2 class="cycle-title">Drastic Changes</h2>
             <div class="cycle-content">
@@ -367,9 +382,9 @@
                     Shin send them away, who praises Eun-hyun for not harming the kids. Eun-hyun has mixed feelings
                     about Shin’s praise.</p>
 
-                <div class="art-image-container">
-                    <img src="../../assets/images/su_in_hong_yeon.png" alt="Su In and Hong Yeon" class="art-image">
-                    <div class="image-caption">Su In and Hong Yeon</div>
+                <div class="img-container">
+                    <img src="../../assets/images/su_in_hong_yeon.png" alt="Su In and Hong Yeon" class="img-display">
+                    <span class="img-caption">Su In and Hong Yeon</span>
                 </div>
 
                 <p>Eighteen years later, Eun-hyun witnesses the engagement of In and Yeon. Gyeon Shin has also remained
@@ -380,7 +395,6 @@
             </div>
         </section>
 
-        <!-- Those That are Lost -->
         <section id="lost" class="cycle-section">
             <h2 class="cycle-title">Those That are Lost</h2>
             <div class="cycle-content">
@@ -411,7 +425,6 @@
             </div>
         </section>
 
-        <!-- Even if This Place is Hell -->
         <section id="hell" class="cycle-section">
             <h2 class="cycle-title">Even if This Place is Hell</h2>
             <div class="cycle-content">
@@ -435,10 +448,10 @@
                     King, Hyeon Eum uses the death of Hyeon Shin to enter the True Devil Realm. He kills the point of
                     contact at the entrance to the Bright Cold Realm and summons an Esteemed One of Blood Yin.</p>
 
-                <div class="art-image-container">
+                <div class="img-container">
                     <img src="../../assets/images/sea_of_righteousness.png"
-                        alt="Sea of Righteousness and Mountain of Grace" class="art-image">
-                    <div class="image-caption">Sea of Righteousness and Mountain of Grace</div>
+                        alt="Sea of Righteousness and Mountain of Grace" class="img-display">
+                    <span class="img-caption">Sea of Righteousness and Mountain of Grace</span>
                 </div>
 
                 <p>Eun-hyun wakes up after his battle with Myeong-hoon. Gyeon Shin tells him the Void Spirit Ponds were
@@ -451,7 +464,6 @@
             </div>
         </section>
 
-        <!-- Master's Grace (End) -->
         <section id="grace2" class="cycle-section">
             <h2 class="cycle-title">Master's Grace</h2>
             <div class="cycle-content">
@@ -503,15 +515,17 @@
             </div>
         </section>
 
-        <!-- Timeline -->
         <section id="timeline" class="cycle-section">
-            <div class="timeline-container">
-                <h4 style="color:#333; margin-bottom:0.5rem;">Timeline: 14th Cycle</h4>
-                <img src="../../assets/images/timeline_14th_cycle.png" alt="Timeline 14th Cycle" class="timeline-img">
+            <h2 class="cycle-title">Timeline</h2>
+            <div class="cycle-content">
+                <div class="img-container">
+                    <img src="../../assets/images/timeline_14th_cycle.png" alt="Timeline 14th Cycle"
+                        class="img-display">
+                    <span class="img-caption">Timeline: 14th Cycle</span>
+                </div>
             </div>
         </section>
 
-        <!-- Last Words -->
         <section id="lastwords" class="cycle-section">
             <h2 class="cycle-title">Azure Tiger Saint's Last Words</h2>
             <div class="quote-box">
@@ -531,6 +545,14 @@
             </div>
         </section>
 
+        <div class="nav-buttons">
+            <a href="mortal_realm_04.html" class="nav-btn">
+                <ion-icon name="arrow-back-outline"></ion-icon> Previous Arc: 13th Cycle
+            </a>
+            <a href="mortal_realm_06.html" class="nav-btn">
+                Next Arc: Betrayal (15th) <ion-icon name="arrow-forward-outline"></ion-icon>
+            </a>
+        </div>
     </div>
 
     <!-- Login Modal -->

@@ -4,15 +4,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#0a0a0f">
-    <title>Betrayal | RToC Wiki</title>
+    <meta name="theme-color" content="#06b6d4">
+    <title>Betrayal (15th Cycle) | RToC Wiki</title>
     <link rel="icon" type="image/jpeg" href="../../assets/images/seo_eun_hyun_cover.jpg">
     <link rel="stylesheet" href="../../styles/main.css">
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap"
         rel="stylesheet">
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
@@ -23,38 +23,46 @@
             padding: 2rem 1rem;
         }
 
-        .wiki-header {
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #06b6d4 0%, #000000 100%);
+            min-height: 40vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 4rem 2rem;
+            position: relative;
             margin-bottom: 3rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            padding-bottom: 2rem;
         }
 
-        .wiki-title {
-            font-family: 'Outfit', sans-serif;
-            font-size: 2.5rem;
-            background: linear-gradient(135deg, #fff, #a5b4fc);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
+        .hero-title {
+            font-family: 'Cinzel', serif;
+            font-size: 3.5rem;
+            color: #fff;
+            text-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
             margin-bottom: 0.5rem;
         }
 
-        .wiki-subtitle {
+        .hero-subtitle {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.5rem;
+            color: rgba(255, 255, 255, 0.9);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .hero-desc {
+            margin-top: 1.5rem;
             font-size: 1.1rem;
-            color: #8B5CF6;
-            margin-bottom: 1.5rem;
-        }
-
-        .intro-box {
-            background: rgba(30, 30, 40, 0.5);
-            border-left: 4px solid #8B5CF6;
-            padding: 1.5rem;
+            color: rgba(255, 255, 255, 0.8);
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
             font-style: italic;
-            color: #ccc;
-            margin-bottom: 2rem;
-            border-radius: 0 8px 8px 0;
         }
 
+        /* Content Styling */
         .toc-container {
             background: rgba(20, 20, 25, 0.6);
             border: 1px solid rgba(255, 255, 255, 0.1);
@@ -82,7 +90,7 @@
         }
 
         .toc-list a {
-            color: #8B5CF6;
+            color: #06b6d4;
             text-decoration: none;
             font-size: 0.95rem;
             transition: color 0.2s;
@@ -100,20 +108,12 @@
 
         .cycle-title {
             font-family: 'Outfit', sans-serif;
-            font-size: 1.8rem;
-            color: #fff;
-            margin-bottom: 1rem;
-            border-bottom: 2px solid rgba(139, 92, 246, 0.3);
+            font-size: 2rem;
+            color: #06b6d4;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid rgba(6, 182, 212, 0.3);
             display: inline-block;
-            padding-bottom: 0.3rem;
-        }
-
-        .section-subtitle {
-            font-family: 'Outfit', sans-serif;
-            font-size: 1.4rem;
-            color: #a5b4fc;
-            margin-top: 2rem;
-            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
         }
 
         .cycle-content {
@@ -123,56 +123,70 @@
             text-align: justify;
         }
 
-        .info-card {
-            background: rgba(139, 92, 246, 0.05);
-            border: 1px solid rgba(139, 92, 246, 0.2);
-            padding: 1rem;
-            border-radius: 8px;
-            margin-bottom: 1.5rem;
-            font-size: 0.9rem;
+        /* Image Styling */
+        .img-container {
+            display: flex;
+            justify-content: center;
+            margin: 2rem 0;
+            flex-direction: column;
+            align-items: center;
         }
 
-        .info-line {
-            margin-bottom: 0.3rem;
+        .img-display {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(6, 182, 212, 0.2);
+            margin-bottom: 0.5rem;
+        }
+
+        .img-caption {
+            color: #94a3b8;
+            font-size: 0.9rem;
+            font-style: italic;
+        }
+
+        .info-card {
+            background: rgba(6, 182, 212, 0.05);
+            border: 1px solid rgba(6, 182, 212, 0.2);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-top: 2rem;
         }
 
         .info-label {
             font-weight: 600;
-            color: #a5b4fc;
+            color: #06b6d4;
         }
 
-        .timeline-container {
-            margin-top: 1rem;
-            background: #fff;
-            padding: 1rem;
+        /* Navigation */
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 2rem;
+            background: rgba(6, 182, 212, 0.1);
             border-radius: 8px;
-            text-align: center;
+            color: #06b6d4;
+            transition: all 0.2s;
+            text-decoration: none;
+            font-weight: 600;
+            border: 1px solid rgba(6, 182, 212, 0.2);
         }
 
-        .timeline-img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 4px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        }
-
-        .art-image-container {
-            margin: 2rem 0;
-            text-align: center;
-        }
-
-        .art-image {
-            max-width: 100%;
-            border-radius: 8px;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
-            max-height: 500px;
-        }
-
-        .image-caption {
-            margin-top: 0.5rem;
-            font-style: italic;
-            color: #94a3b8;
-            font-size: 0.9rem;
+        .nav-btn:hover {
+            background: rgba(6, 182, 212, 0.2);
+            transform: translateY(-2px);
+            color: #fff;
         }
     </style>
 </head>
@@ -203,30 +217,33 @@
         </div>
     </nav>
 
-    <div class="cycle-article">
-        <header class="wiki-header">
-            <h1 class="wiki-title">Betrayal</h1>
-            <h2 class="wiki-subtitle">15th Regression</h2>
-            <div class="intro-box">
+    <!-- Hero Header -->
+    <header class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">Betrayal</h1>
+            <p class="hero-subtitle">15th Regression</p>
+            <p class="hero-desc">
                 Seo Eun-hyun decides to investigate the whereabouts of Oh Hye-seo, whom he had not heard any news about.
                 He joins Seo Hweol to complete his goal.
-            </div>
-            <div class="toc-container">
-                <div class="toc-title">Contents</div>
-                <ul class="toc-list">
-                    <li><a href="#tribe">1 Tribe of the Earth</a></li>
-                    <li><a href="#name">2 The One with a Name</a></li>
-                    <li><a href="#betrayal">3 Betrayal</a></li>
-                    <li><a href="#shattered">4 Shattered Heart</a></li>
-                    <li><a href="#flash">5 Lighting Flash</a></li>
-                    <li><a href="#clown">6 The Clown and the Performance</a></li>
-                    <li><a href="#after">7 After the Performance</a></li>
-                    <li><a href="#timeline">8 Timeline</a></li>
-                </ul>
-            </div>
-        </header>
+            </p>
+        </div>
+    </header>
 
-        <!-- Tribe of the Earth -->
+    <div class="cycle-article">
+        <div class="toc-container">
+            <div class="toc-title">Contents</div>
+            <ul class="toc-list">
+                <li><a href="#tribe">1 Tribe of the Earth</a></li>
+                <li><a href="#name">2 The One with a Name</a></li>
+                <li><a href="#betrayal">3 Betrayal</a></li>
+                <li><a href="#shattered">4 Shattered Heart</a></li>
+                <li><a href="#flash">5 Lighting Flash</a></li>
+                <li><a href="#clown">6 The Clown and the Performance</a></li>
+                <li><a href="#after">7 After the Performance</a></li>
+                <li><a href="#timeline">8 Timeline</a></li>
+            </ul>
+        </div>
+
         <section id="tribe" class="cycle-section">
             <h2 class="cycle-title">Tribe of the Earth</h2>
             <div class="cycle-content">
@@ -285,7 +302,7 @@
                     prepares to leave for the Blood Fusion, the Sea Dragons mutter at him. During the journey, Hweol
                     tells Eun-hyun to pay the mutterings no mind. Eun-hyun, however, is aware the mutterings must have
                     started from Hweol himself. They head to the lowest floor of the Ark, the Emptiness Floor. The
-                    Emptiness Floor appears to be a cold, dark,and vast desert, where even breathing scatters spiritual
+                    Emptiness Floor appears to be a cold, dark, and vast desert, where even breathing scatters spiritual
                     energy. Gyu Ryeon, administrator of the floor, tells them about the competition. While she speaks,
                     Eun-hyun realizes a Four-Axis stage has awoken the ‘power of life’. Eun-hyun is not too worried as
                     he has worn Yuan Yu. Gyu Ryeon dispels the ‘desert’ spell, plunging all participants into
@@ -302,7 +319,7 @@
                 <p>Eun-hyun finds a campfire in front of him in a place with no “light”. [Someone] tells him they
                     converted ten years into ten seconds of conversation. As Eun-hyun attempts to look at the being, his
                     body attempts to ‘liberate’ itself from its framework. The [Someone] introduces themselves as Bong
-                    Myeong, Owner of Liberation, and creator of the Serving Command Arc. He says he will ask three
+                    Myeong, Owner of Liberation, and creator of the Serving Command Ark. He says he will ask three
                     questions and leave. Eun-hyun barely manages to pull himself together. He first asks Eun-hyun about
                     his fate, to which he gives no reply. He asks if Eun-hyun knows where the being who brought him is
                     located, which Eun-hyun does not understand. He then asks Eun-hyun if he has ever come across
@@ -362,7 +379,6 @@
             </div>
         </section>
 
-        <!-- The One with a Name -->
         <section id="name" class="cycle-section">
             <h2 class="cycle-title">The One with a Name</h2>
             <div class="cycle-content">
@@ -397,7 +413,6 @@
             </div>
         </section>
 
-        <!-- Betrayal -->
         <section id="betrayal" class="cycle-section">
             <h2 class="cycle-title">Betrayal</h2>
             <div class="cycle-content">
@@ -439,52 +454,9 @@
                     Eun-hun also offers to work under Gyu Ryeon, as the Sea Dragon Palace has been destroyed. As her
                     attendant, he also serves as a liaison between Seo Hweol and Ryeon. He plans to besmirch Hweol’s
                     name before having him forced to marry Ryeon in order to preserve his honour.</p>
-
-                <p>Three years later, Cheon Ryang, a canine demon beast, brings Hong Guk, overseer of Gyu Ryeon’s farm.
-                    Hong Guk says the technique Hweol used to embed his consciousness into the Nascent Soul dragons is a
-                    technique of Blood Yin, proving he has ties to that realm. The technique leaves an imprint on the
-                    earth, so revisiting the farm may provide evidence. As Gyu Ryeon is scheduled for seclusion on the
-                    last floor, they decide to go there the following day.</p>
-
-                <p>After they leave, Yu Hwa and Baek Nyeong appear. She tells him she has undone most of Baek Nyeong’s
-                    brainwashing, but he wishes to kill Hong Guk. Eun-hyun promises to let Nyeong meet the boar alone
-                    once this episode is over. When Yu Hwa asks him if this means they can kill him tomorrow, and tells
-                    Eun-hyun the Seo Hweol opposition faction is stealing Gyu Ryeon’s farm, he is horrified. He rushes
-                    to the site, along with Baek Nyeong and Yu Hwa. Upon his arrival, Cheon Ryang tells him they are
-                    taking the land to the Supreme Tiger Race for investigation. Eun-hyun tries to get them to hurry,
-                    but Gyu Ryeon opens a spatial rift and sees them. Eun-hyun screams at the rest to run, as Ryeon is
-                    now a Quasi-Demon King.</p>
-
-                <p>Eun-hyun swiftly converts the land into a flying artifact. Gyu Ryeon begins chasing them in her true
-                    form. The landmass transforms into General Seo’s head, and Eun-hyun pilots the head to avoid Gyu
-                    Ryeon’s rays, but she catches up anyway. She tells Eun-hyun she will trust him once more and demands
-                    an explanation from him. Just as Eun-hyun is about to tell her everything about Seo Hweol, the
-                    dragon himself walks in.</p>
-
-                <p>Hweol tells them he never left the Bright Cold Realm, and stabs Gyu Ryeon in her heart. He tells
-                    Eun-hyun he has visited the Head Realm and was surprised to see all his preparations destroyed. He
-                    stomps on Gyu Ryeon’s neck, revealing he had already condensed the Five Blessings True Orthodox Axis
-                    in the Sea Dragon Palace, the Serving Command Palace, the black castle, and the Ascension Path. He
-                    also implies Eun-hyun is the leftover of a True Immortal. Hong Guk reveals himself to be loyal to
-                    Seo Hweol. Hweol tortures Eun-hyun, attempting to pry information from him. Gyu Ryeon tells Hweol
-                    she loved him, to which he replies it was nothing but the desire to mate. He says emotion is simply
-                    the body-language. Eun-hyun refutes this. Hweol replies, saying the world is merely a “play” under
-                    fate. Gyu Ryeon pulls the entire cotton field into the Serving Command Ark. Hweol uses this
-                    opportunity to further injure Gyu Ryeon. He also pulls out Yu Hwa and kills all the other demon
-                    beasts. He tells Gyu Ryeon the Vast Cold Oath is ‘incomplete’, and shatters her Demon Core. Gyu
-                    Ryeon desperately tears open and rift, and Eun-hyun and Yu Hwa are dragged in with her.</p>
-
-                <p>After they have left, Seo Hweol uses a parasite to take control of Hong Guk, instructing him to give
-                    the Human Race an excuse to attack the True Devil Realm. Baek Nyeong submits to Hweol once again.
-                </p>
-
-                <p>Eun-hyun regains consciousness in an unnamed Lower Realm. He rushes to Gyu Ryeon’s head, only to find
-                    her mind broken and on the verge of death. As she dies, she leaves a leftover, swearing to kill Seo
-                    Hweol.</p>
             </div>
         </section>
 
-        <!-- Shattered Heart -->
         <section id="shattered" class="cycle-section">
             <h2 class="cycle-title">Shattered Heart</h2>
             <div class="cycle-content">
@@ -517,7 +489,6 @@
             </div>
         </section>
 
-        <!-- Lighting Flash -->
         <section id="flash" class="cycle-section">
             <h2 class="cycle-title">Lighting Flash</h2>
             <div class="cycle-content">
@@ -544,7 +515,6 @@
             </div>
         </section>
 
-        <!-- The Clown and the Performance -->
         <section id="clown" class="cycle-section">
             <h2 class="cycle-title">The Clown and the Performance</h2>
             <div class="cycle-content">
@@ -587,7 +557,6 @@
             </div>
         </section>
 
-        <!-- After the Performance -->
         <section id="after" class="cycle-section">
             <h2 class="cycle-title">After the Performance</h2>
             <div class="cycle-content">
@@ -624,14 +593,25 @@
             </div>
         </section>
 
-        <!-- Timeline -->
         <section id="timeline" class="cycle-section">
-            <div class="timeline-container">
-                <h4 style="color:#333; margin-bottom:0.5rem;">Timeline: 15th Cycle</h4>
-                <img src="../../assets/images/timeline_15th_cycle.png" alt="Timeline 15th Cycle" class="timeline-img">
+            <h2 class="cycle-title">Timeline</h2>
+            <div class="cycle-content">
+                <div class="img-container">
+                    <img src="../../assets/images/timeline_15th_cycle.png" alt="Timeline 15th Cycle"
+                        class="img-display">
+                    <span class="img-caption">Timeline: 15th Cycle</span>
+                </div>
             </div>
         </section>
 
+        <div class="nav-buttons">
+            <a href="mortal_realm_05.html" class="nav-btn">
+                <ion-icon name="arrow-back-outline"></ion-icon> Previous Arc: 14th Cycle
+            </a>
+            <a href="mortal_realm_07.html" class="nav-btn">
+                Next Arc: Nine Categories (16th) <ion-icon name="arrow-forward-outline"></ion-icon>
+            </a>
+        </div>
     </div>
 
     <!-- Login Modal -->
