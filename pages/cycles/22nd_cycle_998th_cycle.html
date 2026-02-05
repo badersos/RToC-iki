@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#4f46e5">
+    <title>Divine Descent (22nd - 998th Cycle) | RToC Wiki</title>
+    <link rel="icon" type="image/jpeg" href="../../assets/images/seo_eun_hyun_cover.jpg">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap"
+        rel="stylesheet">
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <style>
+        .cycle-article {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #1e1b4b 0%, #0f172a 100%);
+            min-height: 40vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 4rem 2rem;
+            position: relative;
+            margin-bottom: 3rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .hero-title {
+            font-family: 'Cinzel', serif;
+            font-size: 3.5rem;
+            color: #fff;
+            text-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+            margin-bottom: 0.5rem;
+            line-height: 1.2;
+        }
+
+        .hero-subtitle {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.8);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+        }
+
+        .hero-desc {
+            margin-top: 1.5rem;
+            font-size: 1.1rem;
+            color: #94a3b8;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            font-style: italic;
+        }
+
+        /* Content Styling */
+        .toc-container {
+            background: rgba(20, 20, 25, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 3rem;
+            display: inline-block;
+            min-width: 250px;
+        }
+
+        .toc-title {
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #fff;
+            text-align: center;
+        }
+
+        .toc-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .toc-list li {
+            margin-bottom: 0.5rem;
+        }
+
+        .toc-list a {
+            color: #818cf8;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.2s;
+        }
+
+        .toc-list a:hover {
+            color: #fff;
+            text-decoration: underline;
+        }
+
+        .cycle-section {
+            margin-bottom: 4rem;
+            scroll-margin-top: 100px;
+        }
+
+        .cycle-subtitle {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.8rem;
+            color: #cbd5e1;
+            /* Lighter text for dark theme */
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid rgba(129, 140, 248, 0.3);
+            display: inline-block;
+            padding-bottom: 0.5rem;
+        }
+
+        .cycle-content {
+            line-height: 1.8;
+            color: #e2e8f0;
+            margin-bottom: 1.5rem;
+            text-align: justify;
+        }
+
+        /* Image Styling */
+        .img-container {
+            display: flex;
+            justify-content: center;
+            margin: 2rem 0;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .img-display {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(129, 140, 248, 0.2);
+            margin-bottom: 0.5rem;
+        }
+
+        .img-caption {
+            color: #94a3b8;
+            font-size: 0.9rem;
+            font-style: italic;
+        }
+
+        .info-card {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-top: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .info-line {
+            margin-bottom: 0.5rem;
+        }
+
+        .info-label {
+            font-weight: 600;
+            color: #38bdf8;
+            margin-right: 0.5rem;
+        }
+
+        /* Navigation */
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 2rem;
+            background: rgba(129, 140, 248, 0.1);
+            border-radius: 8px;
+            color: #818cf8;
+            transition: all 0.2s;
+            text-decoration: none;
+            font-weight: 600;
+            border: 1px solid rgba(129, 140, 248, 0.2);
+        }
+
+        .nav-btn:hover {
+            background: rgba(129, 140, 248, 0.2);
+            transform: translateY(-2px);
+            color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="nav">
+        <div class="nav-container">
+            <a href="../../index.html" class="nav-logo">
+                <img src="../../assets/logo_character.png" alt="RToC" class="nav-logo-img"
+                    style="width:36px; height:36px; border-radius:8px; object-fit:cover;">
+                RToC Wiki
+            </a>
+            <ul class="nav-links">
+                <li><a href="../../index.html" class="nav-link">Home</a></li>
+                <li><a href="../characters.html" class="nav-link">Characters</a></li>
+                <li><a href="../concepts.html" class="nav-link">Concepts</a></li>
+                <li><a href="../plot.html" class="nav-link"
+                        style="color: var(--text-primary); background: rgba(139, 92, 246, 0.1);">Plot</a></li>
+                <li><a href="../cultivation.html" class="nav-link">Cultivation</a></li>
+                <li><a href="../martial_arts.html" class="nav-link">Martial Arts</a></li>
+                <li><a href="../locations.html" class="nav-link">Locations</a></li>
+            </ul>
+            <div class="nav-search">
+                <ion-icon name="search-outline" class="nav-search-icon"></ion-icon>
+                <input type="text" placeholder="Search the wiki...">
+            </div>
+            <button class="login-btn">Log In</button>
+        </div>
+    </nav>
+
+    <!-- Hero Header -->
+    <header class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">Divine Descent</h1>
+            <p class="hero-subtitle">22nd Cycle - 998th Cycle</p>
+            <p class="hero-desc">
+                Chapter 467 - Chapter 471<br>
+                A saga of endless death, a Star Shattering breakthrough, and the descent of an Immortal.
+            </p>
+        </div>
+    </header>
+
+    <div class="cycle-article">
+        <div class="toc-container">
+            <div class="toc-title">Contents</div>
+            <ul class="toc-list">
+                <li><a href="#first-day">1 First Day, First Day, First Day...First Day!!!</a></li>
+                <li><a href="#star-shattering">2 Star Shattering Advancement/701st Cycle's First Day. And...</a></li>
+                <li><a href="#divine-descent">3 Divine Descent</a></li>
+                <li><a href="#timeline">4 Timeline</a></li>
+            </ul>
+        </div>
+
+        <section id="first-day" class="cycle-section">
+            <h2 class="cycle-subtitle">First Day, First Day, First Day...First Day!!!</h2>
+            <div class="cycle-content">
+                <p>Seo Eun-hyun opens his eyes, and is shocked to find himself in the Interdimensional Void, surrounded
+                    by his comrades, in the twenty-third cycle. He once again attempts to send them into the True Devil
+                    Realm, but Blood Yin kills him again. saying he cannot forgive Seo Eun-hyun for summoning light into
+                    his friend. In the twenty-fourth cycle, Seo Eun-hyun sends his friends far into the Interdimensional
+                    Void and holds his breath, attempting to hide from Blood Yin, but is immediately found out and
+                    killed. In the twenty-fifth cycle he remembers the Great Mountain Supreme Deity’s words about
+                    desecrating fate. In the twenty-sixth cycle, he cuts off an arm, creating a cursed beast he names
+                    ‘Blood Yin’, declaring he has met with Blood Yin and flees. However, he is caught and killed by
+                    Blood Yin again. In the twenty-seventh and twenty-eighth cycles, he ponders harder on the Great
+                    Mountain Supreme Diety’s words. In the twenty-ninth cycle, Seo Eun-hyun quickly enters the True
+                    Devil Realm, which was once part of Blood Yin. As he celebrates his survival, Blood Yin appears on
+                    the horizon and kills him. In the thirtieth cycle, Seo Eun-hyun attempts to use Extinguishing Divine
+                    Tribulating Heavens, but is still killed. From the thirty-first to five hundred seventh cycles, Seo
+                    Eun-hyun loses his mind and makes desperate attempts to survive, even pretending to be a Judge of
+                    the Netherworld. He decides to try to breakthrough to Star Shattering to make a chance of survival
+                    and repentantly enlightens himself until the 700th cycle.</p>
+            </div>
+        </section>
+
+        <section id="star-shattering" class="cycle-section">
+            <h2 class="cycle-subtitle">Star Shattering Advancement/701st Cycle's First Day. And...</h2>
+            <div class="cycle-content">
+                <p>He pushes his comrades away and explodes everything, beginning the advancement ritual. He gathers his
+                    consciousness around the Colourless Glass Swords, and succeeds by using the Divine Powers of
+                    Integration to condense his Star body. Blood Yin arrogantly allows this. As the Star Tribulation
+                    begins, Blood Yin blocks the Tribulation, which makes it gather a humongous amount of power, which
+                    gathers until the barrier breaks, instantly killing Seo Eun-hyun. As he dies, he recalls a memory
+                    from the 16th Cycle, of Hong Fan’s Entering Heavens Beyond the Path, which he realises is the only
+                    thing that can save him.</p>
+
+                <p>Seo Eun-hyun recalls the memory completely, and remembers the essence of the Martial Art being the
+                    unification of Martial Flow. He can use Hong Fan’s Manifestation to fuse all the bolts of Star
+                    Tribulation into one massive strike Blood Yin won't be able to block. He also notices the nebula of
+                    the previous cycle has followed him, slightly increasing his mass. Hong Fan and Jeon Myeong-hoon
+                    begin the plan, but Blood Yin kills them before they can succeed. They again use a formation to
+                    force the Star Tribulation to build up. Seo Eun-hyun, enraged, explodes the newly formed star and
+                    realises he needs to be able to a block a single strike of Blood Yin to successfully escape. In the
+                    985th Cycle, Seo Eun-hyun finally grasps a clue. He creates the 33rd Move of Severing Mountain
+                    Swordsmanship, Sumeru, but fails to properly use it. He fails and fails, but the act of drawing a
+                    circle, integral to Sumeru, becomes ingrained into him.</p>
+            </div>
+        </section>
+
+        <section id="divine-descent" class="cycle-section">
+            <h2 class="cycle-subtitle">Divine Descent</h2>
+            <div class="cycle-content">
+                <p>Through Sumeru, in the 991st Cycle, he succeeds in borrowing the power of the world to reach the
+                    realm of a True Immortal for an instant, and dies in a mutual strike. In the 992nd Cycle, only his
+                    sword crumbles. In the 994th Cycle, only Seo Eun-hyun’s energy is drained. In the 997th Cycle, Seo
+                    Eun-hyun realises his technique has caused a True Immortal to Divine Descend into him. This
+                    [someone] guides him into combining his Immortal and Martial techniques. Seo Eun-hyun begins to
+                    ‘return to thee’, but Blood Yin is enraged at the identity of the Immortal descended and uses his
+                    full force to kill Seo Eun-hyun.</p>
+
+                <p>In the 998th Cycle, Seo Eun-hyun decides to use his own strength and refuses to ‘return to thee’ to
+                    the Immortal, asserting that his sword is his and his alone. Through Hong Fan’s Entering Heavens
+                    Beyond the Path, Void Sword, and Jeon Myeong-hoon’s authority, all the power of the Heavenly
+                    Tribulation is turned into a single strike, which Seo Eun-hyun pierces through, succeeding his
+                    advancement. Seo Eun-hyun enters the Astral Realm, but is barred by the avatars of the fifty
+                    Entering Nirvana True Persons that he had offended in the Nether Ghost Realm. Exhausted, Seo
+                    Eun-hyun prepares to die, but the True Immortal he inadvertently Divine Descended uses his Sword
+                    Dance to descend. They use Their Sword Art, Sword-Guided Star Rain, annihilating the avatars and
+                    dealing a grievous wound to Blood Yin. The Immortal Introduces themselves as the Fifth of Radiance
+                    Eight Immortals, Sword Spear Heavenly Lord and vows to make Seo Eun-hyun Their Immortal Treasure.
+                </p>
+
+                <div class="info-card">
+                    <div class="info-line"><span class="info-label">Martial Realm:</span> Second Step Before The
+                        Throne/Void Shattering</div>
+                    <div class="info-line"><span class="info-label">Cultivation Realm:</span> Star Shattering</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="timeline" class="cycle-section">
+            <h2 class="cycle-subtitle">Timeline</h2>
+            <div class="cycle-content">
+                <div class="img-container">
+                    <img src="../../assets/images/timeline_22nd_998th_cycle.png" alt="Timeline 22nd-998th Cycle"
+                        class="img-display">
+                    <span class="img-caption">Timeline: 22nd Cycle - 998th Cycle</span>
+                </div>
+            </div>
+        </section>
+
+        <div class="nav-buttons">
+            <a href="20th_cycle.html" class="nav-btn">
+                <ion-icon name="arrow-back-outline"></ion-icon> Previous Arc: What Does a Person Live For (20th)
+            </a>
+            <a href="998th_cycle_eve.html" class="nav-btn">
+                Next Arc: Eve of the End (998th Cycle) <ion-icon name="arrow-forward-outline"></ion-icon>
+            </a>
+        </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div class="modal-overlay">
+        <div class="login-modal">
+            <div class="modal-header">
+                <button class="modal-close"><ion-icon name="close-outline"></ion-icon></button>
+                <h2 class="modal-title">Welcome Back</h2>
+                <p class="modal-subtitle">Log in to the RToC Wiki Community</p>
+            </div>
+
+            <div class="social-login">
+                <button class="social-btn discord">
+                    <ion-icon name="logo-discord"></ion-icon>
+                    Continue with Discord
+                </button>
+                <button class="social-btn google">
+                    <ion-icon name="logo-google"></ion-icon>
+                    Continue with Google
+                </button>
+            </div>
+
+            <div class="divider">or</div>
+
+            <div class="auth-form">
+                <div class="form-group">
+                    <input type="email" placeholder="Email Address">
+                </div>
+                <div class="form-group">
+                    <input type="password" placeholder="Password">
+                </div>
+                <button class="auth-submit">Log In</button>
+            </div>
+
+            <div class="auth-footer">
+                Don't have an account? <span class="auth-link">Create Account</span>
+            </div>
+        </div>
+    </div>
+
+    <script src="../../scripts/editor.js"></script>
+    <script src="../../scripts/main.js"></script>
+</body>
+
+</html>
