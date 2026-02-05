@@ -25,7 +25,7 @@
 
         /* Hero Section */
         .hero {
-            background: linear-gradient(135deg, #475569 0%, #0f172a 100%);
+            background: linear-gradient(135deg, #475569 0%, #020617 100%);
             min-height: 40vh;
             display: flex;
             align-items: center;
@@ -141,21 +141,6 @@
             margin-bottom: 0.5rem;
         }
 
-        /* Timeline specific styling */
-        .timeline-container {
-            margin-top: 1rem;
-            background: #fff;
-            padding: 1rem;
-            border-radius: 8px;
-            text-align: center;
-        }
-
-        .timeline-img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 4px;
-        }
-
         .img-caption {
             color: #94a3b8;
             font-size: 0.9rem;
@@ -171,26 +156,9 @@
             margin-bottom: 1.5rem;
         }
 
-        .info-line {
-            margin-bottom: 0.5rem;
-        }
-
         .info-label {
             font-weight: 600;
             color: #94a3b8;
-        }
-
-        .cycle-image-container {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 2rem;
-        }
-
-        .cycle-art-img {
-            max-width: 300px;
-            border-radius: 12px;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
-            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         /* Navigation */
@@ -265,9 +233,10 @@
 
     <div class="cycle-article">
 
-        <!-- Main Character Image if applicable, user provided one art image -->
-        <div class="cycle-image-container">
-            <img src="../../assets/images/seo_eun_hyun_art.png" alt="Seo Eun-hyun" class="cycle-art-img">
+        <!-- Main Character Image -->
+        <div class="img-container">
+            <img src="../../assets/images/seo_eun_hyun_art.png" alt="Seo Eun-hyun" class="img-display"
+                style="max-width: 300px;">
         </div>
 
         <div class="toc-container">
@@ -330,9 +299,9 @@
                         href="../martial_arts.html">Second Rate</a></div>
                 <div class="info-line"><span class="info-label">Cultivation Realm:</span> N/A</div>
             </div>
-            <div class="timeline-container">
-                <h4 style="color:#333; margin-bottom:0.5rem;">Timeline: 1st Cycle</h4>
-                <img src="../../assets/images/timeline_1st_cycle.png" alt="Timeline 1st Cycle" class="timeline-img">
+            <div class="img-container">
+                <img src="../../assets/images/timeline_1st_cycle.png" alt="Timeline 1st Cycle" class="img-display">
+                <span class="img-caption">Timeline: 1st Cycle</span>
             </div>
         </section>
 
@@ -361,9 +330,9 @@
                         href="../martial_arts.html">First Rate</a></div>
                 <div class="info-line"><span class="info-label">Cultivation Realm:</span> N/A</div>
             </div>
-            <div class="timeline-container">
-                <h4 style="color:#333; margin-bottom:0.5rem;">Timeline: 2nd Cycle</h4>
-                <img src="../../assets/images/timeline_2nd_cycle.png" alt="Timeline 2nd Cycle" class="timeline-img">
+            <div class="img-container">
+                <img src="../../assets/images/timeline_2nd_cycle.png" alt="Timeline 2nd Cycle" class="img-display">
+                <span class="img-caption">Timeline: 2nd Cycle</span>
             </div>
         </section>
 
@@ -395,9 +364,9 @@
                 <div class="info-line"><span class="info-label">Martial Realm:</span> Pinnacle Realm</div>
                 <div class="info-line"><span class="info-label">Cultivation Realm:</span> N/A</div>
             </div>
-            <div class="timeline-container">
-                <h4 style="color:#333; margin-bottom:0.5rem;">Timeline: 3rd Cycle</h4>
-                <img src="../../assets/images/timeline_3rd_cycle.png" alt="Timeline 3rd Cycle" class="timeline-img">
+            <div class="img-container">
+                <img src="../../assets/images/timeline_3rd_cycle.png" alt="Timeline 3rd Cycle" class="img-display">
+                <span class="img-caption">Timeline: 3rd Cycle</span>
             </div>
         </section>
 
@@ -432,9 +401,9 @@
                         Summit</a></div>
                 <div class="info-line"><span class="info-label">Cultivation Realm:</span> N/A</div>
             </div>
-            <div class="timeline-container">
-                <h4 style="color:#333; margin-bottom:0.5rem;">Timeline: 4th Cycle</h4>
-                <img src="../../assets/images/timeline_4th_cycle.png" alt="Timeline 4th Cycle" class="timeline-img">
+            <div class="img-container">
+                <img src="../../assets/images/timeline_4th_cycle.png" alt="Timeline 4th Cycle" class="img-display">
+                <span class="img-caption">Timeline: 4th Cycle</span>
             </div>
         </section>
 
