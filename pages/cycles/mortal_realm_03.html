@@ -4,15 +4,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#0a0a0f">
-    <title>Fighting Yuan Li | RToC Wiki</title>
+    <meta name="theme-color" content="#1e40af">
+    <title>Fighting Yuan Li (10th-12th) | RToC Wiki</title>
     <link rel="icon" type="image/jpeg" href="../../assets/images/seo_eun_hyun_cover.jpg">
     <link rel="stylesheet" href="../../styles/main.css">
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&family=JetBrains+Mono:wght@400&display=swap"
         rel="stylesheet">
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
@@ -23,38 +23,46 @@
             padding: 2rem 1rem;
         }
 
-        .wiki-header {
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #1e40af 0%, #000000 100%);
+            min-height: 40vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 4rem 2rem;
+            position: relative;
             margin-bottom: 3rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            padding-bottom: 2rem;
         }
 
-        .wiki-title {
-            font-family: 'Outfit', sans-serif;
-            font-size: 2.5rem;
-            background: linear-gradient(135deg, #fff, #a5b4fc);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
+        .hero-title {
+            font-family: 'Cinzel', serif;
+            font-size: 3.5rem;
+            color: #fff;
+            text-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
             margin-bottom: 0.5rem;
         }
 
-        .wiki-subtitle {
+        .hero-subtitle {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.5rem;
+            color: rgba(255, 255, 255, 0.9);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .hero-desc {
+            margin-top: 1.5rem;
             font-size: 1.1rem;
-            color: #8B5CF6;
-            margin-bottom: 1.5rem;
-        }
-
-        .intro-box {
-            background: rgba(30, 30, 40, 0.5);
-            border-left: 4px solid #8B5CF6;
-            padding: 1.5rem;
+            color: rgba(255, 255, 255, 0.8);
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
             font-style: italic;
-            color: #ccc;
-            margin-bottom: 2rem;
-            border-radius: 0 8px 8px 0;
         }
 
+        /* Content Styling */
         .toc-container {
             background: rgba(20, 20, 25, 0.6);
             border: 1px solid rgba(255, 255, 255, 0.1);
@@ -82,7 +90,7 @@
         }
 
         .toc-list a {
-            color: #8B5CF6;
+            color: #60a5fa;
             text-decoration: none;
             font-size: 0.95rem;
             transition: color 0.2s;
@@ -100,18 +108,18 @@
 
         .cycle-title {
             font-family: 'Outfit', sans-serif;
-            font-size: 1.8rem;
-            color: #fff;
-            margin-bottom: 1rem;
-            border-bottom: 2px solid rgba(139, 92, 246, 0.3);
+            font-size: 2rem;
+            color: #60a5fa;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid rgba(96, 165, 250, 0.3);
             display: inline-block;
-            padding-bottom: 0.3rem;
+            padding-bottom: 0.5rem;
         }
 
         .section-subtitle {
             font-family: 'Outfit', sans-serif;
             font-size: 1.4rem;
-            color: #a5b4fc;
+            color: #93c5fd;
             margin-top: 2rem;
             margin-bottom: 1rem;
         }
@@ -123,76 +131,96 @@
             text-align: justify;
         }
 
-        .info-card {
-            background: rgba(139, 92, 246, 0.05);
-            border: 1px solid rgba(139, 92, 246, 0.2);
-            padding: 1rem;
-            border-radius: 8px;
-            margin-bottom: 1.5rem;
-            font-size: 0.9rem;
+        /* Image Styling */
+        .img-container {
+            display: flex;
+            justify-content: center;
+            margin: 2rem 0;
+            flex-direction: column;
+            align-items: center;
         }
 
-        .info-line {
-            margin-bottom: 0.3rem;
+        .img-display {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(96, 165, 250, 0.2);
+            margin-bottom: 0.5rem;
+        }
+
+        .img-caption {
+            color: #94a3b8;
+            font-size: 0.9rem;
+            font-style: italic;
+        }
+
+        .info-card {
+            background: rgba(96, 165, 250, 0.05);
+            border: 1px solid rgba(96, 165, 250, 0.2);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-top: 2rem;
+            margin-bottom: 1.5rem;
         }
 
         .info-label {
             font-weight: 600;
-            color: #a5b4fc;
+            color: #60a5fa;
         }
 
-        .timeline-container {
-            margin-top: 1rem;
-            background: #fff;
-            padding: 1rem;
-            border-radius: 8px;
-            text-align: center;
-        }
-
-        .timeline-img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 4px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        }
-
-        .art-image-container {
-            margin: 2rem 0;
-            text-align: center;
-        }
-
-        .art-image {
-            max-width: 100%;
-            border-radius: 8px;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
-            max-height: 500px;
-        }
-
-        .image-caption {
-            margin-top: 0.5rem;
-            font-style: italic;
-            color: #94a3b8;
-            font-size: 0.9rem;
-        }
-
+        /* Standardized Messages Box */
         .messages-box {
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px solid #333;
-            padding: 1.5rem;
-            border-radius: 8px;
-            font-family: monospace;
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(251, 191, 36, 0.3);
+            padding: 2rem;
+            border-radius: 12px;
+            font-family: 'JetBrains Mono', monospace;
             color: #fbbf24;
             margin-top: 2rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
         }
 
         .message-item {
-            margin-bottom: 1rem;
-            padding-bottom: 1rem;
-            border-bottom: 1px dashed rgba(255, 255, 255, 0.1);
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px dashed rgba(251, 191, 36, 0.2);
+            line-height: 1.6;
         }
 
         .message-item:last-child {
             border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        /* Navigation */
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 2rem;
+            background: rgba(96, 165, 250, 0.1);
+            border-radius: 8px;
+            color: #60a5fa;
+            transition: all 0.2s;
+            text-decoration: none;
+            font-weight: 600;
+            border: 1px solid rgba(96, 165, 250, 0.2);
+        }
+
+        .nav-btn:hover {
+            background: rgba(96, 165, 250, 0.2);
+            transform: translateY(-2px);
+            color: #fff;
         }
     </style>
 </head>
@@ -223,25 +251,29 @@
         </div>
     </nav>
 
-    <div class="cycle-article">
-        <header class="wiki-header">
-            <h1 class="wiki-title">Fighting Yuan Li</h1>
-            <h2 class="wiki-subtitle">10th to 12th Regression</h2>
-            <div class="intro-box">
+    <!-- Hero Header -->
+    <header class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">Fighting Yuan Li</h1>
+            <p class="hero-subtitle">10th to 12th Regression</p>
+            <p class="hero-desc">
                 After reaching Entering Heavens and having a Longevity Fruit prepared for Kim Young-hoon, Eun-hyun
                 decides to take it easy for a while. He falls in love with Buk Hyang-hwa, but his idyllic life is
                 shattered when Yuan Li kills all of his loved ones.
-            </div>
-            <div class="toc-container">
-                <div class="toc-title">Contents</div>
-                <ul class="toc-list">
-                    <li><a href="#10th">1 10th Regression</a></li>
-                    <li><a href="#11th">2 11th Regression</a></li>
-                    <li><a href="#12th">3 12th Regression</a></li>
-                    <li><a href="#messages">4 Messages encountered in these cycles</a></li>
-                </ul>
-            </div>
-        </header>
+            </p>
+        </div>
+    </header>
+
+    <div class="cycle-article">
+        <div class="toc-container">
+            <div class="toc-title">Contents</div>
+            <ul class="toc-list">
+                <li><a href="#10th">1 10th Regression</a></li>
+                <li><a href="#11th">2 11th Regression</a></li>
+                <li><a href="#12th">3 12th Regression</a></li>
+                <li><a href="#messages">4 Messages encountered in these cycles</a></li>
+            </ul>
+        </div>
 
         <!-- 10th Regression -->
         <section id="10th" class="cycle-section">
@@ -288,60 +320,12 @@
                     deactivates the golder order. Jung-jin comes down and asks Hyang-hwa to reactivate the order as he
                     noticed a barrier appear when it was active. They go to the top floor, but Jung-jin fails to break
                     through. He tells them to go back down while he gathers enough strength.</p>
+            </div>
 
-                <p>On their last day in the Palace, Ryeong examines the barrier and tells Jung-jin where to strike. The
-                    shattering of the barrier changes the prohibition on the exterior of the Palace, which prompts Song
-                    Jin to leave. Meanwhile, Jung-jin, Ryeong, Hyang-hwa and Eun-hyun enter the control room. Eun-hyun
-                    discovers a line of text asking why ascension blessing are prepared[1] They find two teleportation
-                    arrays. Jung-jin takes Ryeong and escapes, but cannot return as the array deactivates. Eun-hyun is
-                    forced to reveal his Core Formation prowess and the Formless Sword. Buk Hyang-hwa decides to create
-                    an artifact perfectly suited for the Formless Sword, but Eun-hyun gives her three conditions-he
-                    should be able to craft the sword, with ordinary material, and it should encompass all the changes
-                    of his Formless Sword. They decide to take the “trip” Eun-hyun won. They go to see “World’s End”,
-                    where Eun-hyun is stunned to discover the world is flat. They see a village plagued by a centipede
-                    demon and decide to help it. The centipede claims eating human flesh will let it hatch a child with
-                    a Demon Core. They kill the centipede out of pity. In a fit of spite, the centipede uses its dying
-                    breath to make the nearby poisonous beasts attack the village. The village hold a festival, which
-                    Hyang-hwa takes part in. Eun-hyun is guarding the village when he encounters a child with a book,
-                    who claims to be waiting for her [Sister]. Eun-hyun is shocked to see the first chapter in the book
-                    is titled “the Ender’s Tale”[2]. The book also contains a map of the Head realm, including Ascension
-                    Path and Serving Command Palace. It also shows the sun and moon as a “pair of eyes”, leaving
-                    Eun-hyun with a sinister feeling. Eun-hyun takes the girl to the festival, where he shares the Twin
-                    Immortals Dance with Hyang-hwa. He later deconstructs the dance into a spear technique.</p>
-
-                <p>On reaching Cheon-sak city, Jung-jin apologies to Hyang-hwa and Eun-hyun and promises them a favour.
-                    The next day, Byeok Mun-seong kidnaps Hyan-hwa to forcibly advance her Four-pattern talent to a
-                    Three-pattern. She is rescued by Eun-hyun. They set down the completed formation at Hyang-hwa’s
-                    mother’s grave. Five years later, she advances to Qi Building. Ryeong leaves for the Cheongmun clan
-                    to test the formation in a spiritually similar environment. Eun-hyun decides to stay in the city, as
-                    he has fallen in love with Hyang-hwa. Days later, Young-hoon appears and challenges Eun-hyun to a
-                    match. Young-hoon has reached the limits of Ultimate Pinnacle but is yet to reach Entering Heavens.
-                    He teases Eun-hyun about Hyang-hwa, who he has yet to confess to. Hyang-hwa shows Eun-hyun the
-                    repaired bee puppet, which comes with a teleportation function. He realises the puppet is based on
-                    the seven emotions. Hyang-hwa studies the puppet and realises the Mad Lord was trying to break taboo
-                    through his puppets. She uses this inspiration to enhance her design for Eun-hyun’s artifact.</p>
-
-                <div class="art-image-container">
-                    <img src="../../assets/images/seo_eun_hyun_cursed.png"
-                        alt="Seo Eun-hyun after Buk Hyang-hwa's death" class="art-image">
-                    <div class="image-caption">Seo Eun-hyun after Buk Hyang-hwa's death</div>
-                </div>
-
-                <p>Another five years pass. Eun-hyun ends up managing the artifact shop. Their neighbours call Eun-hyun
-                    and Hyang-hwa a couple. Young-hoon enters Entering Heavens and immediately spars Eun-hyun. Towards
-                    the end of their spar, Eun-hyun tells Young-hoon he plans to confess to Hyang-hwa. Cheongmun Ryeong
-                    also returns, and both him and Young-hoon lampoon Eun-hyun’s single status. Eun-hyun attempts to
-                    confess to Hyang-hwa, but she asks him to wait until tomorrow, so she can complete the design for
-                    his artifact. The next day, Hyang-hwa’s father, Buk Joong-ho, prepares his wife’s grave for their
-                    wedding ceremony. Just before confessing to Hyang-hwa, Eun-hyun smells blood. Yuan Li has arrived to
-                    retrieve his blood soul. They fight bitterly against Yuan Li, but nearly everyone in Cheon-sak city
-                    dies, and Young-hoon is fatally wounded. Hyang-hwa and Joong-ho teleport Eun-hyun out of the city.
-                    Eun-hyun, who has run out of spiritual power, rushes back. He discovers everyone except Hyang-hwa is
-                    dead; Hyang-hwa is dying. With her last breath she tells Eun-hyun she never loved him, but Eun-hyun
-                    can see her intent is still dyed a clear pink(love).</p>
-
-                <p>With Hyang-hwa’s death, Eun-hyun’s tears turn black. Curses pour from his seven orifices as he swears
-                    to kill Yuan Li.</p>
+            <div class="img-container">
+                <img src="../../assets/images/seo_eun_hyun_cursed.png" alt="Seo Eun-hyun after Buk Hyang-hwa's death"
+                    class="img-display" style="max-height: 500px;">
+                <div class="img-caption">Seo Eun-hyun after Buk Hyang-hwa's death</div>
             </div>
 
             <h3 class="section-subtitle">Fighting Yuan Li</h3>
@@ -356,26 +340,6 @@
                     discovers Young-hoon’s Inner Core is gone. He collapses in grief, emitting more than three thousand
                     curses. He opens Hyang-hwa’s gift, which is a blueprint for a flying sword artifact called the
                     Colourless Glass Sword. He then leaves to attend Ryeong’s funeral.</p>
-
-                <p>During a strategy meeting, Eun-hyun realises the golden order in the Serving Command Palace can lower
-                    Yuan Li to Core Formation while he can still use martial arts. They use the Nether Crossing Ship to
-                    go to the Palace. Eun-hyun asks Seo Ran to teach him how to use the space-breaking bead, which he
-                    had kept all this time. Seo Ran is shocked and tells him to wait. Eun-hyun displays his full
-                    strength under the golden order and sets down the formation for the Longevity Tree. On the return
-                    trip, Song Jin tells Eun-hyun the bead can only be activated by one possessing the “True Origin
-                    blood” of a Sea Dragon, and that the bead in question was for Seo Ran. Eun-hyun asks Song Jin for
-                    help. The latter says Seo Ran can help him more, as the sealed Sea Dragon Palace should hold items
-                    antagonistic to Yuan Li.</p>
-
-                <p>Eun-hyun helps Seo Ran break the seal placed by Seo Hweol. Seo Eun-hyun is surprised to see the
-                    interior of the Sea Dragon Palace matches the Serving Command Palace. Seo Ran tells him Seo Hweol
-                    claimed this would have an effect of “mental awakening”. As Eun-hyun wanders the Sea Dragon Palace,
-                    he comes across a hallway with no prohibitions. He enters what he presumes is the astronomy room. He
-                    is hit by a curse that leaves a message. [3] Eun-hyun follows the message and looks under the slabs,
-                    to find Astronomer Jeon Hyang’s diary, left for Seo Ran. From the diary, he learns about how the sun
-                    and moon do not exist in the realm, and hints about the true nature of both this world and Seo
-                    Hweol. When Eun-hyun closes the diary, Seo Hweol’s remnant consciousness appears, causing the dharma
-                    treasures in the Sea Dragon Palace to go berserk. Song Jin rescues them.</p>
             </div>
 
             <h3 class="section-subtitle">What You Trampled On / The Path You Have Tread</h3>
@@ -385,62 +349,10 @@
                     Jung-jin proposes the plan of fighting within the Serving Comamand Palace. The cultivators agree to
                     meet again in two hundred years.</p>
 
-                <p>Two hundred years later, Byeok Mun-seong, along with two female cultivators, goes to fetch Eun-hyun.
-                    Eun-hyun is staying within the cave of the centipede he had killed with Hyang-hwa. His prowess
-                    appears to be at Core Formation despite him being in Qi Building. Byeok Mun-seong notices Eun-hyun
-                    has left behind a carved a glass sculpture of himself and Hyang-hwa dancing the Twin Immortals
-                    Dance. He keeps the sculpture.</p>
-
-                <p>Eun-hyun arrives at Cheon-sak city. He takes the 3000 most intact glass-sword-grave markers and
-                    carves the circuits Hyang-hwa designed into each of them. He stores the newly made artifact. He
-                    notices Mun-seong’s consciousness is also the deep blue of sorrow, and they promise to mourn
-                    together once she is avenged.</p>
-
-                <p>More than 200 Core Formation cultivators gather in front of Yuan Li’s black castle. The Serving
-                    Command Palace begins its descent, freeing Yuan Li. The cultivators begin to harry Yuan Li with
-                    varying degrees of success. Yuan Li suddenly notices they are creating an altar for a Core Formation
-                    advancement. He notices the gates of the Palace opening, so ignores it. From within the Serving
-                    Command Palace, the true Seo Eun-hyun emerges, revealing the one outside to be a cursed doll.
-                    Eun-hyun begins his advancement ritual for Core Formation, while the other hold Yuan Li back. After
-                    the ritual, Heavenly Tribulations strikes Eun-hyun, shocking all present. Eun-hyun uses the
-                    Tribulation to sap Yuan Li’s strength. The lightning drops until all of Yuan Li’s defensive
-                    treasures are broken and Eun-hyun uses him as a shield. Eun-hyun uses his newly acquired Dan Fire to
-                    turn the Colourless Glass Swords into dharma treasures. Yuan Li is pushed into the Palace, and the
-                    golden order is activated. Yuan Li begins the fight, mainly against Eun-hyun. Manli Min-lap and
-                    Byeok Cheon-gi begin infusing energy into a cannon and the Heaven Striking Talisman containing the
-                    strike of a Heavenly Being respectively. He reveals Young-hoon's Inner Core within one of his blood
-                    spirits. Eun-hyun reclaims the Inner Core, striking a severe blow on Yuan Li. Cheon-gi launches the
-                    talisman, and Min-lap fires the cannon. However, it is revealed the talisman in fact was the Heaven
-                    Sealing Talisman, one that granted the target the body of a Heavenly Being. The Byeok Clan, Five
-                    Eastern Lords, Jinlu Clan, Makli Clan and others reveal they serve Yuan Li. Yuan Li is unharmed due
-                    to the talisman. Buk Mun-seong appears and uses the Heaven Striking Talisman to shatter Yuan Li’s
-                    defense, with the help of the young cultivators of the Byeok Clan. Eun-hyun uses the moment to land
-                    a strong hit on Yuan Li using the All-Heavens Sword, the final form of the Colourless Glass Sword.
-                    Yuan Li uses his powers to kill a huge number of cultivators and absorbs their power. He summons his
-                    blood body, and transfers himself into it. He begins using Summoning Wind, True Blood
-                    Transformation. Seo Ran appears and uses the effects of Summoning Wind, Blood Core Coagulation to
-                    control Yuan Li. He summons the spirits of all Yuan Li has killed over the years, and allows them to
-                    take their revenge on Yuan Li. He channels their strength into Song Jin, who temporarily regains his
-                    Heavenly Being Cultivation. Song Jin strikes him once, destroying half of the Palace, and leaves.
-                    Yuan Li sacrifices part of his Nascent Soul to claim the Serving Command Seal, and “fate” starts to
-                    ridiculously favour him. He is “coincidently” freed from Seo Ran’s control, and all of Eun-hyun’s
-                    strikes are “coincidently” blocked by debris.</p>
-
-                <p>Eun-hyun comes across a dying Mun-seong, who tells him he loved Hyang-hwa as well. He begs Eun-hyun
-                    to avenge her for both of them. Eun-hyun tells Mun-seong he understands, and to rest. He then enters
-                    Yuan Li’s black castle. Song Jin tells Eun-hyun to protect Seo Ran. He enters with the Nether
-                    Crossing Ship. He forcibly activates the space-breaking bead and commands the Ship to self-destruct,
-                    passing on. Yuan Li has lost a large amount of power, but a remnant consciousness of Seo Hweol
-                    protects him. Eun-hyun launches Foolish Old Man Moves Mountains. During the last fight, he raises
-                    his martial realm to Treading Heavens Beyond the Path. He creates the Black Ghost Curse Banner, and
-                    kills Yuan Li. He comforts Seo Ran in the aftermath of Song Jin’s death, and leaves with Yuan Li’s
-                    head. As he travels to Cheon-sak city, the Curse Banners begin evolving into something much more
-                    sinister.</p>
-
-                <div class="art-image-container">
+                <div class="img-container">
                     <img src="../../assets/images/seo_eun_hyun_buk_hyang_hwa.png" alt="One Last Dance"
-                        class="art-image">
-                    <div class="image-caption">One Last Dance</div>
+                        class="img-display">
+                    <div class="img-caption">One Last Dance</div>
                 </div>
 
                 <p>Over two months later, he reaches his destination. He places the head down and goes to Hyang-hwa’s
@@ -454,9 +366,9 @@
                 </div>
                 <div class="info-line"><span class="info-label">Cultivation Realm:</span> Core Formation</div>
             </div>
-            <div class="timeline-container">
-                <h4 style="color:#333; margin-bottom:0.5rem;">Timeline: 10th Cycle</h4>
-                <img src="../../assets/images/timeline_10th_cycle.png" alt="Timeline 10th Cycle" class="timeline-img">
+            <div class="img-container">
+                <img src="../../assets/images/timeline_10th_cycle.png" alt="Timeline 10th Cycle" class="img-display">
+                <span class="img-caption">Timeline: 10th Cycle</span>
             </div>
         </section>
 
@@ -489,9 +401,9 @@
                 </div>
                 <div class="info-line"><span class="info-label">Cultivation Realm:</span> Qi Gathering</div>
             </div>
-            <div class="timeline-container">
-                <h4 style="color:#333; margin-bottom:0.5rem;">Timeline: 11th Cycle</h4>
-                <img src="../../assets/images/timeline_11th_cycle.png" alt="Timeline 11th Cycle" class="timeline-img">
+            <div class="img-container">
+                <img src="../../assets/images/timeline_11th_cycle.png" alt="Timeline 11th Cycle" class="img-display">
+                <span class="img-caption">Timeline: 11th Cycle</span>
             </div>
         </section>
 
@@ -522,44 +434,15 @@
                     Hyang-hwa, he realises she is now a completely different person. Their norigaes merge into one. He
                     leaves the strengthened norigae with Hyang-hwa. Back on the Ship, Eun-hyun asks Song Jin for the
                     Devil Legion Terracotta Scroll.</p>
-
-                <p>Eun-hyun controls the Blood Body to exhort the traitorous Byeok clan. He then goes with the stones to
-                    the Cheongmun Clan and tells them to support Cheongmun Ryeong. He then goes to the traitorous Jinlu
-                    Clan and tells them to serve the Cheongmun Clan. He visits the village where he and Hyang-hwa fought
-                    together, and asks for the book of fairy tales he came across last time, but discovers it has
-                    vanished. On asking about the child’s sister, her father says she is an only child. This confuses
-                    Eun-hyun, and he then seems to remember the child was waiting for her parents last cycle.</p>
-
-                <p>Eun-hyun goes to kill the centipede demon. The centipede begs Eun-hyun to take its offspring and turn
-                    them into intelligent beasts. He accepts and takes all the eggs.</p>
-
-                <p>In the serving command palace, Eun-hyun stores Immortal Demon Bamboo(a smoking-pipe for awakening
-                    Demon Beasts), some talismans, and drinks some White-Red wine. He then acquires the Serving Command
-                    Seal. On seeing the blessing bestowed on Eun-hyun, Song Jin remarks Eun-hyun has a strong fate.
-                    Eun-hyun gives him the blueprints for the Longevity Tree Formation and asks him to deliver one to
-                    Kim Young-hoon. They then arrive at Ascension Path. Eun-hyun blows some smoke to help awaken the
-                    centipedes. One of them clings to Eun-hyun, and on Song Jin’s advice, he decides to keep it. One
-                    attempting to examine Ascension Gate, Eun-hyun sees a message from Yang Su-jin, who tells him to
-                    depart from this “ominous head”[5]. Ascension Gate swallows Eun-hyun, ejecting the Serving Command
-                    Seal, and closing. Eun-hyun has begun his ascension</p>
-
-                <p>During the ascension, he turns back to see the world he left behind as a gigantic jade something
-                    before losing consciousness. He wakes up with no recollection of what he saw. He uses all his
-                    talismans to arrive safely, right behind the Heavenly Being cultivators who took his colleagues. A
-                    Four-Axis wood-man cultivator attempts to intimidate him, but is rebuffed by the newly advanced
-                    Heavenly Being cultivators from the same realm as Eun-hyun. The wood-man cultivator stops and says
-                    they must be from the Head Realm. The ascenders from the Head Realm offer to take Eun-hyun into
-                    their respective sects. Eun-hyun lets the Formless Sword melt into his body. This ‘aura’ is detected
-                    by the wood-man who accuses Eun-hyun of being a ‘Heart Tribe spy’ and kills him.</p>
             </div>
             <div class="info-card">
                 <div class="info-line"><span class="info-label">Martial Realm:</span> Treading Heavens Beyond the Path
                 </div>
                 <div class="info-line"><span class="info-label">Cultivation Realm:</span> Qi Gathering</div>
             </div>
-            <div class="timeline-container">
-                <h4 style="color:#333; margin-bottom:0.5rem;">Timeline: 12th Cycle</h4>
-                <img src="../../assets/images/timeline_12th_cycle.png" alt="Timeline 12th Cycle" class="timeline-img">
+            <div class="img-container">
+                <img src="../../assets/images/timeline_12th_cycle.png" alt="Timeline 12th Cycle" class="img-display">
+                <span class="img-caption">Timeline: 12th Cycle</span>
             </div>
         </section>
 
@@ -610,6 +493,15 @@
                 </div>
             </div>
         </section>
+
+        <div class="nav-buttons">
+            <a href="mortal_realm_02.html" class="nav-btn">
+                <ion-icon name="arrow-back-outline"></ion-icon> Previous Arc: 7th - 9th Regression
+            </a>
+            <a href="mortal_realm_04.html" class="nav-btn">
+                Next Arc: 13th Regression <ion-icon name="arrow-forward-outline"></ion-icon>
+            </a>
+        </div>
 
     </div>
 
