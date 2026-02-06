@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.head.appendChild(link);
     }
     // === SEARCH FUNCTIONALITY ===
+    // === SEARCH FUNCTIONALITY ===
     const searchInput = document.querySelector('.nav-search input');
     const searchContainer = document.querySelector('.nav-search');
 
@@ -19,84 +20,152 @@ document.addEventListener('DOMContentLoaded', () => {
             top: '100%',
             left: '0',
             right: '0',
-            background: 'rgba(26, 31, 46, 0.95)',
-            border: '1px solid rgba(255, 255, 255, 0.1)',
-            borderRadius: '8px',
+            background: 'rgba(15, 20, 25, 0.98)',
+            border: '1px solid rgba(139, 92, 246, 0.2)',
+            borderRadius: '12px',
             marginTop: '8px',
-            maxHeight: '300px',
+            maxHeight: '400px',
             overflowY: 'auto',
             zIndex: '1000',
             display: 'none',
-            backdropFilter: 'blur(10px)',
-            boxShadow: '0 10px 25px rgba(0,0,0,0.5)'
+            backdropFilter: 'blur(12px)',
+            boxShadow: '0 10px 30px rgba(0,0,0,0.6)'
         });
-        searchContainer.style.position = 'relative'; // Ensure positioning context
+        searchContainer.style.position = 'relative'; 
         searchContainer.appendChild(resultsBox);
 
-        let allPages = [];
+        // Debounce Utility
+        const debounce = (func, wait) => {
+            let timeout;
+            return (...args) => {
+                clearTimeout(timeout);
+                timeout = setTimeout(() => func.apply(this, args), wait);
+            };
+        };
 
-        // Fetch pages once on focus to cache
-        searchInput.addEventListener('focus', async () => {
-            if (allPages.length === 0) {
-                try {
-                    const res = await fetch('/api/pages');
-                    const data = await res.json();
-                    if (data.status === 'success') {
-                        allPages = data.pages;
-                    }
-                } catch (e) {
-                    console.error("Failed to fetch pages for search", e);
-                }
-            }
-        });
+        // State for keyboard nav
+        let currentSelectionIndex = -1;
+        let currentResults = [];
 
-        searchInput.addEventListener('input', (e) => {
-            const query = e.target.value.toLowerCase().trim();
-            resultsBox.innerHTML = '';
-
+        const performSearch = async (query) => {
             if (query.length < 2) {
                 resultsBox.style.display = 'none';
+                currentResults = [];
                 return;
             }
 
-            const matches = allPages.filter(page => {
-                // Simple weighting: Title match > path match
-                const name = page.name.toLowerCase().replace('.html', '').replace(/_/g, ' ');
-                return name.includes(query);
-            }).slice(0, 10); // Limit to 10 results
-
-            if (matches.length > 0) {
-                matches.forEach(page => {
-                    const div = document.createElement('div');
-                    const displayName = page.name.replace('.html', '').replace(/_/g, ' ')
-                        .replace(/\b\w/g, c => c.toUpperCase()); // Title Case
-
-                    Object.assign(div.style, {
-                        padding: '10px 14px',
-                        cursor: 'pointer',
-                        borderBottom: '1px solid rgba(255,255,255,0.05)',
-                        color: '#b8c5d6',
-                        fontSize: '0.9rem',
-                        transition: 'background 0.2s'
-                    });
-
-                    div.innerHTML = `
-                        <div style="font-weight:600; color:#fff;">${displayName}</div>
-                        <div style="font-size:0.75rem; opacity:0.6; margin-top:2px;">${page.path}</div>
-                    `;
-
-                    div.addEventListener('mouseenter', () => div.style.background = 'rgba(139, 92, 246, 0.2)');
-                    div.addEventListener('mouseleave', () => div.style.background = 'transparent');
-
-                    div.addEventListener('click', () => {
-                        window.location.href = '/' + page.path;
-                    });
-
-                    resultsBox.appendChild(div);
-                });
+            try {
+                // Show loading state if needed
+                resultsBox.innerHTML = '<div style="padding:1rem; color:#6e7a8a; text-align:center;">Searching...</div>';
                 resultsBox.style.display = 'block';
-            } else {
+
+                const res = await fetch(`/api/search?q=${encodeURIComponent(query)}&limit=8`);
+                const data = await res.json();
+
+                if (data.status === 'success') {
+                    currentResults = data.results;
+                    renderResults(data.results, query);
+                }
+            } catch (e) {
+                console.error("Search failed", e);
+                resultsBox.innerHTML = '<div style="padding:1rem; color:#ef4444; text-align:center;">Search failed</div>';
+            }
+        };
+
+        const renderResults = (results, query) => {
+            resultsBox.innerHTML = '';
+            currentSelectionIndex = -1;
+
+            if (results.length === 0) {
+                resultsBox.innerHTML = '<div style="padding:1rem; color:#6e7a8a; text-align:center;">No results found</div>';
+                return;
+            }
+
+            const terms = query.toLowerCase().split(/\s+/).filter(t => t.length > 0);
+
+            results.forEach((result, index) => {
+                const div = document.createElement('div');
+                div.className = 'search-result-item';
+                div.dataset.index = index;
+                
+                // Highlight logic for Snippet
+                let snippetHtml = result.snippet || "";
+                terms.forEach(term => {
+                    const regex = new RegExp(`(${term})`, 'gi');
+                    snippetHtml = snippetHtml.replace(regex, '<span class="search-highlight">$1</span>');
+                });
+
+                Object.assign(div.style, {
+                    padding: '12px 16px',
+                    cursor: 'pointer',
+                    borderBottom: '1px solid rgba(255,255,255,0.05)',
+                    transition: 'all 0.2s'
+                });
+
+                div.innerHTML = `
+                    <div style="font-weight:600; color:#fff; margin-bottom:4px; font-family: var(--font-display);">${result.name}</div>
+                    <div class="search-snippet" style="font-size:0.8rem; color:#94a3b8; line-height:1.4;">${snippetHtml}</div>
+                `;
+
+                div.addEventListener('mouseenter', () => {
+                    currentSelectionIndex = index;
+                    updateSelection();
+                });
+
+                div.addEventListener('click', () => {
+                    window.location.href = '/' + result.path;
+                });
+
+                resultsBox.appendChild(div);
+            });
+            resultsBox.style.display = 'block';
+        };
+
+        const updateSelection = () => {
+            const items = resultsBox.querySelectorAll('.search-result-item');
+            items.forEach((item, idx) => {
+                if (idx === currentSelectionIndex) {
+                    item.style.background = 'rgba(139, 92, 246, 0.15)';
+                    item.style.borderLeft = '3px solid #1d9bf0';
+                } else {
+                    item.style.background = 'transparent';
+                    item.style.borderLeft = '3px solid transparent';
+                }
+            });
+        };
+
+        // Event Listeners
+        searchInput.addEventListener('input', debounce((e) => {
+            performSearch(e.target.value.trim());
+        }, 300)); // 300ms debounce
+
+        searchInput.addEventListener('keydown', (e) => {
+            if (resultsBox.style.display === 'none') return;
+            
+            const items = resultsBox.querySelectorAll('.search-result-item');
+            if (items.length === 0) return;
+
+            if (e.key === 'ArrowDown') {
+                e.preventDefault();
+                currentSelectionIndex++;
+                if (currentSelectionIndex >= items.length) currentSelectionIndex = 0;
+                updateSelection();
+                // Scroll into view if needed
+                items[currentSelectionIndex].scrollIntoView({ block: 'nearest' });
+            } else if (e.key === 'ArrowUp') {
+                e.preventDefault();
+                currentSelectionIndex--;
+                if (currentSelectionIndex < 0) currentSelectionIndex = items.length - 1;
+                updateSelection();
+                items[currentSelectionIndex].scrollIntoView({ block: 'nearest' });
+            } else if (e.key === 'Enter') {
+                e.preventDefault();
+                if (currentSelectionIndex >= 0 && currentSelectionIndex < currentResults.length) {
+                    window.location.href = '/' + currentResults[currentSelectionIndex].path;
+                }
+            } else if (e.key === 'Escape') {
                 resultsBox.style.display = 'none';
+                searchInput.blur();
             }
         });
 
@@ -104,6 +173,13 @@ document.addEventListener('DOMContentLoaded', () => {
         document.addEventListener('click', (e) => {
             if (!searchContainer.contains(e.target)) {
                 resultsBox.style.display = 'none';
+            }
+        });
+        
+        // Focus handler just to reshow if query exists
+        searchInput.addEventListener('focus', () => {
+            if (searchInput.value.trim().length >= 2 && currentResults.length > 0) {
+                resultsBox.style.display = 'block';
             }
         });
     }

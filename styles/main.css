@@ -248,6 +248,42 @@ h3 {
     font-size: 1rem;
 }
 
+/* === Search Results === */
+.search-results {
+    /* Custom Scrollbar for results */
+    scrollbar-width: thin;
+    scrollbar-color: var(--accent-primary) transparent;
+}
+
+.search-results::-webkit-scrollbar {
+    width: 6px;
+}
+
+.search-results::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.search-results::-webkit-scrollbar-thumb {
+    background-color: var(--accent-primary);
+    border-radius: 20px;
+}
+
+.search-highlight {
+    color: var(--accent-secondary); 
+    background: rgba(29, 155, 240, 0.15); /* Blue tint */
+    font-weight: 600;
+    padding: 0 2px;
+    border-radius: 2px;
+}
+
+.search-result-item:last-child {
+    border-bottom: none !important;
+}
+
+.search-result-item:hover .search-snippet {
+    color: #cbd5e1 !important; /* Lighter on hover */
+}
+
 /* Mobile Nav Toggle */
 .nav-toggle {
     display: none;

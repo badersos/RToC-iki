@@ -106,6 +106,178 @@ class SessionManager:
         except: pass
         return None
 
+from html.parser import HTMLParser
+import re
+
+# === SEARCH INDEXER ===
+class SearchIndexer:
+    _instance = None
+    
+    def __init__(self):
+        self.index = [] # List of {path, title, content, headers}
+        self.is_indexed = False
+        
+    @classmethod
+    def get_instance(cls):
+        if cls._instance is None:
+            cls._instance = cls()
+        return cls._instance
+
+    def index_all(self, root_dir):
+        print("Building Search Index...", file=sys.stderr)
+        self.index = []
+        for root, _, files in os.walk(root_dir):
+            for file in files:
+                if file.endswith('.html'):
+                    path = os.path.join(root, file)
+                    rel_path = os.path.relpath(path, root_dir).replace('\\', '/')
+                    
+                    # Skip administrative/hidden pages if needed
+                    if 'node_modules' in rel_path or '.git' in rel_path:
+                        continue
+                        
+                    try:
+                        with open(path, 'r', encoding='utf-8', errors='ignore') as f:
+                            content = f.read()
+                            self.parse_and_add(rel_path, content)
+                    except Exception as e:
+                        print(f"Failed to index {rel_path}: {e}", file=sys.stderr)
+        
+        self.is_indexed = True
+        print(f"Search Index Built: {len(self.index)} pages indexed.", file=sys.stderr)
+
+    def parse_and_add(self, path, html_content):
+        parser = TextExtractor()
+        parser.feed(html_content)
+        
+        self.index.append({
+            'path': path,
+            'title': parser.title,
+            'headers': parser.headers,
+            'content': parser.get_body_text()
+        })
+
+    def search(self, query, limit=10):
+        if not self.is_indexed:
+            self.index_all(os.getcwd())
+            
+        terms = query.lower().split()
+        results = []
+        
+        for page in self.index:
+            score = 0
+            
+            # 1. Title Match (High Priority)
+            title_lower = page['title'].lower() if page['title'] else ""
+            if query.lower() in title_lower:
+                score += 20
+            
+            for term in terms:
+                if term in title_lower:
+                    score += 10
+            
+            # 2. Header Match (Medium Priority)
+            for header in page['headers']:
+                header_lower = header.lower()
+                for term in terms:
+                    if term in header_lower:
+                        score += 5
+            
+            # 3. Content Match (Low Priority)
+            content_lower = page['content'].lower()
+            term_matches = 0
+            for term in terms:
+                if term in content_lower:
+                    score += 1
+                    term_matches += 1
+            
+            # Boost if all terms are present
+            if term_matches == len(terms):
+                score += 5
+                
+            if score > 0:
+                snippet = self.get_snippet(page['content'], terms)
+                results.append({
+                    'path': page['path'],
+                    'name': page['title'] or os.path.basename(page['path']),
+                    'score': score,
+                    'snippet': snippet
+                })
+        
+        # Sort by score desc
+        results.sort(key=lambda x: x['score'], reverse=True)
+        return results[:limit]
+
+    def get_snippet(self, content, terms, window_size=60):
+        content_lower = content.lower()
+        best_pos = -1
+        
+        # Find the first occurrence of the rarest term (heuristic)
+        # For simplicity, distinct occurrence of first term
+        if not terms: return content[:100] + "..."
+        
+        # Try to find a cluster of terms
+        positions = []
+        for term in terms:
+            pos = content_lower.find(term)
+            if pos != -1: positions.append(pos)
+            
+        if not positions:
+            return content[:100] + "..."
+            
+        start_pos = min(positions)
+        start = max(0, start_pos - window_size)
+        end = min(len(content), start_pos + window_size + 20)
+        
+        text = content[start:end]
+        if start > 0: text = "..." + text
+        if end < len(content): text = text + "..."
+        
+        return text
+
+class TextExtractor(HTMLParser):
+    def __init__(self):
+        super().__init__()
+        self.title = ""
+        self.headers = []
+        self.text_parts = []
+        self.in_title = False
+        self.in_header = False
+        self.ignore_tags = {'script', 'style', 'nav', 'footer'}
+        self.current_tag = None
+        
+    def handle_starttag(self, tag, attrs):
+        self.current_tag = tag
+        if tag == 'title':
+            self.in_title = True
+        elif tag in ['h1', 'h2', 'h3', 'h4', 'h5', 'h6']:
+            self.in_header = True
+            
+    def handle_endtag(self, tag):
+        if tag == 'title':
+            self.in_title = False
+        elif tag in ['h1', 'h2', 'h3', 'h4', 'h5', 'h6']:
+            self.in_header = False
+        self.current_tag = None
+
+    def handle_data(self, data):
+        if self.current_tag in self.ignore_tags:
+            return
+            
+        clean_data = ' '.join(data.split())
+        if not clean_data: return
+        
+        if self.in_title:
+            self.title = clean_data
+        elif self.in_header:
+            self.headers.append(clean_data)
+        else:
+            self.text_parts.append(clean_data)
+
+    def get_body_text(self):
+        return " ".join(self.text_parts)
+
+
 class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
     def end_headers(self):
         # Avoid stale caching
@@ -113,9 +285,37 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
             self.send_header('Cache-Control', 'no-store')
         return super().end_headers()
 
+    def send_error(self, code, message=None, explain=None):
+        if self.path.startswith('/api/'):
+            self.send_response(code)
+            self.send_header('Content-Type', 'application/json')
+            self.end_headers()
+            response = {'status': 'error', 'message': message, 'code': code}
+            self.wfile.write(json.dumps(response).encode())
+        else:
+            super().send_error(code, message, explain)
+
 
     def do_GET(self):
         print(f"DEBUG: GET request for {self.path}", file=sys.stderr)
+
+        # API: Search
+        if self.path.startswith('/api/search'):
+            try:
+                query_params = urllib.parse.parse_qs(urllib.parse.urlparse(self.path).query)
+                q = query_params.get('q', [''])[0]
+                limit = int(query_params.get('limit', [10])[0])
+                
+                indexer = SearchIndexer.get_instance()
+                results = indexer.search(q, limit)
+                
+                self.send_response(200)
+                self.send_header('Content-Type', 'application/json')
+                self.end_headers()
+                self.wfile.write(json.dumps({"status": "success", "results": results}).encode())
+            except Exception as e:
+                self.send_error(500, str(e))
+            return
 
         # API: Get Current User (Session Check)
         if self.path == '/api/user/me':
