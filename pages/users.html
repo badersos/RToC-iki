@@ -363,8 +363,9 @@
         </div>
     </div>
 
+    <script src="../scripts/api-config.js"></script>
     <script>
-        const API_URL = '/api/permissions';
+        const API_URL = (window.RTOC_API_BASE || '') + '/api/permissions';
         const currentUser = JSON.parse(localStorage.getItem('rtoc_user') || 'null');
 
         // Security Check
@@ -402,7 +403,7 @@
                     return;
                 }
 
-                const res = await fetch(API_URL);
+                const res = await (window.rtocFetch ? rtocFetch('/api/permissions') : fetch(API_URL));
                 if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
 
                 const data = await res.json();

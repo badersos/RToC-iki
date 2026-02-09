@@ -9,11 +9,19 @@ import urllib.parse
 from datetime import datetime, timezone
 import base64
 
-PORT = 8081
-CLIENT_ID = "1467475613895098472"
-CLIENT_SECRET = "W0w_Zzj0his7APvF4COhti3QWsE8LF0k"
-# UPDATE THIS URL IF CLOUDFLARE SUBDOMAIN CHANGES
-REDIRECT_URI = "https://regressorstaleofcultivation.space/auth/discord/callback"
+# Configuration - use environment variables for deployment
+PORT = int(os.environ.get('PORT', 8081))
+CLIENT_ID = os.environ.get('DISCORD_CLIENT_ID', '1467475613895098472')
+CLIENT_SECRET = os.environ.get('DISCORD_CLIENT_SECRET', 'W0w_Zzj0his7APvF4COhti3QWsE8LF0k')
+REDIRECT_URI = os.environ.get('REDIRECT_URI', 'https://regressorstaleofcultivation.space/auth/discord/callback')
+
+# CORS - allowed origins for cross-origin requests
+ALLOWED_ORIGINS = [
+    'https://regressorstaleofcultivation.space',
+    'https://badersos.github.io',
+    'http://localhost:8081',
+    'http://127.0.0.1:8081'
+]
 
 # === DATABASE & SESSION MANAGER ===
 class UserDatabase:
@@ -279,8 +287,30 @@ class TextExtractor(HTMLParser):
 
 
 class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
+    def get_cors_origin(self):
+        """Get the appropriate CORS origin header based on request origin."""
+        origin = self.headers.get('Origin', '')
+        if origin in ALLOWED_ORIGINS:
+            return origin
+        return ALLOWED_ORIGINS[0]  # Default to main domain
+
+    def send_cors_headers(self):
+        """Send CORS headers for cross-origin requests."""
+        self.send_header('Access-Control-Allow-Origin', self.get_cors_origin())
+        self.send_header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')
+        self.send_header('Access-Control-Allow-Headers', 'Content-Type, Authorization')
+        self.send_header('Access-Control-Allow-Credentials', 'true')
+
+    def do_OPTIONS(self):
+        """Handle preflight CORS requests."""
+        self.send_response(200)
+        self.send_cors_headers()
+        self.send_header('Content-Length', '0')
+        self.end_headers()
+
     def end_headers(self):
-        # Avoid stale caching for everything during dev
+        # CORS and cache headers
+        self.send_cors_headers()
         self.send_header('Cache-Control', 'no-store, no-cache, must-revalidate')
         self.send_header('Pragma', 'no-cache')
         self.send_header('Expires', '0')
@@ -290,6 +320,7 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
         if self.path.startswith('/api/'):
             self.send_response(code)
             self.send_header('Content-Type', 'application/json')
+            self.send_cors_headers()
             self.end_headers()
             response = {'status': 'error', 'message': message, 'code': code}
             self.wfile.write(json.dumps(response).encode())

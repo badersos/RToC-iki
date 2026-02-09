@@ -39,6 +39,19 @@ class CommentSystem {
         return this.user?.id || this.user?.username || 'anonymous';
     }
 
+    // API helper for cross-origin requests
+    apiUrl(endpoint) {
+        return (window.RTOC_API_BASE || '') + endpoint;
+    }
+
+    async apiFetch(endpoint, options = {}) {
+        const url = this.apiUrl(endpoint);
+        if (window.RTOC_API_BASE) {
+            options.credentials = 'include';
+        }
+        return fetch(url, options);
+    }
+
     injectStyles() {
         if (document.getElementById('comment-styles-v2')) return;
 
@@ -567,7 +580,7 @@ class CommentSystem {
         list.innerHTML = `<div class="loading-comments"><div class="loading-spinner"></div><span>Loading...</span></div>`;
 
         try {
-            const res = await fetch(`/api/comments?pageId=${encodeURIComponent(this.pageId)}&sort=${this.sortBy}`);
+            const res = await this.apiFetch(`/api/comments?pageId=${encodeURIComponent(this.pageId)}&sort=${this.sortBy}`);
             if (!res.ok) throw new Error(`HTTP ${res.status}`);
 
             const data = await res.json();
@@ -694,7 +707,7 @@ class CommentSystem {
                 parent_id: this.replyingTo
             };
 
-            const res = await fetch('/api/comments', {
+            const res = await this.apiFetch('/api/comments', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(payload)
@@ -765,7 +778,7 @@ class CommentSystem {
         if (!this.isLoggedIn) return;
 
         try {
-            const res = await fetch('/api/comments/vote', {
+            const res = await this.apiFetch('/api/comments/vote', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -816,7 +829,7 @@ class CommentSystem {
         if (!newContent) return;
 
         try {
-            const res = await fetch('/api/comments/edit', {
+            const res = await this.apiFetch('/api/comments/edit', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -845,7 +858,7 @@ class CommentSystem {
         if (!confirm('Delete this comment?')) return;
 
         try {
-            const res = await fetch('/api/comments/delete', {
+            const res = await this.apiFetch('/api/comments/delete', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -867,7 +880,7 @@ class CommentSystem {
 
     async pinComment(commentId) {
         try {
-            const res = await fetch('/api/comments/pin', {
+            const res = await this.apiFetch('/api/comments/pin', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
