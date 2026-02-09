@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Authenticating...</title>
+    <script src="/scripts/api-config.js"></script>
+    <style>
+        body {
+            background: #1a1a1a;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            font-family: sans-serif;
+        }
+
+        .spinner {
+            border: 4px solid #333;
+            border-top: 4px solid #3498db;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="spinner"></div>
+    <div id="status">Completing login...</div>
+
+    <script>
+        (async function () {
+            const params = new URLSearchParams(window.location.search);
+            const code = params.get('code');
+            const statusDiv = document.getElementById('status');
+
+            if (!code) {
+                statusDiv.textContent = "Error: No login code found.";
+                return;
+            }
+
+            try {
+                // Determine API base URL from api-config or fallback
+                const API_BASE = window.RTOC_API_BASE || 'https://rtoc-wiki-api.onrender.com'; // Fallback to render URL if not set
+
+                // Exchange code for session
+                const response = await fetch(`${API_BASE}/auth/discord/callback?code=${code}`, {
+                    method: 'GET',
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+
+                    if (data.status === 'success') {
+                        // Save user data
+                        localStorage.setItem('rtoc_user', JSON.stringify(data.user));
+                        statusDiv.textContent = "Login successful! Redirecting...";
+
+                        // Redirect to home or saved location
+                        setTimeout(() => {
+                            window.location.href = '/';
+                        }, 1000);
+                    } else {
+                        throw new Error(data.message || 'Login failed');
+                    }
+                } else {
+                    throw new Error(`Server error: ${response.status}`);
+                }
+            } catch (err) {
+                console.error(err);
+                statusDiv.innerHTML = `Login failed.<br><br>Error: ${err.message}<br><br><a href="/" style="color:#3498db">Return Home</a>`;
+            }
+        })();
+    </script>
+</body>
+
+</html>

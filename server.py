@@ -511,10 +511,15 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                     user_data = json.loads(res_user.read().decode())
                 
                 # Save user to database and get role from permissions
+                avatar_url = None
+                if user_data.get('avatar'):
+                    ext = 'gif' if user_data['avatar'].startswith('a_') else 'png'
+                    avatar_url = f"https://cdn.discordapp.com/avatars/{user_data['id']}/{user_data['avatar']}.{ext}"
+
                 final_user = UserDatabase.save({
                     'id': user_data['id'],
                     'username': user_data['username'],
-                    'avatar': f"https://cdn.discordapp.com/avatars/{user_data['id']}/{user_data['avatar']}.png" if user_data.get('avatar') else None
+                    'avatar': avatar_url
                 })
                 
                 # Create session
