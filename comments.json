@@ -5,14 +5,30 @@
             "content": "the TRUE mc",
             "timestamp": "2026-02-01T18:17:03.363853+00:00",
             "role": "admin",
-            "avatar": "https://cdn.discordapp.com/avatars/1021410672803844129/ab6a7db7d9e2f40c762debc337869200.png"
+            "avatar": "https://cdn.discordapp.com/avatars/1021410672803844129/ab6a7db7d9e2f40c762debc337869200.png",
+            "id": "bbd92612-17c6-4075-8060-8dbf56263e36",
+            "user_id": "a8a5db1b05587e88504cf5f0290de620",
+            "created_at": "2026-02-01T18:17:03.363853+00:00",
+            "parent_id": null,
+            "likes": [],
+            "dislikes": [],
+            "is_deleted": false,
+            "is_pinned": false
         },
         {
             "user": "baderso",
             "content": "goat",
             "timestamp": "2026-02-01T18:22:34.788566+00:00",
             "role": "admin",
-            "avatar": "https://cdn.discordapp.com/avatars/1021410672803844129/ab6a7db7d9e2f40c762debc337869200.png"
+            "avatar": "https://cdn.discordapp.com/avatars/1021410672803844129/ab6a7db7d9e2f40c762debc337869200.png",
+            "id": "b36ae922-2223-4b32-b730-af82a3b659c0",
+            "user_id": "a8a5db1b05587e88504cf5f0290de620",
+            "created_at": "2026-02-01T18:22:34.788566+00:00",
+            "parent_id": null,
+            "likes": [],
+            "dislikes": [],
+            "is_deleted": false,
+            "is_pinned": false
         }
     ],
     "/pages/characters/seo_eun_hyun.html": [
