@@ -351,8 +351,7 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
         if self.path.startswith('/api/'):
             self.send_response(code)
             self.send_header('Content-Type', 'application/json')
-            self.send_cors_headers()
-            self.end_headers()
+            self.end_headers()  # This calls send_cors_headers internally
             response = {'status': 'error', 'message': message, 'code': code}
             self.wfile.write(json.dumps(response).encode())
         else:
@@ -821,8 +820,13 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
 
         elif self.path == '/api/permissions':
             try:
+                print(f"[PERMISSIONS POST] Request received")
                 user = get_authenticated_user(self)
-                if not is_admin(user):
+                print(f"[PERMISSIONS POST] User: {user}")
+                admin_check = is_admin(user)
+                print(f"[PERMISSIONS POST] is_admin: {admin_check}")
+                if not admin_check:
+                    print(f"[PERMISSIONS POST] Permission denied for user: {user}")
                     self.send_error(403, "Permission denied: Admins only")
                     return
 

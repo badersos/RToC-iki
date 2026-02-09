@@ -269,8 +269,9 @@ h3 {
 }
 
 .search-highlight {
-    color: var(--accent-secondary); 
-    background: rgba(29, 155, 240, 0.15); /* Blue tint */
+    color: var(--accent-secondary);
+    background: rgba(29, 155, 240, 0.15);
+    /* Blue tint */
     font-weight: 600;
     padding: 0 2px;
     border-radius: 2px;
@@ -281,7 +282,8 @@ h3 {
 }
 
 .search-result-item:hover .search-snippet {
-    color: #cbd5e1 !important; /* Lighter on hover */
+    color: #cbd5e1 !important;
+    /* Lighter on hover */
 }
 
 /* Mobile Nav Toggle */
@@ -1963,5 +1965,23 @@ body.is-editing .infobox-title {
         height: 60vh;
         background-attachment: scroll;
         /* Parallax often breaks on mobile */
+    }
+
+    /* Character cards - always show names on mobile (no hover) */
+    .character-card {
+        padding-bottom: 2.5rem;
+        /* Make room for the name */
+    }
+
+    .character-card::before {
+        opacity: 1;
+        /* Always show gradient overlay */
+    }
+
+    .character-name {
+        opacity: 1 !important;
+        transform: translateY(0) !important;
+        background: linear-gradient(to top, rgba(10, 10, 15, 0.95) 0%, rgba(10, 10, 15, 0.7) 50%, transparent 100%);
+        padding: 2rem 0.75rem 0.75rem;
     }
 }

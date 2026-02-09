@@ -504,14 +504,16 @@
         }
 
         async function submitChange(target, role) {
+            console.log('[submitChange] Starting...', { target, role, rtocFetch: !!window.rtocFetch });
             try {
-                const url = '/api/permissions'; // rtocFetch appends headers/credentials
+                const url = '/api/permissions';
                 const body = {
                     username: target,
                     role: role,
                     requester: currentUser.id || currentUser.username
                 };
 
+                console.log('[submitChange] Making request to:', window.RTOC_API_BASE + url);
                 const res = await (window.rtocFetch
                     ? window.rtocFetch(url, {
                         method: 'POST',
@@ -525,14 +527,19 @@
                         credentials: 'include'
                     })
                 );
+                console.log('[submitChange] Response status:', res.status, res.statusText);
                 const data = await res.json();
+                console.log('[submitChange] Response data:', data);
                 if (data.status === 'success') {
                     showToast('✓ Updated successfully', 'success');
                     loadUsers();
                 } else {
-                    showToast(data.message, 'error');
+                    showToast(data.message || 'Update failed', 'error');
                 }
-            } catch (e) { showToast('Connection failed', 'error'); }
+            } catch (e) {
+                console.error('[submitChange] ERROR:', e.name, e.message, e);
+                showToast('Connection failed: ' + e.message, 'error');
+            }
         }
 
         function showToast(msg, type) {
