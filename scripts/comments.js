@@ -1,5 +1,22 @@
 /* comments.js - Complete Comment System with Replies, Voting, Editing */
 
+// Self-contained API configuration (in case api-config.js isn't loaded)
+(function () {
+    if (typeof window.RTOC_API_BASE === 'undefined') {
+        const isCustomDomain = window.location.hostname === 'regressorstaleofcultivation.space';
+        const isGitHubPages = window.location.hostname.includes('github.io');
+        const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+
+        if (isLocalhost) {
+            window.RTOC_API_BASE = '';
+        } else if (isCustomDomain || isGitHubPages) {
+            window.RTOC_API_BASE = 'https://rtoc-iki.onrender.com';
+        } else {
+            window.RTOC_API_BASE = '';
+        }
+    }
+})();
+
 document.addEventListener('DOMContentLoaded', () => {
     const container = document.getElementById('comments-section');
     if (!container) return;
