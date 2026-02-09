@@ -4,21 +4,20 @@
 (function () {
     // Detect if we're on GitHub Pages or local development
     const isGitHubPages = window.location.hostname.includes('github.io');
+    const isCustomDomain = window.location.hostname === 'regressorstaleofcultivation.space';
     const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
 
     // Set API base URL based on environment
-    // UPDATE THIS after deploying to Render.com with your actual URL
     let API_BASE = '';
 
     if (isLocalhost) {
         // Local development - use same origin
         API_BASE = '';
-    } else if (isGitHubPages) {
-        // GitHub Pages - point to Render.com deployed server
-        // IMPORTANT: Replace this URL after deploying to Render.com!
-        API_BASE = 'https://rtoc-wiki-api.onrender.com';
+    } else if (isGitHubPages || isCustomDomain) {
+        // GitHub Pages or custom domain - point to Render.com deployed server
+        API_BASE = 'https://rtoc-iki.onrender.com';
     } else {
-        // Custom domain with server running (e.g., Cloudflare tunnel)
+        // Fallback - assume server running on same origin (e.g., Cloudflare tunnel)
         API_BASE = '';
     }
 
