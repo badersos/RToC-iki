@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
             backdropFilter: 'blur(12px)',
             boxShadow: '0 10px 30px rgba(0,0,0,0.6)'
         });
-        searchContainer.style.position = 'relative'; 
+        searchContainer.style.position = 'relative';
         searchContainer.appendChild(resultsBox);
 
         // Debounce Utility
@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 resultsBox.innerHTML = '<div style="padding:1rem; color:#6e7a8a; text-align:center;">Searching...</div>';
                 resultsBox.style.display = 'block';
 
-                const res = await fetch(`/api/search?q=${encodeURIComponent(query)}&limit=8`);
+                const res = await (window.rtocFetch ? window.rtocFetch(`/api/search?q=${encodeURIComponent(query)}&limit=8`) : fetch(`/api/search?q=${encodeURIComponent(query)}&limit=8`));
                 const data = await res.json();
 
                 if (data.status === 'success') {
@@ -87,7 +87,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const div = document.createElement('div');
                 div.className = 'search-result-item';
                 div.dataset.index = index;
-                
+
                 // Highlight logic for Snippet
                 let snippetHtml = result.snippet || "";
                 terms.forEach(term => {
@@ -141,7 +141,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         searchInput.addEventListener('keydown', (e) => {
             if (resultsBox.style.display === 'none') return;
-            
+
             const items = resultsBox.querySelectorAll('.search-result-item');
             if (items.length === 0) return;
 
@@ -175,7 +175,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 resultsBox.style.display = 'none';
             }
         });
-        
+
         // Focus handler just to reshow if query exists
         searchInput.addEventListener('focus', () => {
             if (searchInput.value.trim().length >= 2 && currentResults.length > 0) {
@@ -275,7 +275,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Server-side session check (most reliable)
     (async () => {
         try {
-            const res = await fetch('/api/user/me');
+            const res = await (window.rtocFetch ? window.rtocFetch('/api/user/me') : fetch('/api/user/me'));
             const data = await res.json();
 
             if (data.status === 'success' && data.user) {
@@ -302,7 +302,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 // Still try to sync permissions
                 try {
-                    const permRes = await fetch('/api/permissions');
+                    const permRes = await (window.rtocFetch ? window.rtocFetch('/api/permissions') : fetch('/api/permissions'));
                     const permData = await permRes.json();
                     if (permData.status === 'success' && permData.permissions) {
                         const permsLower = {};
@@ -395,7 +395,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const discordLoginBtn = document.querySelector('.social-btn.discord');
     if (discordLoginBtn) {
         discordLoginBtn.addEventListener('click', () => {
-            window.location.href = '/auth/discord/login';
+            const apiBase = window.RTOC_API_BASE || '';
+            window.location.href = `${apiBase}/auth/discord/login`;
         });
     }
 
