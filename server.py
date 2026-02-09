@@ -636,7 +636,25 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
             return SessionManager.get_user(self.headers)
             
         def is_admin(user):
-            return user and user.get('role') in ['admin', 'owner']
+            if not user:
+                return False
+            user_id = str(user.get('id', ''))
+            username = user.get('username', '')
+            # Hardcoded owner ID
+            if user_id == '1021410672803844129':
+                return True
+            # Check permissions.json for role
+            if os.path.exists('permissions.json'):
+                try:
+                    with open('permissions.json', 'r') as f:
+                        perms = json.load(f)
+                        role = perms.get(user_id) or perms.get(username)
+                        if role in ['admin', 'owner']:
+                            return True
+                except:
+                    pass
+            # Fallback to user object's role
+            return user.get('role') in ['admin', 'owner']
 
         if self.path == '/save':
             try:
