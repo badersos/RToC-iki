@@ -404,7 +404,7 @@
                     return;
                 }
 
-                const res = await (window.rtocFetch ? rtocFetch('/api/permissions') : fetch(API_URL));
+                const res = await (window.rtocFetch ? window.rtocFetch('/api/permissions') : fetch('/api/permissions', { credentials: 'include' }));
                 if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
 
                 const data = await res.json();
@@ -518,11 +518,11 @@
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify(body)
                     })
-                    : fetch(API_URL, {
+                    : fetch('/api/permissions', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify(body),
-                        credentials: 'include' // Fallback needs credentials too
+                        credentials: 'include'
                     })
                 );
                 const data = await res.json();
