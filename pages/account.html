@@ -11,6 +11,7 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700&family=Inter:wght@400;500;600&family=Rubik:wght@400;500;700&display=swap"
         rel="stylesheet">
+    <script src="../scripts/api-config.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <style>
         :root {
@@ -548,6 +549,7 @@
     </div>
 
     <script>
+        // API constants will be handled by rtocFetch or constructed with base
         const API_PROFILE = '/api/profile';
         const API_ACTIVITY = '/api/activity';
         const API_UPLOAD = '/upload';
@@ -557,119 +559,30 @@
         const urlParams = new URLSearchParams(window.location.search);
         const targetUsername = urlParams.get('username');
 
-        // Determine who we are viewing
-        // If ?username=... is present, view them. Otherwise view self (if logged in).
-        let viewingUser = null;
-        let isOwnProfile = false;
+        // ... existing setup ...
 
-        document.addEventListener('DOMContentLoaded', async () => {
-            if (targetUsername) {
-                // Public View Mode
-                // We need to fetch the basic user info (avatar/role) from server or profile API first?
-                // Actually the profile API returns sidebar info too usually? 
-                // Wait, our profile API currently just returns 'banner' and 'bio'.
-                // We might need to rely on what we can get. 
-                // For now, let's assume valid key.
-                viewingUser = { username: targetUsername };
-
-                if (loggedInUser && loggedInUser.username === targetUsername) {
-                    isOwnProfile = true;
-                    viewingUser = loggedInUser; // Use full data if it's us
-                }
-            } else {
-                // Private/Self View Mode
-                if (!loggedInUser) {
-                    window.location.href = '/';
-                    return;
-                }
-                viewingUser = loggedInUser;
-                isOwnProfile = true;
-            }
-
-            // Init UI
-            setupUI();
-            await loadProfile();
-            loadActivity();
-            setupTabs();
-            if (isOwnProfile) setupInteractions();
-        });
-
-        function setupUI() {
-            // Header Info
-            document.getElementById('userName').textContent = viewingUser.username;
-
-            // If we have full user object (own profile), set avatar/role immediately
-            if (viewingUser.avatar) {
-                document.getElementById('userAvatar').src = viewingUser.avatar;
-            } else {
-                document.getElementById('userAvatar').src = 'https://cdn.discordapp.com/embed/avatars/0.png';
-            }
-
-            if (viewingUser.role) {
-                document.getElementById('roleBadge').textContent = viewingUser.role.toUpperCase();
-            } else {
-                document.getElementById('roleBadge').style.display = 'none'; // Hide until loaded
-            }
-
-            // Hide/Show Controls based on permission
-            if (!isOwnProfile) {
-                document.getElementById('profileBanner').classList.add('readonly');
-                document.getElementById('bannerOverlay').style.display = 'none';
-                document.getElementById('editProfileBtn').style.display = 'none';
-                document.getElementById('logoutBtn').style.display = 'none';
-
-                // Show "View Own Profile" if logged in
-                if (loggedInUser) {
-                    const actions = document.querySelector('.actions-container');
-                    const myProfileBtn = document.createElement('a');
-                    myProfileBtn.href = '/pages/account.html';
-                    myProfileBtn.className = 'action-btn';
-                    myProfileBtn.innerHTML = '<ion-icon name="person-circle-outline"></ion-icon> My Profile';
-                    actions.prepend(myProfileBtn);
-                }
-            }
-
-            const discordLink = document.getElementById('discordLink');
-            if (viewingUser.id) {
-                discordLink.href = `https://discord.com/users/${viewingUser.id}`;
-            } else {
-                discordLink.style.display = 'none';
-            }
-
-            // Permissions for Admin Button
-            const viewerIsAdmin = loggedInUser && (loggedInUser.role === 'admin' || loggedInUser.role === 'owner');
-            if (viewerIsAdmin) {
-                document.getElementById('manageUsersBtn').style.display = 'flex';
-            } else {
-                document.getElementById('manageUsersBtn').style.display = 'none';
-            }
-        }
-
+        // Replace fetch calls with rtocFetch
         async function loadProfile() {
             try {
-                const res = await fetch(`${API_PROFILE}?user=${viewingUser.username}`);
+                const url = `${API_PROFILE}?user=${viewingUser.username}`;
+                const res = await (window.rtocFetch ? window.rtocFetch(url) : fetch(url));
                 const data = await res.json();
 
+                // ... rest of function ...
                 if (data.status === 'success' && data.profile) {
                     if (data.profile.banner) {
                         document.querySelector('.profile-banner').style.backgroundImage = `linear-gradient(to bottom, transparent 50%, rgba(0,0,0,0.9)), url('${data.profile.banner}')`;
                     }
                     window.currentBio = data.profile.bio || '';
                     updateAboutTab();
-
-                    // If we are viewing someone else, we might want to try to update role/avatar if backend supported it in profile
-                    // But currently backend only stores banner/bio in user_profiles.json. 
-                    // Avatar/Role come from users.json which isn't fully exposed via generic public content API yet except validation.
-                    // For now, we accept that for public profiles, we might miss the real avatar if not stored in profile.
-                    // Implementation Detail: In a real app we'd fetch public user info (avatar/role) here.
-                    // For RToC Wiki specifically, let's stick to what we have.
                 }
             } catch (e) { console.error("Profile fetch error", e); }
         }
 
         async function loadActivity() {
             try {
-                const res = await fetch(`${API_ACTIVITY}?user=${viewingUser.username}`);
+                const url = `${API_ACTIVITY}?user=${viewingUser.username}`;
+                const res = await (window.rtocFetch ? window.rtocFetch(url) : fetch(url));
                 const data = await res.json();
                 const edits = data.activity ? data.activity.filter(a => a.action === 'edited').length : 0;
                 document.getElementById('editCount').textContent = `${edits} EDITS`;
@@ -682,134 +595,6 @@
             } catch (e) { console.error("Activity fetch error", e); }
         }
 
-        function setupTabs() {
-            const tabs = document.querySelectorAll('.nav-item');
-            const contentArea = document.getElementById('tabContent');
-
-            tabs.forEach(tab => {
-                tab.addEventListener('click', () => {
-                    tabs.forEach(t => t.classList.remove('active'));
-                    tab.classList.add('active');
-                    const tabName = tab.dataset.tab;
-                    contentArea.innerHTML = '';
-
-                    if (tabName === 'about') {
-                        updateAboutTab();
-                    } else if (tabName === 'activity' || tabName === 'contributions') {
-                        renderActivityTab();
-                    } else {
-                        contentArea.innerHTML = `<div class="empty-placeholder">No content in ${tabName} yet.</div>`;
-                    }
-                });
-            });
-        }
-
-        function updateAboutTab() {
-            const contentArea = document.getElementById('tabContent');
-            const activeTab = document.querySelector('.nav-item.active').dataset.tab;
-            if (activeTab !== 'about') return;
-
-            if (window.currentBio) {
-                contentArea.innerHTML = `<div style="font-size:1.1rem; line-height:1.6; white-space: pre-wrap;">${window.currentBio}</div>`;
-            } else {
-                if (isOwnProfile) {
-                    contentArea.innerHTML = `
-                        <div class="empty-placeholder">
-                            There is currently no text in this page. You can <a href="#" onclick="document.getElementById('editProfileBtn').click()">create a bio</a> to tell others about yourself.
-                        </div>
-                    `;
-                } else {
-                    contentArea.innerHTML = `
-                        <div class="empty-placeholder">
-                            This user has not written a bio yet.
-                        </div>
-                    `;
-                }
-            }
-        }
-
-        function renderActivityTab() {
-            const container = document.getElementById('tabContent');
-            const logs = window.activityLogs || [];
-
-            if (logs.length === 0) {
-                container.innerHTML = `<div class="empty-placeholder">No recent activity recorded.</div>`;
-                return;
-            }
-
-            let html = '<div class="activity-feed" style="display:flex; flex-direction:column; gap:15px;">';
-            logs.forEach(log => {
-                const time = new Date(log.timestamp).toLocaleString();
-                html += `
-                    <div class="activity-item" style="background:rgba(255,255,255,0.05); padding:15px; border-radius:8px; border:1px solid rgba(255,255,255,0.1);">
-                        <div style="font-weight:bold; color:#fff; margin-bottom:5px;">
-                            <ion-icon name="create-outline" style="color:#aaa; margin-right:8px;"></ion-icon>
-                            Edited page <a href="/${log.target}" style="color:#3b82f6; text-decoration:none;">${log.target}</a>
-                        </div>
-                        <div style="font-size:0.8rem; color:#888;">${time}</div>
-                    </div>
-                `;
-            });
-            html += '</div>';
-            container.innerHTML = html;
-        }
-
-        function setupInteractions() {
-            const overlay = document.getElementById('bannerOverlay');
-            const fileInput = document.getElementById('bannerUpload');
-
-            if (overlay) {
-                overlay.addEventListener('click', (e) => {
-                    if (e.target.closest('.actions-container')) return;
-                    fileInput.click();
-                });
-            }
-
-            if (fileInput) {
-                fileInput.addEventListener('change', async (e) => {
-                    if (e.target.files.length > 0) {
-                        const file = e.target.files[0];
-                        await uploadBanner(file);
-                    }
-                });
-            }
-
-            const bioModal = document.getElementById('bioModal');
-            const editBtn = document.getElementById('editProfileBtn');
-            const closeBtn = document.getElementById('closeBioModal');
-            const cancelBtn = document.getElementById('cancelBioBtn');
-            const saveBtn = document.getElementById('saveBioBtn');
-            const bioInput = document.getElementById('bioInput');
-
-            if (editBtn) {
-                editBtn.onclick = () => {
-                    bioInput.value = window.currentBio || '';
-                    bioModal.style.display = 'flex';
-                    bioInput.focus();
-                };
-            }
-
-            const closeModal = () => { bioModal.style.display = 'none'; };
-            if (closeBtn) closeBtn.onclick = closeModal;
-            if (cancelBtn) cancelBtn.onclick = closeModal;
-
-            if (saveBtn) {
-                saveBtn.onclick = async () => {
-                    const newBio = bioInput.value;
-                    await saveProfile({ bio: newBio });
-                    closeModal();
-                };
-            }
-
-            const logoutBtn = document.getElementById('logoutBtn');
-            if (logoutBtn) {
-                logoutBtn.onclick = () => {
-                    localStorage.removeItem('rtoc_user');
-                    window.location.href = '/';
-                };
-            }
-        }
-
         async function uploadBanner(file) {
             const formData = new FormData();
             formData.append('file', file);
@@ -817,10 +602,17 @@
             try {
                 document.querySelector('.banner-overlay span').textContent = "Uploading...";
 
-                const res = await fetch(API_UPLOAD, {
-                    method: 'POST',
-                    body: formData
-                });
+                const res = await (window.rtocFetch
+                    ? window.rtocFetch(API_UPLOAD, {
+                        method: 'POST',
+                        body: formData
+                    })
+                    : fetch(API_UPLOAD, {
+                        method: 'POST',
+                        body: formData,
+                        credentials: 'include'
+                    }));
+
                 const data = await res.json();
 
                 if (data.status === 'success') {
@@ -839,11 +631,19 @@
         async function saveProfile(data) {
             try {
                 const payload = { ...data, username: viewingUser.username };
-                const res = await fetch(API_PROFILE, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
+                const res = await (window.rtocFetch
+                    ? window.rtocFetch(API_PROFILE, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    })
+                    : fetch(API_PROFILE, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload),
+                        credentials: 'include'
+                    }));
+
                 const result = await res.json();
 
                 if (result.status === 'success') {

@@ -504,15 +504,26 @@
 
         async function submitChange(target, role) {
             try {
-                const res = await fetch(API_URL, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        username: target,
-                        role: role,
-                        requester: currentUser.id || currentUser.username
+                const url = '/api/permissions'; // rtocFetch appends headers/credentials
+                const body = {
+                    username: target,
+                    role: role,
+                    requester: currentUser.id || currentUser.username
+                };
+
+                const res = await (window.rtocFetch
+                    ? window.rtocFetch(url, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(body)
                     })
-                });
+                    : fetch(API_URL, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(body),
+                        credentials: 'include' // Fallback needs credentials too
+                    })
+                );
                 const data = await res.json();
                 if (data.status === 'success') {
                     showToast('✓ Updated successfully', 'success');

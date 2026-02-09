@@ -59,7 +59,7 @@ class WikiEditor {
         let serverChecked = false;
         try {
             // First try server session
-            const res = await fetch('/api/user/me');
+            const res = await window.rtocFetch('/api/user/me');
             const data = await res.json();
 
             if (data.status === 'success' && data.user) {
@@ -1028,7 +1028,7 @@ class WikiEditor {
 
             const newPath = `pages/characters/${id}.html`;
 
-            const saveRes = await fetch('/save', {
+            const saveRes = await window.rtocFetch('/save', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ file: newPath, content: html })
@@ -1095,7 +1095,7 @@ class WikiEditor {
             }
 
             // 3. Save the modified file
-            const saveRes = await fetch('/save', {
+            const saveRes = await window.rtocFetch('/save', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ file: 'pages/characters.html', content: html })
@@ -1137,7 +1137,7 @@ class WikiEditor {
         this.showNotification('Deleting page...', 'info');
 
         try {
-            const response = await fetch('/api/pages/delete', {
+            const response = await window.rtocFetch('/api/pages/delete', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ path: currentPath })
@@ -1188,7 +1188,7 @@ class WikiEditor {
 </html>`;
 
         try {
-            const res = await fetch('/save', {
+            const res = await window.rtocFetch('/save', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ file: fullPath, content: html })
@@ -1224,7 +1224,7 @@ class WikiEditor {
 
             const path = `pages/characters/${id}.html`;
 
-            const saveRes = await fetch('/save', {
+            const saveRes = await window.rtocFetch('/save', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ file: path, content: html })
@@ -1255,7 +1255,7 @@ class WikiEditor {
             // Get current page content
             const html = document.documentElement.outerHTML;
 
-            const res = await fetch('/save', {
+            const res = await window.rtocFetch('/save', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ file: newPath.replace(/^\//, ''), content: html })
@@ -1289,7 +1289,7 @@ class WikiEditor {
             const html = document.documentElement.outerHTML;
 
             // Save to new location
-            const saveRes = await fetch('/save', {
+            const saveRes = await window.rtocFetch('/save', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ file: newPath.replace(/^\//, ''), content: html })
@@ -1298,7 +1298,7 @@ class WikiEditor {
             if (!saveRes.ok) throw new Error('Failed to save new page');
 
             // Delete old page
-            await fetch('/api/pages/delete', {
+            await window.rtocFetch('/api/pages/delete', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ path: currentPath })
@@ -1589,7 +1589,7 @@ class WikiEditor {
         // Browse assets
         document.getElementById('browseImgBtn').onclick = async () => {
             try {
-                const res = await fetch('/api/assets');
+                const res = await window.rtocFetch('/api/assets');
                 const data = await res.json();
 
                 if (data.status === 'success' && data.assets.length > 0) {
@@ -1699,7 +1699,7 @@ class WikiEditor {
         this.showNotification('Uploading...', 'info');
 
         try {
-            const res = await fetch('/upload', {
+            const res = await window.rtocFetch('/upload', {
                 method: 'POST',
                 body: formData
             });
@@ -1758,7 +1758,7 @@ class WikiEditor {
         this.showNotification('Uploading slide...', 'info');
 
         try {
-            const res = await fetch('/upload', {
+            const res = await window.rtocFetch('/upload', {
                 method: 'POST',
                 body: formData
             });
@@ -1849,7 +1849,7 @@ class WikiEditor {
         grid.innerHTML = '<p style="color: #aaa; grid-column: 1/-1;">Loading...</p>';
 
         try {
-            const res = await fetch('/api/assets');
+            const res = await window.rtocFetch('/api/assets');
             const data = await res.json();
 
             if (data.status === 'success') {
@@ -1963,7 +1963,7 @@ class WikiEditor {
         const user = JSON.parse(localStorage.getItem('rtoc_user') || 'null');
 
         try {
-            const response = await fetch('/save', {
+            const response = await window.rtocFetch('/save', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -2700,7 +2700,7 @@ class ImageEditor {
         this.editor.showNotification('Uploading...', 'info');
 
         try {
-            const res = await fetch('/upload', {
+            const res = await window.rtocFetch('/upload', {
                 method: 'POST',
                 body: formData
             });
