@@ -579,7 +579,12 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                 self.send_error(500, str(e))
             return
 
-        super().do_GET()
+        # Only serve static files when NOT running on Render (i.e., local development)
+        if not os.environ.get('RENDER'):
+            super().do_GET()
+        else:
+            # API-only mode on Render - return 404 for non-API routes
+            self.send_error(404, "Not Found")
 
 
     def do_POST(self):
