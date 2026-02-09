@@ -115,6 +115,37 @@ class SessionManager:
         except: pass
         return None
 
+# === HELPER FUNCTIONS ===
+def get_authenticated_user(request_handler):
+    """Get the authenticated user from the request's session cookie."""
+    return SessionManager.get_user(request_handler.headers)
+
+def is_admin(user):
+    """Check if a user has admin or owner role."""
+    if not user:
+        return False
+    
+    user_id = str(user.get('id', ''))
+    username = user.get('username', '')
+    
+    # Hardcoded owner ID
+    if user_id == '1021410672803844129':
+        return True
+    
+    # Check permissions.json for role
+    if os.path.exists('permissions.json'):
+        try:
+            with open('permissions.json', 'r') as f:
+                perms = json.load(f)
+                role = perms.get(user_id) or perms.get(username)
+                if role in ['admin', 'owner']:
+                    return True
+        except:
+            pass
+    
+    # Fallback to user object's role
+    return user.get('role') in ['admin', 'owner']
+
 from html.parser import HTMLParser
 import re
 
@@ -975,19 +1006,34 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                 
                 page_id = data.get('pageId')
                 comment_id = data.get('commentId')
-                # User ID from session, not body
                 user_id = user['id']
-                is_admin_req = is_admin(user)
                 
+                # Robust Admin Check: Read directly from permissions.json
+                is_admin_req = False
+                if os.path.exists('permissions.json'):
+                    try:
+                        with open('permissions.json', 'r') as f:
+                            perms = json.load(f)
+                            role = perms.get(str(user_id)) or perms.get(user['username'])
+                            if role in ['admin', 'owner']:
+                                is_admin_req = True
+                            # Fallback to hardcoded owner
+                            if str(user_id) == '1021410672803844129': 
+                                is_admin_req = True
+                    except: pass
+
                 comments = {}
                 if os.path.exists('comments.json'):
                     with open('comments.json', 'r', encoding='utf-8') as f:
                         comments = json.load(f)
                 
                 success = False
+                found = False
                 if page_id in comments:
                     for comment in comments[page_id]:
                         if comment.get('id') == comment_id:
+                            found = True
+                            # Allow if owner of comment OR admin
                             if comment.get('user_id') == user_id or is_admin_req:
                                 comment['is_deleted'] = True
                                 comment['content'] = '[This comment has been deleted]'
@@ -998,12 +1044,24 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                         with open('comments.json', 'w', encoding='utf-8') as f:
                             json.dump(comments, f, indent=4)
                 
-                self.send_response(200 if success else 403)
-                self.send_header('Content-type', 'application/json')
-                self.end_headers()
-                self.wfile.write(json.dumps({"status": "success" if success else "error"}).encode('utf-8'))
-                
+                if success:
+                    self.send_response(200)
+                    self.send_header('Content-type', 'application/json')
+                    self.end_headers()
+                    self.wfile.write(json.dumps({"status": "success"}).encode('utf-8'))
+                elif found:
+                    self.send_response(403)
+                    self.send_header('Content-type', 'application/json')
+                    self.end_headers()
+                    self.wfile.write(json.dumps({"status": "error", "message": "Permission denied"}).encode('utf-8'))
+                else:
+                    self.send_response(404)
+                    self.send_header('Content-type', 'application/json')
+                    self.end_headers()
+                    self.wfile.write(json.dumps({"status": "error", "message": "Comment not found"}).encode('utf-8'))
+                    
             except Exception as e:
+                print(f"[DELETE ERROR] {e}")
                 self.send_error(500, str(e))
 
         elif self.path == '/api/comments/pin':
