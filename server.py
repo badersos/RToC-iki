@@ -18,6 +18,7 @@ REDIRECT_URI = os.environ.get('REDIRECT_URI', 'https://regressorstaleofcultivati
 # CORS - allowed origins for cross-origin requests
 ALLOWED_ORIGINS = [
     'https://regressorstaleofcultivation.space',
+    'https://www.regressorstaleofcultivation.space',
     'https://badersos.github.io',
     'http://localhost:8081',
     'http://127.0.0.1:8081'

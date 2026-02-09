@@ -4,7 +4,7 @@
 (function () {
     // Detect if we're on GitHub Pages or local development
     const isGitHubPages = window.location.hostname.includes('github.io');
-    const isCustomDomain = window.location.hostname === 'regressorstaleofcultivation.space';
+    const isCustomDomain = window.location.hostname.includes('regressorstaleofcultivation.space');
     const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
 
     // Set API base URL based on environment

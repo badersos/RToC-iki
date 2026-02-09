@@ -3,7 +3,7 @@
 // Self-contained API configuration (in case api-config.js isn't loaded)
 (function () {
     if (typeof window.RTOC_API_BASE === 'undefined') {
-        const isCustomDomain = window.location.hostname === 'regressorstaleofcultivation.space';
+        const isCustomDomain = window.location.hostname.includes('regressorstaleofcultivation.space');
         const isGitHubPages = window.location.hostname.includes('github.io');
         const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
 
@@ -62,6 +62,10 @@ class CommentSystem {
     }
 
     async apiFetch(endpoint, options = {}) {
+        if (window.rtocFetch) {
+            return window.rtocFetch(endpoint, options);
+        }
+
         const url = this.apiUrl(endpoint);
         if (window.RTOC_API_BASE) {
             options.credentials = 'include';

@@ -559,7 +559,125 @@
         const urlParams = new URLSearchParams(window.location.search);
         const targetUsername = urlParams.get('username');
 
-        // ... existing setup ...
+        // Determine which user profile to show
+        let viewingUser = loggedInUser;
+        let isOwnProfile = true;
+
+        if (targetUsername && (!loggedInUser || targetUsername !== loggedInUser.username)) {
+            // Viewing someone else's profile
+            viewingUser = { username: targetUsername, id: null, avatar: null, role: 'user' };
+            isOwnProfile = false;
+        }
+
+        if (!viewingUser) {
+            // Not logged in and no target - redirect to home
+            window.location.href = '/';
+        }
+
+        // --- RENDER UI ---
+        function renderUserUI() {
+            document.getElementById('userName').textContent = viewingUser.username || 'Unknown';
+            document.getElementById('userAvatar').src = viewingUser.avatar || '/assets/default_avatar.png';
+            document.getElementById('userAvatar').onerror = function () { this.src = 'https://cdn.discordapp.com/embed/avatars/0.png'; };
+
+            // Role badge
+            const role = viewingUser.role || 'user';
+            const badge = document.getElementById('roleBadge');
+            badge.textContent = role.toUpperCase();
+            badge.className = 'role-tag ' + role;
+
+            // Discord link
+            if (viewingUser.id) {
+                document.getElementById('discordLink').href = `https://discord.com/users/${viewingUser.id}`;
+            }
+
+            // Show/hide admin features based on logged in user (not viewed user)
+            if (loggedInUser && (loggedInUser.role === 'admin' || loggedInUser.role === 'owner')) {
+                document.getElementById('manageUsersBtn').style.display = 'flex';
+            }
+
+            // Hide editing features if viewing someone else
+            if (!isOwnProfile) {
+                document.getElementById('bannerOverlay').style.display = 'none';
+                document.getElementById('logoutBtn').style.display = 'none';
+                document.getElementById('editProfileBtn').style.display = 'none';
+            }
+        }
+
+        // --- BIO/ABOUT TAB ---
+        window.currentBio = '';
+        window.activityLogs = [];
+
+        function updateAboutTab() {
+            const content = document.getElementById('tabContent');
+            if (window.currentBio) {
+                content.innerHTML = `<div class="bio-content">${window.currentBio.replace(/\n/g, '<br>')}</div>`;
+            } else {
+                content.innerHTML = `<div class="empty-placeholder">There is currently no text in this page. You can <a href="#" onclick="document.getElementById('editProfileBtn').click()">create a bio</a> to tell others about yourself.</div>`;
+            }
+        }
+
+        function renderActivityTab() {
+            const content = document.getElementById('tabContent');
+            if (!window.activityLogs || window.activityLogs.length === 0) {
+                content.innerHTML = '<div class="empty-placeholder">No activity yet.</div>';
+                return;
+            }
+            let html = '<div class="activity-list">';
+            window.activityLogs.forEach(log => {
+                html += `<div class="activity-item">${log.action} - ${log.page || ''} - ${new Date(log.timestamp).toLocaleString()}</div>`;
+            });
+            html += '</div>';
+            content.innerHTML = html;
+        }
+
+        // --- INIT ---
+        renderUserUI();
+        loadProfile();
+        loadActivity();
+
+        // --- TAB SWITCHING ---
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', () => {
+                document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+                item.classList.add('active');
+                const tab = item.dataset.tab;
+                if (tab === 'about') updateAboutTab();
+                else if (tab === 'activity' || tab === 'contributions') renderActivityTab();
+                else document.getElementById('tabContent').innerHTML = '<div class="empty-placeholder">Coming soon...</div>';
+            });
+        });
+
+        // --- MODAL HANDLERS ---
+        document.getElementById('editProfileBtn')?.addEventListener('click', () => {
+            document.getElementById('bioModal').classList.add('active');
+            document.getElementById('bioInput').value = window.currentBio || '';
+        });
+        document.getElementById('closeBioModal')?.addEventListener('click', () => {
+            document.getElementById('bioModal').classList.remove('active');
+        });
+        document.getElementById('cancelBioBtn')?.addEventListener('click', () => {
+            document.getElementById('bioModal').classList.remove('active');
+        });
+        document.getElementById('saveBioBtn')?.addEventListener('click', async () => {
+            const bio = document.getElementById('bioInput').value;
+            await saveProfile({ bio });
+            document.getElementById('bioModal').classList.remove('active');
+        });
+
+        // --- BANNER UPLOAD ---
+        document.getElementById('bannerOverlay')?.addEventListener('click', () => {
+            document.getElementById('bannerUpload').click();
+        });
+        document.getElementById('bannerUpload')?.addEventListener('change', (e) => {
+            if (e.target.files.length) uploadBanner(e.target.files[0]);
+        });
+
+        // --- LOGOUT ---
+        document.getElementById('logoutBtn')?.addEventListener('click', () => {
+            localStorage.removeItem('rtoc_user');
+            window.location.href = '/?logout=true';
+        });
 
         // Replace fetch calls with rtocFetch
         async function loadProfile() {
@@ -568,7 +686,6 @@
                 const res = await (window.rtocFetch ? window.rtocFetch(url) : fetch(url));
                 const data = await res.json();
 
-                // ... rest of function ...
                 if (data.status === 'success' && data.profile) {
                     if (data.profile.banner) {
                         document.querySelector('.profile-banner').style.backgroundImage = `linear-gradient(to bottom, transparent 50%, rgba(0,0,0,0.9)), url('${data.profile.banner}')`;
