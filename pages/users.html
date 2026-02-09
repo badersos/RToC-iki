@@ -52,6 +52,7 @@
             font-weight: 700;
             margin: 0;
             background: linear-gradient(135deg, #fff 0%, #9ca3af 100%);
+            background-clip: text;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             letter-spacing: -1px;
@@ -391,11 +392,37 @@
 
         async function loadUsers() {
             try {
+                if (window.location.protocol === 'file:') {
+                    document.getElementById('usersGrid').innerHTML = `
+                        <div class="empty-state" style="color: #ef4444;">
+                            <ion-icon name="warning-outline" style="font-size: 2rem; margin-bottom: 10px;"></ion-icon><br>
+                            Running via file protocol.<br>
+                            Please start the server using <code>start_server.bat</code> and access via <code>http://localhost:8081</code>.
+                        </div>`;
+                    return;
+                }
+
                 const res = await fetch(API_URL);
+                if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+
                 const data = await res.json();
-                if (data.status === 'success') renderGrid(data.permissions);
-                else showToast(data.message || 'Failed to load', 'error');
+                if (data.status === 'success') {
+                    renderGrid(data.permissions);
+                } else {
+                    document.getElementById('usersGrid').innerHTML = `
+                        <div class="empty-state" style="color: #ef4444;">
+                            Failed to load users: ${data.message || 'Unknown error'}
+                        </div>`;
+                    showToast(data.message || 'Failed to load', 'error');
+                }
             } catch (e) {
+                console.error("Load users error:", e);
+                document.getElementById('usersGrid').innerHTML = `
+                    <div class="empty-state" style="color: #ef4444;">
+                        <ion-icon name="cloud-offline-outline" style="font-size: 2rem; margin-bottom: 10px;"></ion-icon><br>
+                        Connection failed.<br>
+                        <span style="font-size: 0.9em; color: #8899ac;">Is the server running?</span>
+                    </div>`;
                 showToast('Connection error', 'error');
             }
         }
