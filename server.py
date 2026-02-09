@@ -304,7 +304,6 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
     def do_OPTIONS(self):
         """Handle preflight CORS requests."""
         self.send_response(200)
-        self.send_cors_headers()
         self.send_header('Content-Length', '0')
         self.end_headers()
 
@@ -543,7 +542,7 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                     b64_user = base64.b64encode(user_json.encode()).decode()
                     
                     self.send_response(302)
-                    self.send_header('Set-Cookie', f'session={session_id}; Path=/; HttpOnly; SameSite=Lax; Max-Age=2592000')
+                    self.send_header('Set-Cookie', f'session={session_id}; Path=/; HttpOnly; SameSite=None; Secure; Max-Age=2592000')
                     self.send_header('Location', f"/?user_data={b64_user}")
                     self.end_headers()
                 
