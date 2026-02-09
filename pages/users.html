@@ -422,9 +422,14 @@
                     <div class="empty-state" style="color: #ef4444;">
                         <ion-icon name="cloud-offline-outline" style="font-size: 2rem; margin-bottom: 10px;"></ion-icon><br>
                         Connection failed.<br>
-                        <span style="font-size: 0.9em; color: #8899ac;">Is the server running?</span>
+                        <div style="font-size: 0.8em; color: #8899ac; margin-top:10px; text-align:left; background:rgba(0,0,0,0.2); padding:10px; border-radius:5px;">
+                            <strong>Error:</strong> ${e.message}<br>
+                            <strong>URL:</strong> ${window.location.href}<br>
+                            <strong>API:</strong> ${API_URL}<br>
+                            <strong>Origin:</strong> ${window.location.origin}
+                        </div>
                     </div>`;
-                showToast('Connection error', 'error');
+                showToast('Connection error: ' + e.message, 'error');
             }
         }
 
