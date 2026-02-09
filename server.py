@@ -525,15 +525,27 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                 # Create session
                 session_id = SessionManager.create(final_user['id'])
                 
-                # Also store in base64 for backwards compatibility with frontend
-                user_json = json.dumps(final_user)
-                b64_user = base64.b64encode(user_json.encode()).decode()
-                
-                self.send_response(302)
-                # Set session cookie (30 days)
-                self.send_header('Set-Cookie', f'session={session_id}; Path=/; HttpOnly; SameSite=Lax; Max-Age=2592000')
-                self.send_header('Location', f"/?user_data={b64_user}")
-                self.end_headers()
+                # Check if client wants JSON (API call from callback.html)
+                accept_header = self.headers.get('Accept', '')
+                if 'application/json' in accept_header:
+                    # API response for cross-origin callback
+                    self.send_response(200)
+                    self.send_header('Content-Type', 'application/json')
+                    self.send_header('Set-Cookie', f'session={session_id}; Path=/; HttpOnly; SameSite=None; Secure; Max-Age=2592000')
+                    self.end_headers()
+                    self.wfile.write(json.dumps({
+                        "status": "success",
+                        "user": final_user
+                    }).encode())
+                else:
+                    # Traditional redirect for direct browser access
+                    user_json = json.dumps(final_user)
+                    b64_user = base64.b64encode(user_json.encode()).decode()
+                    
+                    self.send_response(302)
+                    self.send_header('Set-Cookie', f'session={session_id}; Path=/; HttpOnly; SameSite=Lax; Max-Age=2592000')
+                    self.send_header('Location', f"/?user_data={b64_user}")
+                    self.end_headers()
                 
             except Exception as e:
                 print(f"OAuth Error: {e}")
