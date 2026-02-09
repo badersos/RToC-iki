@@ -55,7 +55,7 @@
 
             try {
                 // Determine API base URL from api-config or fallback
-                const API_BASE = window.RTOC_API_BASE || 'https://rtoc-wiki-api.onrender.com'; // Fallback to render URL if not set
+                const API_BASE = window.RTOC_API_BASE || 'https://rtoc-iki.onrender.com'; // Fallback to render URL if not set
 
                 // Exchange code for session
                 const response = await fetch(`${API_BASE}/auth/discord/callback?code=${code}`, {
