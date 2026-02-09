@@ -606,14 +606,18 @@ class CommentSystem {
     }
 
     renderComment(comment, isReply = false) {
-        const score = (comment.likes?.length || 0) - (comment.dislikes?.length || 0);
-        const userVote = comment.likes?.includes(this.userId) ? 'like' :
-            (comment.dislikes?.includes(this.userId) ? 'dislike' : null);
+        // Robustness checks for migrated/legacy data
+        const safeLikes = Array.isArray(comment.likes) ? comment.likes : [];
+        const safeDislikes = Array.isArray(comment.dislikes) ? comment.dislikes : [];
+
+        const score = safeLikes.length - safeDislikes.length;
+        const userVote = safeLikes.includes(this.userId) ? 'like' :
+            (safeDislikes.includes(this.userId) ? 'dislike' : null);
 
         const isOwn = this.user && (comment.user === this.user.username || comment.user_id === this.userId);
         const canModify = isOwn || this.isAdmin;
-        const isDeleted = comment.is_deleted;
-        const isPinned = comment.is_pinned;
+        const isDeleted = comment.is_deleted || false;
+        const isPinned = comment.is_pinned || false;
 
         let avatarContent = comment.user?.charAt(0).toUpperCase() || '?';
         if (comment.avatar) {
@@ -621,7 +625,7 @@ class CommentSystem {
         }
 
         // Link wrapper for avatar
-        const avatarLink = `<a href="/pages/account.html?username=${encodeURIComponent(comment.user)}" style="text-decoration:none; color:inherit; display:flex;">${avatarContent}</a>`;
+        const avatarLink = `<a href="/pages/account.html?username=${encodeURIComponent(comment.user || 'Anonymous')}" style="text-decoration:none; color:inherit; display:flex;">${avatarContent}</a>`;
 
         const roleClass = comment.role ? `role-${comment.role}` : '';
         const roleTag = comment.role && comment.role !== 'user'
