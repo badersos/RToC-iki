@@ -280,9 +280,10 @@ class TextExtractor(HTMLParser):
 
 class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
     def end_headers(self):
-        # Avoid stale caching
-        if self.path.endswith('.js') or self.path.startswith('/scripts/'):
-            self.send_header('Cache-Control', 'no-store')
+        # Avoid stale caching for everything during dev
+        self.send_header('Cache-Control', 'no-store, no-cache, must-revalidate')
+        self.send_header('Pragma', 'no-cache')
+        self.send_header('Expires', '0')
         return super().end_headers()
 
     def send_error(self, code, message=None, explain=None):
