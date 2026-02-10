@@ -688,7 +688,11 @@
 
                 if (data.status === 'success' && data.profile) {
                     if (data.profile.banner) {
-                        document.querySelector('.profile-banner').style.backgroundImage = `linear-gradient(to bottom, transparent 50%, rgba(0,0,0,0.9)), url('${data.profile.banner}')`;
+                        const apiBase = window.RTOC_API_BASE || '';
+                        const bannerUrl = data.profile.banner.startsWith('http')
+                            ? data.profile.banner
+                            : `${apiBase}${data.profile.banner}`;
+                        document.querySelector('.profile-banner').style.backgroundImage = `linear-gradient(to bottom, transparent 50%, rgba(0,0,0,0.9)), url('${bannerUrl}?t=${Date.now()}')`;
                     }
                     window.currentBio = data.profile.bio || '';
                     updateAboutTab();

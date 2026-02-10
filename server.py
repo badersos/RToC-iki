@@ -620,6 +620,21 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                 traceback.print_exc()
                 self.send_error(500, f"Authentication Failed: {str(e)}")
             return
+        
+        # Dev Login (Localhost only)
+        if self.path == '/api/dev/login' and not os.environ.get('RENDER'):
+            user_data = {"id": "dev-admin-id", "username": "DevAdmin", "role": "owner", "avatar": None}
+            # Create session
+            session_id = SessionManager.create(user_data['id'])
+            # Save user
+            UserDatabase.save(user_data)
+            
+            self.send_response(200)
+            self.send_header('Content-Type', 'application/json')
+            self.send_header('Set-Cookie', f'session={session_id}; Path=/; HttpOnly; SameSite=Lax; Max-Age=2592000')
+            self.end_headers()
+            self.wfile.write(json.dumps({"status": "success", "user": user_data, "message": "Dev login successful"}).encode())
+            return
 
         # API: List all pages
         if self.path.startswith('/api/pages'):
@@ -659,7 +674,8 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
             return
 
         # Only serve static files when NOT running on Render (i.e., local development)
-        if not os.environ.get('RENDER'):
+        # UNLESS it's an asset file (uploads/images) which we must serve
+        if not os.environ.get('RENDER') or self.path.startswith('/assets/'):
             super().do_GET()
         else:
             # API-only mode on Render - return 404 for non-API routes
