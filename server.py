@@ -1289,3 +1289,21 @@ if __name__ == '__main__':
         print(f"FAILED TO START SERVER: {e}")
         import traceback
         traceback.print_exc()
+
+if __name__ == "__main__":
+    # Ensure assets directory exists
+    if not os.path.exists('assets/uploads'):
+        os.makedirs('assets/uploads')
+
+    handler = SaveRequestHandler
+    
+    # Setup Git for persistence
+    setup_git()
+    
+    with socketserver.TCPServer(("", PORT), handler) as httpd:
+        print(f"Server started at http://localhost:{PORT}")
+        try:
+            httpd.serve_forever()
+        except KeyboardInterrupt:
+            print("\nShutting down server...")
+            httpd.server_close()
