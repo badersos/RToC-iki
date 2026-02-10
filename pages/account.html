@@ -723,7 +723,8 @@
                 const res = await (window.rtocFetch
                     ? window.rtocFetch(API_UPLOAD, {
                         method: 'POST',
-                        body: formData
+                        body: formData,
+                        credentials: 'include'
                     })
                     : fetch(API_UPLOAD, {
                         method: 'POST',
