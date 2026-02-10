@@ -790,7 +790,7 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                 self.send_error(500, str(e))
 
         # API: Upload File (for banners)
-        elif self.path == '/upload':
+        elif self.path == '/api/upload':
             try:
                 # Authentication Check
                 user = get_authenticated_user(self)
