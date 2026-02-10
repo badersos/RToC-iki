@@ -467,13 +467,16 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
 
                 page_comments = comments.get(page_id, [])
                 
-                # Sort comments based on requested order
+                # Sort comments based on requested order, with PINNED comments always on top
                 if sort_by == 'oldest':
-                    page_comments.sort(key=lambda c: c.get('created_at', ''))
+                    # Pinned first (False < True for 'not is_pinned'), then oldest (small timestamp)
+                    page_comments.sort(key=lambda c: (not c.get('is_pinned', False), c.get('created_at', '')))
                 elif sort_by == 'top':
-                    page_comments.sort(key=lambda c: len(c.get('likes', [])) - len(c.get('dislikes', [])), reverse=True)
+                    # Pinned first (True > False), then highest score
+                    page_comments.sort(key=lambda c: (c.get('is_pinned', False), len(c.get('likes', [])) - len(c.get('dislikes', []))), reverse=True)
                 else:  # newest (default)
-                    page_comments.sort(key=lambda c: c.get('created_at', ''), reverse=True)
+                     # Pinned first (True > False), then newest (large timestamp)
+                    page_comments.sort(key=lambda c: (c.get('is_pinned', False), c.get('created_at', '')), reverse=True)
                 
                 self.send_response(200)
                 self.send_header('Content-type', 'application/json')

@@ -35,7 +35,7 @@ class CommentSystem {
         this.container = container;
         this.pageId = pageId;
         this.user = JSON.parse(localStorage.getItem('rtoc_user') || 'null');
-        this.sortBy = 'newest';
+        this.sortBy = 'top';
         this.replyingTo = null;
         this.editingId = null;
 
@@ -552,9 +552,9 @@ class CommentSystem {
                         Discussion <span id="commentCount">(0)</span>
                     </h3>
                     <div class="sort-controls">
-                        <button class="sort-btn active" data-sort="newest">Newest</button>
+                        <button class="sort-btn" data-sort="newest">Newest</button>
                         <button class="sort-btn" data-sort="oldest">Oldest</button>
-                        <button class="sort-btn" data-sort="top">Top</button>
+                        <button class="sort-btn active" data-sort="top">Top</button>
                     </div>
                 </div>
                 
