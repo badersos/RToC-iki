@@ -825,60 +825,90 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
         # API: Upload File (for banners)
         elif self.path == '/upload':
             try:
+                # Authentication Check
+                user = get_authenticated_user(self)
+                if not user:
+                    print("[UPLOAD] Access denied: No user logged in")
+                    self.send_error(403, "Login required")
+                    return
+
                 content_type = self.headers.get('Content-Type', '')
-                if not 'multipart/form-data' in content_type:
+                if 'multipart/form-data' not in content_type:
                     self.send_error(400, "Content-Type must be multipart/form-data")
+                    return
+
+                try:
+                   boundary = content_type.split("boundary=")[1].encode()
+                except IndexError:
+                    self.send_error(400, "Invalid Content-Type: missing boundary")
                     return
 
                 content_length = int(self.headers.get('Content-Length', 0))
                 body = self.rfile.read(content_length)
                 
-                # Manual multipart parsing
-                boundary = content_type.split("boundary=")[1].encode()
-                parts = body.split(boundary)
+                # Robust multipart parsing
+                # Parts are separated by b'--' + boundary
+                parts = body.split(b'--' + boundary)
                 
-                file_url = None
+                found_filename = None
+                file_content = None
                 
                 for part in parts:
+                    # Skip empty parts or end guard
+                    if not part or part == b'--\r\n': continue
+                    
                     if b'filename="' in part:
-                        # Extract headers and content
-                        headers_end = part.find(b'\r\n\r\n')
-                        if headers_end != -1:
-                            headers = part[:headers_end].decode()
-                            content = part[headers_end+4:-4] # Remove \r\n\r\n and trailing \r\n--
+                        # Header/Body separator is \r\n\r\n
+                        split_idx = part.find(b'\r\n\r\n')
+                        if split_idx == -1: continue
+                        
+                        headers = part[:split_idx].decode('utf-8', errors='ignore')
+                        # Content follows headers + 4 bytes (\r\n\r\n)
+                        # And usually ends with \r\n before the next boundary
+                        raw_content = part[split_idx+4:]
+                        
+                        # Remove trailing \r\n which is part of multipart framing, not the file
+                        if raw_content.endswith(b'\r\n'):
+                            raw_content = raw_content[:-2]
                             
-                            # Extract filename
-                            import re
-                            filename_match = re.search(r'filename="([^"]+)"', headers)
-                            if filename_match:
-                                filename = filename_match.group(1)
-                                # Sanitize filename
-                                filename = os.path.basename(filename)
-                                # Unique filename
-                                ext = os.path.splitext(filename)[1]
-                                new_filename = f"{uuid.uuid4()}{ext}"
-                                
-                                # Ensure uploads directory exists
-                                upload_dir = os.path.join(os.getcwd(), 'assets', 'uploads')
-                                os.makedirs(upload_dir, exist_ok=True)
-                                
-                                file_path = os.path.join(upload_dir, new_filename)
-                                with open(file_path, 'wb') as f:
-                                    f.write(content)
-                                    
-                                file_url = f"/assets/uploads/{new_filename}"
-                                break
-                
-                if file_url:
+                        import re
+                        m = re.search(r'filename="([^"]+)"', headers)
+                        if m:
+                            found_filename = m.group(1)
+                            file_content = raw_content
+                            break
+                            
+                if found_filename and file_content:
+                    # Determine extension
+                    ext = os.path.splitext(found_filename)[1].lower()
+                    if not ext: ext = '.png'
+                    
+                    # Generate unique filename
+                    new_filename = f"{uuid.uuid4()}{ext}"
+                    
+                    # Ensure directory exists
+                    upload_dir = os.path.join(os.getcwd(), 'assets', 'uploads')
+                    os.makedirs(upload_dir, exist_ok=True)
+                    
+                    file_path = os.path.join(upload_dir, new_filename)
+                    with open(file_path, 'wb') as f:
+                        f.write(file_content)
+                    
+                    file_url = f"/assets/uploads/{new_filename}"
+                    print(f"[UPLOAD] Success: {file_url}")
+                    
                     self.send_response(200)
                     self.send_header('Content-Type', 'application/json')
                     self.end_headers()
                     self.wfile.write(json.dumps({"status": "success", "url": file_url}).encode())
                 else:
-                    self.send_error(400, "No file found in request")
+                    print("[UPLOAD] Error: No file found in parsing")
+                    self.send_error(400, "No file found")
 
             except Exception as e:
                 print(f"[UPLOAD ERROR] {e}")
+                import traceback
+                traceback.print_exc()
                 self.send_error(500, str(e))
 
         elif self.path == '/api/profile':
@@ -945,7 +975,8 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                 permissions = {}
                 if os.path.exists('permissions.json'):
                     try:
-                        perms = FileHandler.read_json('permissions.json')                    except: pass
+                        perms = FileHandler.read_json('permissions.json')
+                    except: pass
                 
                 permissions[target_user] = new_role
                 with open('permissions.json', 'w') as f:
@@ -1211,70 +1242,6 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
             except Exception as e:
                 self.send_error(500, str(e))
 
-        elif self.path == '/upload':
-            try:
-                user = get_authenticated_user(self)
-                if not is_admin(user):
-                    self.send_error(403, "Permission denied: Admins only")
-                    return
-
-                # Custom multipart parsing to avoid 'cgi' dependency
-                content_type = self.headers.get('Content-Type', '')
-                if 'multipart/form-data' not in content_type:
-                    self.send_error(400, "Content-Type must be multipart/form-data")
-                    return
-                
-                boundary = content_type.split("boundary=")[1].encode()
-                content_length = int(self.headers['Content-Length'])
-                body = self.rfile.read(content_length)
-                
-                # Split by boundary
-                parts = body.split(b'--' + boundary)
-                
-                filename = None
-                file_content = None
-                
-                for part in parts:
-                    if b'filename="' in part:
-                        # Extract filename
-                        headers_part, content_part = part.split(b'\r\n\r\n', 1)
-                        content_part = content_part.rstrip(b'\r\n')
-                        
-                        headers = headers_part.decode()
-                        import re
-                        m = re.search(r'filename="([^"]+)"', headers)
-                        if m:
-                            filename = m.group(1)
-                            file_content = content_part
-                            break
-                            
-                if not filename or not file_content:
-                    self.send_error(400, "No file found")
-                    return
-                
-                # Secure filename
-                filename = os.path.basename(filename)
-                target_dir = os.path.join(os.getcwd(), 'assets', 'images')
-                if not os.path.exists(target_dir):
-                    os.makedirs(target_dir)
-                    
-                target_path = os.path.join(target_dir, filename)
-                
-                with open(target_path, 'wb') as f:
-                    f.write(file_content)
-                    
-                self.send_response(200)
-                self.send_header('Content-type', 'application/json')
-                self.end_headers()
-                self.wfile.write(json.dumps({
-                    "status": "success", 
-                    "url": f"/assets/images/{filename}",
-                    "filename": filename
-                }).encode('utf-8'))
-                
-            except Exception as e:
-                print(f"Upload error: {e}")
-                self.send_error(500, str(e))
 
         else:
             self.send_error(404)
