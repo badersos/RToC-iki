@@ -179,11 +179,10 @@ def is_admin(user):
     # Check permissions.json for role
     if os.path.exists('permissions.json'):
         try:
-            with open('permissions.json', 'r') as f:
-                perms = json.load(f)
-                role = perms.get(user_id) or perms.get(username)
-                if role in ['admin', 'owner']:
-                    return True
+            perms = FileHandler.read_json('permissions.json')
+            role = perms.get(user_id) or perms.get(username)
+            if role in ['admin', 'owner']:
+                return True
         except:
             pass
     
@@ -448,9 +447,7 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
             try:
                 permissions = {}
                 if os.path.exists('permissions.json'):
-                    with open('permissions.json', 'r') as f:
-                        permissions = json.load(f)
-                
+                    perms = FileHandler.read_json('permissions.json')                
                 self.send_response(200)
                 self.send_header('Content-type', 'application/json')
                 self.end_headers()
@@ -685,11 +682,10 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
             # Check permissions.json for role
             if os.path.exists('permissions.json'):
                 try:
-                    with open('permissions.json', 'r') as f:
-                        perms = json.load(f)
-                        role = perms.get(user_id) or perms.get(username)
-                        if role in ['admin', 'owner']:
-                            return True
+                    perms = FileHandler.read_json('permissions.json')
+                    role = perms.get(user_id) or perms.get(username)
+                    if role in ['admin', 'owner']:
+                        return True
                 except:
                     pass
             # Fallback to user object's role
@@ -949,9 +945,7 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                 permissions = {}
                 if os.path.exists('permissions.json'):
                     try:
-                        with open('permissions.json', 'r') as f:
-                            permissions = json.load(f)
-                    except: pass
+                        perms = FileHandler.read_json('permissions.json')                    except: pass
                 
                 permissions[target_user] = new_role
                 with open('permissions.json', 'w') as f:
@@ -1128,14 +1122,13 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                 is_admin_req = False
                 if os.path.exists('permissions.json'):
                     try:
-                        with open('permissions.json', 'r') as f:
-                            perms = json.load(f)
-                            role = perms.get(str(user_id)) or perms.get(user['username'])
-                            if role in ['admin', 'owner']:
-                                is_admin_req = True
-                            # Fallback to hardcoded owner
-                            if str(user_id) == '1021410672803844129': 
-                                is_admin_req = True
+                        perms = FileHandler.read_json('permissions.json')
+                        role = perms.get(str(user_id)) or perms.get(user['username'])
+                        if role in ['admin', 'owner']:
+                            is_admin_req = True
+                        # Fallback to hardcoded owner
+                        if str(user_id) == '1021410672803844129': 
+                            is_admin_req = True
                     except: pass
 
                 comments = {}
@@ -1287,9 +1280,16 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
             self.send_error(404)
 
 if __name__ == '__main__':
-    with socketserver.TCPServer(("", PORT), SaveRequestHandler) as httpd:
-        print(f"Starting server at http://localhost:{PORT}")
-        try:
-            httpd.serve_forever()
-        except KeyboardInterrupt:
-            pass
+    try:
+        # Allow reuse of address to prevent 'Address already in use' errors on quick restarts
+        socketserver.TCPServer.allow_reuse_address = True
+        with socketserver.TCPServer(("", PORT), SaveRequestHandler) as httpd:
+            print(f"Starting server at http://localhost:{PORT}")
+            try:
+                httpd.serve_forever()
+            except KeyboardInterrupt:
+                pass
+    except Exception as e:
+        print(f"FAILED TO START SERVER: {e}")
+        import traceback
+        traceback.print_exc()
