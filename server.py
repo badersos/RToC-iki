@@ -380,6 +380,7 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
         """Handle preflight CORS requests."""
         self.send_response(200)
         self.send_header('Content-Length', '0')
+        self.send_header('Access-Control-Max-Age', '86400')
         self.end_headers()
 
     def end_headers(self):
@@ -445,13 +446,11 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
         # API: Get all permissions
         if self.path == '/api/permissions':
             try:
-                permissions = {}
-                if os.path.exists('permissions.json'):
-                    perms = FileHandler.read_json('permissions.json')                
+                perms = FileHandler.read_json('permissions.json')
                 self.send_response(200)
                 self.send_header('Content-type', 'application/json')
                 self.end_headers()
-                self.wfile.write(json.dumps({"status": "success", "permissions": permissions}).encode('utf-8'))
+                self.wfile.write(json.dumps({"status": "success", "permissions": perms}).encode('utf-8'))
             except Exception as e:
                 self.send_error(500, str(e))
             return
@@ -468,7 +467,14 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
 
                 page_comments = comments.get(page_id, [])
                 
-                # Migrate logic (simplified for brevity, assume valid structure or frontend handles partials)
+                # Sort comments based on requested order
+                if sort_by == 'oldest':
+                    page_comments.sort(key=lambda c: c.get('created_at', ''))
+                elif sort_by == 'top':
+                    page_comments.sort(key=lambda c: len(c.get('likes', [])) - len(c.get('dislikes', [])), reverse=True)
+                else:  # newest (default)
+                    page_comments.sort(key=lambda c: c.get('created_at', ''), reverse=True)
+                
                 self.send_response(200)
                 self.send_header('Content-type', 'application/json')
                 self.end_headers()
@@ -488,10 +494,7 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                 params = urllib.parse.parse_qs(query)
                 username = params.get('user', [None])[0]
 
-                profiles = {}
-                if os.path.exists('user_profiles.json'):
-                    with open('user_profiles.json', 'r') as f:
-                        profiles = json.load(f)
+                profiles = FileHandler.read_json('user_profiles.json')
                 
                 user_profile = profiles.get(username, {})
                 
@@ -510,14 +513,11 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                 params = urllib.parse.parse_qs(query)
                 username = params.get('user', [None])[0]
 
-                logs = []
-                if os.path.exists('activity_log.json'):
-                    with open('activity_log.json', 'r') as f:
-                         all_logs = json.load(f)
-                         if username:
-                             logs = [l for l in all_logs if l.get('user') == username]
-                         else:
-                             logs = all_logs
+                all_logs = FileHandler.read_json('activity_log.json', default=[])
+                if username:
+                    logs = [l for l in all_logs if l.get('user') == username]
+                else:
+                    logs = all_logs
                 
                 logs.sort(key=lambda x: x.get('timestamp', ''), reverse=True)
                 
@@ -667,30 +667,6 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
 
 
     def do_POST(self):
-        # --- Helper for Auth ---
-        def get_authenticated_user(self):
-            return SessionManager.get_user(self.headers)
-            
-        def is_admin(user):
-            if not user:
-                return False
-            user_id = str(user.get('id', ''))
-            username = user.get('username', '')
-            # Hardcoded owner ID
-            if user_id == '1021410672803844129':
-                return True
-            # Check permissions.json for role
-            if os.path.exists('permissions.json'):
-                try:
-                    perms = FileHandler.read_json('permissions.json')
-                    role = perms.get(user_id) or perms.get(username)
-                    if role in ['admin', 'owner']:
-                        return True
-                except:
-                    pass
-            # Fallback to user object's role
-            return user.get('role') in ['admin', 'owner']
-
         if self.path == '/save':
             try:
                 user = get_authenticated_user(self)
@@ -731,16 +707,10 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                             "timestamp": datetime.now(timezone.utc).isoformat()
                         }
                         
-                        logs = []
-                        if os.path.exists('activity_log.json'):
-                            with open('activity_log.json', 'r') as f:
-                                logs = json.load(f)
-                        
+                        logs = FileHandler.read_json('activity_log.json', default=[])
                         logs.insert(0, log_entry)
                         logs = logs[:1000]
-                        
-                        with open('activity_log.json', 'w') as f:
-                            json.dump(logs, f, indent=4)
+                        FileHandler.write_json('activity_log.json', logs)
                     except: pass
 
                 self.send_response(200)
@@ -804,13 +774,10 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                         "target": file_path,
                         "timestamp": datetime.now(timezone.utc).isoformat()
                     }
-                    logs = []
-                    if os.path.exists('activity_log.json'):
-                        with open('activity_log.json', 'r') as f:
-                            logs = json.load(f)
+                    logs = FileHandler.read_json('activity_log.json', default=[])
                     logs.insert(0, log_entry)
-                    with open('activity_log.json', 'w') as f:
-                        json.dump(logs[:1000], f, indent=4)
+                    logs = logs[:1000]
+                    FileHandler.write_json('activity_log.json', logs)
                 except: pass
                 
                 self.send_response(200)
@@ -925,12 +892,7 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                     self.send_error(400, "Username required")
                     return
 
-                profiles = {}
-                if os.path.exists('user_profiles.json'):
-                    try:
-                        with open('user_profiles.json', 'r') as f:
-                            profiles = json.load(f)
-                    except: pass
+                profiles = FileHandler.read_json('user_profiles.json')
                 
                 if username not in profiles:
                     profiles[username] = {}
@@ -938,8 +900,7 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                 if 'banner' in data: profiles[username]['banner'] = data['banner']
                 if 'bio' in data: profiles[username]['bio'] = data['bio']
                 
-                with open('user_profiles.json', 'w') as f:
-                    json.dump(profiles, f, indent=4)
+                FileHandler.write_json('user_profiles.json', profiles)
                     
                 print(f"[PROFILE UPDATE] Success for {username}")
                 self.send_response(200)
@@ -972,15 +933,9 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                     self.send_error(400, "Missing target user or role")
                     return
 
-                permissions = {}
-                if os.path.exists('permissions.json'):
-                    try:
-                        perms = FileHandler.read_json('permissions.json')
-                    except: pass
-                
+                permissions = FileHandler.read_json('permissions.json')
                 permissions[target_user] = new_role
-                with open('permissions.json', 'w') as f:
-                    json.dump(permissions, f, indent=4)
+                FileHandler.write_json('permissions.json', permissions)
 
                 self.send_response(200)
                 self.send_header('Content-type', 'application/json')

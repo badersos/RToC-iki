@@ -21,7 +21,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const container = document.getElementById('comments-section');
     if (!container) return;
 
-    const pageId = window.location.pathname;
+    // Use pathname, ensuring no trailing slash unless it's just '/'
+    let pageId = window.location.pathname;
+    if (pageId.length > 1 && pageId.endsWith('/')) {
+        pageId = pageId.slice(0, -1);
+    }
+    console.log('[Comments] Initializing for pageId:', pageId);
     window.CommentSystem = new CommentSystem(container, pageId);
 });
 

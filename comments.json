@@ -48,5 +48,21 @@
             "is_deleted": false,
             "is_pinned": true
         }
+    ],
+    "/test/page": [
+        {
+            "id": "e4da6a89-4a7d-4a3b-b83c-dc87e16d1100",
+            "user": "TestUser",
+            "user_id": "1021410672803844129",
+            "content": "[This comment has been deleted]",
+            "created_at": "2026-02-10T12:17:17.409273+00:00",
+            "parent_id": null,
+            "role": "admin",
+            "avatar": null,
+            "likes": [],
+            "dislikes": [],
+            "is_deleted": true,
+            "is_pinned": true
+        }
     ]
 }
