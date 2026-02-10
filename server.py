@@ -24,7 +24,8 @@ ALLOWED_ORIGINS = [
     'https://www.regressorstaleofcultivation.space',
     'https://badersos.github.io',
     'http://localhost:8081',
-    'http://127.0.0.1:8081'
+    'http://127.0.0.1:8081',
+    'https://rtoc-iki.onrender.com'
 ]
 
 # === DATABASE & SESSION MANAGER ===
