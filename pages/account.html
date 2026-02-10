@@ -715,6 +715,7 @@
         async function uploadBanner(file) {
             const formData = new FormData();
             formData.append('file', file);
+            console.log('[UPLOAD] Starting upload for:', file.name);
 
             try {
                 document.querySelector('.banner-overlay span').textContent = "Uploading...";
@@ -730,7 +731,9 @@
                         credentials: 'include'
                     }));
 
+                console.log('[UPLOAD] Response status:', res.status);
                 const data = await res.json();
+                console.log('[UPLOAD] Response data:', data);
 
                 if (data.status === 'success') {
                     await saveProfile({ banner: data.url });
@@ -738,8 +741,8 @@
                     alert('Upload failed: ' + data.message);
                 }
             } catch (e) {
-                console.error(e);
-                alert('Upload error');
+                console.error('[UPLOAD] Error:', e);
+                alert('Upload error: ' + e.message);
             } finally {
                 document.querySelector('.banner-overlay span').textContent = "Change Banner";
             }
@@ -748,6 +751,8 @@
         async function saveProfile(data) {
             try {
                 const payload = { ...data, username: viewingUser.username };
+                console.log('[SAVE PROFILE] Saving payload:', payload);
+
                 const res = await (window.rtocFetch
                     ? window.rtocFetch(API_PROFILE, {
                         method: 'POST',
@@ -761,20 +766,27 @@
                         credentials: 'include'
                     }));
 
+                console.log('[SAVE PROFILE] Response status:', res.status);
                 const result = await res.json();
+                console.log('[SAVE PROFILE] Result:', result);
 
                 if (result.status === 'success') {
+                    // Update UI locally
                     if (data.banner) {
-                        document.querySelector('.profile-banner').style.backgroundImage = `linear-gradient(to bottom, transparent 50%, rgba(0,0,0,0.9)), url('${data.banner}')`;
+                        document.getElementById('profileBanner').style.backgroundImage = `url('${data.banner}')`;
                     }
-                    if (data.bio !== undefined) {
+                    if (data.bio) {
                         window.currentBio = data.bio;
                         updateAboutTab();
+                        document.querySelector('.modal-close').click();
                     }
                 } else {
-                    alert("Update failed: " + result.message);
+                    alert('Save failed: ' + result.message);
                 }
-            } catch (e) { console.error(e); alert("Connection error."); }
+            } catch (e) {
+                console.error('[SAVE PROFILE] Error:', e);
+                alert('Save error: ' + e.message);
+            }
         }
     </script>
     <script src="../scripts/editor.js"></script>
