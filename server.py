@@ -33,6 +33,44 @@ ALLOWED_ORIGINS = [
 import shutil
 import threading
 import tempfile
+import subprocess
+
+# === GIT PERSISTENCE (Free Tier Hack) ===
+def setup_git():
+    """Configure git with the token for pushing."""
+    token = os.environ.get('GITHUB_TOKEN')
+    if not token:
+        print("[GIT] No GITHUB_TOKEN found. Persistence disabled.")
+        return
+
+    repo_url = f"https://oauth2:{token}@github.com/badersos/RToC-iki.git"
+    try:
+        # Configure user for commits
+        subprocess.run(["git", "config", "user.email", "bot@rtoc-wiki.com"], check=False)
+        subprocess.run(["git", "config", "user.name", "RToC Wiki Bot"], check=False)
+        # Set remote URL with token
+        subprocess.run(["git", "remote", "set-url", "origin", repo_url], check=False)
+        print("[GIT] Remote configured with token.")
+    except Exception as e:
+        print(f"[GIT] Setup failed: {e}")
+
+def git_push(message="Auto-save data"):
+    """Commit and push changes to remote."""
+    if not os.environ.get('RENDER') or not os.environ.get('GITHUB_TOKEN'):
+        return
+
+    def _push():
+        try:
+            subprocess.run(["git", "add", "."], check=True)
+            subprocess.run(["git", "commit", "-m", message], check=False)
+            subprocess.run(["git", "push"], check=True)
+            print(f"[GIT] Pushed: {message}")
+        except Exception as e:
+            print(f"[GIT] Push failed: {e}")
+
+    # Run in background thread to not block response
+    threading.Thread(target=_push).start()
+
 # === FILE HANDLER ===
 class FileHandler:
     _locks = {}
@@ -880,7 +918,10 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                     file_path = os.path.join(upload_dir, new_filename)
                     with open(file_path, 'wb') as f:
                         f.write(file_content)
+                
+                    git_push(f"Upload asset: {new_filename}")
                     
+                    # Return URL consistent with serving path
                     file_url = f"/assets/uploads/{new_filename}"
                     print(f"[UPLOAD] Success: {file_url}")
                     
@@ -956,7 +997,9 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                 permissions = FileHandler.read_json('permissions.json')
                 permissions[target_user] = new_role
                 FileHandler.write_json('permissions.json', permissions)
-
+            
+                git_push(f"Update permissions: {target_user} -> {new_role}")
+            
                 self.send_response(200)
                 self.send_header('Content-type', 'application/json')
                 self.end_headers()
@@ -1010,9 +1053,10 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                 }
                 
                 comments[page_id].append(new_comment)
-                
                 FileHandler.write_json('comments.json', comments)
-                
+            
+                git_push(f"New comment on {page_id}")
+            
                 self.send_response(200)
                 self.send_header('Content-type', 'application/json')
                 self.end_headers()
@@ -1100,6 +1144,7 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                     
                     if success:
                         FileHandler.write_json('comments.json', comments)
+                        git_push(f"Edited comment {comment_id}")
                 
                 self.send_response(200 if success else 403)
                 self.send_header('Content-type', 'application/json')
@@ -1155,6 +1200,7 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                     
                     if success:
                         FileHandler.write_json('comments.json', comments)
+                        git_push(f"Deleted comment {comment_id}")
                 
                 if success:
                     self.send_response(200)
@@ -1201,18 +1247,22 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                 comments = {}
                 comments = FileHandler.read_json('comments.json')
                 
+                success = False
                 if page_id in comments:
                     for comment in comments[page_id]:
                         if comment.get('id') == comment_id:
                             comment['is_pinned'] = not comment.get('is_pinned', False)
+                            success = True
                             break
                     
-                    FileHandler.write_json('comments.json', comments)
+                    if success:
+                        FileHandler.write_json('comments.json', comments)
+                        git_push(f"Pin comment {comment_id}")
                 
-                self.send_response(200)
+                self.send_response(200 if success else 403)
                 self.send_header('Content-type', 'application/json')
                 self.end_headers()
-                self.wfile.write(json.dumps({"status": "success"}).encode('utf-8'))
+                self.wfile.write(json.dumps({"status": "success" if success else "error", "message": "Permission denied" if not success else None}).encode('utf-8'))
                 
             except Exception as e:
                 self.send_error(500, str(e))
@@ -1227,6 +1277,10 @@ if __name__ == '__main__':
         socketserver.TCPServer.allow_reuse_address = True
         with socketserver.TCPServer(("", PORT), SaveRequestHandler) as httpd:
             print(f"Starting server at http://localhost:{PORT}")
+            
+            # Setup Git for persistence
+            setup_git()
+            
             try:
                 httpd.serve_forever()
             except KeyboardInterrupt:
