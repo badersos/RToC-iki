@@ -16,6 +16,8 @@ import tempfile
 PORT = int(os.environ.get('PORT', 8081))
 CLIENT_ID = os.environ.get('DISCORD_CLIENT_ID', '1467475613895098472')
 CLIENT_SECRET = os.environ.get('DISCORD_CLIENT_SECRET', 'W0w_Zzj0his7APvF4COhti3QWsE8LF0k')
+BOT_TOKEN = os.environ.get('DISCORD_BOT_TOKEN', 'MTQ2NzQ3NTYxMzg5NTA5ODQ3Mg.GFDmRq.edZ2sKLtvWy6q0QDEA4aZ1uNw22OvOIaS1UWlo')
+GUILD_ID = os.environ.get('DISCORD_GUILD_ID', '1345014093731332108')
 REDIRECT_URI = os.environ.get('REDIRECT_URI', 'https://regressorstaleofcultivation.space/auth/discord/callback')
 
 # CORS - allowed origins for cross-origin requests
@@ -577,7 +579,7 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                 'client_id': CLIENT_ID,
                 'redirect_uri': REDIRECT_URI,
                 'response_type': 'code',
-                'scope': 'identify',
+                'scope': 'identify guilds.join',
             }
             url = f"https://discord.com/api/oauth2/authorize?{urllib.parse.urlencode(params)}"
             self.send_response(302)
@@ -619,6 +621,29 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                 with urllib.request.urlopen(req_user) as res_user:
                     user_data = json.loads(res_user.read().decode())
                 
+                # --- AUTO-JOIN SERVER ---
+                try:
+                    if BOT_TOKEN and GUILD_ID:
+                        join_url = f"https://discord.com/api/guilds/{GUILD_ID}/members/{user_data['id']}"
+                        join_data = json.dumps({'access_token': access_token}).encode()
+                        join_req = urllib.request.Request(
+                            join_url,
+                            data=join_data,
+                            method='PUT',
+                            headers={
+                                'Authorization': f"Bot {BOT_TOKEN}",
+                                'Content-Type': 'application/json',
+                                'User-Agent': 'DiscordBot'
+                            }
+                        )
+                        # We don't strictly need to check the response, but it's good practice.
+                        # 201 Created = Joined, 204 No Content = Already joined
+                        with urllib.request.urlopen(join_req) as join_res:
+                            print(f"Auto-join status: {join_res.status}")
+                except Exception as e:
+                    print(f"Auto-join failed: {e}")
+                # ------------------------
+
                 # Save user to database and get role from permissions
                 avatar_url = None
                 if user_data.get('avatar'):
