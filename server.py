@@ -130,7 +130,8 @@ def git_push(message="Auto-save data"):
             result = subprocess.run(["git", "commit", "-m", message], capture_output=True, text=True)
             if result.returncode == 0:
                 print(f"[GIT] Pushing...", file=sys.stderr)
-                subprocess.run(["git", "push"], check=True, stderr=subprocess.PIPE)
+                # Push current HEAD to remote main branch (handles detached HEAD state)
+                subprocess.run(["git", "push", "origin", "HEAD:main"], check=True, stderr=subprocess.PIPE)
                 print(f"[GIT] Pushed: {message}", file=sys.stderr)
             else:
                 print(f"[GIT] Nothing to commit.", file=sys.stderr)
@@ -144,7 +145,7 @@ def git_push(message="Auto-save data"):
         finally:
             with _push_lock:
                 _push_timer = None
-
+    
     with _push_lock:
         # Cancel any pending push and reschedule
         if _push_timer is not None:
