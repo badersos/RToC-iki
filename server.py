@@ -16,7 +16,7 @@ import tempfile
 PORT = int(os.environ.get('PORT', 8081))
 CLIENT_ID = os.environ.get('DISCORD_CLIENT_ID', '1467475613895098472')
 CLIENT_SECRET = os.environ.get('DISCORD_CLIENT_SECRET', 'W0w_Zzj0his7APvF4COhti3QWsE8LF0k')
-BOT_TOKEN = os.environ.get('DISCORD_BOT_TOKEN', 'MTQ2NzQ3NTYxMzg5NTA5ODQ3Mg.GFDmRq.edZ2sKLtvWy6q0QDEA4aZ1uNw22OvOIaS1UWlo')
+BOT_TOKEN = os.environ.get('DISCORD_BOT_TOKEN') # MUST set this in Render Environment Variables
 GUILD_ID = os.environ.get('DISCORD_GUILD_ID', '1345014093731332108')
 REDIRECT_URI = os.environ.get('REDIRECT_URI', 'https://regressorstaleofcultivation.space/auth/discord/callback')
 
