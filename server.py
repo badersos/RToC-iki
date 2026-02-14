@@ -45,16 +45,21 @@ def setup_git():
         print("[GIT] No GITHUB_TOKEN found. Persistence disabled.")
         return
 
-    repo_url = f"https://oauth2:{token}@github.com/badersos/RToC-iki.git"
+    # Use standard username:token format for PATs
+    repo_url = f"https://badersos:{token}@github.com/badersos/RToC-iki.git"
     try:
         # Configure user for commits
         subprocess.run(["git", "config", "user.email", "bot@rtoc-wiki.com"], check=False)
         subprocess.run(["git", "config", "user.name", "RToC Wiki Bot"], check=False)
+        
         # Set remote URL with token
-        subprocess.run(["git", "remote", "set-url", "origin", repo_url], check=False)
-        print("[GIT] Remote configured with token.")
+        # Capture stderr to see auth errors if any
+        subprocess.run(["git", "remote", "set-url", "origin", repo_url], check=True, stderr=subprocess.PIPE)
+        print("[GIT] Remote configured with token.", file=sys.stderr)
+    except subprocess.CalledProcessError as e:
+        print(f"[GIT] Setup failed: {e.stderr.decode()}", file=sys.stderr)
     except Exception as e:
-        print(f"[GIT] Setup failed: {e}")
+        print(f"[GIT] Setup failed: {e}", file=sys.stderr)
 
 def git_pull():
     """Pull latest data from remote on startup to restore persisted data."""
