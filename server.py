@@ -65,21 +65,27 @@ def setup_git():
     repo_url = "https://github.com/badersos/RToC-iki.git"
     
     try:
+        # Initialize git if not present
+        if not os.path.exists('.git'):
+            print("[GIT] Initializing new git repo...", file=sys.stderr)
+            subprocess.run(["git", "init"], check=True)
+            subprocess.run(["git", "branch", "-M", "main"], check=False)
+
         # Configure user for commits
         subprocess.run(["git", "config", "user.email", "bot@rtoc-wiki.com"], check=False)
         subprocess.run(["git", "config", "user.name", "RToC Wiki Bot"], check=False)
         
-        # Make sure git uses .netrc
-        subprocess.run(["git", "config", "--global", "credential.helper", "store"], check=False) # Fallback
-
-        # Set remote URL
-        subprocess.run(["git", "remote", "set-url", "origin", repo_url], check=True, stderr=subprocess.PIPE)
-        print("[GIT] Remote configured.", file=sys.stderr)
-        
+        # Check if remote exists
+        remotes = subprocess.run(["git", "remote"], capture_output=True, text=True).stdout
+        if "origin" in remotes:
+            subprocess.run(["git", "remote", "set-url", "origin", repo_url], check=True, stderr=subprocess.PIPE)
+            print("[GIT] Updated origin remote.", file=sys.stderr)
+        else:
+            subprocess.run(["git", "remote", "add", "origin", repo_url], check=True, stderr=subprocess.PIPE)
+            print("[GIT] Added origin remote.", file=sys.stderr)
+            
     except subprocess.CalledProcessError as e:
         print(f"[GIT] Setup failed: {e.stderr.decode()}", file=sys.stderr)
-        # Fallback to URL token if .netrc fails? 
-        # Actually let's just print the error for now to diagnose.
     except Exception as e:
         print(f"[GIT] Setup failed: {e}", file=sys.stderr)
 
