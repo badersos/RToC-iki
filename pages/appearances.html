@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0a0a0f">
+    <title>Appearances | Regressor's Tale of Cultivation Wiki</title>
+    <link rel="icon" type="image/jpeg" href="../assets/images/seo_eun_hyun_cover.jpg">
+    <link rel="stylesheet" href="../styles/main.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap"
+        rel="stylesheet">
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <style>
+        .appearances-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .category-section {
+            margin-bottom: 4rem;
+        }
+
+        .category-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2rem;
+            color: var(--accent-primary);
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid rgba(139, 92, 246, 0.2);
+            padding-bottom: 0.5rem;
+        }
+
+        .sub-category-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.5rem;
+            color: var(--text-primary);
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .nested-category-title {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            margin-top: 1.5rem;
+            margin-bottom: 0.8rem;
+            font-weight: 600;
+        }
+
+        .char-list {
+            list-style: none;
+            padding: 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+
+        .char-item {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .char-link {
+            color: var(--text-primary);
+            text-decoration: none;
+            transition: color 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .char-link:hover {
+            color: var(--accent-primary);
+        }
+
+        .char-bullet {
+            width: 6px;
+            height: 6px;
+            background-color: var(--accent-secondary);
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .char-name-text {
+            color: var(--text-muted);
+        }
+
+        /* Enders Grid Special Styling */
+        .enders-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+
+        .ender-card {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .ender-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            border-color: var(--accent-primary);
+        }
+
+        .ender-img {
+            width: 100%;
+            aspect-ratio: 3/4;
+            object-fit: cover;
+        }
+
+        .ender-name {
+            padding: 1rem;
+            text-align: center;
+            font-weight: 600;
+            color: var(--text-highlight);
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="nav">
+        <div class="nav-container">
+            <a href="../index.html" class="nav-logo">
+                <img src="../assets/logo_character.png" alt="RToC" class="nav-logo-img"
+                    style="width:36px; height:36px; border-radius:8px; object-fit:cover;">
+                RToC Wiki
+            </a>
+            <ul class="nav-links">
+                <li><a href="../index.html" class="nav-link">Home</a></li>
+                <li><a href="characters.html" class="nav-link">Characters</a></li>
+                <li><a href="concepts.html" class="nav-link">Concepts</a></li>
+                <li><a href="plot.html" class="nav-link">Plot</a></li>
+                <li><a href="cultivation.html" class="nav-link">Cultivation</a></li>
+                <li><a href="martial_arts.html" class="nav-link">Martial Arts</a></li>
+                <li><a href="appearances.html" class="nav-link"
+                        style="color: var(--text-primary); background: rgba(139, 92, 246, 0.1);">Appearances</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <header class="hero"
+        style="min-height: 40vh; padding-bottom: 2rem; background: linear-gradient(to bottom, rgba(0,0,0,0.7), #0a0a0f), url('../assets/images/seo_eun_hyun_cover.jpg') center/cover;">
+        <div class="hero-content">
+            <h1 class="hero-title">Appearances</h1>
+            <p class="hero-subtitle">A comprehensive record of all characters in the cycles.</p>
+        </div>
+    </header>
+
+    <main class="appearances-container">
+
+        <!-- Enders -->
+        <section class="category-section">
+            <h2 class="category-title">Enders</h2>
+            <div class="enders-grid">
+                <a href="characters/seo_eun_hyun.html" class="ender-card">
+                    <img src="../assets/images/seo_eun_hyun_cover.jpg" class="ender-img" alt="Seo Eun-hyun">
+                    <div class="ender-name">Seo Eun-hyun</div>
+                </a>
+                <a href="characters/kim_young_hoon.html" class="ender-card">
+                    <img src="../assets/images/kim_young_hoon_profile.png" class="ender-img" alt="Kim Young-hoon">
+                    <div class="ender-name">Kim Young-hoon</div>
+                </a>
+                <a href="characters/kim_yeon.html" class="ender-card">
+                    <img src="../assets/images/kim_yeon_profile.png" class="ender-img" alt="Kim Yeon">
+                    <div class="ender-name">Kim Yeon</div>
+                </a>
+                <a href="characters/oh_hyun_seok.html" class="ender-card">
+                    <img src="../assets/images/oh_hyun_seok_profile.png" class="ender-img" alt="Oh Hyun-seok">
+                    <div class="ender-name">Oh Hyun-seok</div>
+                </a>
+                <a href="characters/oh_hye_seo.html" class="ender-card">
+                    <img src="../assets/images/oh_hye_seo_profile.png" class="ender-img" alt="Oh Hye-seo">
+                    <div class="ender-name">Oh Hye-seo</div>
+                </a>
+                <a href="characters/jeon_myeong_hoon.html" class="ender-card">
+                    <img src="../assets/images/jeon_myeong_hoon_full.png" class="ender-img" alt="Jeon Myeong-hoon">
+                    <div class="ender-name">Jeon Myeong-hoon</div>
+                </a>
+                <a href="characters/kang_min_hee.html" class="ender-card">
+                    <img src="../assets/images/kang_min_hee_profile.png" class="ender-img" alt="Kang Min-hee">
+                    <div class="ender-name">Kang Min-hee</div>
+                </a>
+                <a href="characters/yang_su_jin.html" class="ender-card">
+                    <img src="../assets/images/yang_su_jin.png" class="ender-img" alt="Yang Su-jin">
+                    <div class="ender-name">Yang Su-jin</div>
+                </a>
+                <a href="characters/vast_cold.html" class="ender-card">
+                    <img src="../assets/images/vast_cold.png" class="ender-img" alt="Vast Cold">
+                    <div class="ender-name">Vast Cold</div>
+                </a>
+            </div>
+        </section>
+
+        <!-- Important Non-Enders -->
+        <section class="category-section">
+            <h2 class="category-title">Important Non-Enders</h2>
+            <ul class="char-list">
+                <li class="char-item"><a href="characters/hong_fan.html" class="char-link"><span
+                            class="char-bullet"></span>Hong Fan</a></li>
+                <li class="char-item"><a href="characters/seo_li.html" class="char-link"><span
+                            class="char-bullet"></span>Seo Li</a></li>
+                <li class="char-item"><a href="characters/seo_ran.html" class="char-link"><span
+                            class="char-bullet"></span>Seo Ran</a></li>
+                <li class="char-item"><a href="characters/buk_hyang_hwa.html" class="char-link"><span
+                            class="char-bullet"></span>Buk Hyang-hwa</a></li>
+                <li class="char-item"><a href="characters/cheongmun_ryeong.html" class="char-link"><span
+                            class="char-bullet"></span>Cheongmun Ryeong</a></li>
+                <li class="char-item"><a href="characters/yeon_jin.html" class="char-link"><span
+                            class="char-bullet"></span>Yeon Wei / Yeon Jin</a></li>
+                <li class="char-item"><span class="char-name-text"><span class="char-bullet"></span>Cheongmun
+                        Sunwoo</span></li>
+                <li class="char-item"><a href="characters/jin_byuk_ho.html" class="char-link"><span
+                            class="char-bullet"></span>Jin Byuk-ho</a></li>
+                <li class="char-item"><a href="characters/heo_gwak.html" class="char-link"><span
+                            class="char-bullet"></span>Heo Gwak</a></li>
+                <li class="char-item"><a href="characters/seo_hweol.html" class="char-link"><span
+                            class="char-bullet"></span>Seo Hweol</a></li>
+                <li class="char-item"><a href="characters/mad_lord.html" class="char-link"><span
+                            class="char-bullet"></span>Jo Yeon</a></li>
+                <li class="char-item"><span class="char-name-text"><span class="char-bullet"></span>Heaven Collapsing
+                        Esteemed One</span></li>
+                <li class="char-item"><a href="characters/jang_ik.html" class="char-link"><span
+                            class="char-bullet"></span>Jang Ik</a></li>
+                <li class="char-item"><a href="characters/gwak_am.html" class="char-link"><span
+                            class="char-bullet"></span>Owner of Great Mountain</a></li>
+            </ul>
+        </section>
+
+        <!-- Mortal Realms -->
+        <section class="category-section">
+            <h2 class="category-title">Mortal Realms</h2>
+
+            <h3 class="sub-category-title">Head Realm</h3>
+            <h4 class="nested-category-title">Ascension Path</h4>
+            <ul class="char-list">
+                <li class="char-item"><a href="characters/shi_ho.html" class="char-link"><span
+                            class="char-bullet"></span>Shi Ho</a></li>
+                <li class="char-item"><span class="char-name-text"><span class="char-bullet"></span>Two Headed
+                        Snake</span></li>
+            </ul>
+
+            <h4 class="nested-category-title">Yanguo</h4>
+            <ul class="char-list">
+                <li class="char-item"><a href="characters/eum_wa.html" class="char-link"><span
+                            class="char-bullet"></span>Eum Cheong-nan (Cheong-nan Bookstore)</a></li>
+                <li class="char-item"><span class="char-name-text"><span class="char-bullet"></span>Qia River Sect (Mun
+                        Ye-eik, Ik Cheon-bae, Pal Jik-tae)</span></li>
+                <li class="char-item"><span class="char-name-text"><span class="char-bullet"></span>Demon Slaying Sect
+                        (Heo Baek)</span></li>
+                <li class="char-item"><span class="char-name-text"><span class="char-bullet"></span>Tuho Gang</span>
+                </li>
+            </ul>
+
+            <h5 class="nested-category-title">Jin Clan</h5>
+            <ul class="char-list">
+                <li class="char-item"><span class="char-name-text"><span class="char-bullet"></span>Jin Yeo-woon</span>
+                </li>
+                <li class="char-item"><span class="char-name-text"><span class="char-bullet"></span>Jeok Rae-ho</span>
+                </li>
+                <li class="char-item"><span class="char-name-text"><span class="char-bullet"></span>Seo Eun-hyun's
+                        Disciples (Man-ho, Yeo-lo, etc.)</span></li>
+            </ul>
+
+            <h5 class="nested-category-title">Makli Clan</h5>
+            <ul class="char-list">
+                <li class="char-item"><span class="char-name-text"><span class="char-bullet"></span>Makli
+                        Hwang-cheon</span></li>
+                <li class="char-item"><span class="char-name-text"><span class="char-bullet"></span>Makli
+                        Wangshin</span></li>
+                <li class="char-item"><span class="char-name-text"><span class="char-bullet"></span>Makli
+                        Yun-ryeon</span></li>
+                <li class="char-item"><span class="char-name-text"><span class="char-bullet"></span>Makli Goon</span>
+                </li>
+                <li class="char-item"><span class="char-name-text"><span class="char-bullet"></span>Makli Jun</span>
+                </li>
+                <li class="char-item"><span class="char-name-text"><span class="char-bullet"></span>Emperor Makli
+                        Jung</span></li>
+                <li class="char-item"><span class="char-name-text"><span class="char-bullet"></span>Crown Prince Makli
+                        Hyun</span></li>
+            </ul>
+
+            <h4 class="nested-category-title">Byeokra</h4>
+            <h5 class="nested-category-title">Cheongmun Clan</h5>
+            <ul class="char-list">
+                <li class="char-item"><span class="char-name-text"><span class="char-bullet"></span>Cheongmun
+                        Jung-jin</span></li>
+                <li class="char-item"><span class="char-name-text"><span class="char-bullet"></span>Cheongmun Mok</span>
+                </li>
+                <li class="char-item"><span class="char-name-text"><span class="char-bullet"></span>Cheongmun
+                        Byeok</span></li>
+                <li class="char-item"><a href="characters/cheongmun_ryeong.html" class="char-link"><span
+                            class="char-bullet"></span>Cheongmun Ryeong</a></li>
+                <li class="char-item"><span class="char-name-text"><span class="char-bullet"></span>Cheongmun
+                        Ryeok-shin</span></li>
+                <li class="char-item"><span class="char-name-text"><span class="char-bullet"></span>Cheongmun
+                        Jeon</span></li>
+                <li class="char-item"><span class="char-name-text"><span class="char-bullet"></span>Cheongmun Dan</span>
+                </li>
+            </ul>
+
+            <h5 class="nested-category-title">Byeok Clan</h5>
+            <ul class="char-list">
+                <li class="char-item"><span class="char-name-text"><span class="char-bullet"></span>Byeok
+                        Cheng-gi</span></li>
+                <li class="char-item"><span class="char-name-text"><span class="char-bullet"></span>Byeok Mun</span>
+                </li>
+                <li class="char-item"><span class="char-name-text"><span class="char-bullet"></span>Byeok
+                        Mun-seong</span></li>
+            </ul>
+
+            <h5 class="nested-category-title">Gongmyo Clan</h5>
+            <ul class="char-list">
+                <li class="char-item"><span class="char-name-text"><span class="char-bullet"></span>Gongmyo
+                        Cheon-saek</span></li>
+                <li class="char-item"><span class="char-name-text"><span class="char-bullet"></span>Buk Joong-ho</span>
+                </li>
+                <li class="char-item"><a href="characters/buk_hyang_hwa.html" class="char-link"><span
+                            class="char-bullet"></span>Buk Hyang-hwa</a></li>
+                <li class="char-item"><span class="char-name-text"><span class="char-bullet"></span>Gongmyo Hee</span>
+                </li>
+            </ul>
+
+            <h4 class="nested-category-title">Shengzi</h4>
+            <ul class="char-list">
+                <li class="char-item"><span class="char-name-text"><span class="char-bullet"></span>Left Minister
+                        Wuk-jeon</span></li>
+                <li class="char-item"><span class="char-name-text"><span class="char-bullet"></span>Jinlu Clan</span>
+                </li>
+                <li class="char-item"><span class="char-name-text"><span class="char-bullet"></span>Ha Clan</span></li>
+                <li class="char-item"><span class="char-name-text"><span class="char-bullet"></span>Geo Clan</span></li>
+            </ul>
+
+            <h4 class="nested-category-title">Black Wind Sea</h4>
+            <ul class="char-list">
+                <li class="char-item"><a href="characters/seo_ran.html" class="char-link"><span
+                            class="char-bullet"></span>Seo Ran</a></li>
+                <li class="char-item"><a href="characters/song_jin.html" class="char-link"><span
+                            class="char-bullet"></span>Song Jin</a></li>
+            </ul>
+
+            <h4 class="nested-category-title">Heaven Treading Desert</h4>
+            <ul class="char-list">
+                <li class="char-item"><a href="characters/yuan_li.html" class="char-link"><span
+                            class="char-bullet"></span>Yuan Li</a></li>
+                <li class="char-item"><span class="char-name-text"><span class="char-bullet"></span>Eastern Lord Manli
+                        Min-lap</span></li>
+                <li class="char-item"><span class="char-name-text"><span class="char-bullet"></span>Wolryang</span></li>
+                <li class="char-item"><span class="char-name-text"><span class="char-bullet"></span>Jinlu
+                        Yeon-cheon</span></li>
+            </ul>
+        </section>
+
+        <!-- Middle Realms -->
+        <section class="category-section">
+            <h2 class="category-title">Middle Realms</h2>
+
+            <h3 class="sub-category-title">Bright Cold Realm</h3>
+            <ul class="char-list">
+                <li class="char-item"><a href="characters/baek_woon.html" class="char-link"><span
+                            class="char-bullet"></span>Sacred Master Baek Woon</a></li>
+                <li class="char-item"><a href="characters/jang_ik.html" class="char-link"><span
+                            class="char-bullet"></span>Heaven-Collapsing Esteemed One Jang Ik</a></li>
+                <li class="char-item"><a href="characters/gyu_wol_jin.html" class="char-link"><span
+                            class="char-bullet"></span>Opening Heaven Esteemed One Gyu Wol-jin</a></li>
+                <li class="char-item"><span class="char-name-text"><span class="char-bullet"></span>Flattening Heaven
+                        Esteemed One Ham Rak</span></li>
+                <li class="char-item"><span class="char-name-text"><span class="char-bullet"></span>Safe Heaven Esteemed
+                        One Gwi Ro</span></li>
+                <li class="char-item"><span class="char-name-text"><span class="char-bullet"></span>Slaughtering Heaven
+                        Esteemed One Geuk Gwang</span></li>
+                <li class="char-item"><span class="char-name-text"><span class="char-bullet"></span>Final Heaven
+                        Esteemed One Jin Wol-ryeong</span></li>
+                <li class="char-item"><a href="characters/seo_eun_hyun.html" class="char-link"><span
+                            class="char-bullet"></span>Esteemed One Seo Eun-hyun</a></li>
+                <li class="char-item"><a href="characters/kim_young_hoon.html" class="char-link"><span
+                            class="char-bullet"></span>Esteemed One Kim Young-hoon</a></li>
+            </ul>
+
+            <h4 class="nested-category-title">Wonderfully Mysterious Fortress</h4>
+            <ul class="char-list">
+                <li class="char-item"><a href="characters/mad_lord.html" class="char-link"><span
+                            class="char-bullet"></span>Mad Lord Jo Yeon</a></li>
+                <li class="char-item"><a href="characters/kim_yeon.html" class="char-link"><span
+                            class="char-bullet"></span>Kim Yeon</a></li>
+            </ul>
+
+            <h4 class="nested-category-title">Human Race Grand Alliance</h4>
+            <ul class="char-list">
+                <li class="char-item"><a href="characters/black_dragon_king.html" class="char-link"><span
+                            class="char-bullet"></span>Black Dragon King Hyeon Eum</a></li>
+                <li class="char-item"><span class="char-name-text"><span class="char-bullet"></span>Hon Won</span></li>
+                <li class="char-item"><span class="char-name-text"><span class="char-bullet"></span>Jun Je</span></li>
+                <li class="char-item"><a href="characters/tae_yeol_jeon.html" class="char-link"><span
+                            class="char-bullet"></span>Tae Yeol-jeon</a></li>
+            </ul>
+
+            <h4 class="nested-category-title">Golden Divine Heavenly Thunder Sect</h4>
+            <ul class="char-list">
+                <li class="char-item"><a href="characters/jin_byuk_ho.html" class="char-link"><span
+                            class="char-bullet"></span>Supreme Sect Master Jin Byuk-ho</a></li>
+                <li class="char-item"><span class="char-name-text"><span class="char-bullet"></span>Sect Leader Jin
+                        Min</span></li>
+                <li class="char-item"><span class="char-name-text"><span class="char-bullet"></span>Elder Gal</span>
+                </li>
+                <li class="char-item"><a href="characters/hong_su_ryeong.html" class="char-link"><span
+                            class="char-bullet"></span>Grand Elder Hong Su-ryeong</a></li>
+                <li class="char-item"><span class="char-name-text"><span class="char-bullet"></span>Jin So-hae</span>
+                </li>
+                <li class="char-item"><a href="characters/yeon_jin.html" class="char-link"><span
+                            class="char-bullet"></span>Yeon Jin</a></li>
+                <li class="char-item"><a href="characters/jeon_myeong_hoon.html" class="char-link"><span
+                            class="char-bullet"></span>Jeon Myeong-hoon</a></li>
+            </ul>
+
+            <h4 class="nested-category-title">Black Ghost Valley</h4>
+            <ul class="char-list">
+                <li class="char-item"><span class="char-name-text"><span class="char-bullet"></span>Heo Nam-kwon</span>
+                </li>
+                <li class="char-item"><span class="char-name-text"><span class="char-bullet"></span>Baek Jin</span></li>
+                <li class="char-item"><a href="characters/heo_gwak.html" class="char-link"><span
+                            class="char-bullet"></span>Heo Gwak</a></li>
+                <li class="char-item"><a href="characters/kang_min_hee.html" class="char-link"><span
+                            class="char-bullet"></span>Kang Min-hee</a></li>
+                <li class="char-item"><a href="characters/seo_li.html" class="char-link"><span
+                            class="char-bullet"></span>Seo Li</a></li>
+            </ul>
+
+            <h4 class="nested-category-title">Earth Tribe True Dragon Alliance</h4>
+            <ul class="char-list">
+                <li class="char-item"><a href="characters/gyu_ryeon.html" class="char-link"><span
+                            class="char-bullet"></span>Gyu Ryeon</a></li>
+                <li class="char-item"><a href="characters/seo_hweol.html" class="char-link"><span
+                            class="char-bullet"></span>Sea Dragon Prince Seo Hweol</a></li>
+            </ul>
+
+            <h3 class="sub-category-title">True Devil Realm</h3>
+            <ul class="char-list">
+                <li class="char-item"><span class="char-name-text"><span class="char-bullet"></span>Sacred Master Sae
+                        Eum</span></li>
+                <li class="char-item"><span class="char-name-text"><span class="char-bullet"></span>Black Fog Esteemed
+                        One Oh Mu</span></li>
+                <li class="char-item"><span class="char-name-text"><span class="char-bullet"></span>Violent Cliff
+                        Esteemed One Tae Cheok</span></li>
+                <li class="char-item"><span class="char-name-text"><span class="char-bullet"></span>Star Seeking
+                        Esteemed One Yo Un</span></li>
+            </ul>
+
+            <h3 class="sub-category-title">Nether Ghost Realm</h3>
+            <ul class="char-list">
+                <li class="char-item"><span class="char-name-text"><span class="char-bullet"></span>Sacred Master Yu
+                        Oh</span></li>
+                <li class="char-item"><a href="characters/seo_eun_hyun.html" class="char-link"><span
+                            class="char-bullet"></span>Wuji Ghost King Seo Eun-hyun</a></li>
+                <li class="char-item"><a href="characters/yeon_jin.html" class="char-link"><span
+                            class="char-bullet"></span>Black-White Devil Ghost Yeon Jin</a></li>
+                <li class="char-item"><a href="characters/jeon_myeong_hoon.html" class="char-link"><span
+                            class="char-bullet"></span>Six Extremes Ghost King Jeon Myeong-hoon</a></li>
+                <li class="char-item"><a href="characters/kim_yeon.html" class="char-link"><span
+                            class="char-bullet"></span>Mysterious Bizarre Ghost King Kim Yeon</a></li>
+                <li class="char-item"><a href="characters/oh_hyun_seok.html" class="char-link"><span
+                            class="char-bullet"></span>Soul Extinguishing Ghost King Oh Hyun-seok</a></li>
+                <li class="char-item"><a href="characters/hong_fan.html" class="char-link"><span
+                            class="char-bullet"></span>Guardian Law Protector Hong Fan</a></li>
+                <li class="char-item"><span class="char-name-text"><span class="char-bullet"></span>Wei Shi-hon</span>
+                </li>
+                <li class="char-item"><a href="characters/eum_wa.html" class="char-link"><span
+                            class="char-bullet"></span>Eum Wa</a></li>
+            </ul>
+
+            <h3 class="sub-category-title">Ancient Force Realm</h3>
+            <ul class="char-list">
+                <li class="char-item"><span class="char-name-text"><span class="char-bullet"></span>Sacred Master Hae
+                        Yu</span></li>
+                <li class="char-item"><span class="char-name-text"><span class="char-bullet"></span>Sea Sinking Esteemed
+                        One Wi Mu-cheon</span></li>
+                <li class="char-item"><span class="char-name-text"><span class="char-bullet"></span>Red Tide Esteemed
+                        One Gyo Wi</span></li>
+                <li class="char-item"><span class="char-name-text"><span class="char-bullet"></span>Salt Sea Esteemed
+                        One Yuk Jeung</span></li>
+                <li class="char-item"><span class="char-name-text"><span class="char-bullet"></span>Great Pulse Esteemed
+                        One Sa Ha</span></li>
+                <li class="char-item"><span class="char-name-text"><span class="char-bullet"></span>Jin Ma-yeol</span>
+                </li>
+                <li class="char-item"><a href="characters/buk_hyang_hwa.html" class="char-link"><span
+                            class="char-bullet"></span>Conquerer King Buk Hyang-hwa</a></li>
+            </ul>
+
+            <h3 class="sub-category-title">Blood Yin Realm</h3>
+            <ul class="char-list">
+                <li class="char-item"><span class="char-name-text"><span class="char-bullet"></span>Seven Esteemed Ones
+                        of an Era</span></li>
+            </ul>
+
+        </section>
+
+        <!-- True Immortals -->
+        <section class="category-section">
+            <h2 class="category-title">True Immortals</h2>
+            <ul class="char-list">
+                <li class="char-item"><a href="characters/sword_spear.html" class="char-link"><span
+                            class="char-bullet"></span>Sword Spear Heavenly Lord</a></li>
+                <li class="char-item"><a href="characters/baek_woon.html" class="char-link"><span
+                            class="char-bullet"></span>Baek Woon</a></li>
+                <li class="char-item"><a href="characters/golden_lightning_banner.html" class="char-link"><span
+                            class="char-bullet"></span>Zhengli (Golden Lightning Banner)</a></li>
+                <li class="char-item"><a href="characters/blood_yin.html" class="char-link"><span
+                            class="char-bullet"></span>Blood Yin</a></li>
+                <li class="char-item"><a href="characters/golden_shaking_bird.html" class="char-link"><span
+                            class="char-bullet"></span>Golden Shaking Bird</a></li>
+                <li class="char-item"><a href="characters/black_dragon.html" class="char-link"><span
+                            class="char-bullet"></span>Black Dragon</a></li>
+                <li class="char-item"><a href="characters/lustrous_glaze_peacock.html" class="char-link"><span
+                            class="char-bullet"></span>Lustrous Glaze Peacock</a></li>
+                <li class="char-item"><a href="characters/heuk_sa.html" class="char-link"><span
+                            class="char-bullet"></span>Heuk Sa</a></li>
+                <li class="char-item"><a href="characters/hyeon_mu.html" class="char-link"><span
+                            class="char-bullet"></span>Hyeon Mu</a></li>
+            </ul>
+        </section>
+
+        <!-- Governing Immortals -->
+        <section class="category-section">
+            <h2 class="category-title">Governing Immortals</h2>
+            <ul class="char-list">
+                <li class="char-item"><a href="characters/heavenly_punishment_supreme_deity.html"
+                        class="char-link"><span class="char-bullet"></span>Heavenly Punishment Supreme Deity</a></li>
+                <li class="char-item"><a href="characters/bong_myeong.html" class="char-link"><span
+                            class="char-bullet"></span>Bong Myeong</a></li>
+                <li class="char-item"><a href="characters/heavenly_venerable.html" class="char-link"><span
+                            class="char-bullet"></span>Heavenly Venerable (Oldest One)</a></li>
+                <li class="char-item"><a href="characters/gwak_am.html" class="char-link"><span
+                            class="char-bullet"></span>Gwak Am</a></li>
+                <li class="char-item"><a href="characters/salt_sea.html" class="char-link"><span
+                            class="char-bullet"></span>Salt Sea Supreme Deity</a></li>
+                <li class="char-item"><a href="characters/swallowing_heaven.html" class="char-link"><span
+                            class="char-bullet"></span>Swallowing Heaven Supreme Deity</a></li>
+                <li class="char-item"><a href="characters/hyeon_go.html" class="char-link"><span
+                            class="char-bullet"></span>Hyeon Go</a></li>
+            </ul>
+        </section>
+
+    </main>
+
+    <script src="../scripts/editor.js"></script>
+    <script src="../scripts/main.js"></script>
+</body>
+
+</html>
