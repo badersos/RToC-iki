@@ -45,17 +45,33 @@ def setup_git():
         print("[GIT] No GITHUB_TOKEN found. Persistence disabled.")
         return
 
-    # Use standard username:token format for PATs
-    repo_url = f"https://badersos:{token}@github.com/badersos/RToC-iki.git"
+    # Create .netrc file for authentication (more robust than URL embedding)
+    netrc_path = os.path.expanduser('~/.netrc')
+    try:
+        with open(netrc_path, 'w') as f:
+            f.write(f"machine github.com login badersos password {token}")
+        
+        # Securing .netrc (optional but good practice)
+        try:
+            os.chmod(netrc_path, 0o600)
+        except:
+            pass
+            
+        print(f"[GIT] Configured .netrc at {netrc_path}", file=sys.stderr)
+    except Exception as e:
+        print(f"[GIT] Failed to create .netrc: {e}", file=sys.stderr)
+
+    # Use standard URL
+    repo_url = "https://github.com/badersos/RToC-iki.git"
+    
     try:
         # Configure user for commits
         subprocess.run(["git", "config", "user.email", "bot@rtoc-wiki.com"], check=False)
         subprocess.run(["git", "config", "user.name", "RToC Wiki Bot"], check=False)
         
-        # Set remote URL with token
-        # Capture stderr to see auth errors if any
+        # Set remote URL
         subprocess.run(["git", "remote", "set-url", "origin", repo_url], check=True, stderr=subprocess.PIPE)
-        print("[GIT] Remote configured with token.", file=sys.stderr)
+        print("[GIT] Remote configured.", file=sys.stderr)
     except subprocess.CalledProcessError as e:
         print(f"[GIT] Setup failed: {e.stderr.decode()}", file=sys.stderr)
     except Exception as e:
