@@ -56,22 +56,53 @@ def setup_git():
     except Exception as e:
         print(f"[GIT] Setup failed: {e}")
 
+def git_pull():
+    """Pull latest data from remote on startup to restore persisted data."""
+    if not os.environ.get('RENDER') or not os.environ.get('GITHUB_TOKEN'):
+        print("[GIT] Skipping pull (not on Render or no token).")
+        return
+    try:
+        # Fetch and reset to remote to handle any force-pushes or conflicts
+        subprocess.run(["git", "fetch", "origin"], check=True)
+        subprocess.run(["git", "reset", "--hard", "origin/main"], check=True)
+        print("[GIT] Pulled latest data from remote.")
+    except Exception as e:
+        print(f"[GIT] Pull failed: {e}")
+
+# Debounced git push — batches rapid writes into a single push
+_push_timer = None
+_push_lock = threading.Lock()
+
 def git_push(message="Auto-save data"):
-    """Commit and push changes to remote."""
+    """Commit and push changes to remote (debounced, 10s delay)."""
     if not os.environ.get('RENDER') or not os.environ.get('GITHUB_TOKEN'):
         return
 
-    def _push():
+    global _push_timer
+
+    def _do_push():
+        global _push_timer
         try:
             subprocess.run(["git", "add", "."], check=True)
-            subprocess.run(["git", "commit", "-m", message], check=False)
-            subprocess.run(["git", "push"], check=True)
-            print(f"[GIT] Pushed: {message}")
+            result = subprocess.run(["git", "commit", "-m", message], capture_output=True, text=True)
+            if result.returncode == 0:
+                subprocess.run(["git", "push"], check=True)
+                print(f"[GIT] Pushed: {message}")
+            else:
+                print(f"[GIT] Nothing to commit.")
         except Exception as e:
             print(f"[GIT] Push failed: {e}")
+        finally:
+            with _push_lock:
+                _push_timer = None
 
-    # Run in background thread to not block response
-    threading.Thread(target=_push).start()
+    with _push_lock:
+        # Cancel any pending push and reschedule
+        if _push_timer is not None:
+            _push_timer.cancel()
+        _push_timer = threading.Timer(10.0, _do_push)
+        _push_timer.daemon = True
+        _push_timer.start()
 
 # === FILE HANDLER ===
 class FileHandler:
@@ -800,6 +831,8 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                 self.send_header('Content-type', 'application/json')
                 self.end_headers()
                 self.wfile.write(json.dumps({"status": "success"}).encode('utf-8'))
+
+                git_push(f"Page edit: {relative_path}")
                 
             except Exception as e:
                 self.send_error(500, f"Server error: {str(e)}")
@@ -867,6 +900,8 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                 self.send_header('Content-type', 'application/json')
                 self.end_headers()
                 self.wfile.write(json.dumps({"status": "success", "message": "Page deleted"}).encode('utf-8'))
+
+                git_push(f"Page deleted: {file_path}")
                 
             except Exception as e:
                 print(f"[DELETE ERROR] {e}")
@@ -987,6 +1022,8 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                 if 'bio' in data: profiles[username]['bio'] = data['bio']
                 
                 FileHandler.write_json('user_profiles.json', profiles)
+
+                git_push(f"Profile update: {username}")
                     
                 print(f"[PROFILE UPDATE] Success for {username}")
                 self.send_response(200)
@@ -1126,6 +1163,7 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                             break
                     
                     FileHandler.write_json('comments.json', comments)
+                    git_push(f"Vote on comment {comment_id}")
                 
                 self.send_response(200)
                 self.send_header('Content-type', 'application/json')
@@ -1298,37 +1336,25 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
 
 if __name__ == '__main__':
     try:
+        # Ensure assets directory exists
+        if not os.path.exists('assets/uploads'):
+            os.makedirs('assets/uploads')
+
         # Allow reuse of address to prevent 'Address already in use' errors on quick restarts
         socketserver.TCPServer.allow_reuse_address = True
+
+        # Setup Git for persistence and restore data
+        setup_git()
+        git_pull()  # Restore data from GitHub before serving
+
         with socketserver.TCPServer(("", PORT), SaveRequestHandler) as httpd:
-            print(f"Starting server at http://localhost:{PORT}")
-            
-            # Setup Git for persistence
-            setup_git()
-            
+            print(f"Server started at http://localhost:{PORT}")
             try:
                 httpd.serve_forever()
             except KeyboardInterrupt:
-                pass
+                print("\nShutting down server...")
+                httpd.server_close()
     except Exception as e:
         print(f"FAILED TO START SERVER: {e}")
         import traceback
         traceback.print_exc()
-
-if __name__ == "__main__":
-    # Ensure assets directory exists
-    if not os.path.exists('assets/uploads'):
-        os.makedirs('assets/uploads')
-
-    handler = SaveRequestHandler
-    
-    # Setup Git for persistence
-    setup_git()
-    
-    with socketserver.TCPServer(("", PORT), handler) as httpd:
-        print(f"Server started at http://localhost:{PORT}")
-        try:
-            httpd.serve_forever()
-        except KeyboardInterrupt:
-            print("\nShutting down server...")
-            httpd.server_close()
