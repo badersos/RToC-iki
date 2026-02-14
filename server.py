@@ -63,11 +63,24 @@ def git_pull():
         return
     try:
         # Fetch and reset to remote to handle any force-pushes or conflicts
-        subprocess.run(["git", "fetch", "origin"], check=True)
-        subprocess.run(["git", "reset", "--hard", "origin/main"], check=True)
-        print("[GIT] Pulled latest data from remote.")
+        print(f"[GIT] Fetching origin...", file=sys.stderr)
+        subprocess.run(["git", "fetch", "origin"], check=True, stderr=subprocess.PIPE)
+        print(f"[GIT] Resetting to origin/main...", file=sys.stderr)
+        subprocess.run(["git", "reset", "--hard", "origin/main"], check=True, stderr=subprocess.PIPE)
+        print("[GIT] Pulled latest data from remote.", file=sys.stderr)
     except Exception as e:
-        print(f"[GIT] Pull failed: {e}")
+        print(f"[GIT] Pull failed: {e}", file=sys.stderr)
+        import traceback
+        traceback.print_exc()
+
+def git_status():
+    """Get current git status for debugging."""
+    try:
+        status = subprocess.run(["git", "status"], capture_output=True, text=True).stdout
+        log = subprocess.run(["git", "log", "-1"], capture_output=True, text=True).stdout
+        return f"Status:\n{status}\n\nLast Log:\n{log}"
+    except Exception as e:
+        return f"Error getting status: {e}"
 
 # Debounced git push — batches rapid writes into a single push
 _push_timer = None
@@ -86,12 +99,15 @@ def git_push(message="Auto-save data"):
             subprocess.run(["git", "add", "."], check=True)
             result = subprocess.run(["git", "commit", "-m", message], capture_output=True, text=True)
             if result.returncode == 0:
-                subprocess.run(["git", "push"], check=True)
-                print(f"[GIT] Pushed: {message}")
+                print(f"[GIT] Pushing...", file=sys.stderr)
+                subprocess.run(["git", "push"], check=True, stderr=subprocess.PIPE)
+                print(f"[GIT] Pushed: {message}", file=sys.stderr)
             else:
-                print(f"[GIT] Nothing to commit.")
+                print(f"[GIT] Nothing to commit.", file=sys.stderr)
         except Exception as e:
-            print(f"[GIT] Push failed: {e}")
+            print(f"[GIT] Push failed: {e}", file=sys.stderr)
+            import traceback
+            traceback.print_exc()
         finally:
             with _push_lock:
                 _push_timer = None
@@ -719,6 +735,20 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                 self.send_error(500, f"Authentication Failed: {str(e)}")
             return
         
+        # API: Debug Git (Admin only)
+        if self.path == '/api/debug/git':
+            user = get_authenticated_user(self)
+            if not is_admin(user):
+                self.send_error(403, "Admins only")
+                return
+                
+            status_output = git_status()
+            self.send_response(200)
+            self.send_header('Content-Type', 'text/plain')
+            self.end_headers()
+            self.wfile.write(status_output.encode())
+            return
+
         # Dev Login (Localhost only)
         if self.path == '/api/dev/login' and not os.environ.get('RENDER'):
             user_data = {"id": "dev-admin-id", "username": "DevAdmin", "role": "owner", "avatar": None}
