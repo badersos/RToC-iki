@@ -61,7 +61,7 @@ def setup_git():
     except Exception as e:
         print(f"[GIT] Failed to create .netrc: {e}", file=sys.stderr)
 
-    # Use standard URL
+    # Use standard URL for .netrc
     repo_url = "https://github.com/badersos/RToC-iki.git"
     
     try:
@@ -69,11 +69,17 @@ def setup_git():
         subprocess.run(["git", "config", "user.email", "bot@rtoc-wiki.com"], check=False)
         subprocess.run(["git", "config", "user.name", "RToC Wiki Bot"], check=False)
         
+        # Make sure git uses .netrc
+        subprocess.run(["git", "config", "--global", "credential.helper", "store"], check=False) # Fallback
+
         # Set remote URL
         subprocess.run(["git", "remote", "set-url", "origin", repo_url], check=True, stderr=subprocess.PIPE)
         print("[GIT] Remote configured.", file=sys.stderr)
+        
     except subprocess.CalledProcessError as e:
         print(f"[GIT] Setup failed: {e.stderr.decode()}", file=sys.stderr)
+        # Fallback to URL token if .netrc fails? 
+        # Actually let's just print the error for now to diagnose.
     except Exception as e:
         print(f"[GIT] Setup failed: {e}", file=sys.stderr)
 
@@ -89,6 +95,9 @@ def git_pull():
         print(f"[GIT] Resetting to origin/main...", file=sys.stderr)
         subprocess.run(["git", "reset", "--hard", "origin/main"], check=True, stderr=subprocess.PIPE)
         print("[GIT] Pulled latest data from remote.", file=sys.stderr)
+    except subprocess.CalledProcessError as e:
+        err = e.stderr.decode() if e.stderr else str(e)
+        print(f"[GIT] Pull failed: {err}", file=sys.stderr)
     except Exception as e:
         print(f"[GIT] Pull failed: {e}", file=sys.stderr)
         import traceback
@@ -125,6 +134,9 @@ def git_push(message="Auto-save data"):
                 print(f"[GIT] Pushed: {message}", file=sys.stderr)
             else:
                 print(f"[GIT] Nothing to commit.", file=sys.stderr)
+        except subprocess.CalledProcessError as e:
+            err = e.stderr.decode() if e.stderr else str(e)
+            print(f"[GIT] Push failed (CalledProcessError): {err}", file=sys.stderr)
         except Exception as e:
             print(f"[GIT] Push failed: {e}", file=sys.stderr)
             import traceback
