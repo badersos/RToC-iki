@@ -228,6 +228,7 @@
                 <li><a href="cultivation.html" class="nav-link">Cultivation</a></li>
                 <li><a href="martial_arts.html" class="nav-link">Martial Arts</a></li>
                 <li><a href="appearances.html" class="nav-link">Appearances</a></li>
+                <li><a href="pages.html" class="nav-link" style="color: var(--text-primary); background: rgba(139, 92, 246, 0.1);">Pages</a></li>
             </ul>
 
             <div class="nav-search">
@@ -235,7 +236,6 @@
                 <input type="text" placeholder="Search the wiki...">
             </div>
 
-            <a href="pages.html" class="nav-link" style="margin-right: 1rem; color: #8B5CF6; font-weight: 600;">{Pages}</a>
             <button class="login-btn">Log In</button>
         </div>
     </nav>
@@ -363,6 +363,27 @@
             return icons[category] || 'document-text-outline';
         }
 
+        // Get character image path - tries multiple patterns
+        function getCharacterImagePath(charName) {
+            const patterns = [
+                `${charName}_cover.jpg`,
+                `${charName}_cover.png`,
+                `${charName}_profile.png`,
+                `${charName}_full.png`,
+                `${charName}_art.png`,
+                `${charName}.png`,
+                `${charName}.jpg`,
+                `${charName}_manhwa.jpg`,
+                `${charName}_novel.jpg`,
+                `${charName}_dark.png`,
+                `${charName}_header_text.png`
+            ];
+            
+            // Return the first pattern - browser will handle 404s via onerror
+            // We'll use a cascade approach with multiple img tags
+            return patterns.map(pattern => `../assets/images/${pattern}`).join(',');
+        }
+
         // Create page preview card
         function createPageCard(page) {
             const name = getPageName(page.path);
@@ -371,19 +392,55 @@
             
             // Try to find a thumbnail image
             let thumbnailImg = '';
+            
             if (category === 'characters') {
-                // Try common character image paths
+                // For characters, try multiple image patterns
                 const charName = page.path.split('/').pop().replace('.html', '');
-                thumbnailImg = `<img src="../assets/images/${charName}_cover.jpg" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                    <img src="../assets/images/${charName}_profile.png" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                    <div class="page-icon" style="display:none;"><ion-icon name="${icon}"></ion-icon></div>`;
+                const imagePatterns = [
+                    `${charName}_cover.jpg`,
+                    `${charName}_cover.png`,
+                    `${charName}_profile.png`,
+                    `${charName}_full.png`,
+                    `${charName}_art.png`,
+                    `${charName}.png`,
+                    `${charName}.jpg`,
+                    `${charName}_manhwa.jpg`,
+                    `${charName}_novel.jpg`,
+                    `${charName}_dark.png`
+                ];
+                
+                // Create multiple img tags - browser will try each until one loads
+                const imageSources = imagePatterns.map(pattern => 
+                    `../assets/images/${pattern}`
+                );
+                
+                thumbnailImg = imageSources.map((src, idx) => 
+                    `<img class="char-preview-img" src="${src}" 
+                        style="display: ${idx === 0 ? 'block' : 'none'}; width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0;">`
+                ).join('') + 
+                `<div class="page-icon" style="display: none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+                    <ion-icon name="${icon}"></ion-icon>
+                </div>`;
+            } else if (category === 'cycles') {
+                // For cycles, try timeline images
+                const cycleName = page.path.split('/').pop().replace('.html', '');
+                const cycleNum = cycleName.match(/\d+/)?.[0];
+                if (cycleNum) {
+                    thumbnailImg = `<img src="../assets/images/timeline_${cycleNum}_cycle.png" 
+                        style="width: 100%; height: 100%; object-fit: cover;" 
+                        onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="page-icon" style="display: none;"><ion-icon name="${icon}"></ion-icon></div>`;
+                } else {
+                    thumbnailImg = `<div class="page-icon"><ion-icon name="${icon}"></ion-icon></div>`;
+                }
             } else {
+                // For other pages, use icon for now
                 thumbnailImg = `<div class="page-icon"><ion-icon name="${icon}"></ion-icon></div>`;
             }
 
             return `
                 <a href="/${page.path}" class="page-preview-card" data-category="${category}" data-name="${name.toLowerCase()}">
-                    <div class="page-preview-thumbnail">
+                    <div class="page-preview-thumbnail" style="position: relative;">
                         ${thumbnailImg}
                     </div>
                     <div class="page-preview-content">
@@ -430,6 +487,43 @@
             }
             
             grid.innerHTML = filteredPages.map(page => createPageCard(page)).join('');
+            
+            // After rendering, handle image loading for character pages with cascade
+            setTimeout(() => {
+                document.querySelectorAll('.page-preview-thumbnail').forEach(thumbnail => {
+                    const images = thumbnail.querySelectorAll('.char-preview-img');
+                    if (images.length > 0) {
+                        let imageLoaded = false;
+                        const icon = thumbnail.querySelector('.page-icon');
+                        
+                        images.forEach((img, index) => {
+                            // Try to load this image
+                            const testImg = new Image();
+                            testImg.onload = () => {
+                                if (!imageLoaded) {
+                                    imageLoaded = true;
+                                    // Show this image, hide others
+                                    img.style.display = 'block';
+                                    images.forEach((otherImg, otherIndex) => {
+                                        if (otherIndex !== index) otherImg.style.display = 'none';
+                                    });
+                                    if (icon) icon.style.display = 'none';
+                                }
+                            };
+                            testImg.onerror = () => {
+                                // Try next image
+                                if (index < images.length - 1) {
+                                    images[index + 1].style.display = 'block';
+                                } else if (!imageLoaded) {
+                                    // All images failed, show icon
+                                    if (icon) icon.style.display = 'flex';
+                                }
+                            };
+                            testImg.src = img.src;
+                        });
+                    }
+                });
+            }, 50);
         }
 
         // Update stats
