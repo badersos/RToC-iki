@@ -33,6 +33,18 @@
             options.credentials = 'include';
         }
 
+        // Add session token as Authorization header (cross-origin cookie fix)
+        const sessionToken = localStorage.getItem('rtoc_session');
+        if (sessionToken) {
+            if (!options.headers) options.headers = {};
+            // Preserve existing Content-Type if set, but add Authorization
+            if (options.headers instanceof Headers) {
+                options.headers.set('Authorization', 'Bearer ' + sessionToken);
+            } else {
+                options.headers['Authorization'] = 'Bearer ' + sessionToken;
+            }
+        }
+
         return fetch(url, options);
     };
 

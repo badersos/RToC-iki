@@ -70,8 +70,11 @@
                     const data = await response.json();
 
                     if (data.status === 'success') {
-                        // Save user data
+                        // Save user data and session token
                         localStorage.setItem('rtoc_user', JSON.stringify(data.user));
+                        if (data.session_id) {
+                            localStorage.setItem('rtoc_session', data.session_id);
+                        }
                         statusDiv.textContent = "Login successful! Redirecting...";
 
                         // Redirect to home or saved location

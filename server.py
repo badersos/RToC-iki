@@ -136,8 +136,13 @@ def git_push(message="Auto-save data"):
             result = subprocess.run(["git", "commit", "-m", message], capture_output=True, text=True)
             if result.returncode == 0:
                 print(f"[GIT] Pushing...", file=sys.stderr)
-                # Push current HEAD to remote main branch (handles detached HEAD state)
-                subprocess.run(["git", "push", "origin", "HEAD:main"], check=True, stderr=subprocess.PIPE)
+                # Try push first
+                push_result = subprocess.run(["git", "push", "origin", "HEAD:main"], capture_output=True, text=True)
+                if push_result.returncode != 0:
+                    # Pull with rebase to handle remote changes, then retry push
+                    print(f"[GIT] Push rejected, pulling with rebase...", file=sys.stderr)
+                    subprocess.run(["git", "pull", "--rebase", "-X", "ours", "origin", "main"], check=True, stderr=subprocess.PIPE)
+                    subprocess.run(["git", "push", "origin", "HEAD:main"], check=True, stderr=subprocess.PIPE)
                 print(f"[GIT] Pushed: {message}", file=sys.stderr)
             else:
                 print(f"[GIT] Nothing to commit.", file=sys.stderr)
@@ -270,16 +275,24 @@ class SessionManager:
         return session_id
     @staticmethod
     def get_user(headers):
-        cookie_header = headers.get('Cookie')
-        if not cookie_header: return None
+        session_id = None
         
-        cookies = {}
-        for c in cookie_header.split(';'):
-            if '=' in c:
-                parts = c.strip().split('=', 1)
-                cookies[parts[0]] = parts[1]
+        # 1. Try Authorization header first (works cross-origin)
+        auth_header = headers.get('Authorization', '')
+        if auth_header.startswith('Bearer '):
+            session_id = auth_header[7:].strip()
         
-        session_id = cookies.get('session')
+        # 2. Fallback to cookie (works same-origin)
+        if not session_id:
+            cookie_header = headers.get('Cookie')
+            if cookie_header:
+                cookies = {}
+                for c in cookie_header.split(';'):
+                    if '=' in c:
+                        parts = c.strip().split('=', 1)
+                        cookies[parts[0]] = parts[1]
+                session_id = cookies.get('session')
+        
         if not session_id: return None
         
         sessions = FileHandler.read_json(SessionManager.FILE)
@@ -289,7 +302,7 @@ class SessionManager:
         return None
 # === HELPER FUNCTIONS ===
 def get_authenticated_user(request_handler):
-    """Get the authenticated user from the request's session cookie."""
+    """Get the authenticated user from the request's session cookie or Authorization header."""
     return SessionManager.get_user(request_handler.headers)
 
 def is_admin(user):
@@ -756,7 +769,8 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                     self.end_headers()
                     self.wfile.write(json.dumps({
                         "status": "success",
-                        "user": final_user
+                        "user": final_user,
+                        "session_id": session_id
                     }).encode())
                 else:
                     # Traditional redirect for direct browser access

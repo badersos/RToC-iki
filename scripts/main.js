@@ -212,6 +212,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const urlParams = new URLSearchParams(window.location.search);
     if (urlParams.get('reset') === 'true' || urlParams.get('logout') === 'true') {
         localStorage.removeItem('rtoc_user');
+        localStorage.removeItem('rtoc_session');
         console.log("System Reset Performed.");
         window.location.href = window.location.pathname; // Clear query param
     }
@@ -322,6 +323,7 @@ document.addEventListener('DOMContentLoaded', () => {
             } catch (e) {
                 console.log("Invalid user", e);
                 localStorage.removeItem('rtoc_user');
+                localStorage.removeItem('rtoc_session');
             }
         }
     })();

@@ -680,6 +680,7 @@
         // --- LOGOUT ---
         document.getElementById('logoutBtn')?.addEventListener('click', () => {
             localStorage.removeItem('rtoc_user');
+            localStorage.removeItem('rtoc_session');
             window.location.href = '/?logout=true';
         });
 
