@@ -324,11 +324,14 @@ def is_admin(user):
             role = perms.get(user_id) or perms.get(username)
             if role in ['admin', 'owner']:
                 return True
-        except:
+        except Exception as e:
+            print(f"DEBUG: Error reading permissions.json: {e}", file=sys.stderr)
             pass
     
     # Fallback to user object's role
-    return user.get('role') in ['admin', 'owner']
+    role = user.get('role')
+    print(f"DEBUG: Fallback role check for {username}: {role}", file=sys.stderr)
+    return role in ['admin', 'owner']
 
 from html.parser import HTMLParser
 import re
@@ -867,7 +870,10 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
         if self.path == '/save':
             try:
                 user = get_authenticated_user(self)
+                print(f"DEBUG: POST /save user: {user}", file=sys.stderr)
+                
                 if not is_admin(user):
+                    print(f"DEBUG: Admin check failed for user {user}", file=sys.stderr)
                     self.send_error(403, "Permission denied: Admins only")
                     return
 
