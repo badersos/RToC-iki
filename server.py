@@ -841,13 +841,12 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                 self.send_error(500, str(e))
             return
 
-        # Only serve static files when NOT running on Render (i.e., local development)
-        # UNLESS it's an asset file (uploads/images) which we must serve
-        if not os.environ.get('RENDER') or self.path.startswith('/assets/'):
-            super().do_GET()
-        else:
-            # API-only mode on Render - return 404 for non-API routes
-            self.send_error(404, "Not Found")
+        # Serve static files (HTML, CSS, JS, images, etc.)
+        # Handle root path by serving index.html
+        if self.path == '/':
+            self.path = '/index.html'
+        
+        super().do_GET()
 
 
     def do_POST(self):
