@@ -3,5 +3,7 @@ credentials-file: C:\Users\user\.cloudflared\cf1df3b3-cb3b-48c1-a660-c159a92a67e
 
 ingress:
   - hostname: regressorstaleofcultivation.space
-    service: http://127.0.0.1:8081
+    service: https://rtoc-iki.onrender.com
+  - hostname: www.regressorstaleofcultivation.space
+    service: https://rtoc-iki.onrender.com
   - service: http_status:404
