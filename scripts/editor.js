@@ -5,6 +5,8 @@ class WikiEditor {
         this.originalLayoutHTML = '';
         this.isAdmin = false;
         this.currentUser = null;
+        this.currentEditingImage = null;
+        this.contextMenuTarget = null;
 
         // Start initialization
         if (document.readyState === 'loading') {
@@ -308,6 +310,54 @@ class WikiEditor {
                     #imageEditOverlay button:hover {
                         background: #7c3aed;
                     }
+                    /* Edit Menu Dropdown */
+                    .editor-menu-dropdown {
+                        position: relative;
+                        display: inline-block;
+                    }
+                    .editor-menu-content {
+                        display: none;
+                        position: absolute;
+                        bottom: 100%;
+                        left: 0;
+                        margin-bottom: 8px;
+                        background: linear-gradient(135deg, #1a1a24 0%, #12121a 100%);
+                        border: 1px solid rgba(139, 92, 246, 0.4);
+                        border-radius: 8px;
+                        padding: 4px 0;
+                        min-width: 220px;
+                        box-shadow: 0 8px 32px rgba(0,0,0,0.6);
+                        z-index: 100001;
+                        max-height: 400px;
+                        overflow-y: auto;
+                    }
+                    .editor-menu-dropdown:hover .editor-menu-content,
+                    .editor-menu-content:hover {
+                        display: block;
+                    }
+                    .menu-item {
+                        padding: 10px 20px;
+                        color: #fff;
+                        cursor: pointer;
+                        display: flex;
+                        align-items: center;
+                        gap: 10px;
+                        font-size: 0.9rem;
+                        transition: all 0.2s;
+                    }
+                    .menu-item:hover {
+                        background: rgba(139, 92, 246, 0.2);
+                        color: #A78BFA;
+                    }
+                    .menu-item ion-icon {
+                        font-size: 1.1rem;
+                        width: 20px;
+                    }
+                    .menu-divider {
+                        height: 1px;
+                        background: rgba(255,255,255,0.1);
+                        margin: 4px 10px;
+                    }
                 </style>
                 <div class="editor-toolbar">
                     <button class="editor-btn" id="toggleEditor" data-tooltip="Toggle Edit Mode">
@@ -317,6 +367,35 @@ class WikiEditor {
                     <div class="editor-controls" id="editorControls" style="display: none;">
                         <span class="editor-status">Editing...</span>
                         <div class="separator"></div>
+                        
+                        <!-- Edit Menu Dropdown -->
+                        <div class="editor-menu-dropdown" id="editMenuDropdown">
+                            <button class="editor-btn" id="editMenuBtn" data-tooltip="Edit Menu">
+                                <span>Edit</span>
+                                <ion-icon name="chevron-down-outline" style="font-size: 0.8rem; margin-left: 4px;"></ion-icon>
+                            </button>
+                            <div class="editor-menu-content" id="editMenuContent">
+                                <div class="menu-item" id="menuUndo"><ion-icon name="arrow-undo-outline"></ion-icon> Undo (Ctrl+Z)</div>
+                                <div class="menu-item" id="menuRedo"><ion-icon name="arrow-redo-outline"></ion-icon> Redo (Ctrl+Y)</div>
+                                <div class="menu-divider"></div>
+                                <div class="menu-item" id="menuCut"><ion-icon name="cut-outline"></ion-icon> Cut (Ctrl+X)</div>
+                                <div class="menu-item" id="menuCopy"><ion-icon name="copy-outline"></ion-icon> Copy (Ctrl+C)</div>
+                                <div class="menu-item" id="menuPaste"><ion-icon name="clipboard-outline"></ion-icon> Paste (Ctrl+V)</div>
+                                <div class="menu-divider"></div>
+                                <div class="menu-item" id="menuSelectAll"><ion-icon name="checkmark-done-outline"></ion-icon> Select All (Ctrl+A)</div>
+                                <div class="menu-divider"></div>
+                                <div class="menu-item" id="menuFontFamily"><ion-icon name="text-outline"></ion-icon> Font Family...</div>
+                                <div class="menu-item" id="menuFontSize"><ion-icon name="resize-outline"></ion-icon> Font Size...</div>
+                                <div class="menu-item" id="menuLineSpacing"><ion-icon name="list-outline"></ion-icon> Line Spacing...</div>
+                                <div class="menu-item" id="menuTextColor"><ion-icon name="color-palette-outline"></ion-icon> Text Color...</div>
+                                <div class="menu-item" id="menuBgColor"><ion-icon name="color-fill-outline"></ion-icon> Background Color...</div>
+                                <div class="menu-divider"></div>
+                                <div class="menu-item" id="menuTextAlign"><ion-icon name="text-outline"></ion-icon> Text Alignment...</div>
+                                <div class="menu-item" id="menuImageEdit"><ion-icon name="image-outline"></ion-icon> Edit Image...</div>
+                            </div>
+                        </div>
+                        <div class="separator"></div>
+                        
                         <!-- Text Formatting -->
                         <button class="editor-btn" id="formatBold" data-tooltip="Bold (Ctrl+B)"><b>B</b></button>
                         <button class="editor-btn" id="formatItalic" data-tooltip="Italic (Ctrl+I)"><i>I</i></button>
@@ -455,6 +534,101 @@ class WikiEditor {
                     <span><i>Italic</i></span>
                 </div>
                 
+                <div class="context-item" id="ctxFormatUnderline">
+                    <ion-icon name="text-outline"></ion-icon>
+                    <span><u>Underline</u></span>
+                </div>
+                
+                <div class="context-item" id="ctxFormatStrike">
+                    <ion-icon name="text-outline"></ion-icon>
+                    <span><s>Strikethrough</s></span>
+                </div>
+                
+                <div class="context-divider"></div>
+                
+                <!-- Typography Section -->
+                <div class="context-section-title">🔤 Typography</div>
+                
+                <div class="context-item" id="ctxFontFamily">
+                    <ion-icon name="text-outline"></ion-icon>
+                    <span>Font Family...</span>
+                </div>
+                
+                <div class="context-item" id="ctxFontSize">
+                    <ion-icon name="resize-outline"></ion-icon>
+                    <span>Font Size...</span>
+                </div>
+                
+                <div class="context-item" id="ctxLineSpacing">
+                    <ion-icon name="list-outline"></ion-icon>
+                    <span>Line Spacing...</span>
+                </div>
+                
+                <div class="context-divider"></div>
+                
+                <!-- Colors Section -->
+                <div class="context-section-title">🎨 Colors</div>
+                
+                <div class="context-item" id="ctxTextColor">
+                    <ion-icon name="color-palette-outline"></ion-icon>
+                    <span>Text Color...</span>
+                </div>
+                
+                <div class="context-item" id="ctxBgColor">
+                    <ion-icon name="color-fill-outline"></ion-icon>
+                    <span>Background Color...</span>
+                </div>
+                
+                <div class="context-divider"></div>
+                
+                <!-- Alignment Section -->
+                <div class="context-section-title">↔️ Alignment</div>
+                
+                <div class="context-item" id="ctxAlignLeft">
+                    <ion-icon name="arrow-back-outline"></ion-icon>
+                    <span>Align Left</span>
+                </div>
+                
+                <div class="context-item" id="ctxAlignCenter">
+                    <ion-icon name="remove-outline"></ion-icon>
+                    <span>Align Center</span>
+                </div>
+                
+                <div class="context-item" id="ctxAlignRight">
+                    <ion-icon name="arrow-forward-outline"></ion-icon>
+                    <span>Align Right</span>
+                </div>
+                
+                <div class="context-item" id="ctxAlignJustify">
+                    <ion-icon name="resize-outline"></ion-icon>
+                    <span>Justify</span>
+                </div>
+                
+                <div class="context-divider"></div>
+                
+                <!-- Image Editing Section -->
+                <div class="context-section-title" id="ctxImageSection" style="display: none;">🖼️ Image</div>
+                
+                <div class="context-item" id="ctxEditImage" style="display: none;">
+                    <ion-icon name="image-outline"></ion-icon>
+                    <span>Edit Image...</span>
+                </div>
+                
+                <div class="context-item" id="ctxImageSize" style="display: none;">
+                    <ion-icon name="resize-outline"></ion-icon>
+                    <span>Resize Image...</span>
+                </div>
+                
+                <div class="context-item" id="ctxImageAlign" style="display: none;">
+                    <ion-icon name="move-outline"></ion-icon>
+                    <span>Align Image...</span>
+                </div>
+                
+                <div class="context-divider" id="ctxImageDivider" style="display: none;"></div>
+                
+                <div class="context-divider"></div>
+                
+                <!-- Other Format -->
                 <div class="context-item" id="ctxFormatSpoiler">
                     <ion-icon name="eye-off-outline"></ion-icon>
                     <span>Spoiler</span>
@@ -754,6 +928,229 @@ class WikiEditor {
             </style>
         `;
         document.body.insertAdjacentHTML('beforeend', modalHTML);
+        
+        // Add formatting modals
+        this.createFormattingModals();
+    }
+    
+    createFormattingModals() {
+        const formattingModalsHTML = `
+            <!-- Font Family Modal -->
+            <div id="fontFamilyModal" class="admin-modal">
+                <div class="modal-content" style="width: 400px;">
+                    <h3><ion-icon name="text-outline"></ion-icon> Font Family</h3>
+                    <div class="form-field">
+                        <label>Select Font Family</label>
+                        <select id="fontFamilySelect" style="width: 100%; padding: 0.75rem 1rem; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; color: #fff; font-size: 0.95rem;">
+                            <option value="">Default</option>
+                            <option value="Arial, sans-serif">Arial</option>
+                            <option value="'Times New Roman', serif">Times New Roman</option>
+                            <option value="'Courier New', monospace">Courier New</option>
+                            <option value="Georgia, serif">Georgia</option>
+                            <option value="Verdana, sans-serif">Verdana</option>
+                            <option value="'Trebuchet MS', sans-serif">Trebuchet MS</option>
+                            <option value="Impact, sans-serif">Impact</option>
+                            <option value="'Comic Sans MS', cursive">Comic Sans MS</option>
+                            <option value="'Lucida Console', monospace">Lucida Console</option>
+                            <option value="Tahoma, sans-serif">Tahoma</option>
+                            <option value="'Palatino Linotype', serif">Palatino</option>
+                            <option value="'Garamond', serif">Garamond</option>
+                        </select>
+                    </div>
+                    <div class="modal-actions">
+                        <button id="cancelFontFamilyBtn" class="btn-secondary">Cancel</button>
+                        <button id="applyFontFamilyBtn" class="btn-primary">Apply</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Font Size Modal -->
+            <div id="fontSizeModal" class="admin-modal">
+                <div class="modal-content" style="width: 400px;">
+                    <h3><ion-icon name="resize-outline"></ion-icon> Font Size</h3>
+                    <div class="form-field">
+                        <label>Font Size (px, em, rem, or %)</label>
+                        <input type="text" id="fontSizeInput" placeholder="e.g. 16px, 1.2em, 120%">
+                    </div>
+                    <div style="margin: 1rem 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px;">
+                        <button class="quick-size-btn" data-size="12px">12px</button>
+                        <button class="quick-size-btn" data-size="14px">14px</button>
+                        <button class="quick-size-btn" data-size="16px">16px</button>
+                        <button class="quick-size-btn" data-size="18px">18px</button>
+                        <button class="quick-size-btn" data-size="20px">20px</button>
+                        <button class="quick-size-btn" data-size="24px">24px</button>
+                        <button class="quick-size-btn" data-size="32px">32px</button>
+                        <button class="quick-size-btn" data-size="48px">48px</button>
+                    </div>
+                    <div class="modal-actions">
+                        <button id="cancelFontSizeBtn" class="btn-secondary">Cancel</button>
+                        <button id="applyFontSizeBtn" class="btn-primary">Apply</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Line Spacing Modal -->
+            <div id="lineSpacingModal" class="admin-modal">
+                <div class="modal-content" style="width: 400px;">
+                    <h3><ion-icon name="list-outline"></ion-icon> Line Spacing</h3>
+                    <div class="form-field">
+                        <label>Line Height (number, px, em, or %)</label>
+                        <input type="text" id="lineSpacingInput" placeholder="e.g. 1.5, 24px, 150%">
+                    </div>
+                    <div style="margin: 1rem 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px;">
+                        <button class="quick-spacing-btn" data-spacing="1">Single</button>
+                        <button class="quick-spacing-btn" data-spacing="1.15">1.15</button>
+                        <button class="quick-spacing-btn" data-spacing="1.5">1.5</button>
+                        <button class="quick-spacing-btn" data-spacing="2">Double</button>
+                    </div>
+                    <div class="modal-actions">
+                        <button id="cancelLineSpacingBtn" class="btn-secondary">Cancel</button>
+                        <button id="applyLineSpacingBtn" class="btn-primary">Apply</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Text Color Modal -->
+            <div id="textColorModal" class="admin-modal">
+                <div class="modal-content" style="width: 450px;">
+                    <h3><ion-icon name="color-palette-outline"></ion-icon> Text Color</h3>
+                    <div class="form-field">
+                        <label>Color (hex, rgb, or name)</label>
+                        <input type="text" id="textColorInput" placeholder="#ffffff, rgb(255,255,255), or white">
+                    </div>
+                    <div style="margin: 1rem 0;">
+                        <label style="display: block; margin-bottom: 0.5rem; color: #aaa;">Quick Colors:</label>
+                        <div style="display: grid; grid-template-columns: repeat(8, 1fr); gap: 8px;">
+                            <div class="color-swatch" data-color="#000000" style="background: #000; width: 40px; height: 40px; border-radius: 6px; cursor: pointer; border: 2px solid rgba(255,255,255,0.2);"></div>
+                            <div class="color-swatch" data-color="#333333" style="background: #333; width: 40px; height: 40px; border-radius: 6px; cursor: pointer; border: 2px solid rgba(255,255,255,0.2);"></div>
+                            <div class="color-swatch" data-color="#666666" style="background: #666; width: 40px; height: 40px; border-radius: 6px; cursor: pointer; border: 2px solid rgba(255,255,255,0.2);"></div>
+                            <div class="color-swatch" data-color="#999999" style="background: #999; width: 40px; height: 40px; border-radius: 6px; cursor: pointer; border: 2px solid rgba(255,255,255,0.2);"></div>
+                            <div class="color-swatch" data-color="#ffffff" style="background: #fff; width: 40px; height: 40px; border-radius: 6px; cursor: pointer; border: 2px solid rgba(255,255,255,0.2);"></div>
+                            <div class="color-swatch" data-color="#8B5CF6" style="background: #8B5CF6; width: 40px; height: 40px; border-radius: 6px; cursor: pointer; border: 2px solid rgba(255,255,255,0.2);"></div>
+                            <div class="color-swatch" data-color="#EF4444" style="background: #EF4444; width: 40px; height: 40px; border-radius: 6px; cursor: pointer; border: 2px solid rgba(255,255,255,0.2);"></div>
+                            <div class="color-swatch" data-color="#10B981" style="background: #10B981; width: 40px; height: 40px; border-radius: 6px; cursor: pointer; border: 2px solid rgba(255,255,255,0.2);"></div>
+                            <div class="color-swatch" data-color="#3B82F6" style="background: #3B82F6; width: 40px; height: 40px; border-radius: 6px; cursor: pointer; border: 2px solid rgba(255,255,255,0.2);"></div>
+                            <div class="color-swatch" data-color="#F59E0B" style="background: #F59E0B; width: 40px; height: 40px; border-radius: 6px; cursor: pointer; border: 2px solid rgba(255,255,255,0.2);"></div>
+                            <div class="color-swatch" data-color="#EC4899" style="background: #EC4899; width: 40px; height: 40px; border-radius: 6px; cursor: pointer; border: 2px solid rgba(255,255,255,0.2);"></div>
+                            <div class="color-swatch" data-color="#6366F1" style="background: #6366F1; width: 40px; height: 40px; border-radius: 6px; cursor: pointer; border: 2px solid rgba(255,255,255,0.2);"></div>
+                        </div>
+                    </div>
+                    <div class="modal-actions">
+                        <button id="cancelTextColorBtn" class="btn-secondary">Cancel</button>
+                        <button id="applyTextColorBtn" class="btn-primary">Apply</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Background Color Modal -->
+            <div id="bgColorModal" class="admin-modal">
+                <div class="modal-content" style="width: 450px;">
+                    <h3><ion-icon name="color-fill-outline"></ion-icon> Background Color</h3>
+                    <div class="form-field">
+                        <label>Color (hex, rgb, or name)</label>
+                        <input type="text" id="bgColorInput" placeholder="#000000, rgb(0,0,0), or black">
+                    </div>
+                    <div style="margin: 1rem 0;">
+                        <label style="display: block; margin-bottom: 0.5rem; color: #aaa;">Quick Colors:</label>
+                        <div style="display: grid; grid-template-columns: repeat(8, 1fr); gap: 8px;">
+                            <div class="bg-color-swatch" data-color="#000000" style="background: #000; width: 40px; height: 40px; border-radius: 6px; cursor: pointer; border: 2px solid rgba(255,255,255,0.2);"></div>
+                            <div class="bg-color-swatch" data-color="#1a1a24" style="background: #1a1a24; width: 40px; height: 40px; border-radius: 6px; cursor: pointer; border: 2px solid rgba(255,255,255,0.2);"></div>
+                            <div class="bg-color-swatch" data-color="#333333" style="background: #333; width: 40px; height: 40px; border-radius: 6px; cursor: pointer; border: 2px solid rgba(255,255,255,0.2);"></div>
+                            <div class="bg-color-swatch" data-color="#ffffff" style="background: #fff; width: 40px; height: 40px; border-radius: 6px; cursor: pointer; border: 2px solid rgba(255,255,255,0.2);"></div>
+                            <div class="bg-color-swatch" data-color="#8B5CF6" style="background: #8B5CF6; width: 40px; height: 40px; border-radius: 6px; cursor: pointer; border: 2px solid rgba(255,255,255,0.2);"></div>
+                            <div class="bg-color-swatch" data-color="#EF4444" style="background: #EF4444; width: 40px; height: 40px; border-radius: 6px; cursor: pointer; border: 2px solid rgba(255,255,255,0.2);"></div>
+                            <div class="bg-color-swatch" data-color="#10B981" style="background: #10B981; width: 40px; height: 40px; border-radius: 6px; cursor: pointer; border: 2px solid rgba(255,255,255,0.2);"></div>
+                            <div class="bg-color-swatch" data-color="#3B82F6" style="background: #3B82F6; width: 40px; height: 40px; border-radius: 6px; cursor: pointer; border: 2px solid rgba(255,255,255,0.2);"></div>
+                            <div class="bg-color-swatch" data-color="#F59E0B" style="background: #F59E0B; width: 40px; height: 40px; border-radius: 6px; cursor: pointer; border: 2px solid rgba(255,255,255,0.2);"></div>
+                            <div class="bg-color-swatch" data-color="#EC4899" style="background: #EC4899; width: 40px; height: 40px; border-radius: 6px; cursor: pointer; border: 2px solid rgba(255,255,255,0.2);"></div>
+                            <div class="bg-color-swatch" data-color="#6366F1" style="background: #6366F1; width: 40px; height: 40px; border-radius: 6px; cursor: pointer; border: 2px solid rgba(255,255,255,0.2);"></div>
+                            <div class="bg-color-swatch" data-color="transparent" style="background: linear-gradient(45deg, #333 25%, transparent 25%), linear-gradient(-45deg, #333 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #333 75%), linear-gradient(-45deg, transparent 75%, #333 75%); background-size: 10px 10px; background-position: 0 0, 0 5px, 5px -5px, -5px 0px; width: 40px; height: 40px; border-radius: 6px; cursor: pointer; border: 2px solid rgba(255,255,255,0.2);"></div>
+                        </div>
+                    </div>
+                    <div class="modal-actions">
+                        <button id="cancelBgColorBtn" class="btn-secondary">Cancel</button>
+                        <button id="applyBgColorBtn" class="btn-primary">Apply</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Image Edit Enhanced Modal -->
+            <div id="enhancedImageEditModal" class="admin-modal">
+                <div class="modal-content" style="max-width: 700px;">
+                    <h3><ion-icon name="image-outline"></ion-icon> Edit Image</h3>
+                    
+                    <div id="enhancedImagePreview" style="text-align: center; margin: 15px 0;">
+                        <img id="enhancedImgPreview" src="" style="max-width: 100%; max-height: 300px; border-radius: 8px; border: 2px solid rgba(139,92,246,0.3);">
+                    </div>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                        <div class="form-field">
+                            <label>Image URL / Path</label>
+                            <input type="text" id="enhancedImgSrc" style="font-family: monospace;">
+                        </div>
+                        
+                        <div class="form-field">
+                            <label>Alt Text</label>
+                            <input type="text" id="enhancedImgAlt" placeholder="Image description">
+                        </div>
+                    </div>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; margin-top: 1rem;">
+                        <div class="form-field">
+                            <label>Width</label>
+                            <input type="text" id="enhancedImgWidth" placeholder="e.g. 200px, 50%">
+                        </div>
+                        
+                        <div class="form-field">
+                            <label>Height</label>
+                            <input type="text" id="enhancedImgHeight" placeholder="e.g. 300px, auto">
+                        </div>
+                        
+                        <div class="form-field">
+                            <label>Alignment</label>
+                            <select id="enhancedImgAlign" style="width: 100%; padding: 0.75rem 1rem; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; color: #fff;">
+                                <option value="">Default</option>
+                                <option value="left">Left</option>
+                                <option value="center">Center</option>
+                                <option value="right">Right</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-field" style="margin-top: 1rem;">
+                        <label>Border Radius (optional)</label>
+                        <input type="text" id="enhancedImgBorderRadius" placeholder="e.g. 8px, 50%">
+                    </div>
+                    
+                    <div class="modal-actions">
+                        <button id="browseEnhancedImgBtn" class="btn-secondary"><ion-icon name="folder-outline"></ion-icon> Browse Assets</button>
+                        <button id="cancelEnhancedImgBtn" class="btn-secondary">Cancel</button>
+                        <button id="applyEnhancedImgBtn" class="btn-primary">Apply Changes</button>
+                    </div>
+                </div>
+            </div>
+            
+            <style>
+                .quick-size-btn, .quick-spacing-btn {
+                    padding: 0.5rem;
+                    background: rgba(255,255,255,0.1);
+                    border: 1px solid rgba(255,255,255,0.2);
+                    color: #fff;
+                    border-radius: 6px;
+                    cursor: pointer;
+                    transition: all 0.2s;
+                }
+                .quick-size-btn:hover, .quick-spacing-btn:hover {
+                    background: rgba(139, 92, 246, 0.3);
+                    border-color: rgba(139, 92, 246, 0.5);
+                }
+                .color-swatch:hover, .bg-color-swatch:hover {
+                    transform: scale(1.1);
+                    border-color: #8B5CF6 !important;
+                }
+            </style>
+        `;
+        document.body.insertAdjacentHTML('beforeend', formattingModalsHTML);
     }
 
     attachEventListeners() {
@@ -779,12 +1176,64 @@ class WikiEditor {
                 if (btn.id === 'insertImage') this.openModal('insertImageModal');
                 if (btn.id === 'undoBtn') document.execCommand('undo');
                 if (btn.id === 'redoBtn') document.execCommand('redo');
+                
+                // Edit Menu Items
+                if (btn.id === 'menuUndo') document.execCommand('undo');
+                if (btn.id === 'menuRedo') document.execCommand('redo');
+                if (btn.id === 'menuCut') document.execCommand('cut');
+                if (btn.id === 'menuCopy') document.execCommand('copy');
+                if (btn.id === 'menuPaste') document.execCommand('paste');
+                if (btn.id === 'menuSelectAll') document.execCommand('selectAll');
+                if (btn.id === 'menuFontFamily') this.openModal('fontFamilyModal');
+                if (btn.id === 'menuFontSize') this.openModal('fontSizeModal');
+                if (btn.id === 'menuLineSpacing') this.openModal('lineSpacingModal');
+                if (btn.id === 'menuTextColor') this.openModal('textColorModal');
+                if (btn.id === 'menuBgColor') this.openModal('bgColorModal');
+                if (btn.id === 'menuTextAlign') this.openTextAlignModal();
+                if (btn.id === 'menuImageEdit') {
+                    const img = this.getSelectedImage();
+                    if (img) this.showEnhancedImageEdit(img);
+                    else this.showNotification('Select an image first', 'warning');
+                }
+                
+                // Formatting Modal Buttons
+                if (btn.id === 'cancelFontFamilyBtn') this.closeModal('fontFamilyModal');
+                if (btn.id === 'applyFontFamilyBtn') this.applyFontFamily();
+                if (btn.id === 'cancelFontSizeBtn') this.closeModal('fontSizeModal');
+                if (btn.id === 'applyFontSizeBtn') this.applyFontSize();
+                if (btn.id === 'cancelLineSpacingBtn') this.closeModal('lineSpacingModal');
+                if (btn.id === 'applyLineSpacingBtn') this.applyLineSpacing();
+                if (btn.id === 'cancelTextColorBtn') this.closeModal('textColorModal');
+                if (btn.id === 'applyTextColorBtn') this.applyTextColor();
+                if (btn.id === 'cancelBgColorBtn') this.closeModal('bgColorModal');
+                if (btn.id === 'applyBgColorBtn') this.applyBgColor();
+                if (btn.id === 'cancelEnhancedImgBtn') this.closeModal('enhancedImageEditModal');
+                if (btn.id === 'applyEnhancedImgBtn') this.applyEnhancedImageEdit();
+                
+                // Quick buttons
+                if (btn.classList.contains('quick-size-btn')) {
+                    document.getElementById('fontSizeInput').value = btn.dataset.size;
+                }
+                if (btn.classList.contains('quick-spacing-btn')) {
+                    document.getElementById('lineSpacingInput').value = btn.dataset.spacing;
+                }
+                if (btn.classList.contains('color-swatch')) {
+                    document.getElementById('textColorInput').value = btn.dataset.color;
+                }
+                if (btn.classList.contains('bg-color-swatch')) {
+                    document.getElementById('bgColorInput').value = btn.dataset.color;
+                }
                 // Link Modal
                 if (btn.id === 'cancelLinkBtn') this.closeModal('insertLinkModal');
                 if (btn.id === 'confirmLinkBtn') this.insertLink();
                 // Image Modal
                 if (btn.id === 'cancelImageBtn') this.closeModal('insertImageModal');
                 if (btn.id === 'confirmImageBtn') this.insertImage();
+                
+                // Enhanced Image Edit
+                if (btn.id === 'browseEnhancedImgBtn') {
+                    this.browseAssetsForEnhancedImage();
+                }
 
                 // Image Modal Tabs
                 if (btn.classList.contains('tab-btn')) {
@@ -834,7 +1283,44 @@ class WikiEditor {
                 // Format
                 if (ctxItem.id === 'ctxFormatBold') this.formatText('bold');
                 if (ctxItem.id === 'ctxFormatItalic') this.formatText('italic');
+                if (ctxItem.id === 'ctxFormatUnderline') this.formatText('underline');
+                if (ctxItem.id === 'ctxFormatStrike') this.formatText('strikeThrough');
                 if (ctxItem.id === 'ctxFormatSpoiler') this.wrapSelectionInSpoiler();
+                
+                // Typography
+                if (ctxItem.id === 'ctxFontFamily') this.openModal('fontFamilyModal');
+                if (ctxItem.id === 'ctxFontSize') this.openModal('fontSizeModal');
+                if (ctxItem.id === 'ctxLineSpacing') this.openModal('lineSpacingModal');
+                
+                // Colors
+                if (ctxItem.id === 'ctxTextColor') this.openModal('textColorModal');
+                if (ctxItem.id === 'ctxBgColor') this.openModal('bgColorModal');
+                
+                // Alignment
+                if (ctxItem.id === 'ctxAlignLeft') this.applyAlignment('left');
+                if (ctxItem.id === 'ctxAlignCenter') this.applyAlignment('center');
+                if (ctxItem.id === 'ctxAlignRight') this.applyAlignment('right');
+                if (ctxItem.id === 'ctxAlignJustify') this.applyAlignment('justify');
+                
+                // Image Editing
+                if (ctxItem.id === 'ctxEditImage') {
+                    const img = this.getContextTargetImage();
+                    if (img) this.showEnhancedImageEdit(img);
+                }
+                if (ctxItem.id === 'ctxImageSize') {
+                    const img = this.getContextTargetImage();
+                    if (img) {
+                        this.openModal('enhancedImageEditModal');
+                        this.populateImageEditModal(img);
+                    }
+                }
+                if (ctxItem.id === 'ctxImageAlign') {
+                    const img = this.getContextTargetImage();
+                    if (img) {
+                        this.openModal('enhancedImageEditModal');
+                        this.populateImageEditModal(img);
+                    }
+                }
 
                 // Actions
                 if (ctxItem.id === 'ctxSave') this.saveChanges();
@@ -947,11 +1433,15 @@ class WikiEditor {
 
     initContextMenu() {
         this.contextTargetCarousel = null;
+        this.contextMenuTarget = null;
         document.addEventListener('contextmenu', (e) => {
             if (!this.isAdmin) return;
             if (e.shiftKey) return; // Shift+RightClick = browser menu
 
             e.preventDefault();
+            
+            // Store the target element
+            this.contextMenuTarget = e.target;
 
             // Check if right-clicked on a carousel image
             const carouselContainer = e.target.closest('.carousel-container');
@@ -962,6 +1452,29 @@ class WikiEditor {
             } else {
                 this.contextTargetCarousel = null;
                 if (uploadSlideItem) uploadSlideItem.style.display = 'none';
+            }
+            
+            // Check if right-clicked on an image
+            const img = e.target.closest('img');
+            const imageSection = document.getElementById('ctxImageSection');
+            const editImageItem = document.getElementById('ctxEditImage');
+            const imageSizeItem = document.getElementById('ctxImageSize');
+            const imageAlignItem = document.getElementById('ctxImageAlign');
+            const imageDivider = document.getElementById('ctxImageDivider');
+            
+            if (img && !img.closest('#adminEditor') && !img.closest('.admin-modal')) {
+                if (imageSection) imageSection.style.display = 'block';
+                if (editImageItem) editImageItem.style.display = 'flex';
+                if (imageSizeItem) imageSizeItem.style.display = 'flex';
+                if (imageAlignItem) imageAlignItem.style.display = 'flex';
+                if (imageDivider) imageDivider.style.display = 'block';
+                this.contextMenuTarget = img;
+            } else {
+                if (imageSection) imageSection.style.display = 'none';
+                if (editImageItem) editImageItem.style.display = 'none';
+                if (imageSizeItem) imageSizeItem.style.display = 'none';
+                if (imageAlignItem) imageAlignItem.style.display = 'none';
+                if (imageDivider) imageDivider.style.display = 'none';
             }
 
             this.showContextMenu(e.clientX, e.clientY);
@@ -1648,6 +2161,269 @@ class WikiEditor {
     formatBlock(tag) {
         if (!this.isEditorActive) return;
         document.execCommand('formatBlock', false, `<${tag}>`);
+    }
+    
+    // Enhanced Formatting Functions
+    applyFontFamily() {
+        if (!this.isEditorActive) return;
+        const fontFamily = document.getElementById('fontFamilySelect').value;
+        if (!fontFamily) {
+            this.showNotification('Please select a font family', 'warning');
+            return;
+        }
+        this.saveSelection();
+        document.execCommand('fontName', false, fontFamily);
+        this.restoreSelection();
+        this.closeModal('fontFamilyModal');
+        this.showNotification('Font family applied', 'success');
+    }
+    
+    applyFontSize() {
+        if (!this.isEditorActive) return;
+        const fontSize = document.getElementById('fontSizeInput').value.trim();
+        if (!fontSize) {
+            this.showNotification('Please enter a font size', 'warning');
+            return;
+        }
+        this.saveSelection();
+        const selection = window.getSelection();
+        if (selection.rangeCount > 0 && !selection.isCollapsed) {
+            const range = selection.getRangeAt(0);
+            const span = document.createElement('span');
+            span.style.fontSize = fontSize;
+            try {
+                const contents = range.extractContents();
+                span.appendChild(contents);
+                range.insertNode(span);
+            } catch (e) {
+                document.execCommand('fontSize', false, '3');
+                const fontElements = document.querySelectorAll('font[size="3"]');
+                if (fontElements.length > 0) {
+                    const lastFont = fontElements[fontElements.length - 1];
+                    lastFont.style.fontSize = fontSize;
+                    lastFont.removeAttribute('size');
+                }
+            }
+        } else {
+            // Apply to current element
+            const activeElement = document.activeElement;
+            if (activeElement && activeElement.contentEditable === 'true') {
+                activeElement.style.fontSize = fontSize;
+            }
+        }
+        this.closeModal('fontSizeModal');
+        this.showNotification('Font size applied', 'success');
+    }
+    
+    applyLineSpacing() {
+        if (!this.isEditorActive) return;
+        const lineSpacing = document.getElementById('lineSpacingInput').value.trim();
+        if (!lineSpacing) {
+            this.showNotification('Please enter line spacing', 'warning');
+            return;
+        }
+        this.saveSelection();
+        const selection = window.getSelection();
+        if (selection.rangeCount > 0 && !selection.isCollapsed) {
+            const range = selection.getRangeAt(0);
+            let container = range.commonAncestorContainer;
+            if (container.nodeType === Node.TEXT_NODE) {
+                container = container.parentElement;
+            }
+            if (container) {
+                container.style.lineHeight = lineSpacing;
+            }
+        } else {
+            const activeElement = document.activeElement;
+            if (activeElement && activeElement.contentEditable === 'true') {
+                activeElement.style.lineHeight = lineSpacing;
+            }
+        }
+        this.closeModal('lineSpacingModal');
+        this.showNotification('Line spacing applied', 'success');
+    }
+    
+    applyTextColor() {
+        if (!this.isEditorActive) return;
+        const color = document.getElementById('textColorInput').value.trim();
+        if (!color) {
+            this.showNotification('Please enter a color', 'warning');
+            return;
+        }
+        this.saveSelection();
+        document.execCommand('foreColor', false, color);
+        this.restoreSelection();
+        this.closeModal('textColorModal');
+        this.showNotification('Text color applied', 'success');
+    }
+    
+    applyBgColor() {
+        if (!this.isEditorActive) return;
+        const color = document.getElementById('bgColorInput').value.trim();
+        if (!color) {
+            this.showNotification('Please enter a color', 'warning');
+            return;
+        }
+        this.saveSelection();
+        document.execCommand('backColor', false, color);
+        this.restoreSelection();
+        this.closeModal('bgColorModal');
+        this.showNotification('Background color applied', 'success');
+    }
+    
+    applyAlignment(align) {
+        if (!this.isEditorActive) return;
+        this.saveSelection();
+        document.execCommand('justifyLeft');
+        if (align === 'center') {
+            document.execCommand('justifyCenter');
+        } else if (align === 'right') {
+            document.execCommand('justifyRight');
+        } else if (align === 'justify') {
+            document.execCommand('justifyFull');
+        }
+        this.restoreSelection();
+        this.showNotification(`Text aligned ${align}`, 'success');
+    }
+    
+    openTextAlignModal() {
+        // Simple alignment picker
+        const align = prompt('Choose alignment:\n1. Left\n2. Center\n3. Right\n4. Justify\n\nEnter 1-4:');
+        if (align === '1') this.applyAlignment('left');
+        else if (align === '2') this.applyAlignment('center');
+        else if (align === '3') this.applyAlignment('right');
+        else if (align === '4') this.applyAlignment('justify');
+    }
+    
+    getContextTargetImage() {
+        // Get image from context menu target
+        if (this.contextMenuTarget && this.contextMenuTarget.tagName === 'IMG') {
+            return this.contextMenuTarget;
+        }
+        const selection = window.getSelection();
+        if (selection.rangeCount > 0) {
+            const range = selection.getRangeAt(0);
+            let node = range.commonAncestorContainer;
+            if (node.nodeType === Node.TEXT_NODE) node = node.parentElement;
+            const img = node.closest('img');
+            if (img) return img;
+        }
+        return null;
+    }
+    
+    getSelectedImage() {
+        const selection = window.getSelection();
+        if (selection.rangeCount > 0) {
+            const range = selection.getRangeAt(0);
+            let node = range.commonAncestorContainer;
+            if (node.nodeType === Node.TEXT_NODE) node = node.parentElement;
+            const img = node.closest('img');
+            if (img) return img;
+        }
+        return null;
+    }
+    
+    showEnhancedImageEdit(img) {
+        this.currentEditingImage = img;
+        this.populateImageEditModal(img);
+        this.openModal('enhancedImageEditModal');
+    }
+    
+    populateImageEditModal(img) {
+        document.getElementById('enhancedImgPreview').src = img.src;
+        document.getElementById('enhancedImgSrc').value = img.src;
+        document.getElementById('enhancedImgAlt').value = img.alt || '';
+        document.getElementById('enhancedImgWidth').value = img.style.width || img.getAttribute('width') || '';
+        document.getElementById('enhancedImgHeight').value = img.style.height || img.getAttribute('height') || '';
+        
+        // Get alignment
+        const align = img.style.float || img.style.textAlign || img.getAttribute('align') || '';
+        document.getElementById('enhancedImgAlign').value = align;
+        
+        // Get border radius
+        const borderRadius = img.style.borderRadius || '';
+        document.getElementById('enhancedImgBorderRadius').value = borderRadius;
+    }
+    
+    applyEnhancedImageEdit() {
+        if (!this.currentEditingImage) {
+            this.showNotification('No image selected', 'warning');
+            return;
+        }
+        
+        const img = this.currentEditingImage;
+        const src = document.getElementById('enhancedImgSrc').value;
+        const alt = document.getElementById('enhancedImgAlt').value;
+        const width = document.getElementById('enhancedImgWidth').value;
+        const height = document.getElementById('enhancedImgHeight').value;
+        const align = document.getElementById('enhancedImgAlign').value;
+        const borderRadius = document.getElementById('enhancedImgBorderRadius').value;
+        
+        if (src) img.src = src;
+        img.alt = alt;
+        
+        if (width) img.style.width = width;
+        else img.style.width = '';
+        
+        if (height) img.style.height = height;
+        else img.style.height = '';
+        
+        if (align) {
+            img.style.float = align;
+            img.style.display = 'block';
+            if (align === 'center') {
+                img.style.margin = '0 auto';
+                img.style.float = 'none';
+            }
+        } else {
+            img.style.float = '';
+            img.style.display = '';
+            img.style.margin = '';
+        }
+        
+        if (borderRadius) img.style.borderRadius = borderRadius;
+        else img.style.borderRadius = '';
+        
+        this.showNotification('Image updated!', 'success');
+        this.closeModal('enhancedImageEditModal');
+        this.currentEditingImage = null;
+    }
+    
+    async browseAssetsForEnhancedImage() {
+        try {
+            const res = await window.rtocFetch('/api/assets');
+            const data = await res.json();
+
+            if (data.status === 'success' && data.assets.length > 0) {
+                const modal = document.getElementById('enhancedImageEditModal');
+                const existing = modal.querySelector('.asset-gallery');
+                if (existing) existing.remove();
+
+                const gallery = document.createElement('div');
+                gallery.className = 'asset-gallery';
+                gallery.style.cssText = 'display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 15px 0; max-height: 200px; overflow-y: auto;';
+
+                data.assets.forEach(asset => {
+                    const item = document.createElement('div');
+                    item.style.cssText = 'cursor: pointer; border-radius: 8px; overflow: hidden; border: 2px solid transparent; transition: all 0.2s;';
+                    item.innerHTML = `<img src="${asset.url}" style="width: 100%; height: 80px; object-fit: cover;">`;
+                    item.onclick = () => {
+                        document.getElementById('enhancedImgSrc').value = asset.url;
+                        document.getElementById('enhancedImgPreview').src = asset.url;
+                        gallery.querySelectorAll('div').forEach(d => d.style.borderColor = 'transparent');
+                        item.style.borderColor = '#8B5CF6';
+                    };
+                    gallery.appendChild(item);
+                });
+
+                const modalContent = modal.querySelector('.modal-content');
+                modalContent.insertBefore(gallery, modalContent.querySelector('.modal-actions'));
+            } else {
+                this.showNotification('No assets found', 'warning');
+            }
+        } catch (e) {
+            this.showNotification('Failed to load assets', 'error');
+        }
     }
 
     saveSelection() {

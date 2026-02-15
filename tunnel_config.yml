@@ -1,9 +1,0 @@
-tunnel: cf1df3b3-cb3b-48c1-a660-c159a92a67ea
-credentials-file: C:\Users\user\.cloudflared\cf1df3b3-cb3b-48c1-a660-c159a92a67ea.json
-
-ingress:
-  - hostname: regressorstaleofcultivation.space
-    service: https://rtoc-iki.onrender.com
-  - hostname: www.regressorstaleofcultivation.space
-    service: https://rtoc-iki.onrender.com
-  - service: http_status:404

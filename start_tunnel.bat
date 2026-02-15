@@ -1,12 +1,16 @@
 @echo off
-echo Starting Cloudflare Tunnel...
-echo Connecting to: https://rtoc-iki.onrender.com
+echo ========================================
+echo TUNNEL IS DISABLED - DO NOT USE
+echo ========================================
 echo.
-echo Make sure:
-echo 1. The tunnel is configured in Cloudflare Dashboard
-echo 2. DNS records point to the tunnel
-echo 3. The server is running on Render
+echo The Cloudflare tunnel is causing Error 1033.
+echo You don't need it - you're using GitHub Pages + Render.
 echo.
-echo To stop the tunnel, press Ctrl+C
-.\cloudflared.exe tunnel --config .\tunnel_config.yml run
+echo TO FIX THE ERROR:
+echo 1. Go to Cloudflare Dashboard -^> Zero Trust -^> Networks -^> Tunnels
+echo 2. Find tunnel: cf1df3b3-cb3b-48c1-a660-c159a92a67ea
+echo 3. Delete the route for regressorstaleofcultivation.space
+echo.
+echo Your DNS should point directly to GitHub Pages (A records).
+echo.
 pause
