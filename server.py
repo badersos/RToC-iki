@@ -518,9 +518,10 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
     def send_cors_headers(self):
         """Send CORS headers for cross-origin requests."""
         self.send_header('Access-Control-Allow-Origin', self.get_cors_origin())
-        self.send_header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')
-        self.send_header('Access-Control-Allow-Headers', 'Content-Type, Authorization')
+        self.send_header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, DELETE, PUT')
+        self.send_header('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With, Accept')
         self.send_header('Access-Control-Allow-Credentials', 'true')
+        self.send_header('Vary', 'Origin, Access-Control-Request-Method, Access-Control-Request-Headers')
 
     def do_OPTIONS(self):
         """Handle preflight CORS requests."""
