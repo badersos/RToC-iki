@@ -45,24 +45,8 @@ def setup_git():
         print("[GIT] No GITHUB_TOKEN found. Persistence disabled.")
         return
 
-    # Create .netrc file for authentication (more robust than URL embedding)
-    netrc_path = os.path.expanduser('~/.netrc')
-    try:
-        with open(netrc_path, 'w') as f:
-            f.write(f"machine github.com login badersos password {token}")
-        
-        # Securing .netrc (optional but good practice)
-        try:
-            os.chmod(netrc_path, 0o600)
-        except:
-            pass
-            
-        print(f"[GIT] Configured .netrc at {netrc_path}", file=sys.stderr)
-    except Exception as e:
-        print(f"[GIT] Failed to create .netrc: {e}", file=sys.stderr)
-
-    # Use standard URL for .netrc
-    repo_url = "https://github.com/badersos/RToC-iki.git"
+    # Embed token directly in URL for foolproof deployment authentication
+    repo_url = f"https://oauth2:{token}@github.com/badersos/RToC-iki.git"
     
     try:
         # Initialize git if not present
@@ -140,10 +124,17 @@ def git_push(message="Auto-save data"):
                 push_result = subprocess.run(["git", "push", "origin", "HEAD:main"], capture_output=True, text=True)
                 if push_result.returncode != 0:
                     # Pull with rebase to handle remote changes, then retry push
-                    print(f"[GIT] Push rejected, pulling with rebase...", file=sys.stderr)
-                    subprocess.run(["git", "pull", "--rebase", "-X", "ours", "origin", "main"], check=True, stderr=subprocess.PIPE)
-                    subprocess.run(["git", "push", "origin", "HEAD:main"], check=True, stderr=subprocess.PIPE)
-                print(f"[GIT] Pushed: {message}", file=sys.stderr)
+                    print(f"[GIT] Push rejected, pulling with rebase... Error: {push_result.stderr}", file=sys.stderr)
+                    pull_res = subprocess.run(["git", "pull", "--rebase", "-X", "ours", "origin", "main"], capture_output=True, text=True)
+                    if pull_res.returncode != 0:
+                        print(f"[GIT] Pull failed: {pull_res.stderr}", file=sys.stderr)
+                    retry_push = subprocess.run(["git", "push", "origin", "HEAD:main"], capture_output=True, text=True)
+                    if retry_push.returncode != 0:
+                        print(f"[GIT] Retry push failed: {retry_push.stderr}", file=sys.stderr)
+                    else:
+                        print(f"[GIT] Pushed after rebase: {message}", file=sys.stderr)
+                else:
+                    print(f"[GIT] Pushed: {message}", file=sys.stderr)
             else:
                 print(f"[GIT] Nothing to commit.", file=sys.stderr)
         except subprocess.CalledProcessError as e:
@@ -289,8 +280,8 @@ class SessionManager:
                 cookies = {}
                 for c in cookie_header.split(';'):
                     if '=' in c:
-                        parts = c.strip().split('=', 1)
-                        cookies[parts[0]] = parts[1]
+                        parts = c.split('=', 1)
+                        cookies[parts[0].strip()] = parts[1].strip()
                 session_id = cookies.get('session')
         
         if not session_id: return None
@@ -818,7 +809,13 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
             self.send_header('Content-Type', 'application/json')
             self.send_header('Set-Cookie', f'session={session_id}; Path=/; HttpOnly; SameSite=Lax; Max-Age=2592000')
             self.end_headers()
-            self.wfile.write(json.dumps({"status": "success", "user": user_data, "message": "Dev login successful"}).encode())
+            self.end_headers()
+            self.wfile.write(json.dumps({
+                "status": "success", 
+                "user": user_data, 
+                "session_id": session_id,
+                "message": "Dev login successful"
+            }).encode())
             return
 
         # API: List all pages

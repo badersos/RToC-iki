@@ -928,11 +928,11 @@ class WikiEditor {
             </style>
         `;
         document.body.insertAdjacentHTML('beforeend', modalHTML);
-        
+
         // Add formatting modals
         this.createFormattingModals();
     }
-    
+
     createFormattingModals() {
         const formattingModalsHTML = `
             <!-- Font Family Modal -->
@@ -1176,7 +1176,7 @@ class WikiEditor {
                 if (btn.id === 'insertImage') this.openModal('insertImageModal');
                 if (btn.id === 'undoBtn') document.execCommand('undo');
                 if (btn.id === 'redoBtn') document.execCommand('redo');
-                
+
                 // Edit Menu Items
                 if (btn.id === 'menuUndo') document.execCommand('undo');
                 if (btn.id === 'menuRedo') document.execCommand('redo');
@@ -1195,7 +1195,7 @@ class WikiEditor {
                     if (img) this.showEnhancedImageEdit(img);
                     else this.showNotification('Select an image first', 'warning');
                 }
-                
+
                 // Formatting Modal Buttons
                 if (btn.id === 'cancelFontFamilyBtn') this.closeModal('fontFamilyModal');
                 if (btn.id === 'applyFontFamilyBtn') this.applyFontFamily();
@@ -1209,7 +1209,7 @@ class WikiEditor {
                 if (btn.id === 'applyBgColorBtn') this.applyBgColor();
                 if (btn.id === 'cancelEnhancedImgBtn') this.closeModal('enhancedImageEditModal');
                 if (btn.id === 'applyEnhancedImgBtn') this.applyEnhancedImageEdit();
-                
+
                 // Quick buttons
                 if (btn.classList.contains('quick-size-btn')) {
                     document.getElementById('fontSizeInput').value = btn.dataset.size;
@@ -1229,7 +1229,7 @@ class WikiEditor {
                 // Image Modal
                 if (btn.id === 'cancelImageBtn') this.closeModal('insertImageModal');
                 if (btn.id === 'confirmImageBtn') this.insertImage();
-                
+
                 // Enhanced Image Edit
                 if (btn.id === 'browseEnhancedImgBtn') {
                     this.browseAssetsForEnhancedImage();
@@ -1286,22 +1286,22 @@ class WikiEditor {
                 if (ctxItem.id === 'ctxFormatUnderline') this.formatText('underline');
                 if (ctxItem.id === 'ctxFormatStrike') this.formatText('strikeThrough');
                 if (ctxItem.id === 'ctxFormatSpoiler') this.wrapSelectionInSpoiler();
-                
+
                 // Typography
                 if (ctxItem.id === 'ctxFontFamily') this.openModal('fontFamilyModal');
                 if (ctxItem.id === 'ctxFontSize') this.openModal('fontSizeModal');
                 if (ctxItem.id === 'ctxLineSpacing') this.openModal('lineSpacingModal');
-                
+
                 // Colors
                 if (ctxItem.id === 'ctxTextColor') this.openModal('textColorModal');
                 if (ctxItem.id === 'ctxBgColor') this.openModal('bgColorModal');
-                
+
                 // Alignment
                 if (ctxItem.id === 'ctxAlignLeft') this.applyAlignment('left');
                 if (ctxItem.id === 'ctxAlignCenter') this.applyAlignment('center');
                 if (ctxItem.id === 'ctxAlignRight') this.applyAlignment('right');
                 if (ctxItem.id === 'ctxAlignJustify') this.applyAlignment('justify');
-                
+
                 // Image Editing
                 if (ctxItem.id === 'ctxEditImage') {
                     const img = this.getContextTargetImage();
@@ -1439,7 +1439,7 @@ class WikiEditor {
             if (e.shiftKey) return; // Shift+RightClick = browser menu
 
             e.preventDefault();
-            
+
             // Store the target element
             this.contextMenuTarget = e.target;
 
@@ -1453,7 +1453,7 @@ class WikiEditor {
                 this.contextTargetCarousel = null;
                 if (uploadSlideItem) uploadSlideItem.style.display = 'none';
             }
-            
+
             // Check if right-clicked on an image
             const img = e.target.closest('img');
             const imageSection = document.getElementById('ctxImageSection');
@@ -1461,7 +1461,7 @@ class WikiEditor {
             const imageSizeItem = document.getElementById('ctxImageSize');
             const imageAlignItem = document.getElementById('ctxImageAlign');
             const imageDivider = document.getElementById('ctxImageDivider');
-            
+
             if (img && !img.closest('#adminEditor') && !img.closest('.admin-modal')) {
                 if (imageSection) imageSection.style.display = 'block';
                 if (editImageItem) editImageItem.style.display = 'flex';
@@ -2162,7 +2162,7 @@ class WikiEditor {
         if (!this.isEditorActive) return;
         document.execCommand('formatBlock', false, `<${tag}>`);
     }
-    
+
     // Enhanced Formatting Functions
     applyFontFamily() {
         if (!this.isEditorActive) return;
@@ -2177,7 +2177,7 @@ class WikiEditor {
         this.closeModal('fontFamilyModal');
         this.showNotification('Font family applied', 'success');
     }
-    
+
     applyFontSize() {
         if (!this.isEditorActive) return;
         const fontSize = document.getElementById('fontSizeInput').value.trim();
@@ -2214,7 +2214,7 @@ class WikiEditor {
         this.closeModal('fontSizeModal');
         this.showNotification('Font size applied', 'success');
     }
-    
+
     applyLineSpacing() {
         if (!this.isEditorActive) return;
         const lineSpacing = document.getElementById('lineSpacingInput').value.trim();
@@ -2242,7 +2242,7 @@ class WikiEditor {
         this.closeModal('lineSpacingModal');
         this.showNotification('Line spacing applied', 'success');
     }
-    
+
     applyTextColor() {
         if (!this.isEditorActive) return;
         const color = document.getElementById('textColorInput').value.trim();
@@ -2256,7 +2256,7 @@ class WikiEditor {
         this.closeModal('textColorModal');
         this.showNotification('Text color applied', 'success');
     }
-    
+
     applyBgColor() {
         if (!this.isEditorActive) return;
         const color = document.getElementById('bgColorInput').value.trim();
@@ -2270,7 +2270,7 @@ class WikiEditor {
         this.closeModal('bgColorModal');
         this.showNotification('Background color applied', 'success');
     }
-    
+
     applyAlignment(align) {
         if (!this.isEditorActive) return;
         this.saveSelection();
@@ -2285,7 +2285,7 @@ class WikiEditor {
         this.restoreSelection();
         this.showNotification(`Text aligned ${align}`, 'success');
     }
-    
+
     openTextAlignModal() {
         // Simple alignment picker
         const align = prompt('Choose alignment:\n1. Left\n2. Center\n3. Right\n4. Justify\n\nEnter 1-4:');
@@ -2294,7 +2294,7 @@ class WikiEditor {
         else if (align === '3') this.applyAlignment('right');
         else if (align === '4') this.applyAlignment('justify');
     }
-    
+
     getContextTargetImage() {
         // Get image from context menu target
         if (this.contextMenuTarget && this.contextMenuTarget.tagName === 'IMG') {
@@ -2310,7 +2310,7 @@ class WikiEditor {
         }
         return null;
     }
-    
+
     getSelectedImage() {
         const selection = window.getSelection();
         if (selection.rangeCount > 0) {
@@ -2322,35 +2322,35 @@ class WikiEditor {
         }
         return null;
     }
-    
+
     showEnhancedImageEdit(img) {
         this.currentEditingImage = img;
         this.populateImageEditModal(img);
         this.openModal('enhancedImageEditModal');
     }
-    
+
     populateImageEditModal(img) {
         document.getElementById('enhancedImgPreview').src = img.src;
         document.getElementById('enhancedImgSrc').value = img.src;
         document.getElementById('enhancedImgAlt').value = img.alt || '';
         document.getElementById('enhancedImgWidth').value = img.style.width || img.getAttribute('width') || '';
         document.getElementById('enhancedImgHeight').value = img.style.height || img.getAttribute('height') || '';
-        
+
         // Get alignment
         const align = img.style.float || img.style.textAlign || img.getAttribute('align') || '';
         document.getElementById('enhancedImgAlign').value = align;
-        
+
         // Get border radius
         const borderRadius = img.style.borderRadius || '';
         document.getElementById('enhancedImgBorderRadius').value = borderRadius;
     }
-    
+
     applyEnhancedImageEdit() {
         if (!this.currentEditingImage) {
             this.showNotification('No image selected', 'warning');
             return;
         }
-        
+
         const img = this.currentEditingImage;
         const src = document.getElementById('enhancedImgSrc').value;
         const alt = document.getElementById('enhancedImgAlt').value;
@@ -2358,16 +2358,16 @@ class WikiEditor {
         const height = document.getElementById('enhancedImgHeight').value;
         const align = document.getElementById('enhancedImgAlign').value;
         const borderRadius = document.getElementById('enhancedImgBorderRadius').value;
-        
+
         if (src) img.src = src;
         img.alt = alt;
-        
+
         if (width) img.style.width = width;
         else img.style.width = '';
-        
+
         if (height) img.style.height = height;
         else img.style.height = '';
-        
+
         if (align) {
             img.style.float = align;
             img.style.display = 'block';
@@ -2380,15 +2380,15 @@ class WikiEditor {
             img.style.display = '';
             img.style.margin = '';
         }
-        
+
         if (borderRadius) img.style.borderRadius = borderRadius;
         else img.style.borderRadius = '';
-        
+
         this.showNotification('Image updated!', 'success');
         this.closeModal('enhancedImageEditModal');
         this.currentEditingImage = null;
     }
-    
+
     async browseAssetsForEnhancedImage() {
         try {
             const res = await window.rtocFetch('/api/assets');
@@ -2763,7 +2763,10 @@ class WikiEditor {
                     toggleBtn.innerHTML = '<ion-icon name="create-outline"></ion-icon><span>Edit Mode</span>';
                 }
             } else {
-                throw new Error('Server error');
+                if (response.status === 403) {
+                    alert("Permission denied or session expired. Please log out and log in again to refresh your session.");
+                }
+                throw new Error(`Server error: ${response.status}`);
             }
         } catch (e) {
             console.error(e);
