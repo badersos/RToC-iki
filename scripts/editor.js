@@ -2734,43 +2734,64 @@ class WikiEditor {
         if (filePath.startsWith('/')) filePath = filePath.substring(1);
         if (!filePath || filePath === '/') filePath = 'index.html';
 
-        this.showNotification('Saving...', 'info');
-
         const user = JSON.parse(localStorage.getItem('rtoc_user') || 'null');
 
-        try {
-            const response = await window.rtocFetch('/save', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    file: filePath,
-                    content: fullContent,
-                    user: user // Send user info for activity logging
-                })
-            });
+        // Wake up Render server if it's sleeping (free tier cold start)
+        this.showNotification('Connecting to server...', 'info');
+        if (window.rtocWakeServer) {
+            await window.rtocWakeServer();
+        }
 
-            if (response.ok) {
-                this.showNotification('Saved!', 'success');
-                const layoutContainer = document.querySelector('.character-layout');
-                if (layoutContainer) this.originalLayoutHTML = layoutContainer.innerHTML;
+        this.showNotification('Saving...', 'info');
 
-                this.isEditorActive = false;
-                const controls = document.getElementById('editorControls');
-                if (controls) controls.style.display = 'none';
-                const toggleBtn = document.getElementById('toggleEditor');
-                if (toggleBtn) {
-                    toggleBtn.classList.remove('active');
-                    toggleBtn.innerHTML = '<ion-icon name="create-outline"></ion-icon><span>Edit Mode</span>';
-                }
-            } else {
-                if (response.status === 403) {
+        const maxRetries = 3;
+        let saved = false;
+
+        for (let attempt = 1; attempt <= maxRetries; attempt++) {
+            try {
+                const response = await window.rtocFetch('/save', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        file: filePath,
+                        content: fullContent,
+                        user: user
+                    })
+                });
+
+                if (response.ok) {
+                    saved = true;
+                    this.showNotification('Saved!', 'success');
+                    const layoutContainer = document.querySelector('.character-layout');
+                    if (layoutContainer) this.originalLayoutHTML = layoutContainer.innerHTML;
+
+                    this.isEditorActive = false;
+                    const controls = document.getElementById('editorControls');
+                    if (controls) controls.style.display = 'none';
+                    const toggleBtn = document.getElementById('toggleEditor');
+                    if (toggleBtn) {
+                        toggleBtn.classList.remove('active');
+                        toggleBtn.innerHTML = '<ion-icon name="create-outline"></ion-icon><span>Edit Mode</span>';
+                    }
+                    localStorage.removeItem('wiki_autosave_' + window.location.pathname);
+                    break;
+                } else if (response.status === 403) {
                     alert("Permission denied or session expired. Please log out and log in again to refresh your session.");
+                    break; // Don't retry auth errors
+                } else {
+                    throw new Error(`Server error: ${response.status}`);
                 }
-                throw new Error(`Server error: ${response.status}`);
+            } catch (e) {
+                console.error(`Save attempt ${attempt}/${maxRetries} failed:`, e);
+                if (attempt < maxRetries) {
+                    this.showNotification(`Save failed, retrying (${attempt}/${maxRetries})...`, 'warning');
+                    await new Promise(r => setTimeout(r, attempt * 3000));
+                }
             }
-        } catch (e) {
-            console.error(e);
-            this.showNotification('Save Failed!', 'error');
+        }
+
+        if (!saved) {
+            this.showNotification('Save Failed! Server may be starting up — try again in a minute.', 'error');
             this.isEditorActive = true;
             document.body.classList.add('is-editing');
             this.setEditableState(true);

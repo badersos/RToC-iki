@@ -11,5 +11,9 @@ services:
         sync: false
       - key: DISCORD_CLIENT_SECRET
         sync: false
+      - key: DISCORD_BOT_TOKEN
+        sync: false
       - key: REDIRECT_URI
+        sync: false
+      - key: GITHUB_TOKEN
         sync: false

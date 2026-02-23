@@ -538,7 +538,7 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
         return super().end_headers()
 
     def send_error(self, code, message=None, explain=None):
-        if self.path.startswith('/api/'):
+        if self.path.startswith('/api/') or self.path == '/save':
             self.send_response(code)
             self.send_header('Content-Type', 'application/json')
             self.end_headers()  # This calls send_cors_headers internally
@@ -550,6 +550,14 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
 
     def do_GET(self):
         print(f"DEBUG: GET request for {self.path}", file=sys.stderr)
+
+        # API: Health Check (wake-up ping for Render free tier cold starts)
+        if self.path == '/api/health':
+            self.send_response(200)
+            self.send_header('Content-Type', 'application/json')
+            self.end_headers()
+            self.wfile.write(json.dumps({"status": "ok"}).encode())
+            return
 
         # API: Search
         if self.path.startswith('/api/search'):
@@ -801,6 +809,9 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                     self.send_header('Set-Cookie', f'session={session_id}; Path=/; HttpOnly; SameSite=None; Secure; Max-Age=2592000')
                     self.send_header('Location', f"/?user_data={b64_user}&session_id={session_id}")
                     self.end_headers()
+
+                # Persist session & user data to git so they survive Render restarts
+                git_push("User login: " + final_user.get('username', 'unknown'))
                 
             except Exception as e:
                 print(f"OAuth Error: {e}")

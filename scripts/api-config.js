@@ -48,5 +48,20 @@
         return fetch(url, options);
     };
 
+    // Wake-up helper for Render free tier (cold starts take 30-60s)
+    window.rtocWakeServer = async function () {
+        if (!API_BASE) return true; // Same origin, no cold start issue
+        try {
+            const controller = new AbortController();
+            const timeout = setTimeout(() => controller.abort(), 60000);
+            const res = await fetch(API_BASE + '/api/health', { signal: controller.signal });
+            clearTimeout(timeout);
+            return res.ok;
+        } catch (e) {
+            console.log('[RToC] Server wake-up failed:', e.message);
+            return false;
+        }
+    };
+
     console.log('[RToC] API Base URL:', API_BASE || '(same origin)');
 })();
