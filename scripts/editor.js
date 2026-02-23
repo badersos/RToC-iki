@@ -2776,7 +2776,8 @@ class WikiEditor {
                     localStorage.removeItem('wiki_autosave_' + window.location.pathname);
                     break;
                 } else if (response.status === 403) {
-                    alert("Permission denied or session expired. Please log out and log in again to refresh your session.");
+                    alert("Your session has expired or is invalid. You will be logged out to refresh your session. Please log in again.");
+                    window.location.href = '/?logout=true';
                     break; // Don't retry auth errors
                 } else {
                     throw new Error(`Server error: ${response.status}`);

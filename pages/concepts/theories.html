@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0a0a0f">
+    <title>Theories | Regressor's Tale of Cultivation Wiki</title>
+    <link rel="icon" type="image/jpeg" href="../../assets/images/seo_eun_hyun_cover.jpg">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap"
+        rel="stylesheet">
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <style>
+        .concept-content {
+            max-width: 900px;
+            margin: 0 auto;
+            color: var(--text-secondary);
+        }
+
+        .concept-content h2,
+        .concept-content h3,
+        .concept-content h4 {
+            color: var(--text-primary);
+            margin-top: 3rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 0.5rem;
+        }
+
+        .concept-lede {
+            margin: 1rem 0 2rem;
+            font-size: 1.05rem;
+        }
+
+        .quick-read {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            padding: 1.25rem;
+            background: var(--bg-secondary);
+            border: var(--glass-border);
+            border-radius: 14px;
+            margin: 2rem 0;
+            box-shadow: var(--glow-purple);
+        }
+
+        .quick-read-title {
+            width: 100%;
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            letter-spacing: 0.05em;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .quick-read a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.35rem;
+            padding: 0.75rem 1rem;
+            background: rgba(36, 45, 65, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            color: var(--text-primary);
+            font-weight: 600;
+            letter-spacing: 0.02em;
+            transition: var(--transition-medium);
+        }
+
+        .quick-read a:hover {
+            background: var(--bg-card-hover);
+            color: var(--accent-primary);
+            transform: translateY(-2px);
+        }
+
+        .quote {
+            margin: 1.5rem 0;
+            padding: 1rem 1.25rem;
+            background: rgba(255, 255, 255, 0.03);
+            border-left: 3px solid var(--accent-primary);
+            border-radius: 10px;
+            color: var(--text-primary);
+            font-style: italic;
+        }
+
+        .reference-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0 2rem;
+            background: var(--bg-secondary);
+            border: var(--glass-border);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .reference-table th,
+        .reference-table td {
+            padding: 0.9rem 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            text-align: left;
+        }
+
+        .reference-table th {
+            color: var(--text-primary);
+            background: rgba(255, 255, 255, 0.04);
+            font-weight: 700;
+        }
+
+        .small-label {
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 1rem;
+            font-style: normal;
+        }
+
+        .warning-box {
+            background: rgba(255, 170, 0, 0.1);
+            border-left: 4px solid #ffaa00;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 2rem 0;
+        }
+
+        .warning-box a {
+            color: #ffaa00;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="nav">
+        <div class="nav-container">
+            <a href="../../index.html" class="nav-logo">
+                <img src="../../assets/logo_character.png" alt="RToC" class="nav-logo-img"
+                    style="width:36px; height:36px; border-radius:8px; object-fit:cover;">
+                RToC Wiki
+            </a>
+            <ul class="nav-links">
+                <li><a href="../../index.html" class="nav-link">Home</a></li>
+                <li><a href="../characters.html" class="nav-link">Characters</a></li>
+                <li><a href="../concepts.html" class="nav-link"
+                        style="color: var(--text-primary); background: rgba(139, 92, 246, 0.1);">Concepts</a></li>
+                <li><a href="../plot.html" class="nav-link">Plot</a></li>
+                <li><a href="../cultivation.html" class="nav-link">Cultivation</a></li>
+                <li><a href="../martial_arts.html" class="nav-link">Martial Arts</a></li>
+                <li><a href="../appearances.html" class="nav-link">Appearances</a></li>
+                <li><a href="../pages.html" class="nav-link">Pages</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <header class="hero" style="min-height: 45vh; padding-bottom: 2rem; background-position: center 20%;">
+        <div class="hero-content">
+            <div class="hero-badge">Concepts · Theories</div>
+            <h1 class="hero-title">Theories</h1>
+            <p class="hero-subtitle">Community theories regarding the lore and characters of RToC.</p>
+        </div>
+    </header>
+
+    <main class="section">
+        <div class="concept-content">
+            <div class="warning-box">
+                <p><strong>ATTENTION!</strong> This Article is Currently Incomplete. Please feel free to add information
+                    to help finish the article.</p>
+                <p>Join the <a href="https://discord.gg/P2cuYfEcTg">RToC server</a> to let us know what's missing!</p>
+            </div>
+
+            <div class="quick-read">
+                <div class="quick-read-title">Quick Read</div>
+                <a href="#heart-demon">Heart Demon</a>
+                <a href="#head-realm">Head Realm</a>
+                <a href="#ender-pill">Ender Pill Theory</a>
+                <a href="#dreamworlds">Dreamworlds</a>
+                <a href="#future-king">Future King</a>
+                <a href="#heart-path-lifespans">Heart Path Lifespans</a>
+                <a href="#confirmed">Confirmed Theories</a>
+                <a href="#disproven">Disproven Theories</a>
+            </div>
+
+            <section id="heart-demon">
+                <h2>Seo Eun-hyun is a Heart Demon</h2>
+                <p>Heart Demons are beings formed by "Desires". Seo Eun-hyun is theorised to be the Ender of Desire.</p>
+            </section>
+
+            <section id="head-realm">
+                <h2>What is the Head Realm?</h2>
+                <p>The Head Realm is the skull of the First Radiance Supreme Deity.</p>
+                <ul>
+                    <li>Hyeon Rang and Hong Fan(assumed to be Black Snake) look almost exactly the same.</li>
+                    <li>Hyeon Rang also resembles Song Jin. Song Jin's skull structure is the same as that of the Head
+                        Realm.</li>
+                    <li>Cheon Woon, the Heavenly Venerable of Time, call Hyeon Rang a "substitute" for fate.</li>
+                    <li>This further implies the Head Realm and the Akashic Record are under the control of the Radiance
+                        Supreme Diety. This is further supported by the fact only Immortal Arts permitted by the
+                        Radiance Supreme Diety are allowed to function in the Head Realm.</li>
+                    <li>It is also possible the Akashic Records are the anchor for Regression.</li>
+                </ul>
+            </section>
+
+            <section id="ender-pill">
+                <h2>Ender Pill Theory</h2>
+                <div class="quote">
+                    <p>All the stories say the Emperor/Future King welcomes the Enders<br>
+                        And one mentioned the Enders metamorphosing in the [Lotus] (Chapter 323, nun that replaces Tael
+                        Yeon-jeol)</p>
+                    <p>Maybe...<br>
+                        The Ender are part of the Future King, and he uses them as "avatars" or "clones"</p>
+                    <p>Maybe he'll try to assimilate the Enders into himself, like a pill.<br>
+                        And he needs all seven Enders to do so</p>
+                    <p>But, at the same time, his "Ascension" using the Ender-pills will destroy Mount Sumeru<br>
+                        Meaning the entire world of Mount Sumeru is his cultivation furnace</p>
+                    <p>And Light hates Ender because it has power in Sumeru, and is The Emperor's most loyal aide, who
+                        doesn't want to die<br>
+                        And since all TI fight against the destruction of Sumeru<br>
+                        [Fate] itself stops their advancemet</p>
+                    <p>All must reach Heavenly King to be refined into the Ender Pill</p>
+                    <div class="small-label">— @calamity9880</div>
+                </div>
+            </section>
+
+            <section id="dreamworlds">
+                <h2>"All dreamworlds are actually equally as real as Mt Sumeru" or "Mt Sumeru is a dream"</h2>
+                <p>Proof:</p>
+                <ol>
+                    <li>Weak speculative foreshadowing (Penglai Island arc): some time after they awaken in Penglai and
+                        realise it's a dream, SEH comforts one of his friends by telling them to "treat both Penglai and
+                        Mt Sumeru as a dream". However, SEH treats both as real. This could foreshadow how everything in
+                        Mt Sumeru could be a dream, and also links to how dreams may become reality in Mt Sumeru.</li>
+                    <li>The theme/fact that Seo Hweol's world was a dream in the dream of Head Realm, which could mirror
+                        the dream of Head Realm existing in the dream of Mt Sumeru.</li>
+                </ol>
+            </section>
+
+            <section id="future-king">
+                <h2>Who is the Future King?</h2>
+                <p>Hyeon Mu is arguably a fragment of the Future King.</p>
+                <ul>
+                    <li>Hyeon Mu states that all fate that is given must be returned before setting forth to hunt Kim
+                        Young-hoon. This implies she is the one who gave the Enders their Fate.</li>
+                    <li>Building on this, we also learn that Hyeon Mu was given her position by a greater being,
+                        possibly the Future King, meaning that she would also have to return to him.</li>
+                    <li>Ender Fates are presumed to originate from the Future King.</li>
+                    <li>Hyeon Mu's true body is a Three Great Ultimates formed by black snakes, similar to the [Black
+                        Snake] of Radiance.</li>
+                    <li>Netherworld as [She] explicitly said the "North" is their most powerful enemy.</li>
+                </ul>
+            </section>
+
+            <section id="heart-path-lifespans">
+                <h2>Heart Path Lifespans</h2>
+                <p>Those who look deeply into the Heart pursue a different path from Immortal Cultivation. Though they
+                    may be as powerful, they live significantly shorter lives that Heaven/Earth Path cultivators.
+                    However, much about these lifespans are not known.</p>
+
+                <h3>Known information</h3>
+                <ul>
+                    <li>Seo Eun-hyun said the Second Stage of Manifestation gave 49 years.</li>
+                    <li>Seo Eun-hyun said the Third Stage of Manifestation gave 343 years.</li>
+                    <li>Kim Young-hoon said the First Step Before the Throne gave at least 10,000 years.</li>
+                    <li>After reaching Second Step Before the Throne Seo Eun-hyun's lifespan reached millions of years.
+                        Though this information is vague, as he had also cultivated up to the Integration stage in
+                        Heaven and Earth Paths.</li>
+                </ul>
+                <p>Note that these lifespan increases only apply to the Human Race. Lifespan increases in all three
+                    Paths always scale according to the race's natural lifespan. Dragons with long lives will always
+                    receive more lifespan than flowers for advancing in cultivation.</p>
+
+                <h3>Theory</h3>
+                <p>This theory is based on the exponential increase between Second and Third Stages of Manifestation, in
+                    that 7 x 7 = 49 while 7 x 7 x 7 = 343. Extrapolating from this trend, we will get the following:</p>
+
+                <table class="reference-table">
+                    <thead>
+                        <tr>
+                            <th>Order</th>
+                            <th>Realm name</th>
+                            <th>Lifespan</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td colspan="3"><strong>Minor Boundary</strong></td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>First Stage of Manifestation/Entering Heavens Beyond the Path</td>
+                            <td>7 = 7 years</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Second Stage of Manifestation/Treading Heaven Beyond The Path</td>
+                            <td>7 x 7 = 49 years</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>Third Stage of Manifestation/Shattering Heavens Beyond the Path</td>
+                            <td>7 x 7 x 7 = 343 years</td>
+                        </tr>
+                        <tr>
+                            <td colspan="3"><strong>Middle Boundary</strong></td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>First Step Before the Throne/Seated Detachment, Standing Oblivion</td>
+                            <td>7 x 7 x 7 x 7 x 7 = 16,807 years</td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td>Second Step Before The Throne /Void Shattering</td>
+                            <td>7 x 7 x 7 x 7 x 7 x 7 x 7 = 823,543 years</td>
+                        </tr>
+                        <tr>
+                            <td>6</td>
+                            <td>Third Step Before The Throne</td>
+                            <td>7 x 7 x 7 x 7 x 7 x 7 x 7 x 7 = 5,764,801 years</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>Explanation</h3>
+                <p>First Step Before the Throne is unique in that the pattern changed. While First (7^1), Second (7^2),
+                    and Third stages Manifestation (7^3) each only increase by an exponent of one, First Step Before the
+                    Throne (7^5) increased by an exponent of two. The reason for this is twofold:</p>
+                <ul>
+                    <li>7^4 would only result in 2,401, thus contradicting Kim Young-hoon's statement.</li>
+                    <li>7^5 = 16,807 does indeed corroborate the statement, "At least 10,000 years". But it could also
+                        reference the fact that First Step Before the Throne is the equivalent of both the Four-Axis and
+                        Integration stages in Immortal Cultivation.</li>
+                </ul>
+                <p>Since Second Step Before the Throne corresponds to both the Star Shattering and Sacred Vessel stages,
+                    Second Step should likewise be 7^7, not 7^6.</p>
+                <p>Meanwhile, Third Step Before the Throne only corresponds to the Entering Nirvana stage, so it should
+                    be 7^8. A potential corroborating evidence for this is that 7^8 = 5,764,801 years, and in Q&A 5,
+                    Tremendous stated that, on average, cultivators take 5 million years to reach True Immortal.[1]
+                    Since lifespan is assigned by the heavens, this could be on purpose.</p>
+            </section>
+
+            <section id="confirmed">
+                <h2>Confirmed Theories</h2>
+
+                <h3>The Setting of the Regression Point</h3>
+                <p>Seo Eun-hyun's regression point seems to fix under the following conditions:</p>
+                <ul>
+                    <li>He is outside of the Head Realm and in the Interdimensional Void.</li>
+                    <li>He has just witnessed an Ender realise their fate.</li>
+                </ul>
+
+                <div class="quote">
+                    <p>Prediction: Regression is not from Seo Eun Hyun's authority, it's a trap. Remember how he wished
+                        for opportunity from the heavens in cycle 0 on his deathbed? Sincerity moves the heavens, eh?
+                        But is the heavens here.. The Emperor? Light? (Tremendous sure does like pointing to Hong Fan.
+                        Tho this one might be a reach.)</p>
+                    <p>Whoever it is, if they're savepointing whenever an Ender realizes their fate (which is dangerous
+                        for the Enders, for some reason. Maybe cuz if all of em realize can be made into-->Ender pill or
+                        whatever) but anyways, I don't think it was intended as a gift.</p>
+                    <div class="small-label">— @therealmenghao</div>
+                </div>
+
+                <h3>Hong Fan = Black Snake = Light</h3>
+                <div class="quote">
+                    <p>I have a very wild theory. Black Snake = Hong Fan = Light</p>
+                    <div class="small-label">— @THEREALMENGHAO</div>
+                </div>
+                <p>Theory confirmed in chapter 652.</p>
+
+                <h3>Seo Ran is Seo Hweol's main body</h3>
+                <ul>
+                    <li>Seo Hweol is strangely insistent in Seo Ran's death, even leaving a four-fold plan to kill Seo
+                        Ran in the Head Realm. From Seo Li's experience, we know that the death of the "main body"
+                        causes the "main body" to reset. Also, the 'clone' cannot directly kill the main body. This
+                        implies Seo Ran's death would allow Seo Hweol to switch to a "main body" under his control.</li>
+                    <li>After being blinded by the [Chief Judge of the Netherworld], Seo Hweol states he must reach his
+                        main body to regain his vision. After this, he make desparate attempts to acquire Seo Ran's
+                        blood and/or soul. Since having those items would allow him to access Seo Ran's authority, which
+                        would also include regaining his vision, implying that Seo Ran is indeed Seo Hweol's main body.
+                    </li>
+                    <li>In the Dream World, Seo Ran is always among the first to wake up, usually gaining awareness
+                        before Seo Eun-hyun. This implies a large number of being cherish him. It is possible that he
+                        gains awareness through Seo Hweol's Tainted Soul Filling the Heavens, which causes the target to
+                        'adore' the caster.</li>
+                </ul>
+
+                <h3>Hong Fan is Gu Ju</h3>
+                <div class="quote">
+                    <p>Hong Fan is Gu Ju but not for the reasons you might think...</p>
+                    <div class="small-label">— treetreethefirst on reddit</div>
+                </div>
+
+                <h3>Seven Enders, Seven Heavenly Kings, Seven Emotions</h3>
+                <p>Tae Yeol-jeon's Manifestation possessed seven moves which represent the seven Heavenly Kings of the
+                    Buddhist Family Methods. These seven moves seem to represent the Enders. The Seven Brilliances Kings
+                    are more deeply connected with the seven Enders, more clearly than the Ender's Tale. Their
+                    connection was confirmed when the Sacred Master of Nether Ghost Realm, Yu Oh, called Seo Eun-hyun a
+                    Heavenly King designate. The relations are as followed:</p>
+                <ul>
+                    <li><strong>Kim Young-hoon:</strong> The Golden Body Heavenly King, symbolizing the instant.</li>
+                    <li><strong>Jeon Myeong-hoon:</strong> The Red Pearl Extinguishing Heavenly King, symbolizing the
+                        cycle.</li>
+                    <li><strong>Kang Min-hee:</strong> The Lapis Lazuli Protecting Heavenly King, symbolizing protection
+                    </li>
+                    <li><strong>Oh Hyun-seok:</strong> The Silver Basket Heavenly King, symbolizing infinity.</li>
+                    <li><strong>Kim Yeon:</strong> The Tridacna Vast Cold Heavenly King, symbolizing unity.</li>
+                    <li><strong>Oh Hye-seo:</strong> The Agate Hatred Heavenly King, symbolizing pain.</li>
+                    <li><strong>Seo Eun-hyun:</strong> The Obsidian Devil Heavenly King, symbolizing filth.</li>
+                </ul>
+            </section>
+
+            <section id="disproven">
+                <h2>Disproven Theories</h2>
+                <h3>Advancement Ritual for True Immortal</h3>
+                <div class="quote">
+                    <p>Alright, so, I’m certain that the ritual to become a TI is killing yourself...<br>
+                        Most likely, the TI ritual involves desecrating Fate, by creating another ‘you’ which then dies
+                        in your stead...</p>
+                    <div class="small-label">— wolven122</div>
+                </div>
+                <p>This is disproven in Entering Nirvana (개열/開涅) Advancement. While the part about killing oneself, to
+                    face "death", is true, the part about desecrating fate is false, as one must actually die, and then
+                    leave one's physical body behind to advance.</p>
+
+                <h3>Seo Eun-hyun's fate</h3>
+                <p>Various early theories regarding regression not being an Ender ability, trading fates with Hong Fan,
+                    and Hong Fan being a RDS were disproven in later chapters (652, 674).</p>
+
+                <h3>Eun-hyun is Guju</h3>
+                <p>Assumed out of flashes of memories featuring Hong Fan. Disproven later.</p>
+
+                <h3>True Meaning of Being a Heavenly Venerable</h3>
+                <p>Theory posited they must be of the Heart Tribe and achieve Manifestation.</p>
+
+                <h3>Regression is a Trap</h3>
+                <div class="quote">
+                    <p>Prediction: Regression is not from Seo Eun Hyun's authority, it's a trap... Whoever it is, if
+                        they're savepointing whenever an Ender realizes their fate... it was not intended as a gift.</p>
+                    <div class="small-label">— @THEREALMENGHAO</div>
+                </div>
+                <p>Disproven as seen with deeper explanations related to the mechanics of the Regression Point and Ender
+                    Fate realization.</p>
+            </section>
+        </div>
+    </main>
+
+    <script src="../../scripts/main.js"></script>
+    <script src="/scripts/editor.js?v=2"></script>
+</body>
+
+</html>

@@ -17,148 +17,209 @@
     <!-- Ionicons for Icons -->
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-    <script src="../scripts/api-config.js"></script>
+    <script src="../scripts/api-config.js?v=2"></script>
     <style>
         .pages-container {
             max-width: 1400px;
             margin: 0 auto;
             padding: 2rem;
         }
-        
+
         .pages-header {
             text-align: center;
             margin-bottom: 3rem;
         }
-        
+
         .pages-header h1 {
-            font-size: 2.5rem;
+            font-size: 3.5rem;
             margin-bottom: 0.5rem;
-            color: #fff;
+            background: linear-gradient(135deg, #fff 0%, #A78BFA 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 30px rgba(139, 92, 246, 0.3);
+            font-weight: 800;
         }
-        
+
         .pages-header p {
             color: #aaa;
-            font-size: 1.1rem;
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto;
         }
-        
+
         .pages-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 2rem;
             margin-bottom: 3rem;
         }
-        
+
         .page-preview-card {
-            background: linear-gradient(135deg, #1a1a24 0%, #12121a 100%);
+            background: rgba(26, 26, 36, 0.7);
+            backdrop-filter: blur(10px);
             border: 1px solid rgba(139, 92, 246, 0.2);
-            border-radius: 12px;
+            border-radius: 16px;
             overflow: hidden;
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             cursor: pointer;
             text-decoration: none;
-            display: block;
+            display: flex;
+            flex-direction: column;
             height: 100%;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
-        
+
         .page-preview-card:hover {
-            transform: translateY(-4px);
-            border-color: rgba(139, 92, 246, 0.5);
-            box-shadow: 0 8px 24px rgba(139, 92, 246, 0.3);
+            transform: translateY(-8px) scale(1.02);
+            border-color: rgba(139, 92, 246, 0.8);
+            box-shadow: 0 16px 32px rgba(139, 92, 246, 0.3), 0 0 15px rgba(139, 92, 246, 0.2) inset;
         }
-        
+
         .page-preview-thumbnail {
             width: 100%;
-            height: 180px;
+            height: 200px;
             background: linear-gradient(135deg, #2a2a3a 0%, #1a1a24 100%);
             display: flex;
             align-items: center;
             justify-content: center;
             position: relative;
             overflow: hidden;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
-        
+
         .page-preview-thumbnail img {
             width: 100%;
             height: 100%;
             object-fit: cover;
+            transition: transform 0.5s ease;
         }
-        
+
+        .page-preview-card:hover .page-preview-thumbnail img {
+            transform: scale(1.05);
+        }
+
         .page-preview-thumbnail .page-icon {
             font-size: 4rem;
             color: rgba(139, 92, 246, 0.3);
+            z-index: 2;
         }
-        
+
+        .iframe-preview-container {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            overflow: hidden;
+            background: #111;
+        }
+
+        .iframe-preview-container iframe {
+            width: 400%;
+            height: 400%;
+            transform: scale(0.25);
+            transform-origin: top left;
+            border: none;
+            pointer-events: none;
+            opacity: 0.85;
+            transition: opacity 0.5s ease;
+        }
+
+        .page-preview-card:hover .iframe-preview-container iframe {
+            opacity: 1;
+        }
+
+        .iframe-preview-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to top, rgba(18, 18, 26, 1) 0%, rgba(18, 18, 26, 0.3) 100%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
         .page-preview-content {
             padding: 1.5rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
-        
+
         .page-preview-name {
-            font-size: 1.2rem;
-            font-weight: 600;
+            font-size: 1.25rem;
+            font-weight: 700;
             color: #fff;
             margin-bottom: 0.5rem;
             line-height: 1.4;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
         }
-        
+
         .page-preview-path {
             font-size: 0.85rem;
             color: #888;
-            font-family: monospace;
+            font-family: 'JetBrains Mono', monospace;
             word-break: break-all;
+            margin-bottom: 1rem;
         }
-        
+
         .page-preview-category {
             display: inline-block;
-            padding: 0.25rem 0.75rem;
-            background: rgba(139, 92, 246, 0.2);
-            color: #A78BFA;
-            border-radius: 6px;
+            padding: 0.35rem 0.85rem;
+            background: rgba(139, 92, 246, 0.15);
+            color: #C4B5FD;
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            border-radius: 20px;
             font-size: 0.75rem;
-            margin-top: 0.75rem;
+            font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.5px;
+            align-self: flex-start;
         }
-        
+
         .loading-state {
             text-align: center;
             padding: 4rem 2rem;
             color: #888;
         }
-        
+
         .loading-state ion-icon {
             font-size: 3rem;
             margin-bottom: 1rem;
             color: #8B5CF6;
         }
-        
+
         .search-filter {
             margin-bottom: 2rem;
             display: flex;
             gap: 1rem;
             align-items: center;
         }
-        
+
         .search-filter input {
             flex: 1;
             padding: 0.75rem 1rem;
-            background: rgba(0,0,0,0.4);
-            border: 1px solid rgba(255,255,255,0.1);
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 8px;
             color: #fff;
             font-size: 0.95rem;
         }
-        
+
         .search-filter input:focus {
             outline: none;
             border-color: rgba(139, 92, 246, 0.5);
         }
-        
+
         .filter-buttons {
             display: flex;
             gap: 0.5rem;
             flex-wrap: wrap;
         }
-        
+
         .filter-btn {
             padding: 0.5rem 1rem;
             background: rgba(139, 92, 246, 0.2);
@@ -169,13 +230,13 @@
             transition: all 0.2s;
             font-size: 0.85rem;
         }
-        
+
         .filter-btn:hover,
         .filter-btn.active {
             background: rgba(139, 92, 246, 0.4);
             border-color: rgba(139, 92, 246, 0.6);
         }
-        
+
         .stats-bar {
             display: flex;
             justify-content: space-between;
@@ -185,17 +246,17 @@
             border-radius: 8px;
             margin-bottom: 2rem;
         }
-        
+
         .stat-item {
             text-align: center;
         }
-        
+
         .stat-item .stat-number {
             font-size: 1.5rem;
             font-weight: 700;
             color: #8B5CF6;
         }
-        
+
         .stat-item .stat-label {
             font-size: 0.85rem;
             color: #aaa;
@@ -228,7 +289,8 @@
                 <li><a href="cultivation.html" class="nav-link">Cultivation</a></li>
                 <li><a href="martial_arts.html" class="nav-link">Martial Arts</a></li>
                 <li><a href="appearances.html" class="nav-link">Appearances</a></li>
-                <li><a href="pages.html" class="nav-link" style="color: var(--text-primary); background: rgba(139, 92, 246, 0.1);">Pages</a></li>
+                <li><a href="pages.html" class="nav-link"
+                        style="color: var(--text-primary); background: rgba(139, 92, 246, 0.1);">Pages</a></li>
             </ul>
 
             <div class="nav-search">
@@ -313,7 +375,7 @@
         </div>
     </div>
 
-    <script src="../scripts/api-config.js"></script>
+    <script src="../scripts/api-config.js?v=2"></script>
     <script src="../scripts/main.js"></script>
     <script>
         let allPages = [];
@@ -378,7 +440,7 @@
                 `${charName}_dark.png`,
                 `${charName}_header_text.png`
             ];
-            
+
             // Return the first pattern - browser will handle 404s via onerror
             // We'll use a cascade approach with multiple img tags
             return patterns.map(pattern => `../assets/images/${pattern}`).join(',');
@@ -389,54 +451,49 @@
             const name = getPageName(page.path);
             const category = getCategory(page.path);
             const icon = getCategoryIcon(category);
-            
+
             // Try to find a thumbnail image
             let thumbnailImg = '';
-            
-            if (category === 'characters') {
-                // For characters, try multiple image patterns
-                const charName = page.path.split('/').pop().replace('.html', '');
-                const imagePatterns = [
-                    `${charName}_cover.jpg`,
-                    `${charName}_cover.png`,
-                    `${charName}_profile.png`,
-                    `${charName}_full.png`,
-                    `${charName}_art.png`,
-                    `${charName}.png`,
-                    `${charName}.jpg`,
-                    `${charName}_manhwa.jpg`,
-                    `${charName}_novel.jpg`,
-                    `${charName}_dark.png`
-                ];
-                
-                // Create multiple img tags - browser will try each until one loads
-                const imageSources = imagePatterns.map(pattern => 
-                    `../assets/images/${pattern}`
-                );
-                
-                thumbnailImg = imageSources.map((src, idx) => 
-                    `<img class="char-preview-img" src="${src}" 
-                        style="display: ${idx === 0 ? 'block' : 'none'}; width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0;">`
-                ).join('') + 
-                `<div class="page-icon" style="display: none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
-                    <ion-icon name="${icon}"></ion-icon>
-                </div>`;
-            } else if (category === 'cycles') {
-                // For cycles, try timeline images
-                const cycleName = page.path.split('/').pop().replace('.html', '');
-                const cycleNum = cycleName.match(/\d+/)?.[0];
+
+            const charName = page.path.split('/').pop().replace('.html', '');
+            const imagePatterns = [
+                `${charName}_cover.jpg`,
+                `${charName}_cover.png`,
+                `${charName}_profile.png`,
+                `${charName}_full.png`,
+                `${charName}_art.png`,
+                `${charName}.png`,
+                `${charName}.jpg`,
+                `${charName}_manhwa.jpg`,
+                `${charName}_novel.jpg`,
+                `${charName}_dark.png`,
+                `${charName}_placeholder.png`,
+                `${charName}_placeholder.jpg`
+            ];
+
+            const imageSources = imagePatterns.map(pattern =>
+                `../assets/images/${pattern}`
+            );
+
+            if (category === 'cycles') {
+                const cycleNum = charName.match(/\d+/)?.[0];
                 if (cycleNum) {
-                    thumbnailImg = `<img src="../assets/images/timeline_${cycleNum}_cycle.png" 
-                        style="width: 100%; height: 100%; object-fit: cover;" 
-                        onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                        <div class="page-icon" style="display: none;"><ion-icon name="${icon}"></ion-icon></div>`;
-                } else {
-                    thumbnailImg = `<div class="page-icon"><ion-icon name="${icon}"></ion-icon></div>`;
+                    imageSources.unshift(`../assets/images/timeline_${cycleNum}_cycle.png`);
                 }
-            } else {
-                // For other pages, use icon for now
-                thumbnailImg = `<div class="page-icon"><ion-icon name="${icon}"></ion-icon></div>`;
             }
+
+            // Add iframe preview fallback
+            thumbnailImg = imageSources.map((src, idx) =>
+                `<img class="char-preview-img" data-src="${src}" 
+                    style="display: none; width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; z-index: 2;">`
+            ).join('') +
+                `<div class="iframe-preview-container" style="display: none;">
+                <iframe data-src="/${page.path}" loading="lazy" scrolling="no" tabindex="-1"></iframe>
+                <div class="iframe-preview-overlay"></div>
+            </div>
+            <div class="page-icon" style="display: none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 1;">
+                <ion-icon name="${icon}"></ion-icon>
+            </div>`;
 
             return `
                 <a href="/${page.path}" class="page-preview-card" data-category="${category}" data-name="${name.toLowerCase()}">
@@ -444,8 +501,10 @@
                         ${thumbnailImg}
                     </div>
                     <div class="page-preview-content">
-                        <div class="page-preview-name">${name}</div>
-                        <div class="page-preview-path">/${page.path}</div>
+                        <div>
+                            <div class="page-preview-name">${name}</div>
+                            <div class="page-preview-path">/${page.path}</div>
+                        </div>
                         <div class="page-preview-category">${category.replace('_', ' ')}</div>
                     </div>
                 </a>
@@ -456,18 +515,18 @@
         function filterPages() {
             const searchTerm = document.getElementById('pageSearch').value.toLowerCase();
             const activeFilter = document.querySelector('.filter-btn.active')?.dataset.filter || 'all';
-            
+
             filteredPages = allPages.filter(page => {
                 const name = getPageName(page.path).toLowerCase();
                 const category = getCategory(page.path);
                 const path = page.path.toLowerCase();
-                
+
                 const matchesSearch = !searchTerm || name.includes(searchTerm) || path.includes(searchTerm);
                 const matchesFilter = activeFilter === 'all' || category === activeFilter;
-                
+
                 return matchesSearch && matchesFilter;
             });
-            
+
             renderPages();
             updateStats();
         }
@@ -475,7 +534,7 @@
         // Render pages
         function renderPages() {
             const grid = document.getElementById('pagesGrid');
-            
+
             if (filteredPages.length === 0) {
                 grid.innerHTML = `
                     <div class="loading-state" style="grid-column: 1/-1;">
@@ -485,42 +544,56 @@
                 `;
                 return;
             }
-            
+
             grid.innerHTML = filteredPages.map(page => createPageCard(page)).join('');
-            
-            // After rendering, handle image loading for character pages with cascade
+
+            // After rendering, handle image loading for all pages with cascade
             setTimeout(() => {
                 document.querySelectorAll('.page-preview-thumbnail').forEach(thumbnail => {
                     const images = thumbnail.querySelectorAll('.char-preview-img');
+                    const iframeContainer = thumbnail.querySelector('.iframe-preview-container');
+                    const icon = thumbnail.querySelector('.page-icon');
+
                     if (images.length > 0) {
                         let imageLoaded = false;
-                        const icon = thumbnail.querySelector('.page-icon');
-                        
-                        images.forEach((img, index) => {
-                            // Try to load this image
+
+                        const tryLoadImage = (index) => {
+                            if (index >= images.length) {
+                                // All images failed, show iframe!
+                                if (iframeContainer) {
+                                    iframeContainer.style.display = 'block';
+                                    const iframe = iframeContainer.querySelector('iframe');
+                                    if (iframe && iframe.getAttribute('data-src')) {
+                                        iframe.src = iframe.getAttribute('data-src');
+                                    }
+                                } else if (icon) {
+                                    icon.style.display = 'flex';
+                                }
+                                return;
+                            }
+
+                            const img = images[index];
                             const testImg = new Image();
                             testImg.onload = () => {
                                 if (!imageLoaded) {
                                     imageLoaded = true;
-                                    // Show this image, hide others
                                     img.style.display = 'block';
-                                    images.forEach((otherImg, otherIndex) => {
-                                        if (otherIndex !== index) otherImg.style.display = 'none';
-                                    });
-                                    if (icon) icon.style.display = 'none';
+                                    img.src = img.getAttribute('data-src');
                                 }
                             };
                             testImg.onerror = () => {
-                                // Try next image
-                                if (index < images.length - 1) {
-                                    images[index + 1].style.display = 'block';
-                                } else if (!imageLoaded) {
-                                    // All images failed, show icon
-                                    if (icon) icon.style.display = 'flex';
-                                }
+                                tryLoadImage(index + 1);
                             };
-                            testImg.src = img.src;
-                        });
+                            testImg.src = img.getAttribute('data-src');
+                        };
+
+                        tryLoadImage(0);
+                    } else if (iframeContainer) {
+                        iframeContainer.style.display = 'block';
+                        const iframe = iframeContainer.querySelector('iframe');
+                        if (iframe && iframe.getAttribute('data-src')) {
+                            iframe.src = iframe.getAttribute('data-src');
+                        }
                     }
                 });
             }, 50);
@@ -533,14 +606,14 @@
                 concepts: 0,
                 cultivation: 0
             };
-            
+
             filteredPages.forEach(page => {
                 const cat = getCategory(page.path);
                 if (categories.hasOwnProperty(cat)) {
                     categories[cat]++;
                 }
             });
-            
+
             document.getElementById('totalPages').textContent = filteredPages.length;
             document.getElementById('charactersCount').textContent = categories.characters;
             document.getElementById('conceptsCount').textContent = categories.concepts;
@@ -552,25 +625,25 @@
             try {
                 const response = await window.rtocFetch('/api/pages');
                 const data = await response.json();
-                
+
                 if (data.status === 'success') {
                     // Filter out admin pages, templates, and auth pages
                     allPages = data.pages.filter(page => {
                         const path = page.path.toLowerCase();
-                        return !path.includes('admin/') && 
-                               !path.includes('template') && 
-                               !path.includes('auth/') &&
-                               !path.includes('callback') &&
-                               path !== 'index.html';
+                        return !path.includes('admin/') &&
+                            !path.includes('template') &&
+                            !path.includes('auth/') &&
+                            !path.includes('callback') &&
+                            path !== 'index.html';
                     });
-                    
+
                     // Sort by name
                     allPages.sort((a, b) => {
                         const nameA = getPageName(a.path);
                         const nameB = getPageName(b.path);
                         return nameA.localeCompare(nameB);
                     });
-                    
+
                     filteredPages = [...allPages];
                     renderPages();
                     updateStats();
@@ -588,7 +661,7 @@
 
         // Event listeners
         document.getElementById('pageSearch').addEventListener('input', filterPages);
-        
+
         document.querySelectorAll('.filter-btn').forEach(btn => {
             btn.addEventListener('click', () => {
                 document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
@@ -603,4 +676,3 @@
 </body>
 
 </html>
-
