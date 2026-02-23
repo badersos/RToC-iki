@@ -252,6 +252,11 @@ document.addEventListener('DOMContentLoaded', () => {
             const userData = JSON.parse(atob(userDataB64));
             localStorage.setItem('rtoc_user', JSON.stringify(userData));
 
+            const sessionId = urlParams.get('session_id');
+            if (sessionId) {
+                localStorage.setItem('rtoc_session', sessionId);
+            }
+
             // Dispatch event for other scripts (like editor.js)
             window.dispatchEvent(new CustomEvent('RToCUserUpdated', { detail: userData }));
 

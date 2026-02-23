@@ -624,6 +624,16 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                      # Pinned first (True > False), then newest (large timestamp)
                     page_comments.sort(key=lambda c: (c.get('is_pinned', False), c.get('created_at', '')), reverse=True)
                 
+                # Fetch latest avatars for comments
+                try:
+                    users_db = FileHandler.read_json('users.json')
+                    for c in page_comments:
+                        uid = c.get('user_id')
+                        if uid and uid in users_db:
+                            c['avatar'] = users_db[uid].get('avatar')
+                except:
+                    pass
+
                 self.send_response(200)
                 self.send_header('Content-type', 'application/json')
                 self.end_headers()
@@ -750,10 +760,15 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                 # ------------------------
 
                 # Save user to database and get role from permissions
-                avatar_url = None
                 if user_data.get('avatar'):
                     ext = 'gif' if user_data['avatar'].startswith('a_') else 'png'
                     avatar_url = f"https://cdn.discordapp.com/avatars/{user_data['id']}/{user_data['avatar']}.{ext}"
+                else:
+                    try:
+                        index = (int(user_data['id']) >> 22) % 6
+                    except:
+                        index = 0
+                    avatar_url = f"https://cdn.discordapp.com/embed/avatars/{index}.png"
 
                 final_user = UserDatabase.save({
                     'id': user_data['id'],
@@ -784,7 +799,7 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                     
                     self.send_response(302)
                     self.send_header('Set-Cookie', f'session={session_id}; Path=/; HttpOnly; SameSite=None; Secure; Max-Age=2592000')
-                    self.send_header('Location', f"/?user_data={b64_user}")
+                    self.send_header('Location', f"/?user_data={b64_user}&session_id={session_id}")
                     self.end_headers()
                 
             except Exception as e:
