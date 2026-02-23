@@ -239,13 +239,21 @@ class UserDatabase:
         # Sync with permissions.json for role authority
         perms = FileHandler.read_json('permissions.json')
         
-        uname = user_data['username']
+        uname = user_data.get('username', '')
         # Priority: permissions.json > existing role > default 'user'
         role = user_data.get('role', 'user')
         
-        if uid in perms: role = perms[uid]
-        elif uname in perms: role = perms[uname]
-        elif str(uid) == '1021410672803844129': role = 'owner' # Hardcoded safety
+        uname_lower = uname.lower()
+        matched_role = None
+        for k, v in perms.items():
+            if k.lower() == uname_lower:
+                matched_role = v
+                break
+                
+        if matched_role:
+            role = matched_role
+        elif str(uid) == '1021410672803844129': 
+            role = 'owner' # Hardcoded safety
         
         user_data['role'] = role
         users[uid] = user_data
@@ -308,13 +316,16 @@ def is_admin(user):
     if user_id == '1021410672803844129':
         return True
     
-    # Check permissions.json for role
+    # Check permissions.json for role by username
     if os.path.exists('permissions.json'):
         try:
             perms = FileHandler.read_json('permissions.json')
-            role = perms.get(user_id) or perms.get(username)
-            if role in ['admin', 'owner']:
-                return True
+            uname_lower = username.lower() if username else ""
+            for k, v in perms.items():
+                if k.lower() == uname_lower:
+                    if v in ['admin', 'owner']:
+                        return True
+                    break
         except Exception as e:
             print(f"DEBUG: Error reading permissions.json: {e}", file=sys.stderr)
             pass
@@ -1136,13 +1147,19 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                 post_data = self.rfile.read(content_length)
                 data = json.loads(post_data.decode('utf-8'))
                 
-                target_user = data.get('username') or data.get('id')
+                target_user = data.get('username')
                 new_role = data.get('role')
                 if not target_user or not new_role:
-                    self.send_error(400, "Missing target user or role")
+                    self.send_error(400, "Missing target username or role")
                     return
 
                 permissions = FileHandler.read_json('permissions.json')
+                
+                # Remove case-insensitive duplicates to avoid clutter
+                keys_to_remove = [k for k in permissions.keys() if k.lower() == target_user.lower()]
+                for k in keys_to_remove:
+                    del permissions[k]
+                    
                 permissions[target_user] = new_role
                 FileHandler.write_json('permissions.json', permissions)
             
@@ -1323,9 +1340,12 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                 if os.path.exists('permissions.json'):
                     try:
                         perms = FileHandler.read_json('permissions.json')
-                        role = perms.get(str(user_id)) or perms.get(user['username'])
-                        if role in ['admin', 'owner']:
-                            is_admin_req = True
+                        uname_lower = user.get('username', '').lower()
+                        for k, v in perms.items():
+                            if k.lower() == uname_lower:
+                                if v in ['admin', 'owner']:
+                                    is_admin_req = True
+                                break
                         # Fallback to hardcoded owner
                         if str(user_id) == '1021410672803844129': 
                             is_admin_req = True
