@@ -1152,6 +1152,18 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                 # Sanitize user_id: If "anonymous" or obviously invalid, set to None for Null in DB
                 if user_id == 'anonymous' or not (user_id and str(user_id).isdigit()):
                     user_id = None
+                
+                # Check if user exists, otherwise Lazy Sync
+                if user_id:
+                    user_record = UserDatabase.get(user_id)
+                    if not user_record and user:
+                        print(f"[DB] Lazy Sync: Creating missing user {user} ({user_id})")
+                        UserDatabase.save({
+                            'id': user_id,
+                            'username': user,
+                            'avatar': avatar,
+                            'role': role
+                        })
 
                 # Create new comment
                 new_comment = {
