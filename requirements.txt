@@ -1,2 +1,6 @@
 # RToC Wiki Server Dependencies
-# No external dependencies - uses only Python standard library
+supabase
+postgrest
+gotrue
+storage3
+realtime

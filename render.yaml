@@ -2,7 +2,7 @@ services:
   - type: web
     name: rtoc-wiki-api
     runtime: python
-    buildCommand: ""
+    buildCommand: "pip install -r requirements.txt"
     startCommand: python server.py
     envVars:
       - key: PORT
@@ -15,5 +15,8 @@ services:
         sync: false
       - key: REDIRECT_URI
         sync: false
-      - key: GITHUB_TOKEN
+      - key: SUPABASE_URL
         sync: false
+      - key: SUPABASE_KEY
+        sync: false
+

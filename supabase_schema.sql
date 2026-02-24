@@ -1,4 +1,5 @@
 -- Schema for RToC Wiki Database (Idempotent Version)
+-- Optimized for Supabase SQL Editor
 
 -- 1. Users table (Stores discord authentication data)
 CREATE TABLE IF NOT EXISTS users (
@@ -77,7 +78,6 @@ ALTER TABLE activity_logs ENABLE ROW LEVEL SECURITY;
 ALTER TABLE wiki_pages ENABLE ROW LEVEL SECURITY;
 
 -- Allow all operations for anon and service_role (Backend-controlled security)
--- Note: Policies might still error if they exist, but normally Supabase allows re-creating them or you can use DO blocks
 DO $$ 
 BEGIN 
     -- Users Policies
@@ -125,6 +125,3 @@ BEGIN
         CREATE POLICY "Allow all operations for service_role" ON wiki_pages FOR ALL TO service_role USING (true) WITH CHECK (true);
     END IF;
 END $$;
-
-
-
