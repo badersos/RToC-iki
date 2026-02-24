@@ -1149,11 +1149,16 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                 # Database handling done in try block below
                 pass
                 
+                # Sanitize user_id: If "anonymous" or obviously invalid, set to None for Null in DB
+                if user_id == 'anonymous' or not (user_id and str(user_id).isdigit()):
+                    user_id = None
+
                 # Create new comment
                 new_comment = {
                     "id": str(uuid.uuid4()),
                     "page_id": page_id,
                     "user_id": user_id,
+                    "parent_id": parent_id, # Added missing parent_id
                     "text": content,
                     "created_at": datetime.now(timezone.utc).isoformat(),
                     "is_pinned": False,
@@ -1165,8 +1170,10 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                 try:
                     supabase.table('comments').insert(new_comment).execute()
                 except Exception as e:
-                    print(f"[DB] Error inserting comment: {e}")
-                    self.send_error(500, "Database error")
+                    print(f"[DB ERROR] Failed to insert comment into 'comments' table: {e}")
+                    # Log more details if possible
+                    if hasattr(e, 'message'): print(f"  Details: {e.message}")
+                    self.send_error(500, f"Database error (Check logs for details)")
                     return
                 
                 # Fetch user data to return fully populated comment to frontend

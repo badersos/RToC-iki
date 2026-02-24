@@ -31,6 +31,7 @@ CREATE TABLE IF NOT EXISTS comments (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     page_id TEXT NOT NULL,
     user_id TEXT REFERENCES users(id) ON DELETE CASCADE,
+    parent_id UUID REFERENCES comments(id) ON DELETE CASCADE,
     text TEXT NOT NULL,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
     is_pinned BOOLEAN DEFAULT FALSE,
@@ -38,6 +39,14 @@ CREATE TABLE IF NOT EXISTS comments (
     dislikes JSONB DEFAULT '[]'::jsonb,
     replies JSONB DEFAULT '[]'::jsonb
 );
+
+-- Add parent_id column if it doesn't exist (for existing tables)
+DO $$ 
+BEGIN 
+    IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='comments' AND column_name='parent_id') THEN
+        ALTER TABLE comments ADD COLUMN parent_id UUID REFERENCES comments(id) ON DELETE CASCADE;
+    END IF;
+END $$;
 
 -- Index for faster comment fetching by page
 CREATE INDEX IF NOT EXISTS idx_comments_page_id ON comments(page_id);
