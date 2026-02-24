@@ -519,16 +519,25 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                      # Pinned first (True > False), then newest (large timestamp)
                     page_comments.sort(key=lambda c: (c.get('is_pinned', False), c.get('created_at', '')), reverse=True)
                 
-                # Fetch latest avatars for comments
+                # Fetch latest user data (username, avatar, role) for comments
                 try:
-                    users_response = supabase.table('users').select('id, avatar').execute()
-                    users_map = {row['id']: row['avatar'] for row in (users_response.data or [])}
+                    users_response = supabase.table('users').select('id, username, avatar, role').execute()
+                    users_map = {row['id']: row for row in (users_response.data or [])}
                     for c in page_comments:
+                        # Map text -> content for frontend compatibility
+                        c['content'] = c.get('text', '')
+                        
                         uid = c.get('user_id')
                         if uid and uid in users_map:
-                            c['avatar'] = users_map[uid]
+                            u_info = users_map[uid]
+                            c['user'] = u_info.get('username', 'Unknown')
+                            c['avatar'] = u_info.get('avatar')
+                            c['role'] = u_info.get('role', 'user')
+                        else:
+                            # Fallback for anonymous or missing users
+                            c['user'] = c.get('user', 'Anonymous')
                 except Exception as e:
-                    print(f"[DB] Error fetching user avatars for comments: {e}")
+                    print(f"[DB] Error fetching user data for comments: {e}")
 
                 self.send_response(200)
                 self.send_header('Content-type', 'application/json')
