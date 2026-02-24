@@ -207,17 +207,25 @@ def get_authenticated_user(request_handler):
 def is_admin(user):
     """Check if a user has admin or owner role."""
     if not user:
+        print("[ADMIN CHECK] Failed: User object is None")
         return False
     
-    user_id = str(user.get('id', ''))
+    uid = str(user.get('id', ''))
+    uname = str(user.get('username', '')).lower()
+    role = str(user.get('role', 'user')).lower()
     
-    # Hardcoded owner ID
-    if user_id == '1021410672803844129':
+    # Hardcoded owner check (ID or Username)
+    if uid == '1021410672803844129' or uname == 'baderso':
+        print(f"[ADMIN CHECK] Success: Owner match ({uname})")
         return True
     
-    # Check role from user object (which comes from DB)
-    role = user.get('role')
-    return role in ['admin', 'owner']
+    # Role-based check
+    if role in ['admin', 'owner']:
+        print(f"[ADMIN CHECK] Success: Role match ({role}) for {uname}")
+        return True
+        
+    print(f"[ADMIN CHECK] Denied for {uname} (ID: {uid}, Role: {role})")
+    return False
 
 from html.parser import HTMLParser
 import re
