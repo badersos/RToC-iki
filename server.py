@@ -30,6 +30,12 @@ ALLOWED_ORIGINS = [
     'https://rtoc-iki.onrender.com'
 ]
 
+from supabase import create_client, Client
+
+SUPABASE_URL = os.environ.get('SUPABASE_URL', 'https://zzpjxsqlhxdqhcybmgy.supabase.co')
+SUPABASE_KEY = os.environ.get('SUPABASE_KEY', 'sb_publishable_zxGFxVUWupq-F03Ed4-SKQ_3judxO00')
+supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
+
 # === DATABASE & SESSION MANAGER ===
 
 import shutil
@@ -37,124 +43,8 @@ import threading
 import tempfile
 import subprocess
 
-# === GIT PERSISTENCE (Free Tier Hack) ===
-def setup_git():
-    """Configure git with the token for pushing."""
-    token = os.environ.get('GITHUB_TOKEN')
-    if not token:
-        print("[GIT] No GITHUB_TOKEN found. Persistence disabled.")
-        return
-
-    # Embed token directly in URL for foolproof deployment authentication
-    repo_url = f"https://oauth2:{token}@github.com/badersos/RToC-iki.git"
-    
-    try:
-        # Initialize git if not present
-        if not os.path.exists('.git'):
-            print("[GIT] Initializing new git repo...", file=sys.stderr)
-            subprocess.run(["git", "init"], check=True)
-            subprocess.run(["git", "branch", "-M", "main"], check=False)
-
-        # Configure user for commits
-        subprocess.run(["git", "config", "user.email", "bot@rtoc-wiki.com"], check=False)
-        subprocess.run(["git", "config", "user.name", "RToC Wiki Bot"], check=False)
-        
-        # Check if remote exists
-        remotes = subprocess.run(["git", "remote"], capture_output=True, text=True).stdout
-        if "origin" in remotes:
-            subprocess.run(["git", "remote", "set-url", "origin", repo_url], check=True, stderr=subprocess.PIPE)
-            print("[GIT] Updated origin remote.", file=sys.stderr)
-        else:
-            subprocess.run(["git", "remote", "add", "origin", repo_url], check=True, stderr=subprocess.PIPE)
-            print("[GIT] Added origin remote.", file=sys.stderr)
-            
-    except subprocess.CalledProcessError as e:
-        print(f"[GIT] Setup failed: {e.stderr.decode()}", file=sys.stderr)
-    except Exception as e:
-        print(f"[GIT] Setup failed: {e}", file=sys.stderr)
-
-def git_pull():
-    """Pull latest data from remote on startup to restore persisted data."""
-    if not os.environ.get('RENDER') or not os.environ.get('GITHUB_TOKEN'):
-        print("[GIT] Skipping pull (not on Render or no token).")
-        return
-    try:
-        # Fetch and reset to remote to handle any force-pushes or conflicts
-        print(f"[GIT] Fetching origin...", file=sys.stderr)
-        subprocess.run(["git", "fetch", "origin"], check=True, stderr=subprocess.PIPE)
-        print(f"[GIT] Resetting to origin/main...", file=sys.stderr)
-        subprocess.run(["git", "reset", "--hard", "origin/main"], check=True, stderr=subprocess.PIPE)
-        print("[GIT] Pulled latest data from remote.", file=sys.stderr)
-    except subprocess.CalledProcessError as e:
-        err = e.stderr.decode() if e.stderr else str(e)
-        print(f"[GIT] Pull failed: {err}", file=sys.stderr)
-    except Exception as e:
-        print(f"[GIT] Pull failed: {e}", file=sys.stderr)
-        import traceback
-        traceback.print_exc()
-
-def git_status():
-    """Get current git status for debugging."""
-    try:
-        status = subprocess.run(["git", "status"], capture_output=True, text=True).stdout
-        log = subprocess.run(["git", "log", "-1"], capture_output=True, text=True).stdout
-        return f"Status:\n{status}\n\nLast Log:\n{log}"
-    except Exception as e:
-        return f"Error getting status: {e}"
-
-# Debounced git push — batches rapid writes into a single push
-_push_timer = None
-_push_lock = threading.Lock()
-
 def git_push(message="Auto-save data"):
-    """Commit and push changes to remote (debounced, 10s delay)."""
-    if not os.environ.get('RENDER') or not os.environ.get('GITHUB_TOKEN'):
-        return
-
-    global _push_timer
-
-    def _do_push():
-        global _push_timer
-        try:
-            subprocess.run(["git", "add", "."], check=True)
-            result = subprocess.run(["git", "commit", "-m", message], capture_output=True, text=True)
-            if result.returncode == 0:
-                print(f"[GIT] Pushing...", file=sys.stderr)
-                # Try push first
-                push_result = subprocess.run(["git", "push", "origin", "HEAD:main"], capture_output=True, text=True)
-                if push_result.returncode != 0:
-                    # Pull with rebase to handle remote changes, then retry push
-                    print(f"[GIT] Push rejected, pulling with rebase... Error: {push_result.stderr}", file=sys.stderr)
-                    pull_res = subprocess.run(["git", "pull", "--rebase", "-X", "ours", "origin", "main"], capture_output=True, text=True)
-                    if pull_res.returncode != 0:
-                        print(f"[GIT] Pull failed: {pull_res.stderr}", file=sys.stderr)
-                    retry_push = subprocess.run(["git", "push", "origin", "HEAD:main"], capture_output=True, text=True)
-                    if retry_push.returncode != 0:
-                        print(f"[GIT] Retry push failed: {retry_push.stderr}", file=sys.stderr)
-                    else:
-                        print(f"[GIT] Pushed after rebase: {message}", file=sys.stderr)
-                else:
-                    print(f"[GIT] Pushed: {message}", file=sys.stderr)
-            else:
-                print(f"[GIT] Nothing to commit.", file=sys.stderr)
-        except subprocess.CalledProcessError as e:
-            err = e.stderr.decode() if e.stderr else str(e)
-            print(f"[GIT] Push failed (CalledProcessError): {err}", file=sys.stderr)
-        except Exception as e:
-            print(f"[GIT] Push failed: {e}", file=sys.stderr)
-            import traceback
-            traceback.print_exc()
-        finally:
-            with _push_lock:
-                _push_timer = None
-    
-    with _push_lock:
-        # Cancel any pending push and reschedule
-        if _push_timer is not None:
-            _push_timer.cancel()
-        _push_timer = threading.Timer(10.0, _do_push)
-        _push_timer.daemon = True
-        _push_timer.start()
+    pass # Deprecated by Supabase
 
 # === FILE HANDLER ===
 class FileHandler:
@@ -221,56 +111,62 @@ class FileHandler:
             except:
                 return False
 class UserDatabase:
-    FILE = 'users.json'
-    
     @staticmethod
     def get(user_id):
-        users = FileHandler.read_json(UserDatabase.FILE)
-        return users.get(str(user_id))
+        try:
+            response = supabase.table('users').select('*').eq('id', str(user_id)).execute()
+            if response.data:
+                return response.data[0]
+            return None
+        except Exception as e:
+            print(f"[DB] Error getting user {user_id}: {e}", file=sys.stderr)
+            return None
+            
     @staticmethod
     def save(user_data):
-        users = FileHandler.read_json(UserDatabase.FILE)
-        
         uid = str(user_data['id'])
-        # Preserve existing role if not updating
-        existing = users.get(uid, {})
-        if 'role' in existing: user_data['role'] = existing['role']
         
-        # Sync with permissions.json for role authority
-        perms = FileHandler.read_json('permissions.json')
+        # Check if user exists to preserve role
+        existing_user = UserDatabase.get(uid)
         
-        uname = user_data.get('username', '')
         # Priority: permissions.json > existing role > default 'user'
         role = user_data.get('role', 'user')
-        
+        if existing_user and 'role' in existing_user:
+            role = existing_user['role']
+            
+        uname = user_data.get('username', '')
         uname_lower = uname.lower()
-        matched_role = None
-        for k, v in perms.items():
-            if k.lower() == uname_lower:
-                matched_role = v
-                break
-                
-        if matched_role:
-            role = matched_role
-        elif str(uid) == '1021410672803844129': 
+        
+        # Admin sync check (optional, can be fully DB driven now)
+        if uid == '1021410672803844129': 
             role = 'owner' # Hardcoded safety
+            
+        final_data = {
+            'id': uid,
+            'username': uname,
+            'avatar': user_data.get('avatar', ''),
+            'role': role
+        }
         
-        user_data['role'] = role
-        users[uid] = user_data
-        
-        FileHandler.write_json(UserDatabase.FILE, users)
-        return user_data
+        try:
+            supabase.table('users').upsert(final_data).execute()
+        except Exception as e:
+            print(f"[DB] Error saving user {uid}: {e}", file=sys.stderr)
+            
+        return final_data
 class SessionManager:
-    FILE = 'sessions.json'
-    
     @staticmethod
     def create(user_id):
-        sessions = FileHandler.read_json(SessionManager.FILE)
-            
         session_id = str(uuid.uuid4())
-        sessions[session_id] = {'user_id': str(user_id), 'created_at': datetime.now().isoformat()}
-        
-        FileHandler.write_json(SessionManager.FILE, sessions)
+        session_data = {
+            'session_id': session_id,
+            'user_id': str(user_id),
+            'created_at': datetime.now(timezone.utc).isoformat()
+        }
+        try:
+            supabase.table('sessions').insert(session_data).execute()
+        except Exception as e:
+            print(f"[DB] Error creating session: {e}", file=sys.stderr)
         return session_id
     @staticmethod
     def get_user(headers):
@@ -294,10 +190,14 @@ class SessionManager:
         
         if not session_id: return None
         
-        sessions = FileHandler.read_json(SessionManager.FILE)
-        session = sessions.get(session_id)
-        if session:
-            return UserDatabase.get(session['user_id'])
+        try:
+            response = supabase.table('sessions').select('*').eq('session_id', session_id).execute()
+            if response.data:
+                user_id = response.data[0]['user_id']
+                return UserDatabase.get(user_id)
+        except Exception as e:
+            print(f"[DB] Error verifying session: {e}", file=sys.stderr)
+            
         return None
 # === HELPER FUNCTIONS ===
 def get_authenticated_user(request_handler):
@@ -310,29 +210,13 @@ def is_admin(user):
         return False
     
     user_id = str(user.get('id', ''))
-    username = user.get('username', '')
     
     # Hardcoded owner ID
     if user_id == '1021410672803844129':
         return True
     
-    # Check permissions.json for role by username
-    if os.path.exists('permissions.json'):
-        try:
-            perms = FileHandler.read_json('permissions.json')
-            uname_lower = username.lower() if username else ""
-            for k, v in perms.items():
-                if k.lower() == uname_lower:
-                    if v in ['admin', 'owner']:
-                        return True
-                    break
-        except Exception as e:
-            print(f"DEBUG: Error reading permissions.json: {e}", file=sys.stderr)
-            pass
-    
-    # Fallback to user object's role
+    # Check role from user object (which comes from DB)
     role = user.get('role')
-    print(f"DEBUG: Fallback role check for {username}: {role}", file=sys.stderr)
     return role in ['admin', 'owner']
 
 from html.parser import HTMLParser
@@ -617,10 +501,12 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                 page_id = params.get('pageId', [None])[0]
                 sort_by = params.get('sort', ['newest'])[0] 
                 
-                comments = {}
-                comments = FileHandler.read_json('comments.json')
-
-                page_comments = comments.get(page_id, [])
+                try:
+                    response = supabase.table('comments').select('*').eq('page_id', page_id).execute()
+                    page_comments = response.data or []
+                except Exception as e:
+                    print(f"[DB] Error fetching comments: {e}")
+                    page_comments = []
                 
                 # Sort comments based on requested order, with PINNED comments always on top
                 if sort_by == 'oldest':
@@ -635,13 +521,14 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                 
                 # Fetch latest avatars for comments
                 try:
-                    users_db = FileHandler.read_json('users.json')
+                    users_response = supabase.table('users').select('id, avatar').execute()
+                    users_map = {row['id']: row['avatar'] for row in (users_response.data or [])}
                     for c in page_comments:
                         uid = c.get('user_id')
-                        if uid and uid in users_db:
-                            c['avatar'] = users_db[uid].get('avatar')
-                except:
-                    pass
+                        if uid and uid in users_map:
+                            c['avatar'] = users_map[uid]
+                except Exception as e:
+                    print(f"[DB] Error fetching user avatars for comments: {e}")
 
                 self.send_response(200)
                 self.send_header('Content-type', 'application/json')
@@ -661,15 +548,26 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                 query = urllib.parse.urlparse(self.path).query
                 params = urllib.parse.parse_qs(query)
                 username = params.get('user', [None])[0]
-
-                profiles = FileHandler.read_json('user_profiles.json')
-                
-                user_profile = profiles.get(username, {})
+                try:
+                    response = supabase.table('user_profiles').select('*').eq('username', username).execute()
+                    if response.data:
+                        user_profile = response.data[0]
+                        # Map 'about' to 'bio' for frontend compatibility if needed, 
+                        # but migrate_to_supabase.py used 'about'.
+                        user_profile['bio'] = user_profile.get('about', '')
+                    else:
+                        user_profile = {}
+                except Exception as e:
+                    print(f"[DB] Error fetching profile: {e}")
+                    user_profile = {}
                 
                 self.send_response(200)
                 self.send_header('Content-Type', 'application/json')
                 self.end_headers()
-                self.wfile.write(json.dumps({"status": "success", "profile": user_profile}).encode())
+                self.wfile.write(json.dumps({
+                    "status": "success",
+                    "profile": user_profile
+                }).encode())
             except Exception as e:
                 self.send_error(500, str(e))
             return
@@ -681,13 +579,15 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                 params = urllib.parse.parse_qs(query)
                 username = params.get('user', [None])[0]
 
-                all_logs = FileHandler.read_json('activity_log.json', default=[])
-                if username:
-                    logs = [l for l in all_logs if l.get('user') == username]
-                else:
-                    logs = all_logs
-                
-                logs.sort(key=lambda x: x.get('timestamp', ''), reverse=True)
+                try:
+                    if username:
+                        response = supabase.table('activity_logs').select('*').eq('user', username).order('timestamp', desc=True).limit(50).execute()
+                    else:
+                        response = supabase.table('activity_logs').select('*').order('timestamp', desc=True).limit(50).execute()
+                    logs = response.data or []
+                except Exception as e:
+                    print(f"[DB] Error fetching activity {e}")
+                    logs = []
                 
                 self.send_response(200)
                 self.send_header('Content-Type', 'application/json')
@@ -812,27 +712,20 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                     self.end_headers()
 
                 # Persist session & user data to git so they survive Render restarts
-                git_push("User login: " + final_user.get('username', 'unknown'))
+                try:
+                    supabase.table('activity_logs').insert({
+                        "user": final_user.get('username', 'unknown'),
+                        "action": "logged in",
+                        "type": "system",
+                        "timestamp": datetime.now(timezone.utc).isoformat()
+                    }).execute()
+                except: pass
                 
             except Exception as e:
                 print(f"OAuth Error: {e}")
                 import traceback
                 traceback.print_exc()
                 self.send_error(500, f"Authentication Failed: {str(e)}")
-            return
-        
-        # API: Debug Git (Admin only)
-        if self.path == '/api/debug/git':
-            user = get_authenticated_user(self)
-            if not is_admin(user):
-                self.send_error(403, "Admins only")
-                return
-                
-            status_output = git_status()
-            self.send_response(200)
-            self.send_header('Content-Type', 'text/plain')
-            self.end_headers()
-            self.wfile.write(status_output.encode())
             return
 
         # Dev Login (Localhost only)
@@ -898,6 +791,25 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
         if self.path == '/':
             self.path = '/index.html'
         
+        # Phase 2: Intercept HTML pages to serve from Supabase
+        clean_path = self.path
+        if '?' in clean_path: clean_path = clean_path.split('?')[0]
+        if clean_path.startswith('/'): clean_path = clean_path[1:]
+        
+        if clean_path.endswith('.html'):
+            try:
+                response = supabase.table('wiki_pages').select('content').eq('path', clean_path).execute()
+                if response.data:
+                    content = response.data[0]['content']
+                    self.send_response(200)
+                    self.send_header('Content-type', 'text/html')
+                    self.send_header('Cache-Control', 'no-cache, no-store, must-revalidate')
+                    self.end_headers()
+                    self.wfile.write(content.encode('utf-8'))
+                    return
+            except Exception as e:
+                print(f"[DB] Error serving page {clean_path} from Supabase: {e}")
+        
         super().do_GET()
 
 
@@ -934,29 +846,33 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                 with open(safe_path, 'w', encoding='utf-8') as f:
                     f.write(content)
                 
+                # Phase 2: Persist page to Supabase
+                try:
+                    supabase.table('wiki_pages').upsert({
+                        'path': relative_path,
+                        'content': content,
+                        'updated_at': datetime.now(timezone.utc).isoformat()
+                    }).execute()
+                except Exception as e:
+                    print(f"[DB] Error saving page to Supabase: {e}")
+
                 # Activity Log
                 if user_info:
                     try:
                         log_entry = {
                             "user": user_info.get('username', 'Unknown'),
-                            "user_id": user_info.get('id'),
                             "action": "edited",
-                            "target": relative_path,
+                            "type": "page",
+                            "details": {"target": relative_path},
                             "timestamp": datetime.now(timezone.utc).isoformat()
                         }
-                        
-                        logs = FileHandler.read_json('activity_log.json', default=[])
-                        logs.insert(0, log_entry)
-                        logs = logs[:1000]
-                        FileHandler.write_json('activity_log.json', logs)
+                        supabase.table('activity_logs').insert(log_entry).execute()
                     except: pass
 
                 self.send_response(200)
                 self.send_header('Content-type', 'application/json')
                 self.end_headers()
                 self.wfile.write(json.dumps({"status": "success"}).encode('utf-8'))
-
-                git_push(f"Page edit: {relative_path}")
                 
             except Exception as e:
                 self.send_error(500, f"Server error: {str(e)}")
@@ -1007,25 +923,28 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                 os.remove(safe_path)
                 print(f"[DELETE] Deleted file: {safe_path}")
                 
+                # Phase 2: Delete from Supabase
+                try:
+                    supabase.table('wiki_pages').delete().eq('path', file_path).execute()
+                except Exception as e:
+                    print(f"[DB] Error deleting page from Supabase: {e}")
+
                 # Log the deletion
                 try:
                     log_entry = {
+                        "user": user.get('username', 'Admin'),
                         "action": "deleted",
-                        "target": file_path,
+                        "type": "system",
+                        "details": {"target": file_path},
                         "timestamp": datetime.now(timezone.utc).isoformat()
                     }
-                    logs = FileHandler.read_json('activity_log.json', default=[])
-                    logs.insert(0, log_entry)
-                    logs = logs[:1000]
-                    FileHandler.write_json('activity_log.json', logs)
+                    supabase.table('activity_logs').insert(log_entry).execute()
                 except: pass
                 
                 self.send_response(200)
                 self.send_header('Content-type', 'application/json')
                 self.end_headers()
                 self.wfile.write(json.dumps({"status": "success", "message": "Page deleted"}).encode('utf-8'))
-
-                git_push(f"Page deleted: {file_path}")
                 
             except Exception as e:
                 print(f"[DELETE ERROR] {e}")
@@ -1103,7 +1022,16 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                     with open(file_path, 'wb') as f:
                         f.write(file_content)
                 
-                    git_push(f"Upload asset: {new_filename}")
+                    try:
+                        log_entry = {
+                            "user": user.get('username', 'Unknown'),
+                            "action": "uploaded",
+                            "type": "asset",
+                            "details": {"target": new_filename},
+                            "timestamp": datetime.now(timezone.utc).isoformat()
+                        }
+                        supabase.table('activity_logs').insert(log_entry).execute()
+                    except: pass
                     
                     # Return URL consistent with serving path
                     file_url = f"/assets/uploads/{new_filename}"
@@ -1137,17 +1065,17 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                     self.send_error(400, "Username required")
                     return
 
-                profiles = FileHandler.read_json('user_profiles.json')
-                
-                if username not in profiles:
-                    profiles[username] = {}
-                
-                if 'banner' in data: profiles[username]['banner'] = data['banner']
-                if 'bio' in data: profiles[username]['bio'] = data['bio']
-                
-                FileHandler.write_json('user_profiles.json', profiles)
-
-                git_push(f"Profile update: {username}")
+                try:
+                    update_data = {}
+                    if 'banner' in data: update_data['banner'] = data['banner']
+                    if 'bio' in data: update_data['about'] = data['bio']
+                    
+                    if update_data:
+                        supabase.table('user_profiles').update(update_data).eq('username', username).execute()
+                except Exception as e:
+                    print(f"[DB] Error updating profile: {e}")
+                    self.send_error(500, "Database error")
+                    return
                     
                 print(f"[PROFILE UPDATE] Success for {username}")
                 self.send_response(200)
@@ -1180,17 +1108,13 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                     self.send_error(400, "Missing target username or role")
                     return
 
-                permissions = FileHandler.read_json('permissions.json')
-                
-                # Remove case-insensitive duplicates to avoid clutter
-                keys_to_remove = [k for k in permissions.keys() if k.lower() == target_user.lower()]
-                for k in keys_to_remove:
-                    del permissions[k]
-                    
-                permissions[target_user] = new_role
-                FileHandler.write_json('permissions.json', permissions)
-            
-                git_push(f"Update permissions: {target_user} -> {new_role}")
+                try:
+                    # Sync role in users table
+                    supabase.table('users').update({'role': new_role}).eq('username', target_user).execute()
+                except Exception as e:
+                    print(f"[DB] Error updating permissions: {e}")
+                    self.send_error(500, "Database error")
+                    return
             
                 self.send_response(200)
                 self.send_header('Content-type', 'application/json')
@@ -1222,37 +1146,47 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                     self.wfile.write(json.dumps({"status": "error", "message": "Missing required fields"}).encode('utf-8'))
                     return
                 
-                # Load existing comments
-                comments = FileHandler.read_json('comments.json')
-                
-                if page_id not in comments:
-                    comments[page_id] = []
+                # Database handling done in try block below
+                pass
                 
                 # Create new comment
                 new_comment = {
                     "id": str(uuid.uuid4()),
-                    "user": user,
+                    "page_id": page_id,
                     "user_id": user_id,
-                    "content": content,
+                    "text": content,
                     "created_at": datetime.now(timezone.utc).isoformat(),
-                    "parent_id": parent_id,
-                    "role": role,
-                    "avatar": avatar,
+                    "is_pinned": False,
                     "likes": [],
                     "dislikes": [],
-                    "is_deleted": False,
-                    "is_pinned": False
+                    "replies": []
                 }
                 
-                comments[page_id].append(new_comment)
-                FileHandler.write_json('comments.json', comments)
-            
-                git_push(f"New comment on {page_id}")
+                try:
+                    supabase.table('comments').insert(new_comment).execute()
+                except Exception as e:
+                    print(f"[DB] Error inserting comment: {e}")
+                    self.send_error(500, "Database error")
+                    return
+                
+                # Fetch user data to return fully populated comment to frontend
+                user_record = UserDatabase.get(user_id)
+                frontend_comment = {
+                    **new_comment,
+                    "user": user, # Username from request
+                    "role": role,
+                    "avatar": user_record.get('avatar') if user_record else avatar,
+                    "parent_id": parent_id,
+                    "is_deleted": False
+                }
+                
+                # We need to map 'text' to 'content' for the frontend
+                frontend_comment['content'] = frontend_comment['text']
             
                 self.send_response(200)
                 self.send_header('Content-type', 'application/json')
                 self.end_headers()
-                self.wfile.write(json.dumps({"status": "success", "comment": new_comment}).encode('utf-8'))
+                self.wfile.write(json.dumps({"status": "success", "comment": frontend_comment}).encode('utf-8'))
                 
             except Exception as e:
                 print(f"[COMMENT POST ERROR] {e}")
@@ -1269,31 +1203,33 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                 user_id = data.get('userId')
                 vote_type = data.get('voteType')  # 'like' or 'dislike'
                 
-                comments = {}
-                comments = FileHandler.read_json('comments.json')
-                
-                if page_id in comments:
-                    for comment in comments[page_id]:
-                        if comment.get('id') == comment_id:
-                            likes = comment.get('likes', [])
-                            dislikes = comment.get('dislikes', [])
-                            
-                            # Remove from both first
-                            if user_id in likes: likes.remove(user_id)
-                            if user_id in dislikes: dislikes.remove(user_id)
-                            
-                            # Add to appropriate list
-                            if vote_type == 'like':
-                                likes.append(user_id)
-                            elif vote_type == 'dislike':
-                                dislikes.append(user_id)
-                            
-                            comment['likes'] = likes
-                            comment['dislikes'] = dislikes
-                            break
+                try:
+                    response = supabase.table('comments').select('*').eq('id', comment_id).execute()
+                    if not response.data:
+                        self.send_response(404)
+                        self.end_headers()
+                        return
+                        
+                    comment = response.data[0]
+                    likes = comment.get('likes', [])
+                    dislikes = comment.get('dislikes', [])
                     
-                    FileHandler.write_json('comments.json', comments)
-                    git_push(f"Vote on comment {comment_id}")
+                    # Remove from both first
+                    if user_id in likes: likes.remove(user_id)
+                    if user_id in dislikes: dislikes.remove(user_id)
+                    
+                    # Add to appropriate list
+                    if vote_type == 'like':
+                        likes.append(user_id)
+                    elif vote_type == 'dislike':
+                        dislikes.append(user_id)
+                        
+                    supabase.table('comments').update({'likes': likes, 'dislikes': dislikes}).eq('id', comment_id).execute()
+                    
+                except Exception as e:
+                    print(f"[DB] Error voting on comment: {e}")
+                    self.send_error(500, "Database error")
+                    return
                 
                 self.send_response(200)
                 self.send_header('Content-type', 'application/json')
@@ -1321,24 +1257,19 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                 # Trust is_admin only from server side check
                 is_admin_req = is_admin(user)
                 
-                comments = {}
-                comments = FileHandler.read_json('comments.json')
-                
                 success = False
-                if page_id in comments:
-                    for comment in comments[page_id]:
-                        if comment.get('id') == comment_id:
-                            # Check permission
-                            if comment.get('user_id') == user['id'] or is_admin_req:
-                                comment['content'] = new_content
-                                comment['updated_at'] = datetime.now(timezone.utc).isoformat()
-                                success = True
-                            break
+                try:
+                    response = supabase.table('comments').select('*').eq('id', comment_id).execute()
+                    if response.data:
+                        comment = response.data[0]
+                        if comment.get('user_id') == user['id'] or is_admin_req:
+                            supabase.table('comments').update({
+                                'text': new_content
+                            }).eq('id', comment_id).execute()
+                            success = True
+                except Exception as e:
+                    print(f"[DB] Error editing comment: {e}")
                     
-                    if success:
-                        FileHandler.write_json('comments.json', comments)
-                        git_push(f"Edited comment {comment_id}")
-                
                 self.send_response(200 if success else 403)
                 self.send_header('Content-type', 'application/json')
                 self.end_headers()
@@ -1362,57 +1293,34 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                 comment_id = data.get('commentId')
                 user_id = user['id']
                 
-                # Robust Admin Check: Read directly from permissions.json
-                is_admin_req = False
-                if os.path.exists('permissions.json'):
-                    try:
-                        perms = FileHandler.read_json('permissions.json')
-                        uname_lower = user.get('username', '').lower()
-                        for k, v in perms.items():
-                            if k.lower() == uname_lower:
-                                if v in ['admin', 'owner']:
-                                    is_admin_req = True
-                                break
-                        # Fallback to hardcoded owner
-                        if str(user_id) == '1021410672803844129': 
-                            is_admin_req = True
-                    except: pass
+                # Robust Admin Check: Using existing is_admin helper
+                is_admin_req = is_admin(user)
 
-                comments = {}
-                comments = FileHandler.read_json('comments.json')
-                
-                success = False
-                found = False
-                if page_id in comments:
-                    for comment in comments[page_id]:
-                        if comment.get('id') == comment_id:
-                            found = True
-                            # Allow if owner of comment OR admin
-                            if comment.get('user_id') == user_id or is_admin_req:
-                                comment['is_deleted'] = True
-                                comment['content'] = '[This comment has been deleted]'
-                                success = True
-                            break
-                    
-                    if success:
-                        FileHandler.write_json('comments.json', comments)
-                        git_push(f"Deleted comment {comment_id}")
-                
-                if success:
-                    self.send_response(200)
-                    self.send_header('Content-type', 'application/json')
-                    self.end_headers()
-                    self.wfile.write(json.dumps({"status": "success"}).encode('utf-8'))
-                elif found:
+                try:
+                    response = supabase.table('comments').select('*').eq('id', comment_id).execute()
+                    if response.data:
+                        comment = response.data[0]
+                        if comment.get('user_id') == str(user_id) or is_admin_req:
+                            supabase.table('comments').update({
+                                'text': '[This comment has been deleted]',
+                                'is_deleted': True
+                            }).eq('id', comment_id).execute()
+                            
+                            self.send_response(200)
+                            self.send_header('Content-type', 'application/json')
+                            self.end_headers()
+                            self.wfile.write(json.dumps({"status": "success"}).encode('utf-8'))
+                            return
+                            
                     self.send_response(403)
                     self.send_header('Content-type', 'application/json')
                     self.end_headers()
                     self.wfile.write(json.dumps({"status": "error", "message": "Permission denied"}).encode('utf-8'))
-                else:
-                    self.send_response(404)
-                    self.send_header('Content-type', 'application/json')
-                    self.end_headers()
-                    self.wfile.write(json.dumps({"status": "error", "message": "Comment not found"}).encode('utf-8'))
+                    return
+                except Exception as e:
+                    print(f"[DB] Error deleting comment: {e}")
+                    self.send_error(500, "Database error")
+                    return
                     
             except Exception as e:
                 print(f"[DELETE ERROR] {e}")
@@ -1440,25 +1348,29 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                     self.wfile.write(json.dumps({"status": "error", "message": "Admin required"}).encode('utf-8'))
                     return
                 
-                comments = {}
-                comments = FileHandler.read_json('comments.json')
-                
-                success = False
-                if page_id in comments:
-                    for comment in comments[page_id]:
-                        if comment.get('id') == comment_id:
-                            comment['is_pinned'] = not comment.get('is_pinned', False)
-                            success = True
-                            break
-                    
-                    if success:
-                        FileHandler.write_json('comments.json', comments)
-                        git_push(f"Pin comment {comment_id}")
-                
-                self.send_response(200 if success else 403)
-                self.send_header('Content-type', 'application/json')
-                self.end_headers()
-                self.wfile.write(json.dumps({"status": "success" if success else "error", "message": "Permission denied" if not success else None}).encode('utf-8'))
+                try:
+                    response = supabase.table('comments').select('*').eq('id', comment_id).execute()
+                    if response.data:
+                        comment = response.data[0]
+                        new_pin_status = not comment.get('is_pinned', False)
+                        
+                        supabase.table('comments').update({
+                            'is_pinned': new_pin_status
+                        }).eq('id', comment_id).execute()
+                        
+                        self.send_response(200)
+                        self.send_header('Content-type', 'application/json')
+                        self.end_headers()
+                        self.wfile.write(json.dumps({"status": "success"}).encode('utf-8'))
+                        return
+                        
+                    self.send_response(404)
+                    self.send_header('Content-type', 'application/json')
+                    self.end_headers()
+                    self.wfile.write(json.dumps({"status": "error", "message": "Comment not found"}).encode('utf-8'))
+                except Exception as e:
+                    print(f"[DB] Error pinning comment: {e}")
+                    self.send_error(500, "Database error")
                 
             except Exception as e:
                 self.send_error(500, str(e))
@@ -1475,10 +1387,6 @@ if __name__ == '__main__':
 
         # Allow reuse of address to prevent 'Address already in use' errors on quick restarts
         socketserver.TCPServer.allow_reuse_address = True
-
-        # Setup Git for persistence and restore data
-        setup_git()
-        git_pull()  # Restore data from GitHub before serving
 
         with socketserver.TCPServer(("", PORT), SaveRequestHandler) as httpd:
             print(f"Server started at http://localhost:{PORT}")
