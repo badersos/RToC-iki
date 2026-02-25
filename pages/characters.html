@@ -69,15 +69,15 @@
 
     <nav class="nav" style="background: rgba(15, 20, 25, 0.98); box-shadow: rgba(0, 0, 0, 0.4) 0px 4px 20px;">
         <div class="nav-container">
-            <a href="../index.html" class="nav-logo">
+            <div class="nav-start">
+                <a href="../index.html" class="nav-logo">
                 <img src="../assets/logo_character.png" alt="RToC" class="nav-logo-img"
                     style="width:36px; height:36px; border-radius:8px; object-fit:cover;">
                 RToC Wiki
             </a>
             <ul class="nav-links">
                 <li><a href="../index.html" class="nav-link">Home</a></li>
-                <li><a href="characters.html" class="nav-link"
-                        style="color: var(--text-primary); background: rgba(139, 92, 246, 0.1);">Characters</a></li>
+                <li><a href="characters.html" class="nav-link">Characters</a></li>
                 <li><a href="concepts.html" class="nav-link">Concepts</a></li>
                 <li><a href="plot.html" class="nav-link">Plot</a></li>
                 <li><a href="cultivation.html" class="nav-link">Cultivation</a></li>
@@ -85,7 +85,9 @@
                 <li><a href="appearances.html" class="nav-link">Appearances</a></li>
                 <li><a href="pages.html" class="nav-link">Pages</a></li>
             </ul>
-            <div class="nav-search" style="position: relative;">
+            </div>
+            <div class="nav-end">
+                <div class="nav-search" style="position: relative;">
                 <ion-icon name="search-outline" class="nav-search-icon md hydrated" role="img"></ion-icon>
                 <input type="text" placeholder="Search the wiki..." fdprocessedid="phstns">
                 <div class="search-results"
@@ -99,6 +101,7 @@
                 </div>
                 <span class="user-name">baderso</span>
             </button>
+            </div>
         </div>
     </nav>
 

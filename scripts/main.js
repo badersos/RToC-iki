@@ -209,7 +209,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Auto-detect active link
         const currentPath = window.location.pathname;
-        document.querySelectorAll('.nav-link').forEach(link => {
+        const navLinks = document.querySelectorAll('.nav-link');
+
+        // 1. Clear all first to prevent multiple actives
+        navLinks.forEach(link => link.classList.remove('active'));
+
+        let matched = false;
+
+        // 2. Match Logic
+        navLinks.forEach(link => {
+            if (matched) return;
             const href = link.getAttribute('href');
             if (!href) return;
 
@@ -217,13 +226,22 @@ document.addEventListener('DOMContentLoaded', () => {
             if (currentPath === '/' || currentPath === '/index.html' || currentPath === '') {
                 if (href === '/' || href === 'index.html' || href === '/index.html' || href === '../index.html') {
                     link.classList.add('active');
+                    matched = true;
                 }
             } else {
-                // For other pages, check if path ends with href or if href is in path
-                // Normalize href (remove ../)
-                const normalizedHref = href.replace(/^(\.\.\/)+/, '');
-                if (currentPath.includes(normalizedHref) && normalizedHref !== '') {
+                // For other pages
+                const normalizedHref = href.replace(/^(\.\.\/)+/, '').replace('pages/', '');
+                const fileName = currentPath.split('/').pop();
+
+                // Exact filename match (e.g., characters.html)
+                if (currentPath.endsWith(normalizedHref)) {
                     link.classList.add('active');
+                    matched = true;
+                }
+                // Parent category match (e.g., /pages/characters/seo_eun_hyun.html matches characters)
+                else if (normalizedHref !== '' && currentPath.includes('/' + normalizedHref.replace('.html', '') + '/')) {
+                    link.classList.add('active');
+                    matched = true;
                 }
             }
         });

@@ -38,6 +38,7 @@ class WikiEditor {
             this.createModalUI();
             this.attachEventListeners();
             this.slashMenu = new SlashMenu(this);
+            this.floatingToolbar = new FloatingToolbar(this);
             this.initAutosave();
             console.log("[WikiEditor] ✓ Admin UI initialized for:", this.currentUser?.username);
         } else {
@@ -2873,6 +2874,176 @@ class WikiEditor {
             notif.style.opacity = '0';
             setTimeout(() => notif.remove(), 300);
         }, 3000);
+    }
+}
+
+class FloatingToolbar {
+    constructor(editor) {
+        this.editor = editor;
+        this.toolbar = null;
+        this.active = false;
+        this.init();
+    }
+
+    init() {
+        this.createUI();
+        document.addEventListener('mouseup', () => this.handleSelection());
+        document.addEventListener('keyup', () => this.handleSelection());
+        // Hide on click outside
+        document.addEventListener('mousedown', (e) => {
+            if (this.toolbar && !this.toolbar.contains(e.target)) {
+                this.hide();
+            }
+        });
+    }
+
+    createUI() {
+        this.toolbar = document.createElement('div');
+        this.toolbar.className = 'floating-editor-toolbar';
+        this.toolbar.style.display = 'none';
+
+        this.toolbar.innerHTML = `
+            <button class="ft-btn" data-action="bold" title="Bold"><ion-icon name="bold-outline"></ion-icon></button>
+            <button class="ft-btn" data-action="italic" title="Italic"><ion-icon name="italic-outline"></ion-icon></button>
+            <button class="ft-btn" data-action="underline" title="Underline"><ion-icon name="underline-outline"></ion-icon></button>
+            <div class="ft-divider"></div>
+            <button class="ft-btn" data-action="fontFamily" title="Font Family"><ion-icon name="text-outline"></ion-icon></button>
+            <button class="ft-btn" data-action="fontSize" title="Font Size"><ion-icon name="resize-outline"></ion-icon></button>
+            <button class="ft-btn" data-action="lineSpacing" title="Line Spacing"><ion-icon name="list-outline"></ion-icon></button>
+            <div class="ft-divider"></div>
+            <button class="ft-btn" data-action="textColor" title="Text Color"><ion-icon name="color-palette-outline"></ion-icon></button>
+            <button class="ft-btn" data-action="bgColor" title="Background Color"><ion-icon name="color-fill-outline"></ion-icon></button>
+            <button class="ft-btn" data-action="spoiler" title="Spoiler"><ion-icon name="eye-off-outline"></ion-icon></button>
+        `;
+
+        document.body.appendChild(this.toolbar);
+
+        const style = document.createElement('style');
+        style.textContent = `
+            .floating-editor-toolbar {
+                position: fixed;
+                z-index: 10006;
+                background: rgba(26, 26, 36, 0.95);
+                backdrop-filter: blur(8px);
+                border: 1px solid rgba(139, 92, 246, 0.4);
+                border-radius: 10px;
+                box-shadow: 0 8px 32px rgba(0,0,0,0.6);
+                display: flex;
+                align-items: center;
+                padding: 6px;
+                gap: 4px;
+                pointer-events: auto;
+                transition: opacity 0.2s, transform 0.2s;
+            }
+            .ft-btn {
+                background: transparent;
+                border: none;
+                color: #ccc;
+                width: 32px;
+                height: 32px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                border-radius: 6px;
+                transition: all 0.2s;
+            }
+            .ft-btn:hover {
+                background: rgba(139, 92, 246, 0.2);
+                color: #fff;
+            }
+            .ft-btn ion-icon {
+                font-size: 1.2rem;
+            }
+            .ft-divider {
+                width: 1px;
+                height: 20px;
+                background: rgba(255,255,255,0.1);
+                margin: 0 4px;
+            }
+        `;
+        document.head.appendChild(style);
+
+        this.toolbar.addEventListener('click', (e) => {
+            const btn = e.target.closest('.ft-btn');
+            if (!btn) return;
+
+            const action = btn.dataset.action;
+            this.executeAction(action);
+        });
+    }
+
+    handleSelection() {
+        if (!this.editor.isEditorActive) return;
+
+        // Small timeout to allow selection to finalize
+        setTimeout(() => {
+            const selection = window.getSelection();
+            if (selection.rangeCount > 0 && !selection.isCollapsed) {
+                const range = selection.getRangeAt(0);
+
+                // Check if selection is within an editable zone
+                let container = range.commonAncestorContainer;
+                if (container.nodeType !== Node.ELEMENT_NODE) container = container.parentElement;
+
+                if (container.closest('.editable-zone')) {
+                    this.show(range);
+                } else {
+                    this.hide();
+                }
+            } else {
+                this.hide();
+            }
+        }, 50);
+    }
+
+    show(range) {
+        const rect = range.getBoundingClientRect();
+        if (rect.width === 0) return;
+
+        this.toolbar.style.display = 'flex';
+        this.toolbar.style.opacity = '1';
+
+        const toolbarRect = this.toolbar.getBoundingClientRect();
+
+        let left = rect.left + (rect.width / 2) - (toolbarRect.width / 2);
+        let top = rect.top - toolbarRect.height - 15;
+
+        // Boundaries check
+        if (left < 10) left = 10;
+        if (left + toolbarRect.width > window.innerWidth - 10) left = window.innerWidth - toolbarRect.width - 10;
+        if (top < 10) top = rect.bottom + 10; // Show below if no space above
+
+        this.toolbar.style.left = `${left}px`;
+        this.toolbar.style.top = `${top}px`;
+        this.toolbar.style.transform = 'translateY(0)';
+        this.active = true;
+    }
+
+    hide() {
+        if (!this.toolbar || !this.active) return;
+        this.toolbar.style.opacity = '0';
+        this.toolbar.style.transform = 'translateY(10px)';
+        setTimeout(() => {
+            if (this.toolbar.style.opacity === '0') {
+                this.toolbar.style.display = 'none';
+            }
+        }, 200);
+        this.active = false;
+    }
+
+    executeAction(action) {
+        switch (action) {
+            case 'bold': document.execCommand('bold'); break;
+            case 'italic': document.execCommand('italic'); break;
+            case 'underline': document.execCommand('underline'); break;
+            case 'fontFamily': this.editor.openModal('fontFamilyModal'); break;
+            case 'fontSize': this.editor.openModal('fontSizeModal'); break;
+            case 'lineSpacing': this.editor.openModal('lineSpacingModal'); break;
+            case 'textColor': this.editor.openModal('textColorModal'); break;
+            case 'bgColor': this.editor.openModal('bgColorModal'); break;
+            case 'spoiler': this.editor.wrapSelectionInSpoiler(); break;
+        }
     }
 }
 
