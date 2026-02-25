@@ -206,6 +206,27 @@ document.addEventListener('DOMContentLoaded', () => {
                 nav.style.boxShadow = 'none';
             }
         });
+
+        // Auto-detect active link
+        const currentPath = window.location.pathname;
+        document.querySelectorAll('.nav-link').forEach(link => {
+            const href = link.getAttribute('href');
+            if (!href) return;
+
+            // Handle Home specifically
+            if (currentPath === '/' || currentPath === '/index.html' || currentPath === '') {
+                if (href === '/' || href === 'index.html' || href === '/index.html' || href === '../index.html') {
+                    link.classList.add('active');
+                }
+            } else {
+                // For other pages, check if path ends with href or if href is in path
+                // Normalize href (remove ../)
+                const normalizedHref = href.replace(/^(\.\.\/)+/, '');
+                if (currentPath.includes(normalizedHref) && normalizedHref !== '') {
+                    link.classList.add('active');
+                }
+            }
+        });
     }
 
     // === FORCE RESET (User Request) ===

@@ -1384,11 +1384,16 @@ class WikiEditor {
             });
         }
 
-        addNameInput.addEventListener('input', (e) => {
-            const slug = this.slugify(e.target.value);
-            addIdInput.value = slug;
-            addImageInput.value = slug + '_profile.png';
-        });
+        const addNameInput = document.getElementById('addCharName');
+        const addIdInput = document.getElementById('addCharId');
+        const addImageInput = document.getElementById('addCharImage');
+        if (addNameInput && addIdInput && addImageInput) {
+            addNameInput.addEventListener('input', (e) => {
+                const slug = this.slugify(e.target.value);
+                addIdInput.value = slug;
+                addImageInput.value = slug + '_profile.png';
+            });
+        }
     }
 
     // Image Hover Editor Logic
@@ -1510,6 +1515,7 @@ class WikiEditor {
     }
 
     openModal(id) {
+        if (this.isEditorActive) this.saveSelection();
         const modal = document.getElementById(id);
         if (modal) {
             modal.classList.add('active');
@@ -2178,9 +2184,8 @@ class WikiEditor {
             this.showNotification('Please select a font family', 'warning');
             return;
         }
-        this.saveSelection();
-        document.execCommand('fontName', false, fontFamily);
         this.restoreSelection();
+        document.execCommand('fontName', false, fontFamily);
         this.closeModal('fontFamilyModal');
         this.showNotification('Font family applied', 'success');
     }
@@ -2192,10 +2197,12 @@ class WikiEditor {
             this.showNotification('Please enter a font size', 'warning');
             return;
         }
-        this.saveSelection();
+        this.restoreSelection();
         const selection = window.getSelection();
         if (selection.rangeCount > 0 && !selection.isCollapsed) {
             const range = selection.getRangeAt(0);
+
+            // Try to use CSS for font size if possible
             const span = document.createElement('span');
             span.style.fontSize = fontSize;
             try {
@@ -2203,13 +2210,13 @@ class WikiEditor {
                 span.appendChild(contents);
                 range.insertNode(span);
             } catch (e) {
+                // Fallback for complex selections
                 document.execCommand('fontSize', false, '3');
                 const fontElements = document.querySelectorAll('font[size="3"]');
-                if (fontElements.length > 0) {
-                    const lastFont = fontElements[fontElements.length - 1];
-                    lastFont.style.fontSize = fontSize;
-                    lastFont.removeAttribute('size');
-                }
+                fontElements.forEach(el => {
+                    el.style.fontSize = fontSize;
+                    el.removeAttribute('size');
+                });
             }
         } else {
             // Apply to current element
@@ -2229,21 +2236,31 @@ class WikiEditor {
             this.showNotification('Please enter line spacing', 'warning');
             return;
         }
-        this.saveSelection();
+        this.restoreSelection();
         const selection = window.getSelection();
-        if (selection.rangeCount > 0 && !selection.isCollapsed) {
+        if (selection.rangeCount > 0) {
             const range = selection.getRangeAt(0);
             let container = range.commonAncestorContainer;
-            if (container.nodeType === Node.TEXT_NODE) {
+
+            // Find the closest block-level parent
+            while (container && container.nodeType !== Node.ELEMENT_NODE) {
                 container = container.parentElement;
             }
-            if (container) {
-                container.style.lineHeight = lineSpacing;
+
+            // If it's an inline element, go up to the block element
+            const blockTags = ['P', 'DIV', 'H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'LI', 'TD'];
+            while (container && container !== document.body && !blockTags.includes(container.tagName)) {
+                container = container.parentElement;
             }
-        } else {
-            const activeElement = document.activeElement;
-            if (activeElement && activeElement.contentEditable === 'true') {
-                activeElement.style.lineHeight = lineSpacing;
+
+            if (container && container !== document.body) {
+                container.style.lineHeight = lineSpacing;
+            } else {
+                // Fallback: apply to current element if possible
+                const activeElement = document.activeElement;
+                if (activeElement && activeElement.contentEditable === 'true') {
+                    activeElement.style.lineHeight = lineSpacing;
+                }
             }
         }
         this.closeModal('lineSpacingModal');
@@ -2257,9 +2274,8 @@ class WikiEditor {
             this.showNotification('Please enter a color', 'warning');
             return;
         }
-        this.saveSelection();
-        document.execCommand('foreColor', false, color);
         this.restoreSelection();
+        document.execCommand('foreColor', false, color);
         this.closeModal('textColorModal');
         this.showNotification('Text color applied', 'success');
     }
@@ -2271,9 +2287,8 @@ class WikiEditor {
             this.showNotification('Please enter a color', 'warning');
             return;
         }
-        this.saveSelection();
-        document.execCommand('backColor', false, color);
         this.restoreSelection();
+        document.execCommand('backColor', false, color);
         this.closeModal('bgColorModal');
         this.showNotification('Background color applied', 'success');
     }

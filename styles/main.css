@@ -138,7 +138,6 @@ h3 {
     margin: 0 auto;
     display: flex;
     align-items: center;
-    justify-content: space-between;
     gap: 1rem;
 }
 
@@ -181,6 +180,7 @@ h3 {
     display: flex;
     gap: 0.5rem;
     list-style: none;
+    margin-right: auto;
 }
 
 .nav-link {
@@ -193,9 +193,14 @@ h3 {
     transition: var(--transition-medium);
 }
 
-.nav-link:hover {
+.nav-link:hover,
+.nav-link.active {
     color: var(--text-primary);
     background: rgba(139, 92, 246, 0.1);
+}
+
+.nav-link.active::after {
+    width: 60%;
 }
 
 .nav-link::after {
@@ -1827,12 +1832,20 @@ body.is-editing .infobox-title {
     display: flex;
     align-items: center;
     gap: 10px;
-    padding: 5px 15px 5px 5px;
+    padding: 4px 16px 4px 4px;
     background: rgba(255, 255, 255, 0.1);
     border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 30px;
     cursor: pointer;
     transition: all 0.3s ease;
+    height: 40px;
+}
+
+.login-btn {
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .user-profile-btn:hover {
