@@ -1156,93 +1156,91 @@ class WikiEditor {
     attachEventListeners() {
         document.body.addEventListener('click', (e) => {
             const btn = e.target.closest('button');
+            const menuItem = e.target.closest('.menu-item');
             const ctxItem = e.target.closest('.context-item');
+            const swatch = e.target.closest('.color-swatch, .bg-color-swatch');
 
-            if (btn) {
-                if (btn.id === 'toggleEditor') this.toggleEditMode();
-                if (btn.id === 'makeSpoiler') this.wrapSelectionInSpoiler();
-                if (btn.id === 'removeSpoiler') this.removeSpoiler();
-                if (btn.id === 'saveBtn') this.saveChanges();
-                if (btn.id === 'cancelBtn') this.cancelEdit();
-                if (btn.id === 'editSource') this.editSource();
-                if (btn.id === 'formatBold') this.formatText('bold');
-                if (btn.id === 'formatItalic') this.formatText('italic');
-                if (btn.id === 'formatUnderline') this.formatText('underline');
-                if (btn.id === 'formatStrike') this.formatText('strikeThrough');
-                if (btn.id === 'formatH1') this.formatBlock('h1');
-                if (btn.id === 'formatH2') this.formatBlock('h2');
-                if (btn.id === 'formatH3') this.formatBlock('h3');
-                if (btn.id === 'insertLink') this.openModal('insertLinkModal');
-                if (btn.id === 'insertImage') this.openModal('insertImageModal');
-                if (btn.id === 'undoBtn') document.execCommand('undo');
-                if (btn.id === 'redoBtn') document.execCommand('redo');
+            if (btn || menuItem) {
+                const target = btn || menuItem;
+                if (target.id === 'toggleEditor') this.toggleEditMode();
+                if (target.id === 'makeSpoiler') this.wrapSelectionInSpoiler();
+                if (target.id === 'removeSpoiler') this.removeSpoiler();
+                if (target.id === 'saveBtn') this.saveChanges();
+                if (target.id === 'cancelBtn') this.cancelEdit();
+                if (target.id === 'editSource') this.editSource();
+                if (target.id === 'formatBold') this.formatText('bold');
+                if (target.id === 'formatItalic') this.formatText('italic');
+                if (target.id === 'formatUnderline') this.formatText('underline');
+                if (target.id === 'formatStrike') this.formatText('strikeThrough');
+                if (target.id === 'formatH1') this.formatBlock('h1');
+                if (target.id === 'formatH2') this.formatBlock('h2');
+                if (target.id === 'formatH3') this.formatBlock('h3');
+                if (target.id === 'insertLink') this.openModal('insertLinkModal');
+                if (target.id === 'insertImage') this.openModal('insertImageModal');
+                if (target.id === 'undoBtn') document.execCommand('undo');
+                if (target.id === 'redoBtn') document.execCommand('redo');
 
                 // Edit Menu Items
-                if (btn.id === 'menuUndo') document.execCommand('undo');
-                if (btn.id === 'menuRedo') document.execCommand('redo');
-                if (btn.id === 'menuCut') document.execCommand('cut');
-                if (btn.id === 'menuCopy') document.execCommand('copy');
-                if (btn.id === 'menuPaste') document.execCommand('paste');
-                if (btn.id === 'menuSelectAll') document.execCommand('selectAll');
-                if (btn.id === 'menuFontFamily') this.openModal('fontFamilyModal');
-                if (btn.id === 'menuFontSize') this.openModal('fontSizeModal');
-                if (btn.id === 'menuLineSpacing') this.openModal('lineSpacingModal');
-                if (btn.id === 'menuTextColor') this.openModal('textColorModal');
-                if (btn.id === 'menuBgColor') this.openModal('bgColorModal');
-                if (btn.id === 'menuTextAlign') this.openTextAlignModal();
-                if (btn.id === 'menuImageEdit') {
+                if (target.id === 'menuUndo') document.execCommand('undo');
+                if (target.id === 'menuRedo') document.execCommand('redo');
+                if (target.id === 'menuCut') document.execCommand('cut');
+                if (target.id === 'menuCopy') document.execCommand('copy');
+                if (target.id === 'menuPaste') document.execCommand('paste');
+                if (target.id === 'menuSelectAll') document.execCommand('selectAll');
+                if (target.id === 'menuFontFamily') this.openModal('fontFamilyModal');
+                if (target.id === 'menuFontSize') this.openModal('fontSizeModal');
+                if (target.id === 'menuLineSpacing') this.openModal('lineSpacingModal');
+                if (target.id === 'menuTextColor') this.openModal('textColorModal');
+                if (target.id === 'menuBgColor') this.openModal('bgColorModal');
+                if (target.id === 'menuTextAlign') this.openTextAlignModal();
+                if (target.id === 'menuImageEdit') {
                     const img = this.getSelectedImage();
                     if (img) this.showEnhancedImageEdit(img);
                     else this.showNotification('Select an image first', 'warning');
                 }
 
                 // Formatting Modal Buttons
-                if (btn.id === 'cancelFontFamilyBtn') this.closeModal('fontFamilyModal');
-                if (btn.id === 'applyFontFamilyBtn') this.applyFontFamily();
-                if (btn.id === 'cancelFontSizeBtn') this.closeModal('fontSizeModal');
-                if (btn.id === 'applyFontSizeBtn') this.applyFontSize();
-                if (btn.id === 'cancelLineSpacingBtn') this.closeModal('lineSpacingModal');
-                if (btn.id === 'applyLineSpacingBtn') this.applyLineSpacing();
-                if (btn.id === 'cancelTextColorBtn') this.closeModal('textColorModal');
-                if (btn.id === 'applyTextColorBtn') this.applyTextColor();
-                if (btn.id === 'cancelBgColorBtn') this.closeModal('bgColorModal');
-                if (btn.id === 'applyBgColorBtn') this.applyBgColor();
-                if (btn.id === 'cancelEnhancedImgBtn') this.closeModal('enhancedImageEditModal');
-                if (btn.id === 'applyEnhancedImgBtn') this.applyEnhancedImageEdit();
+                if (target.id === 'cancelFontFamilyBtn') this.closeModal('fontFamilyModal');
+                if (target.id === 'applyFontFamilyBtn') this.applyFontFamily();
+                if (target.id === 'cancelFontSizeBtn') this.closeModal('fontSizeModal');
+                if (target.id === 'applyFontSizeBtn') this.applyFontSize();
+                if (target.id === 'cancelLineSpacingBtn') this.closeModal('lineSpacingModal');
+                if (target.id === 'applyLineSpacingBtn') this.applyLineSpacing();
+                if (target.id === 'cancelTextColorBtn') this.closeModal('textColorModal');
+                if (target.id === 'applyTextColorBtn') this.applyTextColor();
+                if (target.id === 'cancelBgColorBtn') this.closeModal('bgColorModal');
+                if (target.id === 'applyBgColorBtn') this.applyBgColor();
+                if (target.id === 'cancelEnhancedImgBtn') this.closeModal('enhancedImageEditModal');
+                if (target.id === 'applyEnhancedImgBtn') this.applyEnhancedImageEdit();
 
                 // Quick buttons
-                if (btn.classList.contains('quick-size-btn')) {
-                    document.getElementById('fontSizeInput').value = btn.dataset.size;
+                if (target.classList.contains('quick-size-btn')) {
+                    document.getElementById('fontSizeInput').value = target.dataset.size;
                 }
-                if (btn.classList.contains('quick-spacing-btn')) {
-                    document.getElementById('lineSpacingInput').value = btn.dataset.spacing;
+                if (target.classList.contains('quick-spacing-btn')) {
+                    document.getElementById('lineSpacingInput').value = target.dataset.spacing;
                 }
-                if (btn.classList.contains('color-swatch')) {
-                    document.getElementById('textColorInput').value = btn.dataset.color;
-                }
-                if (btn.classList.contains('bg-color-swatch')) {
-                    document.getElementById('bgColorInput').value = btn.dataset.color;
-                }
+
                 // Link Modal
-                if (btn.id === 'cancelLinkBtn') this.closeModal('insertLinkModal');
-                if (btn.id === 'confirmLinkBtn') this.insertLink();
+                if (target.id === 'cancelLinkBtn') this.closeModal('insertLinkModal');
+                if (target.id === 'confirmLinkBtn') this.insertLink();
                 // Image Modal
-                if (btn.id === 'cancelImageBtn') this.closeModal('insertImageModal');
-                if (btn.id === 'confirmImageBtn') this.insertImage();
+                if (target.id === 'cancelImageBtn') this.closeModal('insertImageModal');
+                if (target.id === 'confirmImageBtn') this.insertImage();
 
                 // Enhanced Image Edit
-                if (btn.id === 'browseEnhancedImgBtn') {
+                if (target.id === 'browseEnhancedImgBtn') {
                     this.browseAssetsForEnhancedImage();
                 }
 
                 // Image Modal Tabs
-                if (btn.classList.contains('tab-btn')) {
-                    const tabId = btn.dataset.tab;
-                    const modal = btn.closest('.modal-content');
+                if (target.classList.contains('tab-btn')) {
+                    const tabId = target.dataset.tab;
+                    const modal = target.closest('.modal-content');
 
                     // Switch tabs
                     modal.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-                    btn.classList.add('active');
+                    target.classList.add('active');
 
                     modal.querySelectorAll('.tab-content').forEach(c => c.style.display = 'none');
                     document.getElementById(tabId).style.display = 'block';
@@ -1251,12 +1249,21 @@ class WikiEditor {
                 }
 
                 // Create Page Modal
-                if (btn.id === 'cancelCreateBtn') this.closeModal('createPageModal');
-                if (btn.id === 'confirmCreateBtn') this.createNewPage();
+                if (target.id === 'cancelCreateBtn') this.closeModal('createPageModal');
+                if (target.id === 'confirmCreateBtn') this.createNewPage();
 
                 // Add Character Modal
-                if (btn.id === 'cancelAddCharBtn') this.closeModal('addCharacterModal');
-                if (btn.id === 'confirmAddCharBtn') this.addCharacterToList();
+                if (target.id === 'cancelAddCharBtn') this.closeModal('addCharacterModal');
+                if (target.id === 'confirmAddCharBtn') this.addCharacterToList();
+            }
+
+            if (swatch) {
+                if (swatch.classList.contains('color-swatch')) {
+                    document.getElementById('textColorInput').value = swatch.dataset.color;
+                }
+                if (swatch.classList.contains('bg-color-swatch')) {
+                    document.getElementById('bgColorInput').value = swatch.dataset.color;
+                }
             }
 
             if (ctxItem) {

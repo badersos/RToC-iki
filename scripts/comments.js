@@ -540,7 +540,7 @@ class CommentSystem {
             <div class="comment-login-prompt">
                 <ion-icon name="chatbubbles-outline"></ion-icon>
                 <p>Join the discussion!</p>
-                <span>Please <a href="#" onclick="mockLogin(); return false;">login</a> to post comments.</span>
+                <span>Please <a href="#" onclick="window.location.href=(window.RTOC_API_BASE || '') + '/auth/discord/login'; return false;">login</a> to post comments.</span>
             </div>
         `;
 
@@ -958,24 +958,4 @@ class CommentSystem {
     }
 }
 
-// Global login function (kept for compatibility)
-function mockLogin() {
-    const username = prompt("Enter your username:");
-    if (!username) return;
-
-    let role = 'user';
-    if (username.toLowerCase() === 'admin' || username.toLowerCase() === 'owner') {
-        const key = prompt("Enter Admin Key:");
-        if (key === 'admin') role = 'admin';
-    }
-
-    const avatar = prompt("Enter Avatar URL (optional):");
-
-    localStorage.setItem('rtoc_user', JSON.stringify({
-        username: username,
-        role: role,
-        avatar: avatar || null,
-        id: 'local_' + Date.now()
-    }));
-    location.reload();
-}
+// End of CommentSystem script

@@ -996,7 +996,9 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
 
                 try:
                    boundary = content_type.split("boundary=")[1].encode()
+                   print(f"[UPLOAD] Boundary found: {boundary.decode()}")
                 except IndexError:
+                    print(f"[UPLOAD] Error: Missing boundary in content-type: {content_type}")
                     self.send_error(400, "Invalid Content-Type: missing boundary")
                     return
 
@@ -1151,6 +1153,57 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                 self.wfile.write(json.dumps({"status": "success"}).encode('utf-8'))
 
             except Exception as e:
+                self.send_error(500, str(e))
+
+        elif self.path == '/api/profile':
+            try:
+                user = get_authenticated_user(self)
+                print(f"[PROFILE POST] User: {user}")
+                if not user:
+                    print("[PROFILE POST] Error: No user authenticated")
+                    self.send_error(403, "Login required")
+                    return
+
+                content_length = int(self.headers.get('Content-Length', 0))
+                post_data = self.rfile.read(content_length)
+                data = json.loads(post_data.decode('utf-8'))
+                print(f"[PROFILE POST] Data received: {data}")
+
+                target_username = data.get('username')
+                # Try both cases if needed, but migrate_to_supabase.py used 'username'
+                
+                # Security: Only allow user to edit their OWN profile, or admin
+                if not is_admin(user) and user.get('username') != target_username:
+                    print(f"[PROFILE POST] Permission denied: {user.get('username')} tried to edit {target_username}")
+                    self.send_error(403, "Permission denied")
+                    return
+
+                # Prepare profile data
+                profile_update = {}
+                if 'bio' in data: profile_update['about'] = data['bio']
+                if 'about' in data: profile_update['about'] = data['about']
+                if 'banner' in data: profile_update['banner'] = data['banner']
+                if 'rank' in data: profile_update['rank'] = data['rank']
+                if 'title' in data: profile_update['title'] = data['title']
+
+                print(f"[PROFILE POST] Updating {target_username} with: {profile_update}")
+                
+                result = supabase.table('user_profiles').upsert({
+                    "username": target_username,
+                    **profile_update
+                }).execute()
+                
+                print(f"[PROFILE POST] Supabase result: {result.data if hasattr(result, 'data') else 'Success'}")
+
+                self.send_response(200)
+                self.send_header('Content-Type', 'application/json')
+                self.end_headers()
+                self.wfile.write(json.dumps({"status": "success", "message": "Profile updated"}).encode())
+
+            except Exception as e:
+                print(f"[PROFILE POST ERROR] {e}")
+                import traceback
+                traceback.print_exc()
                 self.send_error(500, str(e))
 
         # === COMMENTS API ===
