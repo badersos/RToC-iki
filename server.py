@@ -176,6 +176,7 @@ class SessionManager:
         auth_header = headers.get('Authorization', '')
         if auth_header.startswith('Bearer '):
             session_id = auth_header[7:].strip()
+            print(f"[AUTH] Found Bearer Token: {session_id[:8]}...")
         
         # 2. Fallback to cookie (works same-origin)
         if not session_id:
@@ -187,14 +188,25 @@ class SessionManager:
                         parts = c.split('=', 1)
                         cookies[parts[0].strip()] = parts[1].strip()
                 session_id = cookies.get('session')
+                if session_id:
+                    print(f"[AUTH] Found Cookie Session: {session_id[:8]}...")
         
-        if not session_id: return None
+        if not session_id: 
+            print("[AUTH] No session ID found in headers/cookies")
+            return None
         
         try:
             response = supabase.table('sessions').select('*').eq('session_id', session_id).execute()
             if response.data:
                 user_id = response.data[0]['user_id']
-                return UserDatabase.get(user_id)
+                user = UserDatabase.get(user_id)
+                if user:
+                    print(f"[AUTH] Session valid for user: {user.get('username')} ({user_id})")
+                else:
+                    print(f"[AUTH] Session points to non-existent user: {user_id}")
+                return user
+            else:
+                print(f"[AUTH] Session ID not found in database: {session_id[:8]}...")
         except Exception as e:
             print(f"[DB] Error verifying session: {e}", file=sys.stderr)
             
@@ -834,11 +846,11 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
         if self.path == '/save':
             try:
                 user = get_authenticated_user(self)
-                print(f"DEBUG: POST /save user: {user}", file=sys.stderr)
+                print(f"[SAVE] POST /save authenticated user: {user}")
                 
                 if not is_admin(user):
-                    print(f"DEBUG: Admin check failed for user {user}", file=sys.stderr)
-                    self.send_error(403, "Permission denied: Admins only")
+                    print(f"[SAVE] Admin check failed for user: {user}")
+                    self.send_error(403, f"Permission denied: Admins only. Current user: {user.get('username') if user else 'Guest'}")
                     return
 
                 content_length = int(self.headers['Content-Length'])
