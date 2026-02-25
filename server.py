@@ -876,7 +876,13 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                     f.write(content)
                 
                 # Phase 2: Persist page to Supabase
+                old_content = None
                 try:
+                    # Fetch existing content for diff logging
+                    old_res = supabase.table('wiki_pages').select('content').eq('path', relative_path).execute()
+                    if old_res.data:
+                        old_content = old_res.data[0].get('content')
+
                     supabase.table('wiki_pages').upsert({
                         'path': relative_path,
                         'content': content,
@@ -892,7 +898,11 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                             "user": user_info.get('username', 'Unknown'),
                             "action": "edited",
                             "type": "page",
-                            "details": {"target": relative_path},
+                            "details": {
+                                "target": relative_path,
+                                "old_content": old_content,
+                                "new_content": content
+                            },
                             "timestamp": datetime.now(timezone.utc).isoformat()
                         }
                         supabase.table('activity_logs').insert(log_entry).execute()

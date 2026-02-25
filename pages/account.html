@@ -414,36 +414,75 @@
             background: #d4004c;
         }
 
-        @media (max-width: 768px) {
-            .profile-header {
-                flex-direction: column;
-                align-items: center;
-                text-align: center;
-                margin-top: -70px;
-            }
+        /* Diff Styles */
+        .diff-added {
+            background-color: rgba(40, 167, 69, 0.2);
+            color: #2fb344;
+            text-decoration: none;
+            padding: 2px 4px;
+            border-radius: 3px;
+            border-bottom: 2px solid #28a745;
+        }
 
-            .profile-avatar {
-                width: 120px;
-                height: 120px;
-            }
+        .diff-removed {
+            background-color: rgba(220, 53, 69, 0.2);
+            color: #d63384;
+            text-decoration: line-through;
+            padding: 2px 4px;
+            border-radius: 3px;
+            border-bottom: 2px solid #dc3545;
+        }
 
-            .username-row,
-            .stats-row {
-                justify-content: center;
-            }
+        /* Spoiler Diff Styles */
+        .diff-added.spoiler {
+            background: rgba(40, 167, 69, 0.3) !important;
+            border: 1px dashed #28a745 !important;
+            filter: none !important;
+            display: inline-block;
+        }
 
-            .actions-container {
-                position: relative;
-                top: 0;
-                right: 0;
-                justify-content: center;
-                margin-top: 20px;
-            }
+        .diff-removed.spoiler {
+            background: rgba(220, 53, 69, 0.3) !important;
+            border: 1px dashed #dc3545 !important;
+            filter: none !important;
+            display: inline-block;
+            text-decoration: line-through;
+        }
 
-            .profile-nav {
-                overflow-x: auto;
-                padding-bottom: 5px;
-            }
+        .diff-content {
+            white-space: pre-wrap;
+            line-height: 1.6;
+            font-size: 0.95rem;
+            padding: 10px;
+        }
+
+        .view-changes-btn {
+            background: rgba(29, 155, 240, 0.15);
+            border: 1px solid #1d9bf0;
+            color: #4ab3f4;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            margin-left: auto;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-weight: 600;
+        }
+
+        .view-changes-btn:hover {
+            background: #1d9bf0;
+            color: white;
+        }
+
+        .activity-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
     </style>
 </head>
@@ -549,11 +588,32 @@
         </div>
     </div>
 
+    <!-- Diff View Modal -->
+    <div id="diffModal" class="modal-backdrop">
+        <div class="modal-box" style="max-width: 900px; width: 95%;">
+            <div class="modal-header">
+                <h3 id="diffTitle">View Changes</h3>
+                <button class="close-btn" id="closeDiffModal"><ion-icon name="close-outline"></ion-icon></button>
+            </div>
+            <div class="modal-body" style="background: #111; color: #eee;">
+                <div id="diffContainer" class="diff-content" style="max-height: 60vh; overflow-y: auto;">
+                    <!-- Diff content will be injected here -->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-cancel" id="cancelDiffBtn">Close</button>
+            </div>
+        </div>
+    </div>
+
     <script>
         // API constants will be handled by rtocFetch or constructed with base
         const API_PROFILE = '/api/profile';
         const API_ACTIVITY = '/api/activity';
         const API_UPLOAD = '/api/upload';
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jsdiff/5.1.0/diff.min.js"></script>
+    <script>
 
         // --- AUTH & CONTEXT ---
         const loggedInUser = JSON.parse(localStorage.getItem('rtoc_user') || 'null');
@@ -625,12 +685,84 @@
                 return;
             }
             let html = '<div class="activity-list">';
-            window.activityLogs.forEach(log => {
-                html += `<div class="activity-item">${log.action} - ${log.page || ''} - ${new Date(log.timestamp).toLocaleString()}</div>`;
+            window.activityLogs.forEach((log, index) => {
+                const hasDiff = log.action === 'edited' && log.details && (log.details.old_content !== undefined || log.details.new_content !== undefined);
+                const targetPath = log.details?.target || log.page || 'Unknown Page';
+
+                html += `
+                <div class="activity-item">
+                    <div style="flex: 1;">
+                        <span style="color: var(--accent-secondary); font-weight: 600;">${log.action.toUpperCase()}</span>
+                        <span style="color: #ccc; margin: 0 5px;">on</span>
+                        <span style="color: #fff;">${targetPath}</span>
+                        <div style="font-size: 0.75rem; color: #666; margin-top: 4px;">${new Date(log.timestamp).toLocaleString()}</div>
+                    </div>
+                    ${hasDiff ? `<button class="view-changes-btn" onclick="showDiff(${index})"><ion-icon name="git-compare-outline"></ion-icon> View Changes</button>` : ''}
+                </div>`;
             });
             html += '</div>';
             content.innerHTML = html;
         }
+
+        function showDiff(logIndex) {
+            const log = window.activityLogs[logIndex];
+            if (!log || !log.details) return;
+
+            const oldContent = log.details.old_content || "";
+            const newContent = log.details.new_content || "";
+            const target = log.details.target || "Unknown Page";
+
+            document.getElementById('diffTitle').textContent = `Changes on ${target}`;
+            const container = document.getElementById('diffContainer');
+
+            // Generate diff at word level for better HTML token handling
+            const diff = Diff.diffWordsWithSpace(oldContent, newContent);
+            let diffHtml = "";
+
+            let inAddedSpoiler = false;
+            let inRemovedSpoiler = false;
+
+            diff.forEach((part) => {
+                let colorClass = part.added ? 'diff-added' : part.removed ? 'diff-removed' : '';
+                let val = part.value;
+
+                // Simple spoiler detection in the HTML string
+                if (part.added && val.includes('class="spoiler"')) inAddedSpoiler = true;
+                if (part.removed && val.includes('class="spoiler"')) inRemovedSpoiler = true;
+
+                let finalClass = colorClass;
+                if (inAddedSpoiler && part.added) finalClass += ' spoiler';
+                if (inRemovedSpoiler && part.removed) finalClass += ' spoiler';
+
+                // Reset spoiler state on closing tag
+                if (val.includes('</div>') || val.includes('</span>')) {
+                    if (part.added) inAddedSpoiler = false;
+                    if (part.removed) inRemovedSpoiler = false;
+                }
+
+                let text = val
+                    .replace(/&/g, '&amp;')
+                    .replace(/</g, '&lt;')
+                    .replace(/>/g, '&gt;');
+
+                if (finalClass) {
+                    diffHtml += `<span class="${finalClass.trim()}">${text}</span>`;
+                } else {
+                    diffHtml += text;
+                }
+            });
+
+            container.innerHTML = `<pre style="white-space: pre-wrap; word-break: break-all; font-family: 'Courier New', monospace; font-size: 0.9rem;">${diffHtml}</pre>`;
+            document.getElementById('diffModal').classList.add('active');
+        }
+
+        // Close diff modal
+        document.getElementById('closeDiffModal')?.addEventListener('click', () => {
+            document.getElementById('diffModal').classList.remove('active');
+        });
+        document.getElementById('cancelDiffBtn')?.addEventListener('click', () => {
+            document.getElementById('diffModal').classList.remove('active');
+        });
 
         // --- INIT ---
         renderUserUI();
