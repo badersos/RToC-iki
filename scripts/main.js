@@ -1,4 +1,19 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // === TRACK PAGE VISITS FOR RECENT LIST ===
+    function trackPageVisit() {
+        try {
+            const pageTitle = document.title.split('|')[0].trim() || document.querySelector('h1')?.textContent || window.location.pathname;
+            const pagePath = window.location.pathname;
+            const pageIcon = document.querySelector('link[rel="icon"]')?.href || null;
+            
+            // Call trackPageVisit if it exists (profile page function)
+            if (window.trackPageVisit && pagePath !== '/pages/account.html') {
+                window.trackPageVisit(pagePath, pageTitle, pageIcon);
+            }
+        } catch (e) { console.log('[Track] Error:', e); }
+    }
+    trackPageVisit();
+
     // Inject Profile Modal CSS
     if (!document.querySelector('link[href*="profile-modal.css"]')) {
         const link = document.createElement('link');

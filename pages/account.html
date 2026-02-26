@@ -40,24 +40,105 @@
             background: rgba(0, 0, 0, 0.8);
             min-height: 100vh;
             display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+            padding-top: 60px;
+        }
+
+        .sidebar-wrapper {
+            width: 280px;
+            background: rgba(30, 30, 30, 0.95);
+            border-right: 1px solid #333;
+            padding: 20px;
+            max-height: calc(100vh - 60px);
+            overflow-y: auto;
+            position: sticky;
+            top: 60px;
+        }
+
+        .sidebar-title {
+            font-size: 0.9rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: #fff;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+        }
+
+        .recent-pages-list {
+            display: flex;
             flex-direction: column;
+            gap: 10px;
+        }
+
+        .recent-page-item {
+            display: flex;
             align-items: center;
+            gap: 10px;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            text-decoration: none;
+            color: #aaa;
+            transition: all 0.2s;
+            border-left: 3px solid transparent;
+        }
+
+        .recent-page-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            border-left-color: #8B5CF6;
+        }
+
+        .recent-page-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 6px;
+            background: linear-gradient(135deg, #8B5CF6, #6D28D9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .recent-page-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 6px;
+        }
+
+        .recent-page-text {
+            flex: 1;
+            font-size: 0.85rem;
+            line-height: 1.3;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .profile-content-wrapper {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            padding-bottom: 40px;
         }
 
         .profile-container {
             width: 100%;
-            max-width: 1024px;
+            max-width: 900px;
             background: linear-gradient(180deg, rgba(30, 30, 30, 1) 0%, rgba(20, 20, 20, 1) 100%);
-            margin-top: 60px;
             border: 1px solid #333;
             position: relative;
+            border-radius: 8px;
+            overflow: hidden;
         }
 
         .profile-banner {
             height: var(--banner-height);
             width: 100%;
             background: #333;
-            background-image: linear-gradient(to bottom, transparent 50%, rgba(0, 0, 0, 0.8)), url('https://w.wallhaven.cc/full/85/wallhaven-8589y2.jpg');
+            background-image: linear-gradient(to bottom, transparent 30%, rgba(0, 0, 0, 0.9)), linear-gradient(to right, rgba(139, 92, 246, 0.1), transparent), url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400"><defs><linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:%23ff0080;stop-opacity:0.1" /><stop offset="100%" style="stop-color:%238B5CF6;stop-opacity:0.2" /></linearGradient></defs><rect width="1200" height="400" fill="url(%23grad1)"/><circle cx="100" cy="50" r="80" fill="%23ff0080" opacity="0.05"/><circle cx="1100" cy="350" r="120" fill="%238B5CF6" opacity="0.05"/></svg>');
             background-size: cover;
             background-position: center;
             position: relative;
@@ -496,7 +577,16 @@
             <ion-icon name="arrow-back"></ion-icon> Return Home
         </a>
 
-        <div class="profile-container">
+        <!-- Sidebar with Recent Pages -->
+        <div class="sidebar-wrapper">
+            <div class="sidebar-title">Recent</div>
+            <div class="recent-pages-list" id="recentPagesList">
+                <!-- Recent pages will be injected here -->
+            </div>
+        </div>
+
+        <div class="profile-content-wrapper">
+            <div class="profile-container">
             <!-- Banner -->
             <div class="profile-banner" id="profileBanner">
                 <div class="banner-overlay" id="bannerOverlay">
@@ -530,7 +620,7 @@
                     <div class="stats-row">
                         <span id="editCount">0 EDITS</span>
                         <span>•</span>
-                        <span>0 POSTS</span>
+                        <span id="postCount">0 POSTS</span>
                         <div id="roleBadge" class="role-tag">USER</div>
                         <a id="discordLink" href="#" target="_blank"
                             style="display:flex; align-items:center; text-decoration:none;">
@@ -546,7 +636,7 @@
                 <div class="nav-item active" data-tab="about">About</div>
                 <div class="nav-item" data-tab="activity">Activity</div>
                 <div class="nav-item" data-tab="message">Message Wall</div>
-                <div class="nav-item" data-tab="blog">Blog</div>
+                <!-- blog tab removed -->
                 <div class="nav-item" data-tab="contributions">Contributions</div>
             </div>
 
@@ -584,6 +674,10 @@
             <div class="modal-footer">
                 <button class="btn-cancel" id="cancelBioBtn">Cancel</button>
                 <button class="btn-save" id="saveBioBtn">Save Bio</button>
+            </div>
+        </div>
+    </div>
+
             </div>
         </div>
     </div>
@@ -777,9 +871,28 @@
                 const tab = item.dataset.tab;
                 if (tab === 'about') updateAboutTab();
                 else if (tab === 'activity' || tab === 'contributions') renderActivityTab();
+                else if (tab === 'message') showMessageWall();
                 else document.getElementById('tabContent').innerHTML = '<div class="empty-placeholder">Coming soon...</div>';
             });
         });
+
+        // --- MESSAGE WALL ---
+        let _messageWallInstance = null;
+        function showMessageWall() {
+            const content = document.getElementById('tabContent');
+            // create comments container if not already present
+            if (!document.getElementById('comments-section')) {
+                content.innerHTML = '<div id="comments-section"></div>';
+            }
+            const container = document.getElementById('comments-section');
+            // set explicit pageId for wall
+            const wallId = 'wall:' + viewingUser.username;
+            container.dataset.pageId = wallId;
+            // initialize comment system once
+            if (!_messageWallInstance) {
+                _messageWallInstance = new CommentSystem(container, wallId);
+            }
+        }
 
         // --- MODAL HANDLERS ---
         document.getElementById('editProfileBtn')?.addEventListener('click', () => {
@@ -847,7 +960,22 @@
                 if (activeTab === 'activity' || activeTab === 'contributions') {
                     renderActivityTab();
                 }
+                // also update wall post count
+                await loadWallCount();
             } catch (e) { console.error("Activity fetch error", e); }
+        }
+
+        async function loadWallCount() {
+            try {
+                const wallId = 'wall:' + viewingUser.username;
+                const res = await (window.rtocFetch ? window.rtocFetch(`/api/comments?pageId=${encodeURIComponent(wallId)}`) : fetch(`/api/comments?pageId=${encodeURIComponent(wallId)}`));
+                const data = await res.json();
+                const count = Array.isArray(data.comments) ? data.comments.length : 0;
+                const el = document.getElementById('postCount');
+                if (el) el.textContent = `${count} POSTS`;
+            } catch (e) {
+                console.error('Wall count fetch error', e);
+            }
         }
 
         async function uploadBanner(file) {
@@ -927,7 +1055,48 @@
                 alert('Save error: ' + e.message);
             }
         }
+
+        // --- RECENT PAGES TRACKING ---
+        function trackPageVisit(path, title, icon) {
+            try {
+                let recent = JSON.parse(localStorage.getItem('recentPages') || '[]');
+                // Remove if already exists
+                recent = recent.filter(p => p.path !== path);
+                // Add to front
+                recent.unshift({ path, title, icon });
+                // Keep only last 5
+                recent = recent.slice(0, 5);
+                localStorage.setItem('recentPages', JSON.stringify(recent));
+                renderRecentPages();
+            } catch (e) { console.error('Track visit error', e); }
+        }
+
+        function renderRecentPages() {
+            try {
+                const recent = JSON.parse(localStorage.getItem('recentPages') || '[]');
+                const container = document.getElementById('recentPagesList');
+                if (!container) return;
+
+                if (recent.length === 0) {
+                    container.innerHTML = '<div style="color:#666; font-size:0.8rem; padding:10px;">No recent pages</div>';
+                    return;
+                }
+
+                container.innerHTML = recent.map(p => `
+                    <a href="${p.path}" class="recent-page-item" title="${p.title}">
+                        <div class="recent-page-icon" ${p.icon ? `style="background-image:url('${p.icon}'); background-size:cover; background-position:center;"` : ''}>
+                            ${!p.icon ? '<ion-icon name="document-outline" style="color:#8B5CF6;"></ion-icon>' : ''}
+                        </div>
+                        <div class="recent-page-text">${p.title}</div>
+                    </a>
+                `).join('');
+            } catch (e) { console.error('Render recent pages error', e); }
+        }
+
+        // Initialize on load
+        renderRecentPages();
     </script>
+    <script src="/scripts/comments.js"></script>
     <script src="../scripts/editor.js?v=2"></script>
 </body>
 

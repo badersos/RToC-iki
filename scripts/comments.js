@@ -21,10 +21,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const container = document.getElementById('comments-section');
     if (!container) return;
 
-    // Use pathname, ensuring no trailing slash unless it's just '/'
-    let pageId = window.location.pathname;
-    if (pageId.length > 1 && pageId.endsWith('/')) {
-        pageId = pageId.slice(0, -1);
+    // Allow overriding pageId via data attribute (useful for profile walls etc.)
+    let pageId = container.dataset.pageId;
+    if (!pageId) {
+        // default behaviour: derive from pathname
+        pageId = window.location.pathname;
+        if (pageId.length > 1 && pageId.endsWith('/')) {
+            pageId = pageId.slice(0, -1);
+        }
     }
     console.log('[Comments] Initializing for pageId:', pageId);
     window.CommentSystem = new CommentSystem(container, pageId);
@@ -613,6 +617,11 @@ class CommentSystem {
 
             if (data.status === 'success') {
                 document.getElementById('commentCount').textContent = `(${data.total || data.comments.length})`;
+                // if this is a user wall, update the profile header post count as well
+                if (this.pageId && this.pageId.startsWith('wall:')) {
+                    const el = document.getElementById('postCount');
+                    if (el) el.textContent = `${data.comments.length} POSTS`;
+                }
 
                 if (data.comments.length === 0) {
                     list.innerHTML = `<div class="empty-comments">No comments yet. Be the first to share your thoughts!</div>`;
