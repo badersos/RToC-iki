@@ -479,12 +479,14 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
         if self.path.startswith('/api/') or self.path == '/save':
             self.send_response(code)
             self.send_header('Content-Type', 'application/json')
-            # end_headers() will automatically add CORS headers
             self.end_headers()
             response = {'status': 'error', 'message': message, 'code': code}
             self.wfile.write(json.dumps(response).encode())
         else:
             super().send_error(code, message, explain)
+
+    def do_GET(self):
+        # API endpoints should return early to avoid falling through to static file serving
         if self.path == '/api/health':
             self.send_response(200)
             self.send_header('Content-Type', 'application/json')
