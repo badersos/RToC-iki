@@ -125,21 +125,30 @@ class UserDatabase:
     @staticmethod
     def save(user_data):
         uid = str(user_data['id'])
+        uname = user_data.get('username', '')
         
         # Check if user exists to preserve role
         existing_user = UserDatabase.get(uid)
         
-        # Priority: permissions.json > existing role > default 'user'
+        # Determine initial role
         role = user_data.get('role', 'user')
-        if existing_user and 'role' in existing_user:
+        
+        # 1. Check permissions.json (Static Config)
+        try:
+            static_perms = FileHandler.read_json('permissions.json')
+            if uname in static_perms:
+                role = static_perms[uname]
+                print(f"[DB] Role for {uname} found in permissions.json: {role}")
+        except:
+            pass
+
+        # 2. Preserve existing DB role if it exists and wasn't overridden by static config
+        if existing_user and 'role' in existing_user and role == 'user':
             role = existing_user['role']
             
-        uname = user_data.get('username', '')
-        uname_lower = uname.lower()
-        
-        # Admin sync check (optional, can be fully DB driven now)
-        if uid == '1021410672803844129': 
-            role = 'owner' # Hardcoded safety
+        # Hardcoded owner check (ID or Username)
+        if uid == '1021410672803844129' or uname.lower() == 'baderso':
+            role = 'owner'
             
         final_data = {
             'id': uid,
@@ -505,7 +514,20 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
         # API: Get all permissions
         if self.path == '/api/permissions':
             try:
-                perms = FileHandler.read_json('permissions.json')
+                # Merge logic: Static JSON + Supabase Users
+                perms = FileHandler.read_json('permissions.json', default={})
+                
+                try:
+                    db_users = supabase.table('users').select('username, role').execute()
+                    if db_users.data:
+                        for row in db_users.data:
+                            uname = row.get('username')
+                            urole = row.get('role')
+                            if uname and uname not in perms:
+                                perms[uname] = urole
+                except Exception as db_err:
+                    print(f"[PERMISSIONS GET] Supabase fetch error: {db_err}")
+
                 self.send_response(200)
                 self.send_header('Content-type', 'application/json')
                 self.end_headers()
@@ -1206,11 +1228,18 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                     return
 
                 try:
-                    # Sync role in users table
+                    # 1. Update permissions.json (Static persistence)
+                    perms = FileHandler.read_json('permissions.json', default={})
+                    perms[target_user] = new_role
+                    FileHandler.write_json('permissions.json', perms)
+                    print(f"[PERMISSIONS POST] Updated permissions.json for {target_user}")
+
+                    # 2. Sync role in Supabase users table (Real-time sync)
                     supabase.table('users').update({'role': new_role}).eq('username', target_user).execute()
+                    print(f"[PERMISSIONS POST] Updated Supabase for {target_user}")
                 except Exception as e:
                     print(f"[DB] Error updating permissions: {e}")
-                    self.send_error(500, "Database error")
+                    self.send_error(500, f"Sync error: {str(e)}")
                     return
             
                 self.send_response(200)

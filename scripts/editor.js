@@ -2805,10 +2805,24 @@ class WikiEditor {
                     window.location.href = '/?logout=true';
                     break; // Don't retry auth errors
                 } else {
-                    throw new Error(`Server error: ${response.status}`);
+                    const errorText = await response.text();
+                    console.error('[Save] Server error response:', {
+                        status: response.status,
+                        statusText: response.statusText,
+                        body: errorText
+                    });
+                    throw new Error(`Server error: ${response.status} - ${errorText}`);
                 }
             } catch (e) {
                 console.error(`Save attempt ${attempt}/${maxRetries} failed:`, e);
+                console.error('[Save] Error details:', {
+                    error: e,
+                    message: e.message,
+                    stack: e.stack,
+                    filePath: filePath,
+                    contentLength: fullContent?.length,
+                    user: user
+                });
                 if (attempt < maxRetries) {
                     this.showNotification(`Save failed, retrying (${attempt}/${maxRetries})...`, 'warning');
                     await new Promise(r => setTimeout(r, attempt * 3000));

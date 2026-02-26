@@ -28,10 +28,8 @@
     window.rtocFetch = function (endpoint, options = {}) {
         const url = API_BASE + endpoint;
 
-        // Add credentials for cross-origin requests
-        if (API_BASE) {
-            options.credentials = 'include';
-        }
+        // ALWAYS include credentials for both same-origin and cross-origin
+        options.credentials = 'include';
 
         // Add session token as Authorization header (cross-origin cookie fix)
         const sessionToken = localStorage.getItem('rtoc_session');
@@ -45,6 +43,7 @@
             }
         }
 
+        console.log('[rtocFetch] Request:', endpoint, 'Options:', options);
         return fetch(url, options);
     };
 
