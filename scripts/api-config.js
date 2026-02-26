@@ -16,7 +16,7 @@
     } else if (isGitHubPages || isCustomDomain) {
         // GitHub Pages or custom domain - point to Render.com deployed server
         // Use the primary service domain that is already in ALLOWED_ORIGINS
-        API_BASE = 'https://regressorstaleofcultivation.onrender.com';
+        API_BASE = 'https://rtoc-iki.onrender.com';
     } else {
         // Fallback - assume server running on same origin (e.g., Cloudflare tunnel)
         API_BASE = '';

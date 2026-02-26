@@ -11,7 +11,7 @@
             window.RTOC_API_BASE = '';
         } else if (isCustomDomain || isGitHubPages) {
             // Updated to the correct service URL
-            window.RTOC_API_BASE = 'https://regressorstaleofcultivation.onrender.com';
+            window.RTOC_API_BASE = 'https://rtoc-iki.onrender.com';
         } else {
             window.RTOC_API_BASE = '';
         }
