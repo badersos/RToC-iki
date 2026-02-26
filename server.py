@@ -426,8 +426,12 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
     def get_cors_origin(self):
         """Get the appropriate CORS origin header based on request origin."""
         origin = self.headers.get('Origin', '')
-        if origin in ALLOWED_ORIGINS:
-            return origin
+        if not origin:
+            return ALLOWED_ORIGINS[0]
+        # Check if origin is in ALLOWED_ORIGINS
+        for allowed in ALLOWED_ORIGINS:
+            if origin == allowed:
+                return origin
         return ALLOWED_ORIGINS[0]  # Default to main domain
 
     def send_cors_headers(self):
@@ -435,41 +439,49 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
         origin = self.get_cors_origin()
         self.send_header('Access-Control-Allow-Origin', origin)
         self.send_header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, DELETE, PUT')
-        self.send_header('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With, Accept')
+        self.send_header('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With, Accept, Cache-Control, Pragma, Expires')
         self.send_header('Access-Control-Allow-Credentials', 'true')
-        self.send_header('Vary', 'Origin, Access-Control-Request-Method, Access-Control-Request-Headers')
+        self.send_header('Vary', 'Origin')
 
     def do_OPTIONS(self):
         """Handle preflight CORS requests."""
         self.send_response(200)
         self.send_header('Content-Length', '0')
         self.send_header('Access-Control-Max-Age', '86400')
-        self.end_headers()
+        # Preflight must have CORS headers
+        self.send_cors_headers()
+        http.server.SimpleHTTPRequestHandler.end_headers(self)
 
     def end_headers(self):
-        # CORS and cache headers
+        # API endpoints and /save need CORS headers
         if self.path.startswith('/api/') or self.path == '/save':
             self.send_cors_headers()
         self.send_header('Cache-Control', 'no-store, no-cache, must-revalidate')
         self.send_header('Pragma', 'no-cache')
         self.send_header('Expires', '0')
-        return super().end_headers()
+        super().end_headers()
 
     def send_error(self, code, message=None, explain=None):
         if self.path.startswith('/api/') or self.path == '/save':
             self.send_response(code)
             self.send_header('Content-Type', 'application/json')
-            self.end_headers()  # This calls send_cors_headers internally
+            # Inline CORS for error responses to ensure they reach the client
+            origin = self.get_cors_origin()
+            self.send_header('Access-Control-Allow-Origin', origin)
+            self.send_header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, DELETE, PUT')
+            self.send_header('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With, Accept, Cache-Control, Pragma, Expires')
+            self.send_header('Access-Control-Allow-Credentials', 'true')
+            self.send_header('Vary', 'Origin')
+
+            # Update Access-Control-Allow-Headers to match the expanded headers used in regular responses and preflights
+            self.send_header('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With, Accept, Cache-Control, Pragma, Expires')
+
+            # Use base class end_headers to avoid our logic that might add duplicate headers
+            http.server.SimpleHTTPRequestHandler.end_headers(self)
             response = {'status': 'error', 'message': message, 'code': code}
             self.wfile.write(json.dumps(response).encode())
         else:
             super().send_error(code, message, explain)
-
-
-    def do_GET(self):
-        print(f"DEBUG: GET request for {self.path}", file=sys.stderr)
-
-        # API: Health Check (wake-up ping for Render free tier cold starts)
         if self.path == '/api/health':
             self.send_response(200)
             self.send_header('Content-Type', 'application/json')
@@ -489,7 +501,6 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                 
                 self.send_response(200)
                 self.send_header('Content-Type', 'application/json')
-                self.send_cors_headers()
                 self.end_headers()
                 self.wfile.write(json.dumps({"status": "success", "results": results}).encode())
             except Exception as e:
@@ -501,7 +512,6 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
             user = SessionManager.get_user(self.headers)
             self.send_response(200)
             self.send_header('Content-Type', 'application/json')
-            self.send_cors_headers()
             self.end_headers()
             if user:
                 self.wfile.write(json.dumps({"status": "success", "user": user}).encode())
@@ -536,7 +546,6 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
 
                 self.send_response(200)
                 self.send_header('Content-type', 'application/json')
-                self.send_cors_headers()
                 self.end_headers()
                 self.wfile.write(json.dumps({"status": "success", "permissions": perms}).encode('utf-8'))
             except Exception as e:
@@ -591,7 +600,6 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
 
                 self.send_response(200)
                 self.send_header('Content-type', 'application/json')
-                self.send_cors_headers()
                 self.end_headers()
                 self.wfile.write(json.dumps({
                     "status": "success", 
@@ -623,7 +631,6 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                 
                 self.send_response(200)
                 self.send_header('Content-Type', 'application/json')
-                self.send_cors_headers()
                 self.end_headers()
                 self.wfile.write(json.dumps({
                     "status": "success",
@@ -652,7 +659,6 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                 
                 self.send_response(200)
                 self.send_header('Content-Type', 'application/json')
-                self.send_cors_headers()
                 self.end_headers()
                 self.wfile.write(json.dumps({"status": "success", "activity": logs}).encode())
             except Exception as e:
@@ -800,7 +806,6 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
             
             self.send_response(200)
             self.send_header('Content-Type', 'application/json')
-            self.send_cors_headers() # Added CORS for API endpoint
             self.send_header('Set-Cookie', f'session={session_id}; Path=/; HttpOnly; SameSite=Lax; Max-Age=2592000')
             self.end_headers()
             self.wfile.write(json.dumps({
@@ -824,7 +829,6 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                 
                 self.send_response(200)
                 self.send_header('Content-type', 'application/json')
-                self.send_cors_headers()
                 self.end_headers()
                 self.wfile.write(json.dumps({"status": "success", "pages": pages}).encode('utf-8'))
             except Exception as e:
@@ -843,7 +847,6 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                 
                 self.send_response(200)
                 self.send_header('Content-type', 'application/json')
-                self.send_cors_headers()
                 self.end_headers()
                 self.wfile.write(json.dumps({"status": "success", "assets": assets}).encode('utf-8'))
             except Exception as e:
@@ -997,7 +1000,6 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
 
                 self.send_response(200)
                 self.send_header('Content-type', 'application/json')
-                self.send_cors_headers()
                 self.end_headers()
                 self.wfile.write(json.dumps({"status": "success"}).encode('utf-8'))
                 
@@ -1027,7 +1029,6 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                 if any(file_path.endswith(p) for p in protected):
                     self.send_response(403)
                     self.send_header('Content-type', 'application/json')
-                    self.send_cors_headers()
                     self.end_headers()
                     self.wfile.write(json.dumps({"status": "error", "message": "Cannot delete protected page"}).encode('utf-8'))
                     return
@@ -1043,7 +1044,6 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                 if not os.path.exists(safe_path):
                     self.send_response(404)
                     self.send_header('Content-type', 'application/json')
-                    self.send_cors_headers()
                     self.end_headers()
                     self.wfile.write(json.dumps({"status": "error", "message": "File not found"}).encode('utf-8'))
                     return
@@ -1072,7 +1072,6 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                 
                 self.send_response(200)
                 self.send_header('Content-type', 'application/json')
-                self.send_cors_headers()
                 self.end_headers()
                 self.wfile.write(json.dumps({"status": "success", "message": "Page deleted"}).encode('utf-8'))
                 
@@ -1171,7 +1170,6 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                     
                     self.send_response(200)
                     self.send_header('Content-Type', 'application/json')
-                    self.send_cors_headers()
                     self.end_headers()
                     self.wfile.write(json.dumps({"status": "success", "url": file_url}).encode())
                 else:
@@ -1221,7 +1219,6 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                 
                 self.send_response(200)
                 self.send_header('Content-Type', 'application/json')
-                self.send_cors_headers()
                 self.end_headers()
                 self.wfile.write(json.dumps({"status": "success", "message": "Profile updated"}).encode())
 
@@ -1256,7 +1253,6 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                 
                 self.send_response(200)
                 self.send_header('Content-Type', 'application/json')
-                self.send_cors_headers()
                 self.end_headers()
                 self.wfile.write(json.dumps({"status": "success"}).encode())
             except Exception as e:
@@ -1279,15 +1275,8 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                 avatar = data.get('avatar')
                 
                 if not page_id or not content or not user:
-                    self.send_response(400)
-                    self.send_header('Content-type', 'application/json')
-                    self.send_cors_headers()
-                    self.end_headers()
-                    self.wfile.write(json.dumps({"status": "error", "message": "Missing required fields"}).encode('utf-8'))
+                    self.send_error(400, "Missing required fields")
                     return
-                
-                # Database handling done in try block below
-                pass
                 
                 # Sanitize user_id: If "anonymous" or obviously invalid, set to None for Null in DB
                 if user_id == 'anonymous' or not (user_id and str(user_id).isdigit()):
@@ -1344,7 +1333,6 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
             
                 self.send_response(200)
                 self.send_header('Content-type', 'application/json')
-                self.send_cors_headers()
                 self.end_headers()
                 self.wfile.write(json.dumps({"status": "success", "comment": frontend_comment}).encode('utf-8'))
                 
@@ -1366,10 +1354,7 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                 try:
                     response = supabase.table('comments').select('*').eq('id', comment_id).execute()
                     if not response.data:
-                        self.send_response(404)
-                        self.send_header('Content-type', 'application/json')
-                        self.send_cors_headers()
-                        self.end_headers()
+                        self.send_error(404, "Comment not found")
                         return
                         
                     comment = response.data[0]
@@ -1395,7 +1380,6 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                 
                 self.send_response(200)
                 self.send_header('Content-type', 'application/json')
-                self.send_cors_headers()
                 self.end_headers()
                 self.wfile.write(json.dumps({"status": "success"}).encode('utf-8'))
                 
@@ -1435,7 +1419,6 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                     
                 self.send_response(200)
                 self.send_header('Content-type', 'application/json')
-                self.send_cors_headers()
                 self.end_headers()
                 self.wfile.write(json.dumps({"status": "success" if success else "error", "message": "Permission denied" if not success else None}).encode('utf-8'))
                 
@@ -1472,16 +1455,11 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                             
                             self.send_response(200)
                             self.send_header('Content-type', 'application/json')
-                            self.send_cors_headers()
                             self.end_headers()
                             self.wfile.write(json.dumps({"status": "success"}).encode('utf-8'))
                             return
                             
-                    self.send_response(403)
-                    self.send_header('Content-type', 'application/json')
-                    self.send_cors_headers()
-                    self.end_headers()
-                    self.wfile.write(json.dumps({"status": "error", "message": "Permission denied"}).encode('utf-8'))
+                    self.send_error(403, "Permission denied")
                     return
                 except Exception as e:
                     print(f"[DB] Error deleting comment: {e}")
@@ -1507,14 +1485,6 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                 comment_id = data.get('commentId')
                 # Admin check already done above
                 
-                if False: # Removed previous client-trust check
-                    self.send_response(403)
-                    self.send_header('Content-type', 'application/json')
-                    self.send_cors_headers()
-                    self.end_headers()
-                    self.wfile.write(json.dumps({"status": "error", "message": "Admin required"}).encode('utf-8'))
-                    return
-                
                 try:
                     response = supabase.table('comments').select('*').eq('id', comment_id).execute()
                     if response.data:
@@ -1527,16 +1497,11 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                         
                         self.send_response(200)
                         self.send_header('Content-type', 'application/json')
-                        self.send_cors_headers()
                         self.end_headers()
                         self.wfile.write(json.dumps({"status": "success"}).encode('utf-8'))
                         return
                         
-                    self.send_response(404)
-                    self.send_header('Content-type', 'application/json')
-                    self.send_cors_headers()
-                    self.end_headers()
-                    self.wfile.write(json.dumps({"status": "error", "message": "Comment not found"}).encode('utf-8'))
+                    self.send_error(404, "Comment not found")
                 except Exception as e:
                     print(f"[DB] Error pinning comment: {e}")
                     self.send_error(500, "Database error")
@@ -1547,6 +1512,7 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
 
         else:
             self.send_error(404)
+
 
 if __name__ == '__main__':
     try:

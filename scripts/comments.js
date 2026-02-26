@@ -10,7 +10,8 @@
         if (isLocalhost) {
             window.RTOC_API_BASE = '';
         } else if (isCustomDomain || isGitHubPages) {
-            window.RTOC_API_BASE = 'https://rtoc-iki.onrender.com';
+            // Updated to the correct service URL
+            window.RTOC_API_BASE = 'https://regressorstaleofcultivation.onrender.com';
         } else {
             window.RTOC_API_BASE = '';
         }
@@ -617,10 +618,18 @@ class CommentSystem {
         list.innerHTML = `<div class="loading-comments"><div class="loading-spinner"></div><span>Loading...</span></div>`;
 
         try {
+            console.log('[Comments] Fetching from:', this.apiUrl(`/api/comments?pageId=${encodeURIComponent(this.pageId)}&sort=${this.sortBy}`));
             const res = await this.apiFetch(`/api/comments?pageId=${encodeURIComponent(this.pageId)}&sort=${this.sortBy}`);
-            if (!res.ok) throw new Error(`HTTP ${res.status}`);
+            
+            console.log('[Comments] Response status:', res.status);
+            if (!res.ok) {
+                const errorText = await res.text();
+                console.error('[Comments] Error response body:', errorText);
+                throw new Error(`HTTP ${res.status}: ${errorText || 'Unknown Error'}`);
+            }
 
             const data = await res.json();
+            console.log('[Comments] Data received:', data);
 
             if (data.status === 'success') {
                 document.getElementById('commentCount').textContent = `(${data.total || data.comments.length})`;
