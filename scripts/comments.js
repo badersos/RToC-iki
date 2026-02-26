@@ -10,8 +10,8 @@
         if (isLocalhost) {
             window.RTOC_API_BASE = '';
         } else if (isCustomDomain || isGitHubPages) {
-            // Updated to the correct primary domain
-            window.RTOC_API_BASE = 'https://regressorstaleofcultivation.space';
+            // Updated to the correct service URL
+            window.RTOC_API_BASE = 'https://regressorstaleofcultivation.onrender.com';
         } else {
             window.RTOC_API_BASE = '';
         }
