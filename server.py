@@ -830,6 +830,16 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                 response = supabase.table('wiki_pages').select('content').eq('path', clean_path).execute()
                 if response.data:
                     content = response.data[0]['content']
+                    # make sure editor script is present so admins can toggle edit
+                    if '/scripts/editor.js' not in content:
+                        if '</body>' in content.lower():
+                            # similar injection logic as in save handler
+                            lower = content.lower()
+                            idx = lower.rfind('</body>')
+                            if idx != -1:
+                                content = content[:idx] + '<script src="/scripts/editor.js"></script>\n' + content[idx:]
+                        else:
+                            content += '\n<script src="/scripts/editor.js"></script>'
                     self.send_response(200)
                     self.send_header('Content-type', 'text/html')
                     self.send_header('Cache-Control', 'no-cache, no-store, must-revalidate')
@@ -838,6 +848,33 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                     return
             except Exception as e:
                 print(f"[DB] Error serving page {clean_path} from Supabase: {e}")
+
+            # If we reach here it means either the page isn't in Supabase or an error
+            # occurred fetching it.  We'll try to serve the local file ourselves and
+            # perform the same editor-script injection.
+            try:
+                file_path = os.path.normpath(os.path.join(os.getcwd(), clean_path))
+                if os.path.isfile(file_path):
+                    with open(file_path, 'r', encoding='utf-8', errors='ignore') as f:
+                        content = f.read()
+
+                    if '/scripts/editor.js' not in content:
+                        if '</body>' in content.lower():
+                            lower = content.lower()
+                            idx = lower.rfind('</body>')
+                            if idx != -1:
+                                content = content[:idx] + '<script src="/scripts/editor.js"></script>\n' + content[idx:]
+                        else:
+                            content += '\n<script src="/scripts/editor.js"></script>'
+
+                    self.send_response(200)
+                    self.send_header('Content-type', 'text/html')
+                    self.send_header('Cache-Control', 'no-cache, no-store, must-revalidate')
+                    self.end_headers()
+                    self.wfile.write(content.encode('utf-8'))
+                    return
+            except Exception as e:
+                print(f"[INJECT] Error reading local file {clean_path}: {e}")
         
         super().do_GET()
 
@@ -871,6 +908,25 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                 if not safe_path.startswith(os.getcwd()):
                     self.send_error(403, "Access denied")
                     return
+
+                # Ensure saved pages always include the editor script.
+                # Users are free to delete the <script> tag while editing which would
+                # make future edits impossible; injecting it server-side guards against
+                # that and also unifies paths (use absolute URL so it works from any
+                # directory depth).
+                if '/scripts/editor.js' not in content:
+                    # try to insert just before </body> if present
+                    if '</body>' in content.lower():
+                        # preserve case by doing a case-insensitive replace
+                        # we can't easily match case-insensitively without regex so do simple
+                        # approach: find index of closing tag and splice
+                        lower = content.lower()
+                        idx = lower.rfind('</body>')
+                        if idx != -1:
+                            content = content[:idx] + '<script src="/scripts/editor.js"></script>\n' + content[idx:]
+                    else:
+                        # no body tag? just append it at end
+                        content = content + '\n<script src="/scripts/editor.js"></script>'
 
                 with open(safe_path, 'w', encoding='utf-8') as f:
                     f.write(content)

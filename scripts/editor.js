@@ -68,7 +68,8 @@ class WikiEditor {
             if (data.status === 'success' && data.user) {
                 serverChecked = true;
                 this.currentUser = data.user;
-                const role = data.user.role;
+                // normalize role casing so client logic matches server-side check
+                const role = (data.user.role || '').toLowerCase();
                 const username = data.user.username?.toLowerCase();
                 const userId = data.user.id;
 
@@ -105,7 +106,8 @@ class WikiEditor {
             const user = JSON.parse(userStr);
             this.currentUser = user;
 
-            const role = user.role;
+            // role may come from localStorage and could be capitalized
+            const role = (user.role || '').toLowerCase();
             const username = user.username?.toLowerCase();
             const userId = user.id;
 
