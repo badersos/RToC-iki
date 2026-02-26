@@ -26,95 +26,160 @@
 
         body {
             background-color: #000;
-            background-image: url('https://static.wikia.nocookie.net/regressorstaleofcultivation/images/c/c3/Wiki-background/revision/latest?cb=20240510165909');
+            background-image: url('/assets/profile-background.jpg');
             background-size: cover;
             background-attachment: fixed;
             background-position: center;
+            background-repeat: no-repeat;
             font-family: 'Rubik', sans-serif;
             margin: 0;
             color: var(--fandom-text);
             min-height: 100vh;
+            position: relative;
+        }
+        
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, 
+                rgba(0, 0, 0, 0.3) 0%,
+                rgba(0, 0, 0, 0.2) 25%,
+                rgba(0, 0, 0, 0.2) 50%,
+                rgba(0, 0, 0, 0.2) 75%,
+                rgba(0, 0, 0, 0.3) 100%
+            );
+            pointer-events: none;
+            z-index: 0;
         }
 
         .main-wrapper {
-            background: rgba(0, 0, 0, 0.8);
+            background: transparent;
             min-height: 100vh;
             display: flex;
             flex-direction: row;
             align-items: flex-start;
             padding-top: 60px;
+            backdrop-filter: blur(0px);
+            position: relative;
+            z-index: 1;
         }
 
         .sidebar-wrapper {
-            width: 280px;
-            background: rgba(30, 30, 30, 0.95);
-            border-right: 1px solid #333;
-            padding: 20px;
+            width: 120px;
+            background: rgba(15, 15, 20, 0.98);
+            border-right: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 30px 0;
             max-height: calc(100vh - 60px);
             overflow-y: auto;
             position: sticky;
             top: 60px;
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         .sidebar-title {
-            font-size: 0.9rem;
-            font-weight: 700;
+            font-size: 0.65rem;
+            font-weight: 900;
             text-transform: uppercase;
             color: #fff;
-            margin-bottom: 15px;
-            letter-spacing: 1px;
+            margin-bottom: 20px;
+            letter-spacing: 2.5px;
+            opacity: 0.8;
+            writing-mode: horizontal-tb;
         }
 
         .recent-pages-list {
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 20px;
+            align-items: center;
+            width: 100%;
         }
 
         .recent-page-item {
             display: flex;
+            flex-direction: column;
             align-items: center;
-            gap: 10px;
-            padding: 12px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 8px;
+            gap: 8px;
+            padding: 0;
+            background: transparent;
+            border-radius: 50%;
             text-decoration: none;
             color: #aaa;
-            transition: all 0.2s;
-            border-left: 3px solid transparent;
+            transition: all 0.3s ease;
+            border: none;
+            text-align: center;
+            position: relative;
+            width: 80px;
+        }
+
+        .recent-page-item::before {
+            content: '';
+            position: absolute;
+            width: 85px;
+            height: 85px;
+            border-radius: 50%;
+            border: 2px solid rgba(139, 92, 246, 0);
+            transition: all 0.3s ease;
+            top: -2.5px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .recent-page-item:hover::before {
+            border-color: rgba(139, 92, 246, 0.6);
+            box-shadow: 0 0 15px rgba(139, 92, 246, 0.3);
         }
 
         .recent-page-item:hover {
-            background: rgba(255, 255, 255, 0.1);
             color: #fff;
-            border-left-color: #8B5CF6;
+            transform: scale(1.05);
         }
 
         .recent-page-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 6px;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
             background: linear-gradient(135deg, #8B5CF6, #6D28D9);
             display: flex;
             align-items: center;
             justify-content: center;
             flex-shrink: 0;
+            overflow: hidden;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            transition: all 0.3s ease;
+        }
+
+        .recent-page-item:hover .recent-page-icon {
+            border-color: rgba(139, 92, 246, 0.6);
+            box-shadow: 0 4px 20px rgba(139, 92, 246, 0.4);
         }
 
         .recent-page-icon img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            border-radius: 6px;
+            border-radius: 50%;
         }
 
         .recent-page-text {
             flex: 1;
-            font-size: 0.85rem;
-            line-height: 1.3;
+            font-size: 0.65rem;
+            line-height: 1.1;
             overflow: hidden;
             text-overflow: ellipsis;
-            white-space: nowrap;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            font-weight: 600;
+            width: 90px;
         }
 
         .profile-content-wrapper {
@@ -122,13 +187,14 @@
             display: flex;
             justify-content: center;
             padding-bottom: 40px;
+            min-width: 0;
         }
 
         .profile-container {
             width: 100%;
             max-width: 900px;
-            background: linear-gradient(180deg, rgba(30, 30, 30, 1) 0%, rgba(20, 20, 20, 1) 100%);
-            border: 1px solid #333;
+            background: linear-gradient(180deg, rgba(20, 20, 30, 0.95) 0%, rgba(15, 15, 25, 0.95) 100%);
+            border: 1px solid rgba(139, 92, 246, 0.2);
             position: relative;
             border-radius: 8px;
             overflow: hidden;
@@ -137,8 +203,7 @@
         .profile-banner {
             height: var(--banner-height);
             width: 100%;
-            background: #333;
-            background-image: linear-gradient(to bottom, transparent 30%, rgba(0, 0, 0, 0.9)), linear-gradient(to right, rgba(139, 92, 246, 0.1), transparent), url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400"><defs><linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:%23ff0080;stop-opacity:0.1" /><stop offset="100%" style="stop-color:%238B5CF6;stop-opacity:0.2" /></linearGradient></defs><rect width="1200" height="400" fill="url(%23grad1)"/><circle cx="100" cy="50" r="80" fill="%23ff0080" opacity="0.05"/><circle cx="1100" cy="350" r="120" fill="%238B5CF6" opacity="0.05"/></svg>');
+            background: linear-gradient(to bottom, rgba(139, 92, 246, 0.3) 0%, rgba(255, 0, 102, 0.2) 50%, rgba(0, 0, 0, 0.95) 100%);
             background-size: cover;
             background-position: center;
             position: relative;
@@ -1078,18 +1143,39 @@
                 if (!container) return;
 
                 if (recent.length === 0) {
-                    container.innerHTML = '<div style="color:#666; font-size:0.8rem; padding:10px;">No recent pages</div>';
+                    container.innerHTML = '<div style="color:#555; font-size:0.7rem; padding:15px 10px; text-align:center; line-height:1.4;">Visit pages to see them here</div>';
                     return;
                 }
 
-                container.innerHTML = recent.map(p => `
+                // Show first 5 recent pages
+                const displayed = recent.slice(0, 5);
+                const html = displayed.map(p => `
                     <a href="${p.path}" class="recent-page-item" title="${p.title}">
                         <div class="recent-page-icon" ${p.icon ? `style="background-image:url('${p.icon}'); background-size:cover; background-position:center;"` : ''}>
-                            ${!p.icon ? '<ion-icon name="document-outline" style="color:#8B5CF6;"></ion-icon>' : ''}
+                            ${!p.icon ? `<ion-icon name="${p.icon_name || 'document-outline'}" style="color:#fff; font-size:32px;"></ion-icon>` : ''}
                         </div>
                         <div class="recent-page-text">${p.title}</div>
                     </a>
                 `).join('');
+
+                // Add "More" button if there are more than 5
+                let moreBtn = '';
+                if (recent.length > 5) {
+                    moreBtn = `
+                        <a href="/pages/pages.html" class="recent-page-item more-btn" title="View all">
+                            <div class="recent-page-icon" style="background: rgba(139, 92, 246, 0.2); border-color: rgba(139, 92, 246, 0.4);">
+                                <div style="display:flex; flex-direction:column; gap:2px; align-items:center;">
+                                    <div style="width:3px; height:3px; border-radius:50%; background:#8B5CF6;"></div>
+                                    <div style="width:3px; height:3px; border-radius:50%; background:#8B5CF6;"></div>
+                                    <div style="width:3px; height:3px; border-radius:50%; background:#8B5CF6;"></div>
+                                </div>
+                            </div>
+                            <div class="recent-page-text">More</div>
+                        </a>
+                    `;
+                }
+
+                container.innerHTML = html + moreBtn;
             } catch (e) { console.error('Render recent pages error', e); }
         }
 
