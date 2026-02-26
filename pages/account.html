@@ -83,6 +83,23 @@
             align-items: center;
         }
 
+        .sidebar-wrapper::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .sidebar-wrapper::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .sidebar-wrapper::-webkit-scrollbar-thumb {
+            background: rgba(139, 92, 246, 0.3);
+            border-radius: 3px;
+        }
+
+        .sidebar-wrapper::-webkit-scrollbar-thumb:hover {
+            background: rgba(139, 92, 246, 0.5);
+        }
+
         .sidebar-title {
             font-size: 0.65rem;
             font-weight: 900;
@@ -180,6 +197,20 @@
             -webkit-box-orient: vertical;
             font-weight: 600;
             width: 90px;
+        }
+
+        .recent-page-item.more-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .recent-page-item.more-btn .recent-page-icon {
+            background: rgba(139, 92, 246, 0.15);
+            border-color: rgba(139, 92, 246, 0.5);
+        }
+
+        .recent-page-item.more-btn:hover .recent-page-icon {
+            background: rgba(139, 92, 246, 0.25);
+            box-shadow: 0 4px 20px rgba(139, 92, 246, 0.3);
         }
 
         .profile-content-wrapper {
@@ -1124,13 +1155,23 @@
         // --- RECENT PAGES TRACKING ---
         function trackPageVisit(path, title, icon) {
             try {
+                // Determine icon name based on page path
+                let iconName = 'document-outline';
+                if (path.includes('/characters/')) iconName = 'person-outline';
+                else if (path.includes('/martial_arts/')) iconName = 'flash-outline';
+                else if (path.includes('/cultivation/')) iconName = 'star-outline';
+                else if (path.includes('/realms/')) iconName = 'layers-outline';
+                else if (path.includes('/concepts/')) iconName = 'bulb-outline';
+                else if (path.includes('/plot/')) iconName = 'bookmark-outline';
+                else if (path.includes('/appearances/')) iconName = 'image-outline';
+
                 let recent = JSON.parse(localStorage.getItem('recentPages') || '[]');
                 // Remove if already exists
                 recent = recent.filter(p => p.path !== path);
                 // Add to front
-                recent.unshift({ path, title, icon });
-                // Keep only last 5
-                recent = recent.slice(0, 5);
+                recent.unshift({ path, title, icon, icon_name: iconName });
+                // Keep only last 10
+                recent = recent.slice(0, 10);
                 localStorage.setItem('recentPages', JSON.stringify(recent));
                 renderRecentPages();
             } catch (e) { console.error('Track visit error', e); }
