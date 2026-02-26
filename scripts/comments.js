@@ -10,8 +10,8 @@
         if (isLocalhost) {
             window.RTOC_API_BASE = '';
         } else if (isCustomDomain || isGitHubPages) {
-            // Updated to the correct service URL
-            window.RTOC_API_BASE = 'https://regressorstaleofcultivation.onrender.com';
+            // Updated to the correct primary domain
+            window.RTOC_API_BASE = 'https://regressorstaleofcultivation.space';
         } else {
             window.RTOC_API_BASE = '';
         }
@@ -78,11 +78,19 @@ class CommentSystem {
 
         const url = this.apiUrl(endpoint);
         
-        // Ensure credentials are included for CORS requests to handle sessions
+        // Ensure credentials are included for CORS
         options.credentials = 'include';
+        
+        // Add Authorization header if session exists
+        const sessionToken = localStorage.getItem('rtoc_session');
+        if (sessionToken) {
+            if (!options.headers) options.headers = {};
+            options.headers['Authorization'] = `Bearer ${sessionToken}`;
+        }
         
         // Basic error handling for fetch
         try {
+            console.log(`[API] Fetching: ${url}`, options);
             return await fetch(url, options);
         } catch (err) {
             console.error('[API] Fetch Error:', err);

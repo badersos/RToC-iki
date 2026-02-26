@@ -14,9 +14,8 @@
         // Local development - use same origin
         API_BASE = '';
     } else if (isGitHubPages || isCustomDomain) {
-        // GitHub Pages or custom domain - point to Render.com deployed server
-        // Use the primary service domain that is already in ALLOWED_ORIGINS
-        API_BASE = 'https://regressorstaleofcultivation.onrender.com';
+        // GitHub Pages or custom domain - point to the primary domain
+        API_BASE = 'https://regressorstaleofcultivation.space';
     } else {
         // Fallback - assume server running on same origin (e.g., Cloudflare tunnel)
         API_BASE = '';

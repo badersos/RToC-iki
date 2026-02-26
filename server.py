@@ -27,6 +27,8 @@ ALLOWED_ORIGINS = [
     'https://badersos.github.io',
     'http://localhost:8081',
     'http://127.0.0.1:8081',
+    'http://localhost:10000',
+    'http://127.0.0.1:10000',
     'https://rtoc-iki.onrender.com',
     'https://regressorstaleofcultivation.onrender.com'
 ]
@@ -438,46 +440,47 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
         """Send CORS headers for cross-origin requests."""
         origin = self.get_cors_origin()
         self.send_header('Access-Control-Allow-Origin', origin)
-        self.send_header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, DELETE, PUT')
-        self.send_header('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With, Accept, Cache-Control, Pragma, Expires')
-        self.send_header('Access-Control-Allow-Credentials', 'true')
-        self.send_header('Vary', 'Origin')
-
     def do_OPTIONS(self):
         """Handle preflight CORS requests."""
         self.send_response(200)
         self.send_header('Content-Length', '0')
         self.send_header('Access-Control-Max-Age', '86400')
-        # Preflight must have CORS headers
-        self.send_cors_headers()
-        http.server.SimpleHTTPRequestHandler.end_headers(self)
+        self.end_headers()
 
     def end_headers(self):
         # API endpoints and /save need CORS headers
-        if self.path.startswith('/api/') or self.path == '/save':
-            self.send_cors_headers()
+        if self.path.startswith('/api/') or self.path == '/save' or self.path.startswith('/auth/'):
+            origin = self.headers.get('Origin')
+            
+            # Check if origin is in ALLOWED_ORIGINS
+            if origin in ALLOWED_ORIGINS:
+                self.send_header('Access-Control-Allow-Origin', origin)
+            elif not origin:
+                # Fallback for non-browser clients or same-origin requests without Origin header
+                self.send_header('Access-Control-Allow-Origin', '*')
+            else:
+                # Default to primary for safety if origin not in list
+                self.send_header('Access-Control-Allow-Origin', ALLOWED_ORIGINS[0])
+                
+            self.send_header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, DELETE, PUT')
+            self.send_header('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With, Accept, Cache-Control, Pragma, Expires')
+            self.send_header('Access-Control-Allow-Credentials', 'true')
+            self.send_header('Vary', 'Origin')
+        
+        # Security and Cache Headers
         self.send_header('Cache-Control', 'no-store, no-cache, must-revalidate')
         self.send_header('Pragma', 'no-cache')
         self.send_header('Expires', '0')
+        self.send_header('X-Content-Type-Options', 'nosniff')
+        
         super().end_headers()
 
     def send_error(self, code, message=None, explain=None):
         if self.path.startswith('/api/') or self.path == '/save':
             self.send_response(code)
             self.send_header('Content-Type', 'application/json')
-            # Inline CORS for error responses to ensure they reach the client
-            origin = self.get_cors_origin()
-            self.send_header('Access-Control-Allow-Origin', origin)
-            self.send_header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, DELETE, PUT')
-            self.send_header('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With, Accept, Cache-Control, Pragma, Expires')
-            self.send_header('Access-Control-Allow-Credentials', 'true')
-            self.send_header('Vary', 'Origin')
-
-            # Update Access-Control-Allow-Headers to match the expanded headers used in regular responses and preflights
-            self.send_header('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With, Accept, Cache-Control, Pragma, Expires')
-
-            # Use base class end_headers to avoid our logic that might add duplicate headers
-            http.server.SimpleHTTPRequestHandler.end_headers(self)
+            # end_headers() will automatically add CORS headers
+            self.end_headers()
             response = {'status': 'error', 'message': message, 'code': code}
             self.wfile.write(json.dumps(response).encode())
         else:
@@ -560,12 +563,23 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                 page_id = params.get('pageId', [None])[0]
                 sort_by = params.get('sort', ['newest'])[0] 
                 
+                if not page_id:
+                    self.send_response(400)
+                    self.send_header('Content-type', 'application/json')
+                    self.end_headers()
+                    self.wfile.write(json.dumps({"status": "error", "message": "Missing pageId"}).encode('utf-8'))
+                    return
+
                 try:
                     response = supabase.table('comments').select('*').eq('page_id', page_id).execute()
                     page_comments = response.data or []
                 except Exception as e:
-                    print(f"[DB] Error fetching comments: {e}")
-                    page_comments = []
+                    print(f"[DB] Error fetching comments for {page_id}: {e}")
+                    self.send_response(500)
+                    self.send_header('Content-type', 'application/json')
+                    self.end_headers()
+                    self.wfile.write(json.dumps({"status": "error", "message": "Failed to fetch comments"}).encode('utf-8'))
+                    return
                 
                 # Sort comments based on requested order, with PINNED comments always on top
                 if sort_by == 'oldest':
@@ -1299,7 +1313,7 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                     "id": str(uuid.uuid4()),
                     "page_id": page_id,
                     "user_id": user_id,
-                    "parent_id": parent_id, # Added missing parent_id
+                    "parent_id": parent_id,
                     "text": content,
                     "created_at": datetime.now(timezone.utc).isoformat(),
                     "is_pinned": False,
@@ -1308,13 +1322,16 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                     "replies": []
                 }
                 
+                print(f"[DB] Attempting to insert comment: {new_comment['id']} for page {page_id}")
+                
                 try:
-                    supabase.table('comments').insert(new_comment).execute()
+                    insert_result = supabase.table('comments').insert(new_comment).execute()
+                    print(f"[DB] Insert successful: {insert_result.data}")
                 except Exception as e:
                     print(f"[DB ERROR] Failed to insert comment into 'comments' table: {e}")
-                    # Log more details if possible
                     if hasattr(e, 'message'): print(f"  Details: {e.message}")
-                    self.send_error(500, f"Database error (Check logs for details)")
+                    # If it's a 409 or duplicate key, we might need to handle it, but uuid4 should be unique
+                    self.send_error(500, f"Database error: {str(e)}")
                     return
                 
                 # Fetch user data to return fully populated comment to frontend
