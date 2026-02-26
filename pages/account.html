@@ -60,8 +60,8 @@
             background: transparent;
             min-height: 100vh;
             display: flex;
-            flex-direction: row;
-            align-items: flex-start;
+            flex-direction: column;
+            align-items: center;
             padding-top: 60px;
             backdrop-filter: blur(0px);
             position: relative;
@@ -69,156 +69,66 @@
         }
 
         .sidebar-wrapper {
-            width: 120px;
-            background: rgba(15, 15, 20, 0.98);
-            border-right: 1px solid rgba(255, 255, 255, 0.05);
-            padding: 30px 0;
-            max-height: calc(100vh - 60px);
-            overflow-y: auto;
-            position: sticky;
-            top: 60px;
-            flex-shrink: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .sidebar-wrapper::-webkit-scrollbar {
-            width: 6px;
-        }
-
-        .sidebar-wrapper::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 0.02);
-        }
-
-        .sidebar-wrapper::-webkit-scrollbar-thumb {
-            background: rgba(139, 92, 246, 0.3);
-            border-radius: 3px;
-        }
-
-        .sidebar-wrapper::-webkit-scrollbar-thumb:hover {
-            background: rgba(139, 92, 246, 0.5);
+            display: none;
         }
 
         .sidebar-title {
-            font-size: 0.65rem;
-            font-weight: 900;
-            text-transform: uppercase;
-            color: #fff;
-            margin-bottom: 20px;
-            letter-spacing: 2.5px;
-            opacity: 0.8;
-            writing-mode: horizontal-tb;
+            display: none;
         }
 
         .recent-pages-list {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            align-items: center;
-            width: 100%;
+            display: none;
         }
 
         .recent-page-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 8px;
-            padding: 0;
-            background: transparent;
-            border-radius: 50%;
-            text-decoration: none;
-            color: #aaa;
-            transition: all 0.3s ease;
-            border: none;
-            text-align: center;
-            position: relative;
-            width: 80px;
+            display: none;
         }
 
         .recent-page-item::before {
-            content: '';
-            position: absolute;
-            width: 85px;
-            height: 85px;
-            border-radius: 50%;
-            border: 2px solid rgba(139, 92, 246, 0);
-            transition: all 0.3s ease;
-            top: -2.5px;
-            left: 50%;
-            transform: translateX(-50%);
+            display: none;
         }
 
         .recent-page-item:hover::before {
-            border-color: rgba(139, 92, 246, 0.6);
-            box-shadow: 0 0 15px rgba(139, 92, 246, 0.3);
+            display: none;
         }
 
         .recent-page-item:hover {
-            color: #fff;
-            transform: scale(1.05);
+            display: none;
         }
 
         .recent-page-icon {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #8B5CF6, #6D28D9);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-            overflow: hidden;
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-            transition: all 0.3s ease;
+            display: none;
         }
 
         .recent-page-item:hover .recent-page-icon {
-            border-color: rgba(139, 92, 246, 0.6);
-            box-shadow: 0 4px 20px rgba(139, 92, 246, 0.4);
+            display: none;
         }
 
         .recent-page-icon img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 50%;
+            display: none;
         }
 
         .recent-page-text {
-            flex: 1;
-            font-size: 0.65rem;
-            line-height: 1.1;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            font-weight: 600;
-            width: 90px;
+            display: none;
         }
 
         .recent-page-item.more-btn:hover {
-            transform: scale(1.1);
+            display: none;
         }
 
         .recent-page-item.more-btn .recent-page-icon {
-            background: rgba(139, 92, 246, 0.15);
-            border-color: rgba(139, 92, 246, 0.5);
+            display: none;
         }
 
         .recent-page-item.more-btn:hover .recent-page-icon {
-            background: rgba(139, 92, 246, 0.25);
-            box-shadow: 0 4px 20px rgba(139, 92, 246, 0.3);
+            display: none;
         }
 
         .profile-content-wrapper {
-            flex: 1;
             display: flex;
             justify-content: center;
             padding-bottom: 40px;
-            min-width: 0;
+            width: 100%;
         }
 
         .profile-container {
@@ -672,14 +582,6 @@
             style="position:fixed; top:20px; left:20px; color:white; z-index:100; background:rgba(0,0,0,0.5); padding:10px; border-radius:8px; text-decoration:none;">
             <ion-icon name="arrow-back"></ion-icon> Return Home
         </a>
-
-        <!-- Sidebar with Recent Pages -->
-        <div class="sidebar-wrapper">
-            <div class="sidebar-title">Recent</div>
-            <div class="recent-pages-list" id="recentPagesList">
-                <!-- Recent pages will be injected here -->
-            </div>
-        </div>
 
         <div class="profile-content-wrapper">
             <div class="profile-container">
