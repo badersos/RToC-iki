@@ -139,7 +139,8 @@ class UserDatabase:
             if uname in static_perms:
                 role = static_perms[uname]
                 print(f"[DB] Role for {uname} found in permissions.json: {role}")
-        except:
+        except Exception as e:
+            print(f"[DB] Error reading permissions.json: {e}")
             pass
 
         # 2. Preserve existing DB role if it exists and wasn't overridden by static config
@@ -485,6 +486,7 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                 
                 self.send_response(200)
                 self.send_header('Content-Type', 'application/json')
+                self.send_cors_headers()
                 self.end_headers()
                 self.wfile.write(json.dumps({"status": "success", "results": results}).encode())
             except Exception as e:
@@ -496,6 +498,7 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
             user = SessionManager.get_user(self.headers)
             self.send_response(200)
             self.send_header('Content-Type', 'application/json')
+            self.send_cors_headers()
             self.end_headers()
             if user:
                 self.wfile.write(json.dumps({"status": "success", "user": user}).encode())
@@ -530,9 +533,11 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
 
                 self.send_response(200)
                 self.send_header('Content-type', 'application/json')
+                self.send_cors_headers()
                 self.end_headers()
                 self.wfile.write(json.dumps({"status": "success", "permissions": perms}).encode('utf-8'))
             except Exception as e:
+                print(f"[PERMISSIONS GET] Error: {e}")
                 self.send_error(500, str(e))
             return
 
@@ -583,6 +588,7 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
 
                 self.send_response(200)
                 self.send_header('Content-type', 'application/json')
+                self.send_cors_headers()
                 self.end_headers()
                 self.wfile.write(json.dumps({
                     "status": "success", 
@@ -614,6 +620,7 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                 
                 self.send_response(200)
                 self.send_header('Content-Type', 'application/json')
+                self.send_cors_headers()
                 self.end_headers()
                 self.wfile.write(json.dumps({
                     "status": "success",
@@ -642,6 +649,7 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                 
                 self.send_response(200)
                 self.send_header('Content-Type', 'application/json')
+                self.send_cors_headers()
                 self.end_headers()
                 self.wfile.write(json.dumps({"status": "success", "activity": logs}).encode())
             except Exception as e:
@@ -813,6 +821,7 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                 
                 self.send_response(200)
                 self.send_header('Content-type', 'application/json')
+                self.send_cors_headers()
                 self.end_headers()
                 self.wfile.write(json.dumps({"status": "success", "pages": pages}).encode('utf-8'))
             except Exception as e:
@@ -831,6 +840,7 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                 
                 self.send_response(200)
                 self.send_header('Content-type', 'application/json')
+                self.send_cors_headers()
                 self.end_headers()
                 self.wfile.write(json.dumps({"status": "success", "assets": assets}).encode('utf-8'))
             except Exception as e:
@@ -853,7 +863,7 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                 if response.data:
                     content = response.data[0]['content']
                     # make sure editor script is present so admins can toggle edit
-                    if '/scripts/editor.js' not in content:
+                    if 'editor.js' not in content:
                         if '</body>' in content.lower():
                             # similar injection logic as in save handler
                             lower = content.lower()
@@ -880,7 +890,7 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                     with open(file_path, 'r', encoding='utf-8', errors='ignore') as f:
                         content = f.read()
 
-                    if '/scripts/editor.js' not in content:
+                    if 'editor.js' not in content:
                         if '</body>' in content.lower():
                             lower = content.lower()
                             idx = lower.rfind('</body>')
@@ -927,28 +937,24 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                 if relative_path.startswith('/'): relative_path = relative_path[1:]
                 safe_path = os.path.normpath(os.path.join(os.getcwd(), relative_path))
                 
-                if not safe_path.startswith(os.getcwd()):
+                # Case-insensitive check for Windows compatibility
+                if not safe_path.lower().startswith(os.getcwd().lower()):
+                    print(f"[SAVE] Access denied: {safe_path} not in {os.getcwd()}")
                     self.send_error(403, "Access denied")
                     return
 
                 # Ensure saved pages always include the editor script.
-                # Users are free to delete the <script> tag while editing which would
-                # make future edits impossible; injecting it server-side guards against
-                # that and also unifies paths (use absolute URL so it works from any
-                # directory depth).
-                if '/scripts/editor.js' not in content:
-                    # try to insert just before </body> if present
+                if 'editor.js' not in content:
                     if '</body>' in content.lower():
-                        # preserve case by doing a case-insensitive replace
-                        # we can't easily match case-insensitively without regex so do simple
-                        # approach: find index of closing tag and splice
                         lower = content.lower()
                         idx = lower.rfind('</body>')
                         if idx != -1:
                             content = content[:idx] + '<script src="/scripts/editor.js"></script>\n' + content[idx:]
                     else:
-                        # no body tag? just append it at end
                         content = content + '\n<script src="/scripts/editor.js"></script>'
+
+                # Ensure directory exists for nested pages
+                os.makedirs(os.path.dirname(safe_path), exist_ok=True)
 
                 with open(safe_path, 'w', encoding='utf-8') as f:
                     f.write(content)
@@ -988,6 +994,7 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
 
                 self.send_response(200)
                 self.send_header('Content-type', 'application/json')
+                self.send_cors_headers()
                 self.end_headers()
                 self.wfile.write(json.dumps({"status": "success"}).encode('utf-8'))
                 
@@ -1060,6 +1067,7 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                 
                 self.send_response(200)
                 self.send_header('Content-type', 'application/json')
+                self.send_cors_headers()
                 self.end_headers()
                 self.wfile.write(json.dumps({"status": "success", "message": "Page deleted"}).encode('utf-8'))
                 
@@ -1158,6 +1166,7 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                     
                     self.send_response(200)
                     self.send_header('Content-Type', 'application/json')
+                    self.send_cors_headers()
                     self.end_headers()
                     self.wfile.write(json.dumps({"status": "success", "url": file_url}).encode())
                 else:
@@ -1172,104 +1181,22 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
 
         elif self.path == '/api/profile':
             try:
-                print(f"[PROFILE UPDATE] Request received")
-                content_len = int(self.headers.get('Content-Length', 0))
-                post_body = self.rfile.read(content_len)
-                data = json.loads(post_body)
-                print(f"[PROFILE UPDATE] Data: {data}")
-                
-                username = data.get('username')
-                if not username:
-                    print(f"[PROFILE UPDATE] Error: Username required")
-                    self.send_error(400, "Username required")
-                    return
-
-                try:
-                    update_data = {}
-                    if 'banner' in data: update_data['banner'] = data['banner']
-                    if 'bio' in data: update_data['about'] = data['bio']
-                    
-                    if update_data:
-                        supabase.table('user_profiles').update(update_data).eq('username', username).execute()
-                except Exception as e:
-                    print(f"[DB] Error updating profile: {e}")
-                    self.send_error(500, "Database error")
-                    return
-                    
-                print(f"[PROFILE UPDATE] Success for {username}")
-                self.send_response(200)
-                self.send_header('Content-Type', 'application/json')
-                self.end_headers()
-                self.wfile.write(json.dumps({"status": "success"}).encode())
-            except Exception as e:
-                print(f"[PROFILE UPDATE] Error: {e}")
-                self.send_error(500, str(e))
-
-        elif self.path == '/api/permissions':
-            try:
-                print(f"[PERMISSIONS POST] Request received")
                 user = get_authenticated_user(self)
-                print(f"[PERMISSIONS POST] User: {user}")
-                admin_check = is_admin(user)
-                print(f"[PERMISSIONS POST] is_admin: {admin_check}")
-                if not admin_check:
-                    print(f"[PERMISSIONS POST] Permission denied for user: {user}")
-                    self.send_error(403, "Permission denied: Admins only")
-                    return
-
-                content_length = int(self.headers['Content-Length'])
-                post_data = self.rfile.read(content_length)
-                data = json.loads(post_data.decode('utf-8'))
-                
-                target_user = data.get('username')
-                new_role = data.get('role')
-                if not target_user or not new_role:
-                    self.send_error(400, "Missing target username or role")
-                    return
-
-                try:
-                    # 1. Update permissions.json (Static persistence)
-                    perms = FileHandler.read_json('permissions.json', default={})
-                    perms[target_user] = new_role
-                    FileHandler.write_json('permissions.json', perms)
-                    print(f"[PERMISSIONS POST] Updated permissions.json for {target_user}")
-
-                    # 2. Sync role in Supabase users table (Real-time sync)
-                    supabase.table('users').update({'role': new_role}).eq('username', target_user).execute()
-                    print(f"[PERMISSIONS POST] Updated Supabase for {target_user}")
-                except Exception as e:
-                    print(f"[DB] Error updating permissions: {e}")
-                    self.send_error(500, f"Sync error: {str(e)}")
-                    return
-            
-                self.send_response(200)
-                self.send_header('Content-type', 'application/json')
-                self.end_headers()
-                self.wfile.write(json.dumps({"status": "success"}).encode('utf-8'))
-
-            except Exception as e:
-                self.send_error(500, str(e))
-
-        elif self.path == '/api/profile':
-            try:
-                user = get_authenticated_user(self)
-                print(f"[PROFILE POST] User: {user}")
                 if not user:
-                    print("[PROFILE POST] Error: No user authenticated")
                     self.send_error(403, "Login required")
                     return
 
-                content_length = int(self.headers.get('Content-Length', 0))
-                post_data = self.rfile.read(content_length)
+                content_len = int(self.headers.get('Content-Length', 0))
+                post_data = self.rfile.read(content_len)
                 data = json.loads(post_data.decode('utf-8'))
-                print(f"[PROFILE POST] Data received: {data}")
-
-                target_username = data.get('username')
-                # Try both cases if needed, but migrate_to_supabase.py used 'username'
                 
+                target_username = data.get('username')
+                if not target_username:
+                    self.send_error(400, "Username required")
+                    return
+
                 # Security: Only allow user to edit their OWN profile, or admin
                 if not is_admin(user) and user.get('username') != target_username:
-                    print(f"[PROFILE POST] Permission denied: {user.get('username')} tried to edit {target_username}")
                     self.send_error(403, "Permission denied")
                     return
 
@@ -1281,24 +1208,19 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                 if 'rank' in data: profile_update['rank'] = data['rank']
                 if 'title' in data: profile_update['title'] = data['title']
 
-                print(f"[PROFILE POST] Updating {target_username} with: {profile_update}")
-                
-                result = supabase.table('user_profiles').upsert({
+                supabase.table('user_profiles').upsert({
                     "username": target_username,
                     **profile_update
                 }).execute()
                 
-                print(f"[PROFILE POST] Supabase result: {result.data if hasattr(result, 'data') else 'Success'}")
-
                 self.send_response(200)
                 self.send_header('Content-Type', 'application/json')
+                self.send_cors_headers()
                 self.end_headers()
                 self.wfile.write(json.dumps({"status": "success", "message": "Profile updated"}).encode())
 
             except Exception as e:
                 print(f"[PROFILE POST ERROR] {e}")
-                import traceback
-                traceback.print_exc()
                 self.send_error(500, str(e))
 
         # === COMMENTS API ===
@@ -1381,6 +1303,7 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
             
                 self.send_response(200)
                 self.send_header('Content-type', 'application/json')
+                self.send_cors_headers()
                 self.end_headers()
                 self.wfile.write(json.dumps({"status": "success", "comment": frontend_comment}).encode('utf-8'))
                 
@@ -1429,6 +1352,7 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                 
                 self.send_response(200)
                 self.send_header('Content-type', 'application/json')
+                self.send_cors_headers()
                 self.end_headers()
                 self.wfile.write(json.dumps({"status": "success"}).encode('utf-8'))
                 
