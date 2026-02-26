@@ -27,7 +27,8 @@ ALLOWED_ORIGINS = [
     'https://badersos.github.io',
     'http://localhost:8081',
     'http://127.0.0.1:8081',
-    'https://rtoc-iki.onrender.com'
+    'https://rtoc-iki.onrender.com',
+    'https://regressorstaleofcultivation.onrender.com'
 ]
 
 from supabase import create_client, Client
@@ -431,7 +432,8 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
 
     def send_cors_headers(self):
         """Send CORS headers for cross-origin requests."""
-        self.send_header('Access-Control-Allow-Origin', self.get_cors_origin())
+        origin = self.get_cors_origin()
+        self.send_header('Access-Control-Allow-Origin', origin)
         self.send_header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, DELETE, PUT')
         self.send_header('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With, Accept')
         self.send_header('Access-Control-Allow-Credentials', 'true')
@@ -446,7 +448,8 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
 
     def end_headers(self):
         # CORS and cache headers
-        self.send_cors_headers()
+        if self.path.startswith('/api/') or self.path == '/save':
+            self.send_cors_headers()
         self.send_header('Cache-Control', 'no-store, no-cache, must-revalidate')
         self.send_header('Pragma', 'no-cache')
         self.send_header('Expires', '0')

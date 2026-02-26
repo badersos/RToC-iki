@@ -76,10 +76,17 @@ class CommentSystem {
         }
 
         const url = this.apiUrl(endpoint);
-        if (window.RTOC_API_BASE) {
-            options.credentials = 'include';
+        
+        // Ensure credentials are included for CORS requests to handle sessions
+        options.credentials = 'include';
+        
+        // Basic error handling for fetch
+        try {
+            return await fetch(url, options);
+        } catch (err) {
+            console.error('[API] Fetch Error:', err);
+            throw err;
         }
-        return fetch(url, options);
     }
 
     injectStyles() {
