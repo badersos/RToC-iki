@@ -1208,6 +1208,7 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                 if 'rank' in data: profile_update['rank'] = data['rank']
                 if 'title' in data: profile_update['title'] = data['title']
 
+                # Use upsert to create or update profile
                 supabase.table('user_profiles').upsert({
                     "username": target_username,
                     **profile_update
@@ -1223,12 +1224,46 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                 print(f"[PROFILE POST ERROR] {e}")
                 self.send_error(500, str(e))
 
+        elif self.path == '/api/permissions':
+            try:
+                user = get_authenticated_user(self)
+                if not is_admin(user):
+                    self.send_error(403, "Permission denied")
+                    return
+
+                content_length = int(self.headers.get('Content-Length', 0))
+                post_data = self.rfile.read(content_length)
+                data = json.loads(post_data.decode('utf-8'))
+                
+                target_user = data.get('username')
+                new_role = data.get('role')
+                if not target_user or not new_role:
+                    self.send_error(400, "Missing username or role")
+                    return
+
+                # Update permissions.json
+                perms = FileHandler.read_json('permissions.json', default={})
+                perms[target_user] = new_role
+                FileHandler.write_json('permissions.json', perms)
+
+                # Update Supabase
+                supabase.table('users').update({'role': new_role}).eq('username', target_user).execute()
+                
+                self.send_response(200)
+                self.send_header('Content-Type', 'application/json')
+                self.send_cors_headers()
+                self.end_headers()
+                self.wfile.write(json.dumps({"status": "success"}).encode())
+            except Exception as e:
+                print(f"[PERMISSIONS POST ERROR] {e}")
+                self.send_error(500, str(e))
+
         # === COMMENTS API ===
         elif self.path == '/api/comments':
             try:
                 content_len = int(self.headers.get('Content-Length', 0))
                 post_body = self.rfile.read(content_len)
-                data = json.loads(post_body)
+                data = json.loads(post_body.decode('utf-8'))
                 
                 page_id = data.get('pageId')
                 user = data.get('user')
@@ -1392,6 +1427,7 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                     
                 self.send_response(200 if success else 403)
                 self.send_header('Content-type', 'application/json')
+                self.send_cors_headers()
                 self.end_headers()
                 self.wfile.write(json.dumps({"status": "success" if success else "error", "message": "Permission denied" if not success else None}).encode('utf-8'))
                 
@@ -1428,12 +1464,14 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                             
                             self.send_response(200)
                             self.send_header('Content-type', 'application/json')
+                            self.send_cors_headers()
                             self.end_headers()
                             self.wfile.write(json.dumps({"status": "success"}).encode('utf-8'))
                             return
                             
                     self.send_response(403)
                     self.send_header('Content-type', 'application/json')
+                    self.send_cors_headers()
                     self.end_headers()
                     self.wfile.write(json.dumps({"status": "error", "message": "Permission denied"}).encode('utf-8'))
                     return
@@ -1464,6 +1502,7 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                 if False: # Removed previous client-trust check
                     self.send_response(403)
                     self.send_header('Content-type', 'application/json')
+                    self.send_cors_headers()
                     self.end_headers()
                     self.wfile.write(json.dumps({"status": "error", "message": "Admin required"}).encode('utf-8'))
                     return
@@ -1480,6 +1519,7 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                         
                         self.send_response(200)
                         self.send_header('Content-type', 'application/json')
+                        self.send_cors_headers()
                         self.end_headers()
                         self.wfile.write(json.dumps({"status": "success"}).encode('utf-8'))
                         return
