@@ -797,8 +797,8 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
             
             self.send_response(200)
             self.send_header('Content-Type', 'application/json')
+            self.send_cors_headers() # Added CORS for API endpoint
             self.send_header('Set-Cookie', f'session={session_id}; Path=/; HttpOnly; SameSite=Lax; Max-Age=2592000')
-            self.end_headers()
             self.end_headers()
             self.wfile.write(json.dumps({
                 "status": "success", 
@@ -1024,6 +1024,7 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                 if any(file_path.endswith(p) for p in protected):
                     self.send_response(403)
                     self.send_header('Content-type', 'application/json')
+                    self.send_cors_headers()
                     self.end_headers()
                     self.wfile.write(json.dumps({"status": "error", "message": "Cannot delete protected page"}).encode('utf-8'))
                     return
@@ -1039,6 +1040,7 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                 if not os.path.exists(safe_path):
                     self.send_response(404)
                     self.send_header('Content-type', 'application/json')
+                    self.send_cors_headers()
                     self.end_headers()
                     self.wfile.write(json.dumps({"status": "error", "message": "File not found"}).encode('utf-8'))
                     return
@@ -1276,6 +1278,7 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                 if not page_id or not content or not user:
                     self.send_response(400)
                     self.send_header('Content-type', 'application/json')
+                    self.send_cors_headers()
                     self.end_headers()
                     self.wfile.write(json.dumps({"status": "error", "message": "Missing required fields"}).encode('utf-8'))
                     return
@@ -1361,6 +1364,8 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                     response = supabase.table('comments').select('*').eq('id', comment_id).execute()
                     if not response.data:
                         self.send_response(404)
+                        self.send_header('Content-type', 'application/json')
+                        self.send_cors_headers()
                         self.end_headers()
                         return
                         
@@ -1425,7 +1430,7 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                 except Exception as e:
                     print(f"[DB] Error editing comment: {e}")
                     
-                self.send_response(200 if success else 403)
+                self.send_response(200)
                 self.send_header('Content-type', 'application/json')
                 self.send_cors_headers()
                 self.end_headers()
@@ -1526,6 +1531,7 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                         
                     self.send_response(404)
                     self.send_header('Content-type', 'application/json')
+                    self.send_cors_headers()
                     self.end_headers()
                     self.wfile.write(json.dumps({"status": "error", "message": "Comment not found"}).encode('utf-8'))
                 except Exception as e:
