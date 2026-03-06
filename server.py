@@ -92,6 +92,28 @@ def _urlopen_with_rate_limit_retry(req, max_attempts=3, base_delay_seconds=1.0, 
         raise last_err
     raise RuntimeError('urlopen failed')
 
+_discord_oauth_lock = threading.Lock()
+_discord_oauth_seen_codes = {}
+
+def _discord_oauth_prune_seen_codes(now=None):
+    if now is None:
+        now = time.time()
+    expired = [c for c, exp in _discord_oauth_seen_codes.items() if exp <= now]
+    for c in expired:
+        try:
+            del _discord_oauth_seen_codes[c]
+        except KeyError:
+            pass
+
+def _discord_oauth_mark_code_seen(code, ttl_seconds=60):
+    now = time.time()
+    with _discord_oauth_lock:
+        _discord_oauth_prune_seen_codes(now)
+        if code in _discord_oauth_seen_codes:
+            return False
+        _discord_oauth_seen_codes[code] = now + float(ttl_seconds)
+        return True
+
 # === FILE HANDLER ===
 class FileHandler:
     _locks = {}
@@ -468,6 +490,25 @@ class TextExtractor(HTMLParser):
 
 
 class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
+    def _get_request_proto_host(self):
+        proto = self.headers.get('X-Forwarded-Proto')
+        if proto:
+            proto = proto.split(',')[0].strip()
+        if not proto:
+            proto = 'https' if os.environ.get('RENDER') else 'http'
+
+        host = self.headers.get('X-Forwarded-Host') or self.headers.get('Host')
+        if host:
+            host = host.split(',')[0].strip()
+        if not host:
+            host = f"localhost:{PORT}"
+
+        return proto, host
+
+    def _get_discord_redirect_uri(self):
+        proto, host = self._get_request_proto_host()
+        return f"{proto}://{host}/auth/discord/callback"
+
     def get_cors_origin(self):
         """Get the appropriate CORS origin header based on request origin."""
         origin = self.headers.get('Origin', '')
@@ -726,14 +767,20 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
 
         # Discord Auth
         if self.path == '/auth/discord/login':
+            oauth_state = str(uuid.uuid4())
+            redirect_uri = self._get_discord_redirect_uri()
             params = {
                 'client_id': CLIENT_ID,
-                'redirect_uri': REDIRECT_URI,
+                'redirect_uri': redirect_uri,
                 'response_type': 'code',
                 'scope': 'identify guilds.join',
+                'state': oauth_state,
             }
             url = f"https://discord.com/api/oauth2/authorize?{urllib.parse.urlencode(params)}"
             self.send_response(302)
+            proto, _host = self._get_request_proto_host()
+            secure_attr = '; Secure' if proto == 'https' else ''
+            self.send_header('Set-Cookie', f'oauth_state={oauth_state}; Path=/; HttpOnly; SameSite=Lax{secure_attr}; Max-Age=600')
             self.send_header('Location', url)
             self.end_headers()
             return
@@ -743,17 +790,35 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                 query = urllib.parse.urlparse(self.path).query
                 params = urllib.parse.parse_qs(query)
                 code = params.get('code', [None])[0]
+                returned_state = params.get('state', [None])[0]
+                cookie_header = self.headers.get('Cookie', '')
+                cookies = {}
+                for c in cookie_header.split(';'):
+                    if '=' in c:
+                        k, v = c.split('=', 1)
+                        cookies[k.strip()] = v.strip()
+                expected_state = cookies.get('oauth_state')
                 
                 if not code:
                     self.send_error(400, "No code provided")
                     return
+
+                if not returned_state or not expected_state or returned_state != expected_state:
+                    self.send_error(400, "Invalid OAuth state")
+                    return
+
+                if not _discord_oauth_mark_code_seen(code, ttl_seconds=60):
+                    self.send_error(409, "OAuth code already used")
+                    return
+
+                redirect_uri = self._get_discord_redirect_uri()
 
                 data = urllib.parse.urlencode({
                     'client_id': CLIENT_ID,
                     'client_secret': CLIENT_SECRET,
                     'grant_type': 'authorization_code',
                     'code': code,
-                    'redirect_uri': REDIRECT_URI
+                    'redirect_uri': redirect_uri
                 }).encode()
                 
                 req = urllib.request.Request(
