@@ -6,16 +6,18 @@ import uuid
 import sys
 import urllib.request
 import urllib.parse
+import urllib.error
 from datetime import datetime, timezone
 import base64
 import shutil
 import threading
 import tempfile
+import time
 
 # Configuration - use environment variables for deployment
 PORT = int(os.environ.get('PORT', 8081))
 CLIENT_ID = os.environ.get('DISCORD_CLIENT_ID', '1467475613895098472')
-CLIENT_SECRET = os.environ.get('DISCORD_CLIENT_SECRET', 'W0w_Zzj0his7APvF4COhti3QWsE8LF0k')
+CLIENT_SECRET = os.environ.get('DISCORD_CLIENT_SECRET')
 BOT_TOKEN = os.environ.get('DISCORD_BOT_TOKEN') # MUST set this in Render Environment Variables
 GUILD_ID = os.environ.get('DISCORD_GUILD_ID', '1345014093731332108')
 REDIRECT_URI = os.environ.get('REDIRECT_URI', 'https://regressorstaleofcultivation.space/auth/discord/callback')
@@ -36,7 +38,13 @@ ALLOWED_ORIGINS = [
 from supabase import create_client, Client
 
 SUPABASE_URL = os.environ.get('SUPABASE_URL', 'https://zzpjxsqlhxdqhcybmgy.supabase.co')
-SUPABASE_KEY = os.environ.get('SUPABASE_KEY', 'sb_publishable_zxGFxVUWupq-F03Ed4-SKQ_3judxO00')
+SUPABASE_KEY = os.environ.get('SUPABASE_KEY')
+_IS_PROD = bool(os.environ.get('RENDER')) or os.environ.get('ENV', '').lower() in ('prod', 'production')
+if _IS_PROD:
+    if not CLIENT_SECRET:
+        raise RuntimeError('Missing required environment variable DISCORD_CLIENT_SECRET')
+    if not SUPABASE_KEY:
+        raise RuntimeError('Missing required environment variable SUPABASE_KEY')
 supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
 
 # === DATABASE & SESSION MANAGER ===
@@ -48,6 +56,55 @@ import subprocess
 
 def git_push(message="Auto-save data"):
     pass # Deprecated by Supabase
+
+def _is_within_directory(base_dir, target_path):
+    try:
+        base_real = os.path.realpath(base_dir)
+        target_real = os.path.realpath(target_path)
+        return os.path.commonpath([base_real, target_real]) == base_real
+    except Exception:
+        return False
+
+def _urlopen_with_rate_limit_retry(req, max_attempts=3, base_delay_seconds=1.0, max_delay_seconds=10.0):
+    last_err = None
+    for attempt in range(max_attempts):
+        try:
+            return urllib.request.urlopen(req)
+        except urllib.error.HTTPError as e:
+            last_err = e
+            if getattr(e, 'code', None) != 429:
+                raise
+
+            retry_after_header = None
+            try:
+                retry_after_header = e.headers.get('Retry-After')
+            except Exception:
+                retry_after_header = None
+
+            delay = None
+            if retry_after_header is not None:
+                try:
+                    delay = float(retry_after_header)
+                except Exception:
+                    delay = None
+            if delay is None:
+                delay = base_delay_seconds * (2 ** attempt)
+            delay = max(0.0, min(float(delay), float(max_delay_seconds)))
+
+            try:
+                body = e.read()
+                if body:
+                    print(f"[HTTP 429] Body: {body[:500]!r}")
+            except Exception:
+                pass
+
+            if attempt >= max_attempts - 1:
+                raise
+            time.sleep(delay)
+
+    if last_err is not None:
+        raise last_err
+    raise RuntimeError('urlopen failed')
 
 # === FILE HANDLER ===
 class FileHandler:
@@ -457,7 +514,7 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                 self.send_header('Access-Control-Allow-Origin', origin)
             elif not origin:
                 # Fallback for non-browser clients or same-origin requests without Origin header
-                self.send_header('Access-Control-Allow-Origin', '*')
+                self.send_header('Access-Control-Allow-Origin', ALLOWED_ORIGINS[0])
             else:
                 # Default to primary for safety if origin not in list
                 self.send_header('Access-Control-Allow-Origin', ALLOWED_ORIGINS[0])
@@ -718,7 +775,7 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                     data=data, 
                     headers={'Content-Type': 'application/x-www-form-urlencoded', 'User-Agent': 'DiscordBot'}
                 )
-                with urllib.request.urlopen(req) as res:
+                with _urlopen_with_rate_limit_retry(req) as res:
                     token_data = json.loads(res.read().decode())
                     access_token = token_data['access_token']
 
@@ -726,7 +783,7 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                     "https://discord.com/api/users/@me", 
                     headers={'Authorization': f"Bearer {access_token}", 'User-Agent': 'DiscordBot'}
                 )
-                with urllib.request.urlopen(req_user) as res_user:
+                with _urlopen_with_rate_limit_retry(req_user) as res_user:
                     user_data = json.loads(res_user.read().decode())
                 
                 # --- AUTO-JOIN SERVER ---
@@ -746,7 +803,7 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                         )
                         # We don't strictly need to check the response, but it's good practice.
                         # 201 Created = Joined, 204 No Content = Already joined
-                        with urllib.request.urlopen(join_req) as join_res:
+                        with _urlopen_with_rate_limit_retry(join_req) as join_res:
                             print(f"Auto-join status: {join_res.status}")
                 except Exception as e:
                     print(f"Auto-join failed: {e}")
@@ -805,6 +862,23 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                     }).execute()
                 except: pass
                 
+            except urllib.error.HTTPError as e:
+                print(f"OAuth HTTP Error: {e}")
+                import traceback
+                traceback.print_exc()
+
+                if getattr(e, 'code', None) == 429:
+                    retry_after = None
+                    try:
+                        retry_after = e.headers.get('Retry-After')
+                    except Exception:
+                        retry_after = None
+                    msg = "Authentication temporarily rate-limited by Discord. Please try again."
+                    if retry_after:
+                        msg = f"Authentication temporarily rate-limited by Discord. Please try again in {retry_after} seconds."
+                    self.send_error(503, msg)
+                else:
+                    self.send_error(500, f"Authentication Failed: {str(e)}")
             except Exception as e:
                 print(f"OAuth Error: {e}")
                 import traceback
@@ -959,8 +1033,7 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                 if relative_path.startswith('/'): relative_path = relative_path[1:]
                 safe_path = os.path.normpath(os.path.join(os.getcwd(), relative_path))
                 
-                # Case-insensitive check for Windows compatibility
-                if not safe_path.lower().startswith(os.getcwd().lower()):
+                if not _is_within_directory(os.getcwd(), safe_path):
                     print(f"[SAVE] Access denied: {safe_path} not in {os.getcwd()}")
                     self.send_error(403, "Access denied")
                     return
@@ -973,7 +1046,7 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                         if idx != -1:
                             content = content[:idx] + '<script src="/scripts/editor.js"></script>\n' + content[idx:]
                     else:
-                        content = content + '\n<script src="/scripts/editor.js"></script>'
+                        content += '\n<script src="/scripts/editor.js"></script>'
 
                 # Ensure directory exists for nested pages
                 os.makedirs(os.path.dirname(safe_path), exist_ok=True)
@@ -1012,7 +1085,8 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                             "timestamp": datetime.now(timezone.utc).isoformat()
                         }
                         supabase.table('activity_logs').insert(log_entry).execute()
-                    except: pass
+                    except Exception as e:
+                        print(f"[DB] Error writing activity log (save): {e}", file=sys.stderr)
 
                 self.send_response(200)
                 self.send_header('Content-type', 'application/json')
@@ -1027,12 +1101,12 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
             try:
                 user = get_authenticated_user(self)
                 if not is_admin(user):
-                    self.send_error(403, "Permission denied: Admins only")
+                    self.send_error(403, "Permission denied")
                     return
 
-                content_len = int(self.headers.get('Content-Length', 0))
-                post_body = self.rfile.read(content_len)
-                data = json.loads(post_body)
+                content_length = int(self.headers.get('Content-Length', 0))
+                post_data = self.rfile.read(content_length)
+                data = json.loads(post_data.decode('utf-8'))
                 
                 file_path = data.get('path', '')
                 
@@ -1052,7 +1126,7 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                 safe_path = os.path.normpath(os.path.join(os.getcwd(), file_path))
                 
                 # Security: must be within project directory
-                if not safe_path.startswith(os.getcwd()):
+                if not _is_within_directory(os.getcwd(), safe_path):
                     self.send_error(403, "Access denied")
                     return
                 
@@ -1084,7 +1158,8 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                         "timestamp": datetime.now(timezone.utc).isoformat()
                     }
                     supabase.table('activity_logs').insert(log_entry).execute()
-                except: pass
+                except Exception as e:
+                    print(f"[DB] Error writing activity log (delete): {e}", file=sys.stderr)
                 
                 self.send_response(200)
                 self.send_header('Content-type', 'application/json')
@@ -1178,7 +1253,8 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                             "timestamp": datetime.now(timezone.utc).isoformat()
                         }
                         supabase.table('activity_logs').insert(log_entry).execute()
-                    except: pass
+                    except Exception as e:
+                        print(f"[DB] Error writing activity log (upload): {e}", file=sys.stderr)
                     
                     # Return URL consistent with serving path
                     file_url = f"/assets/uploads/{new_filename}"
@@ -1241,6 +1317,53 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
             except Exception as e:
                 print(f"[PROFILE POST ERROR] {e}")
                 self.send_error(500, str(e))
+
+        # API: Profile Update
+        elif self.path == '/api/profile':
+            try:
+                user = SessionManager.get_user(self.headers)
+                if not user:
+                    self.send_error(403, "Login required")
+                    return
+
+                content_len = int(self.headers.get('Content-Length', 0))
+                post_data = self.rfile.read(content_len)
+                data = json.loads(post_data.decode('utf-8'))
+                
+                target_username = data.get('username')
+                if not target_username:
+                    self.send_error(400, "Username required")
+                    return
+
+                # Security: Only allow user to edit their OWN profile, or admin
+                if not is_admin(user) and user.get('username') != target_username:
+                    self.send_error(403, "Permission denied")
+                    return
+
+                # Prepare profile data
+                profile_update = {}
+                if 'bio' in data: profile_update['about'] = data['bio']
+                if 'about' in data: profile_update['about'] = data['about']
+                if 'banner' in data: profile_update['banner'] = data['banner']
+                if 'rank' in data: profile_update['rank'] = data['rank']
+                if 'title' in data: profile_update['title'] = data['title']
+
+                # Use upsert to create or update profile
+                supabase.table('user_profiles').upsert({
+                    "username": target_username,
+                    **profile_update
+                }).execute()
+                
+                self.send_response(200)
+                self.send_header('Content-Type', 'application/json')
+                self.end_headers()
+                self.wfile.write(json.dumps({"status": "success", "message": "Profile updated"}).encode())
+                return
+
+            except Exception as e:
+                print(f"[PROFILE POST ERROR] {e}")
+                self.send_error(500, str(e))
+                return
 
         elif self.path == '/api/permissions':
             try:
