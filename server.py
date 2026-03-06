@@ -94,6 +94,8 @@ def _urlopen_with_rate_limit_retry(req, max_attempts=3, base_delay_seconds=1.0, 
 
 _discord_oauth_lock = threading.Lock()
 _discord_oauth_seen_codes = {}
+_discord_oauth_rate_limited_until = 0.0
+_discord_oauth_rate_limited_retry_after = None
 
 def _discord_oauth_prune_seen_codes(now=None):
     if now is None:
@@ -113,6 +115,29 @@ def _discord_oauth_mark_code_seen(code, ttl_seconds=60):
             return False
         _discord_oauth_seen_codes[code] = now + float(ttl_seconds)
         return True
+
+def _discord_oauth_get_rate_limit_remaining_seconds(now=None):
+    if now is None:
+        now = time.time()
+    with _discord_oauth_lock:
+        remaining = _discord_oauth_rate_limited_until - float(now)
+        if remaining > 0:
+            return remaining
+        return 0.0
+
+def _discord_oauth_set_rate_limit(retry_after_seconds):
+    now = time.time()
+    try:
+        retry_after_seconds = float(retry_after_seconds)
+    except Exception:
+        retry_after_seconds = 0.0
+    with _discord_oauth_lock:
+        global _discord_oauth_rate_limited_until
+        global _discord_oauth_rate_limited_retry_after
+        until = now + max(0.0, retry_after_seconds)
+        if until > _discord_oauth_rate_limited_until:
+            _discord_oauth_rate_limited_until = until
+            _discord_oauth_rate_limited_retry_after = retry_after_seconds
 
 # === FILE HANDLER ===
 class FileHandler:
@@ -811,6 +836,13 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                     self.send_error(409, "OAuth code already used")
                     return
 
+                # Short-circuit if we're in an active Discord OAuth rate-limit cooldown
+                rate_limit_remaining = _discord_oauth_get_rate_limit_remaining_seconds()
+                if rate_limit_remaining > 0:
+                    msg = f"Authentication temporarily rate-limited by Discord. Please try again in {int(rate_limit_remaining)} seconds."
+                    self.send_error(503, msg)
+                    return
+
                 redirect_uri = self._get_discord_redirect_uri()
 
                 data = urllib.parse.urlencode({
@@ -921,7 +953,12 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                     except Exception:
                         retry_after = None
 
+                    # Record the rate limit cooldown to prevent subsequent token calls
                     if retry_after:
+                        try:
+                            _discord_oauth_set_rate_limit(float(retry_after))
+                        except Exception:
+                            pass
                         print(f"OAuth rate-limited by Discord (429). Retry-After={retry_after}")
                     else:
                         print("OAuth rate-limited by Discord (429).")
