@@ -849,26 +849,27 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                 except: pass
                 
             except urllib.error.HTTPError as e:
-                print(f"OAuth HTTP Error: {e}")
-                import traceback
-                traceback.print_exc()
-
                 if getattr(e, 'code', None) == 429:
                     retry_after = None
                     try:
                         retry_after = e.headers.get('Retry-After')
                     except Exception:
                         retry_after = None
+
+                    if retry_after:
+                        print(f"OAuth rate-limited by Discord (429). Retry-After={retry_after}")
+                    else:
+                        print("OAuth rate-limited by Discord (429).")
+
                     msg = "Authentication temporarily rate-limited by Discord. Please try again."
                     if retry_after:
                         msg = f"Authentication temporarily rate-limited by Discord. Please try again in {retry_after} seconds."
                     self.send_error(503, msg)
                 else:
+                    print(f"OAuth HTTP Error: {e}")
                     self.send_error(500, f"Authentication Failed: {str(e)}")
             except Exception as e:
                 print(f"OAuth Error: {e}")
-                import traceback
-                traceback.print_exc()
                 self.send_error(500, f"Authentication Failed: {str(e)}")
             return
 
