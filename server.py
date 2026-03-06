@@ -17,7 +17,7 @@ import time
 # Configuration - use environment variables for deployment
 PORT = int(os.environ.get('PORT', 8081))
 CLIENT_ID = os.environ.get('DISCORD_CLIENT_ID', '1467475613895098472')
-CLIENT_SECRET = os.environ.get('DISCORD_CLIENT_SECRET')
+CLIENT_SECRET = os.environ.get('DISCORD_CLIENT_SECRET', 'W0w_Zzj0his7APvF4COhti3QWsE8LF0k')
 BOT_TOKEN = os.environ.get('DISCORD_BOT_TOKEN') # MUST set this in Render Environment Variables
 GUILD_ID = os.environ.get('DISCORD_GUILD_ID', '1345014093731332108')
 REDIRECT_URI = os.environ.get('REDIRECT_URI', 'https://regressorstaleofcultivation.space/auth/discord/callback')
@@ -38,13 +38,7 @@ ALLOWED_ORIGINS = [
 from supabase import create_client, Client
 
 SUPABASE_URL = os.environ.get('SUPABASE_URL', 'https://zzpjxsqlhxdqhcybmgy.supabase.co')
-SUPABASE_KEY = os.environ.get('SUPABASE_KEY')
-_IS_PROD = bool(os.environ.get('RENDER')) or os.environ.get('ENV', '').lower() in ('prod', 'production')
-if _IS_PROD:
-    if not CLIENT_SECRET:
-        raise RuntimeError('Missing required environment variable DISCORD_CLIENT_SECRET')
-    if not SUPABASE_KEY:
-        raise RuntimeError('Missing required environment variable SUPABASE_KEY')
+SUPABASE_KEY = os.environ.get('SUPABASE_KEY', 'sb_publishable_zxGFxVUWupq-F03Ed4-SKQ_3judxO00')
 supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
 
 # === DATABASE & SESSION MANAGER ===
@@ -56,14 +50,6 @@ import subprocess
 
 def git_push(message="Auto-save data"):
     pass # Deprecated by Supabase
-
-def _is_within_directory(base_dir, target_path):
-    try:
-        base_real = os.path.realpath(base_dir)
-        target_real = os.path.realpath(target_path)
-        return os.path.commonpath([base_real, target_real]) == base_real
-    except Exception:
-        return False
 
 def _urlopen_with_rate_limit_retry(req, max_attempts=3, base_delay_seconds=1.0, max_delay_seconds=10.0):
     last_err = None
@@ -514,7 +500,7 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                 self.send_header('Access-Control-Allow-Origin', origin)
             elif not origin:
                 # Fallback for non-browser clients or same-origin requests without Origin header
-                self.send_header('Access-Control-Allow-Origin', ALLOWED_ORIGINS[0])
+                self.send_header('Access-Control-Allow-Origin', '*')
             else:
                 # Default to primary for safety if origin not in list
                 self.send_header('Access-Control-Allow-Origin', ALLOWED_ORIGINS[0])
@@ -1033,7 +1019,8 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                 if relative_path.startswith('/'): relative_path = relative_path[1:]
                 safe_path = os.path.normpath(os.path.join(os.getcwd(), relative_path))
                 
-                if not _is_within_directory(os.getcwd(), safe_path):
+                # Case-insensitive check for Windows compatibility
+                if not safe_path.lower().startswith(os.getcwd().lower()):
                     print(f"[SAVE] Access denied: {safe_path} not in {os.getcwd()}")
                     self.send_error(403, "Access denied")
                     return
@@ -1046,7 +1033,7 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                         if idx != -1:
                             content = content[:idx] + '<script src="/scripts/editor.js"></script>\n' + content[idx:]
                     else:
-                        content += '\n<script src="/scripts/editor.js"></script>'
+                        content = content + '\n<script src="/scripts/editor.js"></script>'
 
                 # Ensure directory exists for nested pages
                 os.makedirs(os.path.dirname(safe_path), exist_ok=True)
@@ -1085,8 +1072,7 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                             "timestamp": datetime.now(timezone.utc).isoformat()
                         }
                         supabase.table('activity_logs').insert(log_entry).execute()
-                    except Exception as e:
-                        print(f"[DB] Error writing activity log (save): {e}", file=sys.stderr)
+                    except: pass
 
                 self.send_response(200)
                 self.send_header('Content-type', 'application/json')
@@ -1101,12 +1087,12 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
             try:
                 user = get_authenticated_user(self)
                 if not is_admin(user):
-                    self.send_error(403, "Permission denied")
+                    self.send_error(403, "Permission denied: Admins only")
                     return
 
-                content_length = int(self.headers.get('Content-Length', 0))
-                post_data = self.rfile.read(content_length)
-                data = json.loads(post_data.decode('utf-8'))
+                content_len = int(self.headers.get('Content-Length', 0))
+                post_body = self.rfile.read(content_len)
+                data = json.loads(post_body)
                 
                 file_path = data.get('path', '')
                 
@@ -1126,7 +1112,7 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                 safe_path = os.path.normpath(os.path.join(os.getcwd(), file_path))
                 
                 # Security: must be within project directory
-                if not _is_within_directory(os.getcwd(), safe_path):
+                if not safe_path.startswith(os.getcwd()):
                     self.send_error(403, "Access denied")
                     return
                 
@@ -1158,8 +1144,7 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                         "timestamp": datetime.now(timezone.utc).isoformat()
                     }
                     supabase.table('activity_logs').insert(log_entry).execute()
-                except Exception as e:
-                    print(f"[DB] Error writing activity log (delete): {e}", file=sys.stderr)
+                except: pass
                 
                 self.send_response(200)
                 self.send_header('Content-type', 'application/json')
@@ -1253,8 +1238,7 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                             "timestamp": datetime.now(timezone.utc).isoformat()
                         }
                         supabase.table('activity_logs').insert(log_entry).execute()
-                    except Exception as e:
-                        print(f"[DB] Error writing activity log (upload): {e}", file=sys.stderr)
+                    except: pass
                     
                     # Return URL consistent with serving path
                     file_url = f"/assets/uploads/{new_filename}"
