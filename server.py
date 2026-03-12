@@ -13,6 +13,7 @@ import shutil
 import threading
 import tempfile
 import time
+import random
 
 # Configuration - use environment variables for deployment
 PORT = int(os.environ.get('PORT', 8081))
@@ -58,7 +59,7 @@ def _urlopen_with_rate_limit_retry(req, max_attempts=3, base_delay_seconds=1.0, 
             return urllib.request.urlopen(req)
         except urllib.error.HTTPError as e:
             last_err = e
-            if getattr(e, 'code', None) != 429:
+            if getattr(e, 'code', None) not in (429, 503):
                 raise
 
             retry_after_header = None
@@ -67,10 +68,40 @@ def _urlopen_with_rate_limit_retry(req, max_attempts=3, base_delay_seconds=1.0, 
             except Exception:
                 retry_after_header = None
 
+            reset_after_header = None
+            try:
+                reset_after_header = e.headers.get('X-RateLimit-Reset-After')
+            except Exception:
+                reset_after_header = None
+
+            body = None
+            body_json = None
+            try:
+                body = e.read()
+                if body:
+                    try:
+                        body_json = json.loads(body.decode('utf-8', errors='ignore'))
+                    except Exception:
+                        body_json = None
+                    print(f"[HTTP {getattr(e, 'code', '?')}] Body: {body[:500]!r}")
+            except Exception:
+                body = None
+                body_json = None
+
             delay = None
             if retry_after_header is not None:
                 try:
                     delay = float(retry_after_header)
+                except Exception:
+                    delay = None
+            if delay is None and reset_after_header is not None:
+                try:
+                    delay = float(reset_after_header)
+                except Exception:
+                    delay = None
+            if delay is None and isinstance(body_json, dict) and body_json.get('retry_after') is not None:
+                try:
+                    delay = float(body_json.get('retry_after'))
                 except Exception:
                     delay = None
             if delay is None:
@@ -78,9 +109,7 @@ def _urlopen_with_rate_limit_retry(req, max_attempts=3, base_delay_seconds=1.0, 
             delay = max(0.0, min(float(delay), float(max_delay_seconds)))
 
             try:
-                body = e.read()
-                if body:
-                    print(f"[HTTP 429] Body: {body[:500]!r}")
+                delay = delay + random.uniform(0.0, min(0.5, delay))
             except Exception:
                 pass
 
@@ -88,11 +117,8 @@ def _urlopen_with_rate_limit_retry(req, max_attempts=3, base_delay_seconds=1.0, 
                 raise
             time.sleep(delay)
 
-    if last_err is not None:
-        raise last_err
-    raise RuntimeError('urlopen failed')
-
 _discord_oauth_lock = threading.Lock()
+_discord_oauth_exchange_lock = threading.Lock()
 _discord_oauth_seen_codes = {}
 _discord_oauth_rate_limited_until = 0.0
 _discord_oauth_rate_limited_retry_after = None
@@ -531,6 +557,9 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
         return proto, host
 
     def _get_discord_redirect_uri(self):
+        # Prefer configured redirect URI to avoid mismatches between domains/proxies.
+        if REDIRECT_URI:
+            return REDIRECT_URI
         proto, host = self._get_request_proto_host()
         return f"{proto}://{host}/auth/discord/callback"
 
@@ -858,9 +887,11 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                     data=data, 
                     headers={'Content-Type': 'application/x-www-form-urlencoded', 'User-Agent': 'DiscordBot'}
                 )
-                with _urlopen_with_rate_limit_retry(req) as res:
-                    token_data = json.loads(res.read().decode())
-                    access_token = token_data['access_token']
+                # Prevent concurrent token exchanges from spiking into rate-limits.
+                with _discord_oauth_exchange_lock:
+                    with _urlopen_with_rate_limit_retry(req) as res:
+                        token_data = json.loads(res.read().decode())
+                        access_token = token_data['access_token']
 
                 req_user = urllib.request.Request(
                     "https://discord.com/api/users/@me", 
@@ -946,25 +977,19 @@ class SaveRequestHandler(http.server.SimpleHTTPRequestHandler):
                 except: pass
                 
             except urllib.error.HTTPError as e:
-                if getattr(e, 'code', None) == 429:
+                if getattr(e, 'code', None) in (429, 503):
                     retry_after = None
                     try:
                         retry_after = e.headers.get('Retry-After')
                     except Exception:
                         retry_after = None
 
-                    # Record the rate limit cooldown to prevent subsequent token calls
+                    msg = "Authentication temporarily rate-limited by Discord. Please try again."
                     if retry_after:
                         try:
                             _discord_oauth_set_rate_limit(float(retry_after))
                         except Exception:
                             pass
-                        print(f"OAuth rate-limited by Discord (429). Retry-After={retry_after}")
-                    else:
-                        print("OAuth rate-limited by Discord (429).")
-
-                    msg = "Authentication temporarily rate-limited by Discord. Please try again."
-                    if retry_after:
                         msg = f"Authentication temporarily rate-limited by Discord. Please try again in {retry_after} seconds."
                     self.send_error(503, msg)
                 else:
